@@ -1,7 +1,7 @@
 /*!
  * Add download links to images on tumblr /tagged/ pages.
  * @author Eugene
- * @version 0.1
+ * @version 0.2
 */
 
 // Get each image post
