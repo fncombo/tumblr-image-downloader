@@ -1,0 +1,27 @@
+.photoset_row {
+    overflow: visible !important;
+}
+
+.__download_parent {
+    position: relative !important;
+    cursor: default;
+}
+
+.__download_parent:hover .__download {
+    opacity: 1;
+}
+
+img.__highlight {
+    box-shadow: 0 0 0 1px #f00;
+}
+
+.__download {
+    background: #2c4762;
+    padding: 0.3em 0.6em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    opacity: 0;
+    cursor: pointer;
+}

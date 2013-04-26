@@ -55,7 +55,11 @@ Array.prototype.slice.call(document.querySelectorAll('.post.photo img')).forEach
     };
 
     // Add a special class to the parent of the download button
-    el.parentNode.classList.add('__download_parent');
+    if (el.parentNode.classList.contains('high_res_link')) {
+        el.parentNode.parentNode.classList.add('__download_parent');
+    } else {
+        el.parentNode.classList.add('__download_parent');
+    }
 
     // Insert the download button
     el.parentNode.insertBefore(save, el.nextSibling);
@@ -66,36 +70,3 @@ Array.prototype.slice.call(document.querySelectorAll('.post.photo img')).forEach
     };
 
 });
-
-// Dirtily inject some CSS
-// Please forgive me for I have sinned by using multi-line strings in JS
-document.querySelector('head').innerHTML += '<style> \
-.photoset_row { \
-    overflow: visible !important; \
-} \
- \
-.__download_parent { \
-    position: relative; \
-    cursor: default; \
-} \
- \
-.__download_parent:hover .__download { \
-    opacity: 1; \
-} \
- \
-img.__highlight { \
-    box-shadow: 0 0 0 1px #f00; \
-} \
- \
-.__download { \
-    background: #2c4762; \
-    padding: 0.3em 0.6em; \
-    position: absolute; \
-    top: 0; \
-    left: 0; \
-    color: #fff; \
-    opacity: 0; \
-    cursor: pointer; \
-} \
- \
-</style>';

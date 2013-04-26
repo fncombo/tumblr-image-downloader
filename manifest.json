@@ -6,6 +6,7 @@
     {
       "matches" : [ "http://*.tumblr.com/tagged/*" ],
       "js" : [ "script.js" ],
+      "css" : [ "style.css" ],
       "run_at" : "document_idle",
       "all_frames" : false
     }
