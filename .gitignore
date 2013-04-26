@@ -163,10 +163,6 @@ pip-log.txt
 .DS_Store
 
 # Misc extension stuff
-icon16.png
-icon48.png
-icon128.png
 screenshot.png
 tile440.png
-manifest.json
 style.css
