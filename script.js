@@ -50,7 +50,14 @@ Array.prototype.slice.call(document.querySelectorAll('.post.photo img')).forEach
         if (hd) {
             this.parentNode.classList.add('__highlight');
         } else {
+
             this.previousSibling.classList.add('__highlight');
+
+            // If the image is in a photoset row, reveal the row to show the whole image
+            if (this.parentNode.parentNode.classList.contains('photoset_row')) {
+                this.parentNode.parentNode.classList.add('__show_photoset');
+            }
+
         }
 
     };
@@ -61,7 +68,13 @@ Array.prototype.slice.call(document.querySelectorAll('.post.photo img')).forEach
         if (hd) {
             this.parentNode.classList.remove('__highlight');
         } else {
+
             this.previousSibling.classList.remove('__highlight');
+
+            if (this.parentNode.parentNode.classList.contains('photoset_row')) {
+                this.parentNode.parentNode.classList.remove('__show_photoset');
+            }
+
         }
 
     };

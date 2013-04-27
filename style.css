@@ -1,5 +1,7 @@
-.photoset_row {
+.__show_photoset {
     overflow: visible !important;
+    position: relative;
+    z-index: 99999999;
 }
 
 .__download_parent {
@@ -24,4 +26,8 @@
     color: #fff;
     opacity: 0;
     cursor: pointer;
+}
+
+.__download:hover {
+    background: #1f354c;
 }
