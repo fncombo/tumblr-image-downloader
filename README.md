@@ -1,4 +1,4 @@
-#[tumblr image saver][0]
+#[tumblr image downloader][0]
 
 Download images on tumblr /tagged/ pages with a single classy click.
 
