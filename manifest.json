@@ -1,6 +1,6 @@
 {
-  "name": "tumblr image saver",
-  "version": "0.2",
+  "name": "tumblr image downloader",
+  "version": "0.2.1",
   "description": "Download images on tumblr /tagged/ pages with a single classy click.",
   "content_scripts": [
     {
