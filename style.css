@@ -6,7 +6,6 @@
 
 .__download_parent {
     position: relative !important;
-    cursor: default;
 }
 
 .__download_parent:hover .__download {
