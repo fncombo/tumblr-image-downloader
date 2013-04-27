@@ -1,7 +1,7 @@
 /*!
  * Add download links to images on tumblr.
  * @author Eugene
- * @version 0.2
+ * @version 0.4
 */
 
 (function () {
