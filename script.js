@@ -46,27 +46,40 @@ Array.prototype.slice.call(document.querySelectorAll('.post.photo img')).forEach
 
     // Highlight the image when hovering over download link
     save.onmouseover = function () {
-        this.previousSibling.classList.add('__highlight');
+
+        if (hd) {
+            this.parentNode.classList.add('__highlight');
+        } else {
+            this.previousSibling.classList.add('__highlight');
+        }
+
     };
 
     // Remove the highlight when not hovering
     save.onmouseout = function () {
-        this.previousSibling.classList.remove('__highlight');
+
+        if (hd) {
+            this.parentNode.classList.remove('__highlight');
+        } else {
+            this.previousSibling.classList.remove('__highlight');
+        }
+
     };
 
     // Add a special class to the parent of the download button
-    if (el.parentNode.classList.contains('high_res_link')) {
-        el.parentNode.parentNode.classList.add('__download_parent');
+    // Insert the download button
+    if (hd) {
+
+        var parent = el.parentNode.parentNode;
+        parent.classList.add('__download_parent');
+        parent.insertBefore(save, parent.lastChild);
+
     } else {
+
         el.parentNode.classList.add('__download_parent');
+        el.parentNode.insertBefore(save, el.nextSibling);
+
     }
 
-    // Insert the download button
-    el.parentNode.insertBefore(save, el.nextSibling);
-
-    // In case the parent element is a link, make sure we can't click on it
-    el.parentNode.onclick = function (event) {
-        event.preventDefault();
-    };
 
 });
