@@ -222,8 +222,17 @@
         // If the changes is empty, then the array has been cleared, so remove all ticks
         if (!changes.images.newValue) {
             Array.prototype.slice.call(document.querySelectorAll('.__downloaded')).forEach(function (el) {
+
                 el.classList.remove('__downloaded');
-                el.nextSibling.innerHTML = el.nextSibling.innerHTML.substr(2);
+
+                var downloadButton = el.parentNode.querySelector('.__download');
+
+                if (!downloadButton) {
+                    downloadButton = el.parentNode.parentNode.querySelector('.__download');
+                }
+
+                downloadButton.innerHTML = downloadButton.innerHTML.substr(2);
+
             });
             return;
         }
