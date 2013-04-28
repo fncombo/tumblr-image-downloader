@@ -65,7 +65,7 @@
             if (downloadedImages.indexOf(getImageId(el.src)) !== -1) {
 
                 save.innerHTML = '&#10003; ' + save.innerHTML;
-                save.title = 'You\'ve already downloaded this image.';
+                save.title = 'You\'ve already downloaded this image before.';
                 el.classList.add('__downloaded');
 
             }
@@ -211,6 +211,19 @@
 
     }
 
+    // Add/remove the tick from the download button
+    function tick(el, action) {
+
+        var downloadButton = el.parentNode.querySelector('.__download') || el.parentNode.parentNode.querySelector('.__download');
+
+        if (action === 'add') {
+            downloadButton.innerHTML = '&#10003; ' + downloadButton.innerHTML;
+        } else if (action === 'remove') {
+            downloadButton.innerHTML = downloadButton.innerHTML.substr(2);
+        }
+
+    }
+
     // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
     chrome.storage.onChanged.addListener(function (changes) {
 
@@ -223,15 +236,8 @@
         if (!changes.images.newValue) {
             Array.prototype.slice.call(document.querySelectorAll('.__downloaded')).forEach(function (el) {
 
+                tick(el, 'remove');
                 el.classList.remove('__downloaded');
-
-                var downloadButton = el.parentNode.querySelector('.__download');
-
-                if (!downloadButton) {
-                    downloadButton = el.parentNode.parentNode.querySelector('.__download');
-                }
-
-                downloadButton.innerHTML = downloadButton.innerHTML.substr(2);
 
             });
             return;
@@ -243,7 +249,7 @@
         if (changedImage) {
 
             // Add the tick and downloaded class to the image
-            changedImage.nextSibling.innerHTML = '&#10003; ' + changedImage.nextSibling.innerHTML;
+            tick(changedImage, 'add');
             changedImage.classList.add('__downloaded');
 
         }
