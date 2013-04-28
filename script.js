@@ -1,18 +1,49 @@
 /*!
  * Add download links to images on tumblr.
  * @author Eugene
- * @version 0.4
+ * @version 0.5
 */
 
 (function () {
 
     'use strict';
 
+        // Use Chrome's local storage
+    var storage = chrome.storage.local;
+
+    // Get tumblr image ID
+    function getImageId(imageSrc) {
+        return imageSrc.match(/tumblr_(\w+)(?=_\d+\.{1}(jpe?g|png|gif)$)/)[1];
+    }
+
+    // Update local storage
+    function rememberImage(imageId) {
+
+        // Get all currently set images, return an empty array if nothing has been set yet
+        storage.get({images: []}, function (object) {
+
+            // Make sure the image isn't already in the array
+            if (object.images.indexOf(imageId) === -1) {
+
+                // Add the new image ID
+                object.images.push(imageId);
+
+                // Set the updated array
+                storage.set({images: object.images});
+
+            }
+
+        });
+
+    }
+
     // Add download buttons to image posts
-    function addButtons() {
+    function addButtons(downloadedImages) {
+
+        downloadedImages = downloadedImages || [];
 
         // Get each image post
-        Array.prototype.slice.call(document.querySelectorAll('.post.photo img:not(.__ignore)')).forEach(function (el) {
+        Array.prototype.slice.call(document.querySelectorAll('.post.photo .post_content img:not(.__ignore)')).forEach(function (el) {
 
             // Add a class to the image so we don't add a button to it again
             el.classList.add('__ignore');
@@ -31,6 +62,15 @@
             save.innerHTML = 'Download' + (hd || softHdSize ? ' <strong>HD</strong>' : '');
             save.classList.add('__download');
 
+            // If the image has already been downloaded
+            if (downloadedImages.indexOf(getImageId(el.src)) !== -1) {
+
+                save.innerHTML = '&#10003; ' + save.innerHTML;
+                save.title = 'You\'ve already downloaded this image.';
+                el.classList.add('__downloaded');
+
+            }
+
             // Download the image on click
             save.onclick = function () {
 
@@ -48,6 +88,14 @@
                         el.parentNode.onclick = originalEvent;
                     }, 100);
 
+                }
+
+                // If the image has already been downloaded
+                if (el.classList.contains('__downloaded')) {
+                    var sure = confirm('You\'ve already downloaded this image before.\n\nAre you sure you want to download it again?');
+                    if (!sure) {
+                        return;
+                    }
                 }
 
                     // Create the download link
@@ -72,6 +120,9 @@
 
                 // Free some memory or something
                 window.URL.revokeObjectURL(link.href);
+
+                // Remember that this image has been downloaded
+                rememberImage(getImageId(el.src));
 
             };
 
@@ -130,8 +181,19 @@
 
     }
 
+    // Get array of downloaded images before placing the buttons
+    function addDownloadedButtons() {
+
+        storage.get({images: []}, function (object) {
+
+            addButtons(object.images);
+
+        });
+
+    }
+
     // Add buttons to initially loaded images
-    addButtons();
+    addDownloadedButtons();
 
     // If #pagination is hidden, check if new posts have been added with each scroll
     if (document.getElementById('pagination').classList.contains('hidden')) {
@@ -143,11 +205,27 @@
             // If the document increased in height while scrolling, assume new posts have been loaded
             if (previousHeight < document.height) {
                 previousHeight = document.height;
-                addButtons();
+                addDownloadedButtons();
             }
 
         };
 
     }
+
+    // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
+    chrome.storage.onChanged.addListener(function (changes) {
+
+            // Get the element of the image with the last ID added to the array
+        var changedImage = document.querySelector('img[src*="' + changes.images.newValue.pop() + '"]');
+
+        if (changedImage) {
+
+            // Add the tick and downloaded class to the image
+            changedImage.nextSibling.innerHTML = '&#10003; ' + changedImage.nextSibling.innerHTML;
+            changedImage.classList.add('__downloaded');
+
+        }
+
+    });
 
 }());
