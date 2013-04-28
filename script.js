@@ -1,7 +1,7 @@
 /*!
  * Add download links to images on tumblr.
  * @author Eugene
- * @version 0.5
+ * @version 0.5.1
 */
 
 (function () {
@@ -214,6 +214,15 @@
 
     // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
     chrome.storage.onChanged.addListener(function (changes) {
+
+        // If the changes is empty, then the array has been cleared, so remove all ticks
+        if (!changes.images.newValue) {
+            Array.prototype.slice.call(document.querySelectorAll('.__downloaded')).forEach(function (el) {
+                el.classList.remove('__downloaded');
+                el.nextSibling.innerHTML = el.nextSibling.innerHTML.substr(2);
+            });
+            return;
+        }
 
             // Get the element of the image with the last ID added to the array
         var changedImage = document.querySelector('img[src*="' + changes.images.newValue.pop() + '"]');

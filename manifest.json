@@ -1,6 +1,6 @@
 {
   "name": "tumblr image downloader",
-  "version": "0.5",
+  "version": "0.5.1",
   "description": "Download images on tumblr /tagged/ pages with a single classy click.",
   "permissions": [
     "storage"
@@ -14,6 +14,7 @@
       "all_frames": false
     }
   ],
+  "options_page": "options.html",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
