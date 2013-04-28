@@ -1,7 +1,6 @@
 /*!
  * Add download links to images on tumblr.
  * @author Eugene
- * @version 0.5.1
 */
 
 (function () {
@@ -214,6 +213,11 @@
 
     // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
     chrome.storage.onChanged.addListener(function (changes) {
+
+        // If not the images object has been changed, return
+        if (!changes.images) {
+            return;
+        }
 
         // If the changes is empty, then the array has been cleared, so remove all ticks
         if (!changes.images.newValue) {
