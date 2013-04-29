@@ -28,7 +28,7 @@
             storage.set({version: newVersion});
 
             // Create the notification from the update.html file
-            var notification = window.webkitNotifications.createHTMLNotification('update.html');
+            var notification = window.webkitNotifications.createHTMLNotification('../html/update.html');
 
             // Show the notification
             notification.show();

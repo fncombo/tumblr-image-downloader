@@ -7,7 +7,7 @@
     * {box-sizing:border-box; margin:0; padding:0;}
     html, body {background:#2c4762; height:100%; text-align:center; font-size:16px; font-family:Arial, sans-serif; color:hsl(0, 0%, 20%);}
     body:before {content:''; display:inline-block; height:100%; vertical-align:middle; margin-right:-0.25rem;}
-    main {background:#fff; display:inline-block; vertical-align:middle; padding:1em; border-radius:6px; box-shadow:0 1px 5px rgba(0, 0, 0, 0.5);}
+    main {background:#fff; max-width:800px; display:inline-block; vertical-align:middle; padding:1em; border-radius:6px; box-shadow:0 1px 5px rgba(0, 0, 0, 0.5);}
     hr {border:none; border-top:1px dashed hsl(0, 0%, 70%); margin:2rem 0;}
     h1 {margin:1.5rem 0;}
     h2 {margin:1rem 0;}
@@ -31,6 +31,12 @@
     <p>This will permanently forget all the images you have downloaded so far.</p>
     <button id="clear">Clear</button>
 
+    <hr>
+
+    <h2>Confirm downloading again</h2>
+    <p>Will bring up a confirmation dialog when downloading an already downloaded image.</p>
+    <button id="confirm">Enable</button>
+
 </main>
 
-<script src="options.js"></script>
+<script src="../js/options.js"></script>

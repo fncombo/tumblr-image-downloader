@@ -8,7 +8,13 @@
     'use strict';
 
         // Use Chrome's local storage
-    var storage = chrome.storage.local;
+    var storage = chrome.storage.local,
+        // Whether or not to confirm downloading again
+        confirmDownload;
+
+    storage.get({confirm: false}, function (object) {
+        confirmDownload = object.confirm;
+    });
 
     // Get tumblr image ID
     function getImageId(imageSrc) {
@@ -89,8 +95,8 @@
 
                 }
 
-                // If the image has already been downloaded
-                if (el.classList.contains('__downloaded')) {
+                // If the image has already been downloaded and confirmation is enabled
+                if (el.classList.contains('__downloaded') && confirmDownload) {
                     var sure = confirm('You\'ve already downloaded this image before.\n\nAre you sure you want to download it again?');
                     if (!sure) {
                         return;
@@ -226,6 +232,12 @@
 
     // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
     chrome.storage.onChanged.addListener(function (changes) {
+
+        // If the download confirmation setting was changed
+        if (changes.confirm) {
+            confirmDownload = changes.confirm.newValue;
+            return;
+        }
 
         // If not the images object has been changed, return
         if (!changes.images) {

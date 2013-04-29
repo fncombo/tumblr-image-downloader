@@ -1,6 +1,6 @@
 {
   "name": "tumblr image downloader",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Download images on tumblr /tagged/ pages with a single classy click.",
   "permissions": [
     "storage",
@@ -9,20 +9,20 @@
   "content_scripts": [
     {
       "matches": ["http://*.tumblr.com/tagged/*"],
-      "js": ["script.js"],
-      "css": ["style.css"],
+      "js": ["js/script.js"],
+      "css": ["css/style.css"],
       "run_at": "document_idle",
       "all_frames": false
     }
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["js/background.js"]
   },
-  "options_page": "options.html",
+  "options_page": "html/options.html",
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
   },
   "manifest_version": 2
 }
