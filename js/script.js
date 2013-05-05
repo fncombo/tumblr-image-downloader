@@ -10,11 +10,29 @@
         // Use Chrome's local storage
     var storage = chrome.storage.local,
         // Whether or not to confirm downloading again
-        confirmDownload;
+        confirmDownload,
+        // Regular expression to match the size of the image
+        matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g');
 
-    storage.get({confirm: false}, function (object) {
-        confirmDownload = object.confirm;
-    });
+    // Check if a HD version of the image is available
+    function isHd(img) {
+
+        if (img.parentNode.classList.contains('high_res_link')) {
+
+            return img.parentNode.href.match(/tumblr\.com\/image/g) ? 1 : false;
+
+        } else if (img.parentNode.nodeName === 'A' && img.parentNode.href.match(/(jpe?g|png|gif)$/g)) {
+
+            var linkSize = img.parentNode.href.match(matchSize)[0],
+                imgSize = img.src.match(matchSize)[0];
+
+            return parseInt(linkSize, 10) > parseInt(imgSize, 10) ? 2 : false;
+
+        }
+
+        return false;
+
+    }
 
     // Get tumblr image ID
     function getImageId(imageSrc) {
@@ -42,6 +60,29 @@
 
     }
 
+    // When hovering over download button
+    function mouseOver() {
+
+        this.parentNode.classList.add('__highlight');
+
+        // If the image is in a photoset row, reveal the row to show the whole image
+        if (this.parentNode.parentNode.classList.contains('photoset_row')) {
+            this.parentNode.parentNode.classList.add('__show_photoset');
+        }
+
+    }
+
+    // When not hovering over download button
+    function mouseOut() {
+
+        this.parentNode.classList.remove('__highlight');
+
+        if (this.parentNode.parentNode.classList.contains('photoset_row')) {
+            this.parentNode.parentNode.classList.remove('__show_photoset');
+        }
+
+    }
+
     // Add download buttons to image posts
     function addButtons(downloadedImages) {
 
@@ -54,46 +95,37 @@
             el.classList.add('__ignore');
 
                 // Create the download button
-            var save = document.createElement('div'),
-                // If the image is inside a link, then it means we can get a HD version
-                hd = el.parentNode.classList.contains('high_res_link'),
-                // Regular expression to match the size of the image
-                matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g'),
-                // Another type of HD image link
-                softHd = el.parentNode.nodeName === 'A' && el.parentNode.href.match(matchSize) !== null ? true : false,
-                // See if the soft HD image is bigger than the one displayed on the page
-                softHdSize = softHd ? parseInt(el.src.match(matchSize)[0], 10) < parseInt(el.parentNode.href.match(matchSize)[0], 10) : false;
+            var save = document.createElement('span'),
+                // Check if the image has a HD version
+                hd = isHd(el);
 
-            save.innerHTML = 'Download' + (hd || softHdSize ? ' <strong>HD</strong>' : '');
+            save.innerHTML = 'Download' + (hd ? ' <strong>HD</strong>' : '');
             save.classList.add('__download');
 
             // If the image has already been downloaded
             if (downloadedImages.indexOf(getImageId(el.src)) !== -1) {
-
-                save.innerHTML = '&#10003; ' + save.innerHTML;
-                save.title = 'You\'ve already downloaded this image before.';
                 el.classList.add('__downloaded');
-
             }
 
             // Download the image on click
             save.onclick = function () {
 
-                if (el.parentNode.nodeName === 'A') {
+                    // Create the download link
+                var link = document.createElement('a'),
+                    // Create the click event
+                    event = document.createEvent('Event'),
+                    // Original event of the parent tag
+                    originalEvent = el.parentNode.onclick;
 
-                    var originalEvent = el.parentNode.onclick;
+                // Suppress the click on the link
+                el.parentNode.onclick = function () {
+                    return false;
+                };
 
-                    // Suppress the click on the link
-                    el.parentNode.onclick = function () {
-                        return false;
-                    };
-
-                    // Restore the click event
-                    setTimeout(function () {
-                        el.parentNode.onclick = originalEvent;
-                    }, 100);
-
-                }
+                // Restore the click event
+                setTimeout(function () {
+                    el.parentNode.onclick = originalEvent;
+                }, 100);
 
                 // If the image has already been downloaded and confirmation is enabled
                 if (el.classList.contains('__downloaded') && confirmDownload) {
@@ -103,24 +135,20 @@
                     }
                 }
 
-                    // Create the download link
-                var link = document.createElement('a'),
-                    // Create the click event
-                    event = document.createEvent('Event');
-
                 // If a HD version is available, then replace the download URL with the one for high resolution image
-                link.href = hd ? el.src.replace(matchSize, '1280') : el.src;
-
-                // If another type of HD version is available, prefer that
-                link.href = softHd ? el.parentNode.href : link.href;
+                if (hd && hd === 1) {
+                    link.href = el.src.replace(matchSize, '1280');
+                } else if (hd && hd === 2) {
+                    link.href = el.parentNode.href;
+                } else {
+                    link.href = el.src;
+                }
 
                 // Extract the image file name from the link
                 link.download = link.href.match(/tumblr_\w+\.(jpe?g|png|gif)$/g);
 
-                // Configure the click event
+                // Configure & tirgger the click event
                 event.initEvent('click', true, true);
-
-                // Trigger the click event on the link
                 link.dispatchEvent(event);
 
                 // Free some memory or something
@@ -132,55 +160,12 @@
             };
 
             // Highlight the image when hovering over download link
-            save.onmouseover = function () {
+            save.onmouseover = mouseOver;
+            save.onmouseout = mouseOut;
 
-                if (hd) {
-                    this.parentNode.classList.add('__highlight');
-                } else {
-
-                    this.previousSibling.classList.add('__highlight');
-
-                    // If the image is in a photoset row, reveal the row to show the whole image
-                    if (this.parentNode.parentNode.classList.contains('photoset_row')) {
-                        this.parentNode.parentNode.classList.add('__show_photoset');
-                    }
-
-                }
-
-            };
-
-            // Remove the highlight when not hovering
-            save.onmouseout = function () {
-
-                if (hd) {
-                    this.parentNode.classList.remove('__highlight');
-                } else {
-
-                    this.previousSibling.classList.remove('__highlight');
-
-                    if (this.parentNode.parentNode.classList.contains('photoset_row')) {
-                        this.parentNode.parentNode.classList.remove('__show_photoset');
-                    }
-
-                }
-
-            };
-
-            // Add a special class to the parent of the download button
             // Insert the download button
-            if (hd) {
-
-                // If HD image, go up another tag to avoid inserting the button into an anchor tag
-                var parent = el.parentNode.parentNode;
-                parent.classList.add('__download_parent');
-                parent.insertBefore(save, parent.lastChild);
-
-            } else {
-
-                el.parentNode.classList.add('__download_parent');
-                el.parentNode.insertBefore(save, el.nextSibling);
-
-            }
+            el.parentNode.classList.add('__download_parent');
+            el.parentNode.insertBefore(save, el.nextSibling);
 
         });
 
@@ -189,9 +174,13 @@
     // Get array of downloaded images before placing the buttons
     function addDownloadedButtons() {
 
-        storage.get({images: []}, function (object) {
+        storage.get({confirm: false}, function (object) {
 
-            addButtons(object.images);
+            confirmDownload = object.confirm;
+
+            storage.get({images: []}, function (object) {
+                addButtons(object.images);
+            });
 
         });
 
@@ -217,19 +206,6 @@
 
     }
 
-    // Add/remove the tick from the download button
-    function tick(el, action) {
-
-        var downloadButton = el.parentNode.querySelector('.__download') || el.parentNode.parentNode.querySelector('.__download');
-
-        if (action === 'add') {
-            downloadButton.innerHTML = '&#10003; ' + downloadButton.innerHTML;
-        } else if (action === 'remove') {
-            downloadButton.innerHTML = downloadButton.innerHTML.substr(2);
-        }
-
-    }
-
     // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
     chrome.storage.onChanged.addListener(function (changes) {
 
@@ -247,10 +223,7 @@
         // If the changes is empty, then the array has been cleared, so remove all ticks
         if (!changes.images.newValue) {
             Array.prototype.slice.call(document.querySelectorAll('.__downloaded')).forEach(function (el) {
-
-                tick(el, 'remove');
                 el.classList.remove('__downloaded');
-
             });
             return;
         }
@@ -261,7 +234,6 @@
         if (changedImage) {
 
             // Add the tick and downloaded class to the image
-            tick(changedImage, 'add');
             changedImage.classList.add('__downloaded');
 
         }

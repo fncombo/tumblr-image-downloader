@@ -8,16 +8,26 @@
     position: relative !important;
 }
 
+a.__download_parent {
+    display: inline-block;
+    margin-bottom: -5px !important;
+}
+
+a.__download_parent img {
+    margin-bottom: 0 !important;
+}
+
 .__download_parent:hover .__download {
     opacity: 1;
 }
 
-.__highlight {
-    box-shadow: 0 0 0 1px #f00;
+.__highlight img {
+    outline: 1px solid #f00;
 }
 
 .__download {
     background: #2c4762;
+    display: inline-block;
     padding: 0.3em 0.6em;
     position: absolute;
     top: 0;
@@ -29,4 +39,8 @@
 
 .__download:hover {
     background: #1f354c;
+}
+
+.__downloaded ~ .__download:before {
+    content: '\2713\00A0';
 }
