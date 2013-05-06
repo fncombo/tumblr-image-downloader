@@ -5,6 +5,11 @@
         // Use Chrome's local storage
     var storage = chrome.storage.local;
 
+    // Send a message to the background page
+    function msg(action) {
+        chrome.runtime.sendMessage({action: action});
+    }
+
     // Clear list of downloaded images from options
     document.querySelector('#clear').onclick = function () {
 
@@ -17,6 +22,8 @@
         storage.remove('images');
 
         alert('List of downloaded images has been cleared successfully.');
+
+        msg(['Cleared Storage', 'Cleared Images']);
 
     };
 
@@ -37,6 +44,8 @@
         var newSetting = this.innerText === 'Enable' ? true : false;
         this.innerText = newSetting ? 'Disable' : 'Enable';
         storage.set({confirm: newSetting});
+
+        msg(['Download Confirmation', newSetting ? 'Enabled' : 'Disabled']);
 
     };
 

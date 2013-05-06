@@ -14,6 +14,11 @@
         // Regular expression to match the size of the image
         matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g');
 
+    // Send a message to the background page
+    function msg(action) {
+        chrome.runtime.sendMessage({action: action});
+    }
+
     // Check if a HD version of the image is available
     function isHd(img) {
 
@@ -157,6 +162,8 @@
                 // Remember that this image has been downloaded
                 rememberImage(getImageId(el.src));
 
+                msg(['Downloaded Image', hd ? 'HD' : 'SD']);
+
             };
 
             // Highlight the image when hovering over download link
@@ -184,6 +191,8 @@
 
         });
 
+        msg(['Added Download Buttons', 'Added']);
+
     }
 
     // Add buttons to initially loaded images
@@ -203,6 +212,12 @@
             }
 
         };
+
+        msg(['Infinite Scroll', 'Enabled']);
+
+    } else {
+
+        msg(['Infinite Scroll', 'Disabled']);
 
     }
 
