@@ -96,6 +96,11 @@
         // Get each image post
         Array.prototype.slice.call(document.querySelectorAll('.post.photo .post_content img:not(.__ignore)')).forEach(function (el) {
 
+            // Skip images that are not part of the actual post
+            if (el.parentNode.parentNode.classList.contains('caption')) {
+                return;
+            }
+
             // Add a class to the image so we don't add a button to it again
             el.classList.add('__ignore');
 
