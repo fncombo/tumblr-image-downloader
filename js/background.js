@@ -62,31 +62,6 @@ chrome.runtime.onMessage.addListener(function (request) {
 
     'use strict';
 
-    var action = request.action[0],
-        label = request.action[1];
-
-    switch (action) {
-
-    case 'Downloaded Image':
-        _gaq.push(['_trackEvent', action, label]);
-        break;
-
-    case 'Added Download Buttons':
-        _gaq.push(['_trackEvent', action, label]);
-        break;
-
-    case 'Infinite Scroll':
-        _gaq.push(['_trackEvent', action, label]);
-        break;
-
-    case 'Cleared Storage':
-        _gaq.push(['_trackEvent', action, label]);
-        break;
-
-    case 'Download Confirmation':
-        _gaq.push(['_trackEvent', action, label]);
-        break;
-
-    }
+    _gaq.push(['_trackEvent', request.action[0], request.action[1]]);
 
 });
