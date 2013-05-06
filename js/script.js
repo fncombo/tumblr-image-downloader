@@ -24,7 +24,7 @@
 
         if (img.parentNode.classList.contains('high_res_link')) {
 
-            return img.parentNode.href.match(/tumblr\.com\/image/g) ? 1 : false;
+            return img.parentNode.href.match(/\/image\/\d+/g) ? 1 : false;
 
         } else if (img.parentNode.nodeName === 'A' && img.parentNode.href.match(/(jpe?g|png|gif)$/g)) {
 
