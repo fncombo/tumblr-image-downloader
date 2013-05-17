@@ -41,7 +41,8 @@
 
     // Get tumblr image ID
     function getImageId(imageSrc) {
-        return imageSrc.match(/tumblr_(\w+)(?=_\d+\.{1}(jpe?g|png|gif)$)/)[1];
+        var imageId = imageSrc.match(/tumblr_(\w+)(?=_\d+\.{1}(jpe?g|png|gif)$)/);
+        return imageId !== null ? imageId[1] : false;
     }
 
     // Update local storage
@@ -107,13 +108,20 @@
                 // Create the download button
             var save = document.createElement('span'),
                 // Check if the image has a HD version
-                hd = isHd(el);
+                hd = isHd(el),
+                // ID of the image
+                imageId = getImageId(el.src);
+
+            // Skip the image if an ID for it couldn't be matched
+            if (!imageId) {
+                return;
+            }
 
             save.innerHTML = 'Download' + (hd ? ' <strong>HD</strong>' : '');
             save.classList.add('__download');
 
             // If the image has already been downloaded
-            if (downloadedImages.indexOf(getImageId(el.src)) !== -1) {
+            if (downloadedImages.indexOf(imageId) !== -1) {
                 el.classList.add('__downloaded');
             }
 
@@ -165,7 +173,7 @@
                 window.URL.revokeObjectURL(link.href);
 
                 // Remember that this image has been downloaded
-                rememberImage(getImageId(el.src));
+                rememberImage(imageId);
 
                 msg(['Downloaded Image', hd ? 'HD' : 'SD']);
 
