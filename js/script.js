@@ -42,7 +42,13 @@
     // Get tumblr image ID
     function getImageId(imageSrc) {
         var imageId = imageSrc.match(/tumblr_(\w+)(?=_\d+\.{1}(jpe?g|png|gif)$)/);
-        return imageId !== null ? imageId[1] : false;
+        if (imageId !== null && imageId.length === 3) {
+            return imageId[1];
+        } else {
+            console.warn('Failed to find image ID in:', imageSrc);
+            msg(['Failed to find image ID', imageSrc]);
+            return false;
+        }
     }
 
     // Update local storage
