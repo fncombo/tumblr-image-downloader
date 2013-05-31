@@ -101,7 +101,7 @@
         downloadedImages = downloadedImages || [];
 
         // Get each image post
-        Array.prototype.slice.call(document.querySelectorAll('.post.photo .post_content img:not(.__ignore)')).forEach(function (el) {
+        Array.prototype.slice.call(document.querySelectorAll('.post.is_photo .post_content img:not(.__ignore), .post.is_photoset .post_content img:not(.__ignore)')).forEach(function (el) {
 
             // Skip images that are not part of the actual post
             if (el.parentNode.parentNode.classList.contains('caption')) {

@@ -1,6 +1,6 @@
 {
   "name": "Tumblr Image Downloader",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "Download images on Tumblr /tagged/ pages with a single classy click.",
   "permissions": [
     "storage",
