@@ -29,7 +29,11 @@
 
         if (img.parentNode.classList.contains('high_res_link')) {
 
-            return img.parentNode.href.match(/\/image\/\d+/g) ? 1 : false;
+            if (img.parentNode.href.match(/\/image\/\d+/g)) {
+                return 1;
+            } else if (img.parentNode.href.match(/[^\/]+\.{1}(jpe?g|png|gif)$/g)) {
+                return 3;
+            }
 
         } else if (img.parentNode.nodeName === 'A' && img.parentNode.href.match(/(jpe?g|png|gif)$/g)) {
 
@@ -132,6 +136,10 @@
             }
 
             save.innerHTML = 'Download' + (hd ? ' <strong>HD</strong>' : '');
+            if (hd === 3) {
+                save.innerHTML += '&#10138;';
+                save.title = 'High-res image is from an external site.';
+            }
             save.classList.add('__download');
 
             // If the image has already been downloaded
@@ -159,16 +167,25 @@
                 }
 
                 // If a HD version is available, then replace the download URL with the one for high resolution image
-                if (hd && hd === 1) {
+                switch (hd) {
+                case 1:
                     link.href = el.src.replace(matchSize, '1280');
-                } else if (hd && hd === 2) {
+                    break;
+                case 2:
+                case 3:
                     link.href = el.parentNode.href;
-                } else {
+                    break;
+                default:
                     link.href = el.src;
+                    break;
                 }
 
                 // Extract the image file name from the link
-                link.download = link.href.match(/tumblr_\w+\.(jpe?g|png|gif)$/g);
+                if (hd === 3) {
+                    link.download = link.href.match(/[^\/]+\.{1}(jpe?g|png|gif)$/g);
+                } else {
+                    link.download = link.href.match(/tumblr_\w+\.(jpe?g|png|gif)$/g);
+                }
 
                 // Configure & tirgger the click event
                 event.initEvent('click', true, true);
