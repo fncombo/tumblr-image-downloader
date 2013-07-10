@@ -37,6 +37,11 @@ _gaq.push(['_trackPageview']);
     // Show an update notification if the user's stored version is smaller than the updated one
     storage.get({version: 0}, function (object) {
 
+        // Don't show an update notification after first install
+        if (!object.version) {
+            return;
+        }
+
         var newVersion = getVersion(chrome.app.getDetails().version),
             oldVersion = getVersion(object.version);
 
