@@ -2,12 +2,14 @@
 
 (function () {
 
-        // Use Chrome's local storage
-    var storage = chrome.storage.local,
-        // Whether or not to confirm downloading again
-        confirmDownload,
-        // Regular expression to match the size of the image
-        matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g');
+    // Use Chrome's local storage
+    var storage = chrome.storage.local;
+
+    // Whether or not to confirm downloading again
+    var confirmDownload;
+
+    // Regular expression to match the size of the image
+    var matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g');
 
     // Send a message to the background page
     function msg(action) {
@@ -23,8 +25,8 @@
 
         } else if (img.parentNode.nodeName === 'A' && img.parentNode.href.match(/(jpe?g|png|gif)$/g)) {
 
-            var linkSize = img.parentNode.href.match(matchSize)[0],
-                imgSize = img.src.match(matchSize)[0];
+            var linkSize = img.parentNode.href.match(matchSize)[0];
+            var imgSize = img.src.match(matchSize)[0];
 
             return parseInt(linkSize, 10) > parseInt(imgSize, 10) ? 2 : false;
 
@@ -106,12 +108,14 @@
             // Add a class to the image so we don't add a button to it again
             el.classList.add('__ignore');
 
-                // Create the download button
-            var save = document.createElement('span'),
-                // Check if the image has a HD version
-                hd = isHd(el),
-                // ID of the image
-                imageId = getImageId(el.src);
+            // Create the download button
+            var save = document.createElement('span');
+
+            // Check if the image has a HD version
+            var hd = isHd(el);
+
+            // ID of the image
+            var imageId = getImageId(el.src);
 
             // Skip the image if an ID for it couldn't be matched
             if (!imageId) {
@@ -132,10 +136,11 @@
                 e.stopPropagation();
                 e.preventDefault();
 
-                    // Create the download link
-                var link = document.createElement('a'),
-                    // Create the click event
-                    event = document.createEvent('Event');
+                // Create the download link
+                var link = document.createElement('a');
+
+                // Create the click event
+                var event = document.createEvent('Event');
 
                 // If the image has already been downloaded and confirmation is enabled
                 if (el.classList.contains('__downloaded') && confirmDownload) {
