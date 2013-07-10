@@ -1,11 +1,6 @@
-/*!
- * Add download links to images on tumblr.
- * @author Eugene
-*/
+'use strict';
 
 (function () {
-
-    'use strict';
 
         // Use Chrome's local storage
     var storage = chrome.storage.local,

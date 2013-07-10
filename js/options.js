@@ -1,6 +1,6 @@
-(function () {
+'use strict';
 
-    'use strict';
+(function () {
 
         // Use Chrome's local storage
     var storage = chrome.storage.local;

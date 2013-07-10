@@ -1,7 +1,4 @@
-/*!
- * Background script.
- * @author Eugene
-*/
+'use strict';
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-40682860-1']);
@@ -9,8 +6,6 @@ _gaq.push(['_trackPageview']);
 
 // Analytics code
 (function () {
-
-    'use strict';
 
     var ga = document.createElement('script');
     ga.type = 'text/javascript';
@@ -22,8 +17,6 @@ _gaq.push(['_trackPageview']);
 }());
 
 (function () {
-
-    'use strict';
 
         // Use Chrome's local storage
     var storage = chrome.storage.local;
@@ -64,8 +57,6 @@ _gaq.push(['_trackPageview']);
 
 // Track an event with Analytics
 chrome.runtime.onMessage.addListener(function (request) {
-
-    'use strict';
 
     _gaq.push(['_trackEvent', request.action[0], request.action[1]]);
 
