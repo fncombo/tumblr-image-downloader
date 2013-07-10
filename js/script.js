@@ -127,24 +127,15 @@
             }
 
             // Download the image on click
-            save.onclick = function () {
+            save.onclick = function (e) {
+
+                e.stopPropagation();
+                e.preventDefault();
 
                     // Create the download link
                 var link = document.createElement('a'),
                     // Create the click event
-                    event = document.createEvent('Event'),
-                    // Original event of the parent tag
-                    originalEvent = el.parentNode.onclick;
-
-                // Suppress the click on the link
-                el.parentNode.onclick = function () {
-                    return false;
-                };
-
-                // Restore the click event
-                setTimeout(function () {
-                    el.parentNode.onclick = originalEvent;
-                }, 100);
+                    event = document.createEvent('Event');
 
                 // If the image has already been downloaded and confirmation is enabled
                 if (el.classList.contains('__downloaded') && confirmDownload) {
