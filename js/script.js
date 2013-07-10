@@ -4,12 +4,20 @@
 
     // Use Chrome's local storage
     var storage = chrome.storage.local;
-
     // Whether or not to confirm downloading again
     var confirmDownload;
-
     // Regular expression to match the size of the image
     var matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g');
+
+    // Get a simgle element
+    function $(selector) {
+        return document.querySelector(selector);
+    }
+
+    // Get all elements
+    function $$(selector) {
+        return Array.prototype.slice.call(document.querySelectorAll(selector));
+    }
 
     // Send a message to the background page
     function msg(action) {
@@ -38,14 +46,17 @@
 
     // Get tumblr image ID
     function getImageId(imageSrc) {
+
         var imageId = imageSrc.match(/tumblr_(\w+)(?=_\d+\.{1}(jpe?g|png|gif)$)/);
+
         if (imageId !== null && imageId.length === 3) {
+
             return imageId[1];
-        } else {
-            console.warn('Failed to find image ID in:', imageSrc);
-            msg(['Failed to find image ID', imageSrc]);
-            return false;
+
         }
+
+        return false;
+
     }
 
     // Update local storage
@@ -98,7 +109,7 @@
         downloadedImages = downloadedImages || [];
 
         // Get each image post
-        Array.prototype.slice.call(document.querySelectorAll('.post.is_photo .post_content img:not(.__ignore), .post.is_photoset .post_content img:not(.__ignore)')).forEach(function (el) {
+        $$('.post.is_photo .post_content img:not(.__ignore), .post.is_photoset .post_content img:not(.__ignore)').forEach(function (el) {
 
             // Skip images that are not part of the actual post
             if (el.parentNode.parentNode.classList.contains('caption')) {
@@ -110,10 +121,8 @@
 
             // Create the download button
             var save = document.createElement('span');
-
             // Check if the image has a HD version
             var hd = isHd(el);
-
             // ID of the image
             var imageId = getImageId(el.src);
 
@@ -138,7 +147,6 @@
 
                 // Create the download link
                 var link = document.createElement('a');
-
                 // Create the click event
                 var event = document.createEvent('Event');
 
@@ -223,12 +231,6 @@
 
         };
 
-        msg(['Infinite Scroll', 'Enabled']);
-
-    } else {
-
-        msg(['Infinite Scroll', 'Disabled']);
-
     }
 
     // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
@@ -247,20 +249,17 @@
 
         // If the changes is empty, then the array has been cleared, so remove all ticks
         if (!changes.images.newValue) {
-            Array.prototype.slice.call(document.querySelectorAll('.__downloaded')).forEach(function (el) {
+            $$('.__downloaded').forEach(function (el) {
                 el.classList.remove('__downloaded');
             });
             return;
         }
 
-            // Get the element of the image with the last ID added to the array
-        var changedImage = document.querySelector('img[src*="' + changes.images.newValue.pop() + '"]');
-
+        // Get the element of the image with the last ID added to the array
+        var changedImage = $('img[src*="' + changes.images.newValue.pop() + '"]');
         if (changedImage) {
-
             // Add the tick and downloaded class to the image
             changedImage.classList.add('__downloaded');
-
         }
 
     });

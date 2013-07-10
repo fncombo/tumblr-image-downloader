@@ -2,7 +2,7 @@
 
 (function () {
 
-        // Use Chrome's local storage
+    // Use Chrome's local storage
     var storage = chrome.storage.local;
 
     // Send a message to the background page

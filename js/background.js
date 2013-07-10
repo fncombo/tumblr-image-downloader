@@ -18,7 +18,7 @@ _gaq.push(['_trackPageview']);
 
 (function () {
 
-        // Use Chrome's local storage
+    // Use Chrome's local storage
     var storage = chrome.storage.local;
 
     // Clean up version numbers
@@ -35,8 +35,8 @@ _gaq.push(['_trackPageview']);
             return;
         }
 
-        var newVersion = getVersion(chrome.app.getDetails().version),
-            oldVersion = getVersion(object.version);
+        var newVersion = getVersion(chrome.app.getDetails().version);
+        var oldVersion = getVersion(object.version);
 
         if (newVersion > oldVersion) {
 
