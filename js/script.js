@@ -236,13 +236,13 @@
     // If #pagination is hidden, check if new posts have been added with each scroll
     if (document.getElementById('pagination').classList.contains('hidden')) {
 
-        var previousHeight = document.height;
+        var previousHeight = document.documentElement.scrollHeight;
 
         document.onscroll = function () {
 
             // If the document increased in height while scrolling, assume new posts have been loaded
-            if (previousHeight < document.height) {
-                previousHeight = document.height;
+            if (previousHeight < document.documentElement.scrollHeight) {
+                previousHeight = document.documentElement.scrollHeight;
                 addDownloadedButtons();
             }
 
