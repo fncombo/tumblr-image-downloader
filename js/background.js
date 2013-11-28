@@ -43,8 +43,24 @@ _gaq.push(['_trackPageview']);
             // Update the user's version so we don't show the notification again
             storage.set({version: newVersion});
 
-            // Create the notification from the update.html file
-            var notification = window.webkitNotifications.createHTMLNotification('../html/update.html');
+            // Try to create a rich notification
+            if ('notifications' in chrome) {
+
+                var notification = chrome.notifications.create('', {
+                        type: 'basic',
+                        title: 'Tumblr Image Downloader Update',
+                        message: 'Fixed a bug to do with endless scrolling.',
+                        iconUrl: '../img/icon128.png'
+                    }, function () {
+                        // It really wants a callback
+                    });
+
+            } else {
+
+                // Create the notification from the update.html file
+                var notification = window.webkitNotifications.createHTMLNotification('../html/update.html');
+
+            }
 
             // Show the notification
             notification.show();
