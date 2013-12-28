@@ -12,7 +12,9 @@
         "http://*.tumblr.com/tagged/*",
         "http://*.tumblr.com/blog/*",
         "http://*.tumblr.com/dashboard",
-        "http://*.tumblr.com/likes"
+        "http://*.tumblr.com/dashboard/*",
+        "http://*.tumblr.com/likes",
+        "http://*.tumblr.com/likes/*"
         ],
       "js": ["js/script.js"],
       "css": ["css/style.css"],
