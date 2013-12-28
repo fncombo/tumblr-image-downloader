@@ -23,22 +23,12 @@ _gaq.push(['_trackPageview']);
     // Use Chrome's local storage
     var storage = chrome.storage.local;
 
-    // Clean up version numbers
-    function getVersion(versionNumber) {
-        versionNumber = versionNumber.toString();
-        return parseFloat(versionNumber.match(/(\d\.){2}/g) !== null ? versionNumber.replace(/\.(?=\d$)/g, '') : versionNumber);
-    }
+    // Show an update notification if the user's stored version is not the same as the updated one
+    storage.get({version: '0'}, function (object) {
 
-    // Show an update notification if the user's stored version is smaller than the updated one
-    storage.get({version: 0}, function (object) {
 
-        // Don't show an update notification after first install
-        if (!object.version) {
-            return;
-        }
-
-        var newVersion = getVersion(chrome.app.getDetails().version);
-        var oldVersion = getVersion(object.version);
+        var newVersion = chrome.app.getDetails().version;
+        var oldVersion = object.version;
 
         // Don't display if versions match
         if (newVersion === oldVersion) {
@@ -52,7 +42,7 @@ _gaq.push(['_trackPageview']);
         var notificationID;
 
         // Create a notification
-        var notification = chrome.notifications.create('', {
+        chrome.notifications.create('', {
             type: 'basic',
             title: 'Tumblr Image Downloader Update',
             message: '• Now works on your dashboard, likes page, and search pages!\n• Improved visual styling.\n• Improved options page.',
@@ -78,9 +68,6 @@ _gaq.push(['_trackPageview']);
                 }
             }
         });
-
-        // Show the notification
-        notification.show();
 
     });
 
