@@ -40,34 +40,47 @@ _gaq.push(['_trackPageview']);
         var newVersion = getVersion(chrome.app.getDetails().version);
         var oldVersion = getVersion(object.version);
 
-        if (newVersion > oldVersion) {
-
-            // Update the user's version so we don't show the notification again
-            storage.set({version: newVersion});
-
-            // Try to create a rich notification
-            if ('notifications' in chrome) {
-
-                var notification = chrome.notifications.create('', {
-                        type: 'basic',
-                        title: 'Tumblr Image Downloader Update',
-                        message: 'Fixed a bug to do with endless scrolling.',
-                        iconUrl: '../img/icon128.png'
-                    }, function () {
-                        // It really wants a callback
-                    });
-
-            } else {
-
-                // Create the notification from the update.html file
-                var notification = window.webkitNotifications.createHTMLNotification('../html/update.html');
-
-            }
-
-            // Show the notification
-            notification.show();
-
+        // Don't display if versions match
+        if (newVersion === oldVersion) {
+            return;
         }
+
+        // Update the user's version so we don't show the notification again
+        storage.set({version: newVersion});
+
+        // Notification's ID
+        var notificationID;
+
+        // Create a notification
+        var notification = chrome.notifications.create('', {
+            type: 'basic',
+            title: 'Tumblr Image Downloader Update',
+            message: '• Now works on your dashboard, likes page, and search pages!\n• Improved visual styling.\n• Improved options page.',
+            iconUrl: '../img/icon128.png',
+            buttons: [
+                {title: 'Click here to rate this extension if you find it useful :)'},
+                {title: 'Please report any bugs or file feature requests here'}
+            ]
+        }, function (id) {
+            notificationID = id;
+        });
+
+        // Respond to buton clicks
+        chrome.notifications.onButtonClicked.addListener(function (notificationID, buttonIndex) {
+            if (notificationID === notificationID) {
+                switch (buttonIndex) {
+                case 0:
+                    window.open('https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop/reviews');
+                    break;
+                case 1:
+                    window.open('https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug');
+                    break;
+                }
+            }
+        });
+
+        // Show the notification
+        notification.show();
 
     });
 
