@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals chrome */
+
 (function () {
 
     // Use Chrome's local storage

@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals chrome */
+
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-40682860-1']);
 _gaq.push(['_trackPageview']);
