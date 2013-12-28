@@ -21,6 +21,8 @@
 
         storage.remove('images');
 
+        document.querySelector('#image-count').innerText = '0';
+
         alert('List of downloaded images has been cleared successfully.');
 
         msg(['Cleared Storage', 'Cleared Images']);
@@ -32,8 +34,10 @@
 
         if (object.confirm) {
             document.querySelector('#confirm').innerText = 'Disable';
+            document.querySelector('#current-status').innerText = 'enabled';
         } else {
             document.querySelector('#confirm').innerText = 'Enable';
+            document.querySelector('#current-status').innerText = 'disabled';
         }
 
     });
@@ -43,10 +47,18 @@
 
         var newSetting = this.innerText === 'Enable' ? true : false;
         this.innerText = newSetting ? 'Disable' : 'Enable';
+        document.querySelector('#current-status').innerText = newSetting ? 'enabled' : 'disabled';
         storage.set({confirm: newSetting});
 
         msg(['Download Confirmation', newSetting ? 'Enabled' : 'Disabled']);
 
     };
+
+    // Get number of remembered images
+    storage.get({images: []}, function (object) {
+
+        document.querySelector('#image-count').innerText = object.images.length;
+
+    });
 
 }());

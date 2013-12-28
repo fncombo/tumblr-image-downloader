@@ -4,18 +4,66 @@
 <title>Options | Tumblr Image Downloader</title>
 
 <style>
-    * {box-sizing:border-box; margin:0; padding:0;}
-    html, body {background:#2c4762; height:100%; text-align:center; font-size:16px; font-family:Arial, sans-serif; color:hsl(0, 0%, 20%);}
-    body:before {content:''; display:inline-block; height:100%; vertical-align:middle; margin-right:-0.25rem;}
-    main {background:#fff; max-width:800px; display:inline-block; vertical-align:middle; padding:1em; border-radius:6px; box-shadow:0 1px 5px rgba(0, 0, 0, 0.5);}
-    hr {border:none; border-top:1px dashed hsl(0, 0%, 70%); margin:2rem 0;}
-    h1 {margin:1.5rem 0;}
-    h2 {margin:1rem 0;}
-    p {margin:0.5rem 0 0;}
-    a {color:hsl(0, 0%, 20%);}
-    a:hover {text-decoration:none;}
-    button {background:hsl(0, 0%, 70%); border:none; border-radius:2px; margin:0.5rem; padding:0.5rem 0.75rem; font-weight:bolder; color:#fff;}
-    button:hover {background:hsl(0, 0%, 60%);}
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    html, body {
+        background: #2c4762;
+        height: 100%;
+        text-align: center;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+        color: hsl(0, 0%, 20%);
+    }
+    body:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25rem;
+    }
+    main {
+        background: #fff;
+        max-width: 800px;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 1em;
+        border-radius: 6px;
+    }
+    hr {
+        border: none;
+        border-top: 1px dashed hsl(0, 0%, 70%);
+        margin: 2rem 0;
+    }
+    h1 {
+        margin: 1.5rem 0;
+    }
+    h2 {
+        margin: 1rem 0;
+    }
+    p {
+        margin: 0.5rem 0 0;
+    }
+    a {
+        color: hsl(0, 0%, 20%);
+    }
+    a:hover {
+        text-decoration: none;
+    }
+    button {
+        background: hsl(0, 0%, 70%);
+        border: none;
+        border-radius: 2px;
+        margin: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-weight: bolder;
+        color: #fff;
+    }
+    button: hover {
+        background: hsl(0, 0%, 60%);
+    }
 </style>
 
 <main>
@@ -23,18 +71,22 @@
     <h1>Tumblr Image Downloader</h1>
     <p>Created with love by <a href="http://twitter.com/fncombo" target="_blank">fncombo</a>.</p>
     <p>View project source on <a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank">GitHub</a>.</p>
-    <p>View in <a href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank">Chrome Web Store</a>.</p>
+    <p>View in <a href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank">Chrome Web Store</a> and don't forget to leave a review if you find this useful :)</p>
+    <br>
+    <p><strong>Please report any bugs or file feature requests <a href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop?hl=en&gl=GB#bug" target="_blank">here</a>.</strong></p>
 
     <hr>
 
     <h2>Clear list of downloaded images</h2>
     <p>This will permanently forget all the images you have downloaded so far.</p>
+    <p>Remembered images: <strong id="image-count">0</strong>.</p>
     <button id="clear">Clear</button>
 
     <hr>
 
     <h2>Confirm downloading again</h2>
     <p>Will bring up a confirmation dialog when downloading an already downloaded image.</p>
+    <p>Currently: <strong id="current-status">disabled</strong>.</p>
     <button id="confirm">Enable</button>
 
 </main>
