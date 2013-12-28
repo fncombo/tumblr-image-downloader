@@ -8,7 +8,12 @@
   ],
   "content_scripts": [
     {
-      "matches": ["http://*.tumblr.com/tagged/*"],
+      "matches": [
+        "http://*.tumblr.com/tagged/*",
+        "http://*.tumblr.com/blog/*",
+        "http://*.tumblr.com/dashboard",
+        "http://*.tumblr.com/likes"
+        ],
       "js": ["js/script.js"],
       "css": ["css/style.css"],
       "run_at": "document_idle",
