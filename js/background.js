@@ -20,40 +20,47 @@ _gaq.push(['_trackPageview']);
 
 (function () {
 
-    // Use Chrome's local storage
-    var storage = chrome.storage.local;
-
-    // Show an update notification if the user's stored version is not the same as the updated one
-    storage.get({version: '0'}, function (object) {
-
-
-        var newVersion = chrome.app.getDetails().version;
-        var oldVersion = object.version;
-
-        // Don't display if versions match
-        if (newVersion === oldVersion) {
-            return;
-        }
-
-        // Update the user's version so we don't show the notification again
-        storage.set({version: newVersion});
+    // Show an update notification
+    function updateNotification() {
 
         // Notification's ID
         var notificationID;
 
-        // Create a notification
-        chrome.notifications.create('', {
-            type: 'basic',
-            title: 'Tumblr Image Downloader Update',
-            message: '• Now works on your dashboard, likes page, and search pages!\n• Improved visual styling.\n• Improved options page.',
-            iconUrl: '../img/icon128.png',
-            buttons: [
-                {title: 'Click here to rate this extension if you find it useful :)'},
-                {title: 'Please report any bugs or file feature requests here'}
-            ]
-        }, function (id) {
-            notificationID = id;
-        });
+        // Notification's message
+        var message;
+
+        // Get JSON with all update messages
+        var request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+
+                // Get the update messages
+                message = JSON.parse(request.responseText);
+                message = message.updates;
+                message = message[message.length - 1];
+
+                message = '• ' + message.join('\n• ');
+
+                // Create a notification
+                chrome.notifications.create('', {
+                    type: 'basic',
+                    title: 'Tumblr Image Downloader Update',
+                    message: message,
+                    iconUrl: '../img/icon128.png',
+                    buttons: [
+                        {title: 'Rate this extension if you find it useful :)'},
+                        {title: 'Report bugs or request features'}
+                    ]
+                }, function (id) {
+                    notificationID = id;
+                });
+
+            }
+        };
+
+        request.open('GET', 'js/updates.json', true);
+        request.send();
 
         // Respond to buton clicks
         chrome.notifications.onButtonClicked.addListener(function (notificationID, buttonIndex) {
@@ -68,6 +75,22 @@ _gaq.push(['_trackPageview']);
                 }
             }
         });
+
+    }
+
+    // When the extension is first installed, updated, or when Chrome is updated
+    chrome.runtime.onInstalled.addListener(function (details) {
+
+        switch (details.reason) {
+        case 'install':
+            chrome.tabs.create({url: 'html/options.html'});
+            break;
+        case 'update':
+            updateNotification();
+            break;
+        case 'chrome_update':
+            break;
+        }
 
     });
 
