@@ -6,16 +6,16 @@
 <style>
     * {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
     }
     html, body {
         background: #2c4762;
         height: 100%;
         text-align: center;
         font-size: 16px;
-        font-family: Arial, sans-serif;
+        font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
         color: hsl(0, 0%, 20%);
+        margin: 0;
+        padding: 0;
     }
     body:before {
         content: '';
@@ -26,19 +26,21 @@
     }
     main {
         background: #fff;
-        max-width: 800px;
+        max-width: 700px;
         display: inline-block;
         vertical-align: middle;
-        padding: 1em;
+        padding: 2em;
         border-radius: 6px;
+        text-align: left;
     }
     hr {
         border: none;
-        border-top: 1px dashed hsl(0, 0%, 70%);
-        margin: 2rem 0;
+        border-top: 1px solid hsl(0, 0%, 75%);
+        margin: 1.5rem 0;
     }
     h1 {
-        margin: 1.5rem 0;
+        font-size: 1.5rem;
+        margin: 0 0 1.5rem 0;
     }
     h2 {
         margin: 1rem 0;
@@ -56,38 +58,46 @@
         background: hsl(0, 0%, 70%);
         border: none;
         border-radius: 2px;
-        margin: 0.5rem;
+        margin: 1rem 0;
         padding: 0.5rem 0.75rem;
         font-weight: bolder;
         color: #fff;
     }
-    button: hover {
+    button:hover {
         background: hsl(0, 0%, 60%);
+    }
+    footer {
+        font-size: 0.75rem;
     }
 </style>
 
 <main>
 
     <h1>Tumblr Image Downloader</h1>
-    <p>Created with love by <a href="http://twitter.com/fncombo" target="_blank">fncombo</a>.</p>
-    <p>View project source on <a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank">GitHub</a>.</p>
-    <p>View in <a href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank">Chrome Web Store</a> and don't forget to leave a review if you find this useful :)</p>
-    <br>
-    <p><strong>Please report any bugs or file feature requests <a href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop?hl=en&gl=GB#bug" target="_blank">here</a>.</strong></p>
+    <p>Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don't forget to <a href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop">rate it</a> on the Chrome Web Store.</p>
+    <ul>
+        <li>Created with love by <a href="http://twitter.com/fncombo" target="_blank">fncombo</a></li>
+        <li>View project source on <a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank">GitHub</a></li>
+    </ul>
+    <p>If you have any feature requests or find that something is not working, please report it <a href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug">here</a> before leaving a negative review.</p>
 
     <hr>
 
     <h2>Clear list of downloaded images</h2>
+    <p>Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a tick &#10003; next to the download button.</p>
     <p>This will permanently forget all the images you have downloaded so far.</p>
-    <p>Remembered images: <strong id="image-count">0</strong>.</p>
-    <button id="clear">Clear</button>
+    <button id="clear">Clear <strong id="image-count">0</strong> remembered images</button>
 
     <hr>
 
     <h2>Confirm downloading again</h2>
-    <p>Will bring up a confirmation dialog when downloading an already downloaded image.</p>
-    <p>Currently: <strong id="current-status">disabled</strong>.</p>
+    <p>Toggle whether to bring up a confirmation dialog when downloading an already downloaded image. This will affect the settings on any currently open pages.</p>
+    <p>Currently <strong id="current-status">disabled</strong></p>
     <button id="confirm">Enable</button>
+
+    <hr>
+
+    <footer>Please remember to respect the images' owners and respect their rules and usage guidelines :)</footer>
 
 </main>
 
