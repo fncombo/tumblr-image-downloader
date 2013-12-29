@@ -163,11 +163,7 @@ pip-log.txt
 .DS_Store
 
 # Misc extension stuff
-screenshot.png
-screenshot.psd
-tile440.png
-tile440.psd
-tile920.png
-tile920.psd
-tile1400.png
-tile1400.psd
+screenshot*.png
+screenshot*.psd
+tile*.png
+tile*.psd
