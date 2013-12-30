@@ -283,4 +283,7 @@
 
     });
 
+    // Add page action button
+    msg('show_page_action');
+
 }());

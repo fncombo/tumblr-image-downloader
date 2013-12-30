@@ -26,6 +26,13 @@
     "scripts": ["js/background.js"]
   },
   "options_page": "html/options.html",
+  "page_action": {
+    "default_icon": {
+      "19": "img/icon19.png",
+      "38": "img/icon38.png"
+    },
+    "default_title": "Tumblr Image Downloader Options"
+  },
   "icons": {
     "16": "img/icon16.png",
     "128": "img/icon128.png"

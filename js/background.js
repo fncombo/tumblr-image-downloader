@@ -96,9 +96,28 @@ _gaq.push(['_trackPageview']);
 
 }());
 
-// Track an event with Analytics
-chrome.runtime.onMessage.addListener(function (request) {
+// Listen to messages from other scripts
+chrome.runtime.onMessage.addListener(function (request, sender) {
 
-    _gaq.push(['_trackEvent', request.action[0], request.action[1]]);
+    switch (request.action) {
+    case 'show_page_action':
 
+        // Show page action button
+        chrome.pageAction.show(sender.tab.id);
+
+        break;
+
+    default:
+
+        // Track an event with Analytics
+        _gaq.push(['_trackEvent', request.action[0], request.action[1]]);
+
+        break;
+    }
+
+});
+
+// Clicking on page action button
+chrome.pageAction.onClicked.addListener(function () {
+    chrome.tabs.create({url: 'html/options.html'});
 });
