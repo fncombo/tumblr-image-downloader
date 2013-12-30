@@ -1,10 +1,12 @@
-{
-    "updates": [
-        [
-            "Now works on your dashboard, likes page, and search pages!",
-            "Improved visual styling.",
-            "Improved options page.",
-            "General fixes and improvements."
-        ]
+[
+    [
+        "Now works on your dashboard, likes page, and search pages!",
+        "Improved visual styling.",
+        "Improved options page.",
+        "General fixes and improvements."
+    ],
+    [
+        "A whole new set of icons.",
+        "Added a button to the access the options page from the address bar."
     ]
-}
+]
