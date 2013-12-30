@@ -47,7 +47,7 @@ _gaq.push(['_trackPageview']);
                     type: 'basic',
                     title: 'Tumblr Image Downloader Update',
                     message: message,
-                    iconUrl: '../img/icon128.png',
+                    iconUrl: '../img/icon80.png',
                     buttons: [
                         {title: 'Rate this extension if you find it useful :)'},
                         {title: 'Report bugs or request features'}
