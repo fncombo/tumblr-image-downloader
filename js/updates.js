@@ -1,6 +1,11 @@
 'use strict';
 
+/* globals chrome */
+
 (function () {
+
+    // Populate the version value
+    document.querySelector('#version').innerText = chrome.runtime.getManifest().version;
 
     // Get JSON with all update messages
     var request = new XMLHttpRequest();
