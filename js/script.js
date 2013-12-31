@@ -239,6 +239,9 @@
         // Get each image post
         $$('.post.post_micro.is_photo .post_thumbnail_container.has_imageurl:not(.__ignore)').forEach(function (el) {
 
+            // Add class so we don't add button again
+            el.classList.add('__ignore');
+
             var url = el.getAttribute('data-imageurl');
             var imageId = getImageId(url);
 
@@ -347,7 +350,8 @@
     addDownloadedButtons();
 
     // If #pagination is hidden, check if new posts have been added with each scroll
-    if (document.getElementById('pagination').classList.contains('hidden')) {
+    // Always applies on the archive pages
+    if (document.getElementById('pagination').classList.contains('hidden') || IS_ARCHIVE) {
 
         var previousHeight = document.documentElement.scrollHeight;
 
