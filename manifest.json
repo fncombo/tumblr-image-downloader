@@ -14,7 +14,9 @@
         "http://*.tumblr.com/dashboard",
         "http://*.tumblr.com/dashboard/*",
         "http://*.tumblr.com/likes",
-        "http://*.tumblr.com/likes/*"
+        "http://*.tumblr.com/likes/*",
+        "http://*.tumblr.com/archive",
+        "http://*.tumblr.com/archive/*"
         ],
       "js": ["js/script.js"],
       "css": ["css/style.css"],

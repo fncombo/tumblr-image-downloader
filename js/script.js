@@ -10,6 +10,8 @@
     var confirmDownload;
     // Regular expression to match the size of the image
     var matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g');
+    // Archive pages
+    var IS_ARCHIVE = !!window.location.pathname.match(/(archive)/i);
 
     // Get a simgle element
     function $(selector) {
@@ -106,6 +108,20 @@
         if (this.parentNode.parentNode.classList.contains('photoset_row')) {
             this.parentNode.parentNode.classList.remove('__show_photoset');
         }
+
+    }
+
+    // When hovering over download button in archive
+    function mouseOverArchive() {
+
+        this.parentNode.parentNode.parentNode.classList.add('__highlight_archive');
+
+    }
+
+    // When not hovering over download button in archive
+    function mouseOutArchive() {
+
+        this.parentNode.parentNode.parentNode.classList.remove('__highlight_archive');
 
     }
 
@@ -215,6 +231,97 @@
 
     }
 
+    // Add download buttons to image posts in the archive
+    function addArchiveButtons(downloadedImages) {
+
+        downloadedImages = downloadedImages || [];
+
+        // Get each image post
+        $$('.post.post_micro.is_photo .post_thumbnail_container.has_imageurl:not(.__ignore)').forEach(function (el) {
+
+            var url = el.getAttribute('data-imageurl');
+            var imageId = getImageId(url);
+
+            // Save button
+            var save = document.createElement('span');
+            save.innerText = 'Download';
+            save.classList.add('__download_archive');
+
+            // If the image has already been downloaded
+            if (downloadedImages.indexOf(imageId) !== -1) {
+                save.classList.add('__downloaded_archive');
+            }
+
+            // Download the image on click
+            save.onclick = function (e) {
+
+                e.stopPropagation();
+                e.preventDefault();
+
+                // Create the download link
+                var link = document.createElement('a');
+                // Create the click event
+                var event = document.createEvent('Event');
+
+                // If the image has already been downloaded and confirmation is enabled
+                if (save.classList.contains('__downloaded_archive') && confirmDownload) {
+                    var sure = confirm('You\'ve already downloaded this image before.\n\nAre you sure you want to download it again?');
+                    if (!sure) {
+                        return;
+                    }
+                }
+
+                // See if a HD image is available
+                var checkHdImage = new Image();
+                var hdAvailable = false;
+
+                var checkDone = function () {
+
+                    // Link to final download image
+                    link.href = hdAvailable ? checkHdImage.src : url;
+
+                    // File name
+                    link.download = link.href.match(/tumblr_\w+\.(jpe?g|png|gif)$/g);
+
+                    // Configure & tirgger the click event
+                    event.initEvent('click', true, true);
+                    link.dispatchEvent(event);
+
+                    // Free some memory or something
+                    window.URL.revokeObjectURL(link.href);
+
+                    // Remember that this image has been downloaded
+                    rememberImage(imageId);
+
+                    msg(['Downloaded Image', 'Archive']);
+
+                };
+
+                checkHdImage.onload = function () {
+                    hdAvailable = true;
+                    checkDone();
+                };
+
+                checkHdImage.onerror = function () {
+                    checkDone();
+                };
+
+                checkHdImage.src = url.replace('_500.', '_1280.');
+
+            };
+
+            // Highlight the image when hovering over download link
+            save.onmouseover = mouseOverArchive;
+            save.onmouseout = mouseOutArchive;
+
+            // Insert the button
+            var glass = el.parentNode.parentNode.parentNode.querySelector('.post_micro_glass .hover_inner');
+            glass.insertBefore(save, glass.firstChild);
+
+        });
+
+    }
+
     // Get array of downloaded images before placing the buttons
     function addDownloadedButtons() {
 
@@ -223,7 +330,11 @@
             confirmDownload = object.confirm;
 
             storage.get({images: []}, function (object) {
-                addButtons(object.images);
+                if (IS_ARCHIVE) {
+                    addArchiveButtons(object.images);
+                } else {
+                    addButtons(object.images);
+                }
             });
 
         });
@@ -268,17 +379,39 @@
 
         // If the changes is empty, then the array has been cleared, so remove all ticks
         if (!changes.images.newValue) {
+
             $$('.__downloaded').forEach(function (el) {
                 el.classList.remove('__downloaded');
             });
+
+            if (IS_ARCHIVE) {
+                $$('.__downloaded_archive').forEach(function (el) {
+                    el.classList.remove('__downloaded_archive');
+                });
+            }
+
             return;
+
         }
 
         // Get the element of the image with the last ID added to the array
-        var changedImage = $('img[src*="' + changes.images.newValue.pop() + '"]');
-        if (changedImage) {
-            // Add the tick and downloaded class to the image
-            changedImage.classList.add('__downloaded');
+        var changedImage;
+        if (IS_ARCHIVE) {
+
+            changedImage = $('.post_thumbnail_container.has_imageurl[data-imageurl*="' + changes.images.newValue.pop() + '"]');
+            if (changedImage) {
+                // Add the tick and downloaded class
+                changedImage.parentNode.parentNode.parentNode.querySelector('.__download_archive').classList.add('__downloaded_archive');
+            }
+
+        } else {
+
+            changedImage = $('img[src*="' + changes.images.newValue.pop() + '"]');
+            if (changedImage) {
+                // Add the tick and downloaded class to the image
+                changedImage.classList.add('__downloaded');
+            }
+
         }
 
     });
