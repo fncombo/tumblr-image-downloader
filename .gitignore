@@ -164,6 +164,6 @@ pip-log.txt
 
 # Misc extension stuff
 screenshot*.png
-screenshot*.psd
 tile*.png
-tile*.psd
+*.ai
+*.psd
