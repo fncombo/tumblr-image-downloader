@@ -76,7 +76,8 @@
             imageName: new RegExp('tumblr_(\\w+)(?=_\\d+\\.{1}(jpe?g|png|gif)$)', 'i'),
             imageExt: new RegExp('(jpe?g|png|gif)$', 'i'),
             imageURL: new RegExp('[^\\/]+\\.{1}(jpe?g|png|gif)$', 'i'),
-            tumblrDomain: new RegExp('tumblr\\.com', 'i')
+            tumblrDomain: new RegExp('tumblr\\.com', 'i'),
+            tumblrImgRes: new RegExp('(_\\d+\\.)')
         },
 
         run: function () {
@@ -154,7 +155,7 @@
             $$(TID.selectors.images()).forEach(function (el) {
 
                 // Skip images that are not part of the actual post
-                if (el.ancestor(2).classList.contains('caption')) {
+                if (el.ancestor(2).classList.contains('caption') || el.ancestor(2).nodeName === 'BLOCKQUOTE') {
                     return;
                 }
 
@@ -315,6 +316,12 @@
 
                     data.isHD = 'tumblr_high_res';
 
+                    // If the link is not to an image, it must be to the fancy preview page
+                    // So just get the 1280 link manually
+                    if (!imageEl.closest('.high_res_link').href.match(TID.match.imageExt)) {
+                        data.url = imageEl.src.replace(TID.match.tumblrImgRes, '_1280.');
+                    }
+
                 // If it's a straight up link to an image, it's probably external
                 // } else if (imageEl.closest('.high_res_link').href.match(TID.match.imageURL)) {
                 } else {
@@ -369,7 +376,7 @@
 
                 // Next try the 500 version (if not already)
                 if (!url.match(/_500\./)) {
-                    image.src = url.replace(/(_\d+\.)/, '_500.');
+                    image.src = url.replace(TID.match.tumblrImgRes, '_500.');
                 } else {
                     callbackError.call(this, url);
                 }
@@ -377,7 +384,7 @@
             };
 
             // First try the 1280 version
-            image.src = url.replace(/(_\d+\.)/, '_1280.');
+            image.src = url.replace(TID.match.tumblrImgRes, '_1280.');
 
         },
 
