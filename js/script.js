@@ -424,7 +424,7 @@
          */
         sendMessage: function (message, callback) {
 
-            if (typeof message !== 'object') {
+            if (typeof message !== 'object' || message instanceof Array) {
                 message = {message: message};
             }
 
