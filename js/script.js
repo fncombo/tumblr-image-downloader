@@ -75,7 +75,8 @@
             imageSize: new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'i'),
             imageName: new RegExp('tumblr_(\\w+)(?=_\\d+\\.{1}(jpe?g|png|gif)$)', 'i'),
             imageExt: new RegExp('(jpe?g|png|gif)$', 'i'),
-            imageURL: new RegExp('[^\\/]+\\.{1}(jpe?g|png|gif)$', 'i')
+            imageURL: new RegExp('[^\\/]+\\.{1}(jpe?g|png|gif)$', 'i'),
+            tumblrDomain: new RegExp('tumblr\\.com', 'i')
         },
 
         run: function () {
@@ -309,8 +310,8 @@
 
                 data.url = imageEl.closest('.high_res_link').href;
 
-                // If it has /image/ in the URL, it's probably from Tumblr
-                if (imageEl.closest('.high_res_link').href.match(/\/image\/\d+/)) {
+                // If it has "tumblr.com" in the URL, it's probably from Tumblr
+                if (imageEl.closest('.high_res_link').href.match(TID.match.tumblrDomain)) {
 
                     data.isHD = 'tumblr_high_res';
 
