@@ -11,5 +11,11 @@
     ],
     [
         "You can now download images straight from someone's archive!"
+    ],
+    [
+        "Completely refactored the code to be more extensible and maintainable in the future.",
+        "Settings now sync across multiple options pages.",
+        "Files are now downloaded using the native chrome.downloads API.",
+        "Improved detection of infinite scrolling."
     ]
 ]

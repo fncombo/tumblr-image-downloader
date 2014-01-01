@@ -6,9 +6,11 @@ var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-40682860-1']);
 _gaq.push(['_trackPageview']);
 
-// Analytics code
 (function () {
 
+    /**
+     * Analytics code
+     */
     var ga = document.createElement('script');
     ga.type = 'text/javascript';
     ga.async = true;
@@ -16,10 +18,11 @@ _gaq.push(['_trackPageview']);
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ga, s);
 
-    // Show an update notification
+    /**
+     * Show an update notification
+     */
     function updateNotification() {
 
-        // Notification's ID
         var notificationID;
 
         // Get JSON with all update messages
@@ -68,7 +71,9 @@ _gaq.push(['_trackPageview']);
 
     }
 
-    // When the extension is first installed, updated, or when Chrome is updated
+    /**
+     * When the extension is first installed, updated, or when Chrome is updated
+     */
     chrome.runtime.onInstalled.addListener(function (details) {
 
         switch (details.reason) {
@@ -82,28 +87,34 @@ _gaq.push(['_trackPageview']);
 
     });
 
-    // Listen to messages from other scripts
+    /**
+     * Listen to messages from other scripts
+     */
     chrome.runtime.onMessage.addListener(function (request, sender) {
 
-        switch (request.action) {
+        switch (request.message) {
+
         case 'show_page_action':
-
-            // Show page action button
             chrome.pageAction.show(sender.tab.id);
+            break;
 
+        case 'download':
+            chrome.downloads.download({
+                url: request.url
+            });
             break;
 
         default:
-
-            // Track an event with Analytics
             _gaq.push(['_trackEvent', request.action[0], request.action[1]]);
-
             break;
+
         }
 
     });
 
-    // Clicking on page action button
+    /**
+     * Clicking on page action button
+     */
     chrome.pageAction.onClicked.addListener(function () {
         chrome.tabs.create({url: 'html/options.html'});
     });

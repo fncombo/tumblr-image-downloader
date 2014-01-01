@@ -4,423 +4,466 @@
 
 (function () {
 
-    // Use Chrome's local storage
-    var storage = chrome.storage.local;
-    // Whether or not to confirm downloading again
-    var confirmDownload;
-    // Regular expression to match the size of the image
-    var matchSize = new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'g');
-    // Archive pages
-    var IS_ARCHIVE = !!window.location.pathname.match(/(archive)/i);
-
-    // Get a simgle element
-    function $(selector) {
-        return document.querySelector(selector);
+    // Get a single element
+    function $(selector, context) {
+        return (context || document).querySelector(selector);
     }
 
     // Get all elements
-    function $$(selector) {
-        return Array.prototype.slice.call(document.querySelectorAll(selector));
+    function $$(selector, context) {
+        return Array.prototype.slice.call((context || document).querySelectorAll(selector));
     }
 
-    // Send a message to the background page
-    function msg(action) {
-        chrome.runtime.sendMessage({action: action});
-    }
+    // Check if an element matches a selector (future-proof)
+    Element.prototype.matchesSelector = function (selector) {
+        return 'matches' in Element ? this.matches(selector) : this.webkitMatchesSelector(selector);
+    };
 
-    // Check if a HD version of the image is available
-    function isHd(img) {
-
-        if (img.parentNode.classList.contains('high_res_link')) {
-
-            if (img.parentNode.href.match(/\/image\/\d+/g)) {
-                return 1;
-            } else if (img.parentNode.href.match(/[^\/]+\.{1}(jpe?g|png|gif)$/g)) {
-                return 3;
-            }
-
-        } else if (img.parentNode.nodeName === 'A' && img.parentNode.href.match(/(jpe?g|png|gif)$/g)) {
-
-            var linkSize = img.parentNode.href.match(matchSize)[0];
-            var imgSize = img.src.match(matchSize)[0];
-
-            return parseInt(linkSize, 10) > parseInt(imgSize, 10) ? 2 : false;
-
+    // Get the closest parent element by a selector
+    Element.prototype.closest = function (selector) {
+        var parent = this.parentNode;
+        if (parent.nodeType !== 1) {
+            return false;
         }
-
-        return false;
-
-    }
-
-    // Get tumblr image ID
-    function getImageId(imageSrc) {
-
-        var imageId = imageSrc.match(/tumblr_(\w+)(?=_\d+\.{1}(jpe?g|png|gif)$)/);
-
-        if (imageId !== null && imageId.length === 3) {
-
-            return imageId[1];
-
+        if (parent.matchesSelector(selector)) {
+            return parent;
         }
+        return parent.closest(selector);
+    };
 
-        return false;
-
-    }
-
-    // Update local storage
-    function rememberImage(imageId) {
-
-        // Get all currently set images, return an empty array if nothing has been set yet
-        storage.get({images: []}, function (object) {
-
-            // Make sure the image isn't already in the array
-            if (object.images.indexOf(imageId) === -1) {
-
-                // Add the new image ID
-                object.images.push(imageId);
-
-                // Set the updated array
-                storage.set({images: object.images});
-
-            }
-
-        });
-
-    }
-
-    // When hovering over download button
-    function mouseOver() {
-
-        this.parentNode.classList.add('__highlight');
-
-        // If the image is in a photoset row, reveal the row to show the whole image
-        if (this.parentNode.parentNode.classList.contains('photoset_row')) {
-            this.parentNode.parentNode.classList.add('__show_photoset');
+    // Get a specific ancestor element
+    Element.prototype.ancestor = function (depth) {
+        var ancestor = this;
+        while (depth) {
+            depth = depth -= 1;
+            ancestor = ancestor.parentNode;
         }
+        return ancestor;
+    };
 
-    }
+    var TID = {
 
-    // When not hovering over download button
-    function mouseOut() {
+        downloadedImages: [],
+        confirm: true,
+        isArchivePage: !!window.location.pathname.match(/(archive)/i),
+        isInfiniteScrolling: !$('#pagination').clientHeight,
 
-        this.parentNode.classList.remove('__highlight');
+        classes: {
+            ignore: '__TID_ignore',
+            download: '__TID_download',
+            downloaded: '__TID_downloaded',
+            parent: '__TID_parent',
+            photoset: '__TID_photoset',
+            highlight: '__TID_highlight'
+        },
 
-        if (this.parentNode.parentNode.classList.contains('photoset_row')) {
-            this.parentNode.parentNode.classList.remove('__show_photoset');
-        }
+        selectors: {
+            images: function () {
 
-    }
-
-    // When hovering over download button in archive
-    function mouseOverArchive() {
-
-        this.parentNode.parentNode.parentNode.classList.add('__highlight_archive');
-
-    }
-
-    // When not hovering over download button in archive
-    function mouseOutArchive() {
-
-        this.parentNode.parentNode.parentNode.classList.remove('__highlight_archive');
-
-    }
-
-    // Add download buttons to image posts
-    function addButtons(downloadedImages) {
-
-        downloadedImages = downloadedImages || [];
-
-        // Get each image post
-        $$('.post.is_photo .post_content img:not(.__ignore), .post.is_photoset .post_content img:not(.__ignore)').forEach(function (el) {
-
-            // Skip images that are not part of the actual post
-            if (el.parentNode.parentNode.classList.contains('caption')) {
-                return;
-            }
-
-            // Add a class to the image so we don't add a button to it again
-            el.classList.add('__ignore');
-
-            // Create the download button
-            var save = document.createElement('span');
-            // Check if the image has a HD version
-            var hd = isHd(el);
-            // ID of the image
-            var imageId = getImageId(el.src);
-
-            // Skip the image if an ID for it couldn't be matched
-            if (!imageId) {
-                return;
-            }
-
-            save.innerHTML = 'Download' + (hd ? ' <strong>HD</strong>' : '');
-            if (hd === 3) {
-                save.innerHTML += '&#10138;';
-                save.title = 'High-res image is from an external site.';
-            }
-            save.classList.add('__download');
-
-            // If the image has already been downloaded
-            if (downloadedImages.indexOf(imageId) !== -1) {
-                el.classList.add('__downloaded');
-            }
-
-            // Download the image on click
-            save.onclick = function (e) {
-
-                e.stopPropagation();
-                e.preventDefault();
-
-                // Create the download link
-                var link = document.createElement('a');
-                // Create the click event
-                var event = document.createEvent('Event');
-
-                // If the image has already been downloaded and confirmation is enabled
-                if (el.classList.contains('__downloaded') && confirmDownload) {
-                    var sure = confirm('You\'ve already downloaded this image before.\n\nAre you sure you want to download it again?');
-                    if (!sure) {
-                        return;
-                    }
-                }
-
-                // If a HD version is available, then replace the download URL with the one for high resolution image
-                switch (hd) {
-                case 1:
-                    link.href = el.src.replace(matchSize, '1280');
-                    break;
-                case 2:
-                case 3:
-                    link.href = el.parentNode.href;
-                    break;
-                default:
-                    link.href = el.src;
-                    break;
-                }
-
-                // Extract the image file name from the link
-                if (hd === 3) {
-                    link.download = link.href.match(/[^\/]+\.{1}(jpe?g|png|gif)$/g);
+                if (!TID.isArchivePage) {
+                    return '.post.is_photo .post_content img:not(.' + TID.classes.ignore + '), ' +
+                           '.post.is_photoset .post_content img:not(.' + TID.classes.ignore + ')';
                 } else {
-                    link.download = link.href.match(/tumblr_\w+\.(jpe?g|png|gif)$/g);
+                    return '.post.post_micro.is_photo ' +
+                           '.post_thumbnail_container.has_imageurl:not(.' + TID.classes.ignore + ')';
                 }
 
-                // Configure & tirgger the click event
-                event.initEvent('click', true, true);
-                link.dispatchEvent(event);
+            }
+        },
 
-                // Free some memory or something
-                window.URL.revokeObjectURL(link.href);
+        match: {
+            imageSize: new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'i'),
+            imageName: new RegExp('tumblr_(\\w+)(?=_\\d+\\.{1}(jpe?g|png|gif)$)', 'i'),
+            imageExt: new RegExp('(jpe?g|png|gif)$', 'i'),
+            imageURL: new RegExp('[^\\/]+\\.{1}(jpe?g|png|gif)$', 'i')
+        },
 
-                // Remember that this image has been downloaded
-                rememberImage(imageId);
+        run: function () {
 
-                msg(['Downloaded Image', hd ? 'HD' : 'SD']);
+            TID.sendMessage('show_page_action');
+
+            // Monitor storage changes
+            chrome.storage.onChanged.addListener(function (changes) {
+
+                // If the download confirmation setting was changed, adjust the local setting
+                if (changes.confirm) {
+
+                    TID.confirm = changes.confirm.newValue;
+
+                // If the images storage was updated
+                } else if (changes.images) {
+
+                    // Update the downloaded images array
+                    TID.downloadedImages = changes.images.newValue || [];
+
+                    // If the new value is empty, all images have been cleared, remove all ticks
+                    if (!changes.images.newValue) {
+
+                        TID.removeAllTicks();
+
+                    // New image has been added, get the last ID and add a tick to it
+                    } else {
+
+                        var imageID = changes.images.newValue[changes.images.newValue.length - 1];
+                        TID.addTick(imageID);
+
+                    }
+
+                }
+
+            });
+
+            // Keep adding new buttons for pages with endless scrolling
+            if (TID.isInfiniteScrolling || TID.isArchivePage) {
+
+                var previousHeight = TID.getDocumentHeight();
+
+                document.onscroll = function () {
+
+                    // If the height has changed, try adding buttons to new images (if any)
+                    if (previousHeight !== TID.getDocumentHeight()) {
+                        previousHeight = TID.getDocumentHeight();
+                        TID.addButtons();
+                    }
+
+                };
+
+            }
+
+            // Update the downloaded images array
+            chrome.storage.local.get({images: []}, function (object) {
+                TID.downloadedImages = object.images;
+                TID.addButtons();
+            });
+
+            // Get the confirmation settings
+            chrome.storage.local.get({confirm: TID.confirm}, function (object) {
+                TID.confirm = object.confirm;
+            });
+
+        },
+
+        /**
+         * Add buttons to all downloadable images
+         */
+        addButtons: function () {
+
+            TID.sendMessage(['Added Download Buttons', 'Added']);
+
+            $$(TID.selectors.images()).forEach(function (el) {
+
+                // Skip images that are not part of the actual post
+                if (el.ancestor(2).classList.contains('caption')) {
+                    return;
+                }
+
+                // Don't add buttons to this image anymore
+                el.classList.add(TID.classes.ignore);
+
+                var button;
+                var container;
+
+                if (!TID.isArchivePage) {
+
+                    var imageData = TID.getImageData(el);
+                    button = TID.createDownloadButton(TID.getImageID(el.src), imageData.isHD, imageData.url);
+
+                    // Append the button
+                    container = el.parentNode;
+                    container.classList.add(TID.classes.parent);
+                    container.insertBefore(button, container.firstChild);
+
+                } else {
+
+                    var url = el.getAttribute('data-imageurl');
+                    button = TID.createDownloadButton(TID.getImageID(url), false, url);
+
+                    // Append the button
+                    container = el.closest('.post').querySelector('.post_micro_glass .hover_inner');
+                    container.insertBefore(button, container.firstChild);
+
+                }
+
+            });
+
+        },
+
+        /**
+         * Create the download button
+         */
+        createDownloadButton: function (imageID, isHD, url) {
+
+            // Basic button stuff and meta data
+            var el = document.createElement('div');
+            el.innerText = 'Download';
+            el.setAttribute('data-download-url', url);
+            el.setAttribute('data-image-id', imageID);
+            el.classList.add(TID.classes.download);
+
+            // Check if the image has already been downloaded
+            if (TID.downloadedImages.indexOf(imageID) !== -1) {
+                el.classList.add(TID.classes.downloaded);
+            }
+
+            // If any type of HD, add message
+            if (isHD) {
+                el.innerHTML += '&nbsp;<strong>HD</strong>';
+            }
+
+            // If HD is from an external site, add an arrow and a tooltip
+            if (isHD === 'external_high_res') {
+                el.innerHTML += '&#10138;';
+                el.title = 'HD image is from an external site';
+            }
+
+            el.onclick = function (event) {
+
+                // Prevent any default/Tumblr events
+                event.stopPropagation();
+                event.preventDefault();
+
+                if (TID.confirm && TID.downloadedImages.indexOf(imageID) !== -1 && !TID.confirmDialog()) {
+                    return;
+                }
+
+                TID.downloadImage(url, imageID);
+
+                if (!TID.isArchivePage) {
+                    TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
+                } else {
+                    TID.sendMessage(['Downloaded Image', 'Archive']);
+                }
 
             };
 
-            // Highlight the image when hovering over download link
-            save.onmouseover = mouseOver;
-            save.onmouseout = mouseOut;
+            el.onmouseover = function () {
 
-            // Insert the download button
-            el.parentNode.classList.add('__download_parent');
-            el.parentNode.insertBefore(save, el.nextSibling);
+                if (!TID.isArchivePage) {
 
-        });
-
-    }
-
-    // Add download buttons to image posts in the archive
-    function addArchiveButtons(downloadedImages) {
-
-        downloadedImages = downloadedImages || [];
-
-        // Get each image post
-        $$('.post.post_micro.is_photo .post_thumbnail_container.has_imageurl:not(.__ignore)').forEach(function (el) {
-
-            // Add class so we don't add button again
-            el.classList.add('__ignore');
-
-            var url = el.getAttribute('data-imageurl');
-            var imageId = getImageId(url);
-
-            // Save button
-            var save = document.createElement('span');
-            save.innerText = 'Download';
-            save.classList.add('__download_archive');
-
-            // If the image has already been downloaded
-            if (downloadedImages.indexOf(imageId) !== -1) {
-                save.classList.add('__downloaded_archive');
-            }
-
-            // Download the image on click
-            save.onclick = function (e) {
-
-                e.stopPropagation();
-                e.preventDefault();
-
-                // Create the download link
-                var link = document.createElement('a');
-                // Create the click event
-                var event = document.createEvent('Event');
-
-                // If the image has already been downloaded and confirmation is enabled
-                if (save.classList.contains('__downloaded_archive') && confirmDownload) {
-                    var sure = confirm('You\'ve already downloaded this image before.\n\nAre you sure you want to download it again?');
-                    if (!sure) {
-                        return;
+                    if (el.ancestor(2).classList.contains('photoset_row')) {
+                        el.ancestor(2).classList.add(TID.classes.photoset);
                     }
+
+                } else {
+
+                    el.ancestor(3).classList.add(TID.classes.highlight);
+
                 }
-
-                // See if a HD image is available
-                var checkHdImage = new Image();
-                var hdAvailable = false;
-
-                var checkDone = function () {
-
-                    // Link to final download image
-                    link.href = hdAvailable ? checkHdImage.src : url;
-
-                    // File name
-                    link.download = link.href.match(/tumblr_\w+\.(jpe?g|png|gif)$/g);
-
-                    // Configure & tirgger the click event
-                    event.initEvent('click', true, true);
-                    link.dispatchEvent(event);
-
-                    // Free some memory or something
-                    window.URL.revokeObjectURL(link.href);
-
-                    // Remember that this image has been downloaded
-                    rememberImage(imageId);
-
-                    msg(['Downloaded Image', 'Archive']);
-
-                };
-
-                checkHdImage.onload = function () {
-                    hdAvailable = true;
-                    checkDone();
-                };
-
-                checkHdImage.onerror = function () {
-                    checkDone();
-                };
-
-                checkHdImage.src = url.replace('_500.', '_1280.');
 
             };
 
-            // Highlight the image when hovering over download link
-            save.onmouseover = mouseOverArchive;
-            save.onmouseout = mouseOutArchive;
+            el.onmouseout = function () {
 
-            // Insert the button
-            var glass = el.parentNode.parentNode.parentNode.querySelector('.post_micro_glass .hover_inner');
-            glass.insertBefore(save, glass.firstChild);
+                if (!TID.isArchivePage) {
 
-        });
+                    if (el.ancestor(2).classList.contains('photoset_row')) {
+                        el.ancestor(2).classList.remove(TID.classes.photoset);
+                    }
 
-    }
-
-    // Get array of downloaded images before placing the buttons
-    function addDownloadedButtons() {
-
-        storage.get({confirm: false}, function (object) {
-
-            confirmDownload = object.confirm;
-
-            storage.get({images: []}, function (object) {
-                if (IS_ARCHIVE) {
-                    addArchiveButtons(object.images);
                 } else {
-                    addButtons(object.images);
+
+                    el.ancestor(3).classList.remove(TID.classes.highlight);
+
                 }
-            });
 
-        });
+            };
 
-        msg(['Added Download Buttons', 'Added']);
+            return el;
 
-    }
+        },
 
-    // Add buttons to initially loaded images
-    addDownloadedButtons();
+        /**
+         * Get the current document height
+         */
+        getDocumentHeight: function () {
+            return document.documentElement.scrollHeight;
+        },
 
-    // If #pagination is hidden, check if new posts have been added with each scroll
-    // Always applies on the archive pages
-    if (document.getElementById('pagination').classList.contains('hidden') || IS_ARCHIVE) {
+        /**
+         * Get the Tumblr image ID from an image URL
+         */
+        getImageID: function (url) {
 
-        var previousHeight = document.documentElement.scrollHeight;
+            var imageID = url.match(TID.match.imageName);
 
-        document.onscroll = function () {
-
-            // If the document increased in height while scrolling, assume new posts have been loaded
-            if (previousHeight < document.documentElement.scrollHeight) {
-                previousHeight = document.documentElement.scrollHeight;
-                addDownloadedButtons();
+            // If matched correctly
+            if (imageID && imageID.length === 3) {
+                // Return the ID
+                return imageID[1];
             }
 
-        };
+            // Couldn't find an ID
+            return false;
 
-    }
+        },
 
-    // If an image has been saved (in this or another tab), reflect it in the page if the image exists here too
-    chrome.storage.onChanged.addListener(function (changes) {
+        /**
+         * Check if a HD version of the image is available using the markup
+         */
+        getImageData: function (imageEl) {
 
-        // If the download confirmation setting was changed
-        if (changes.confirm) {
-            confirmDownload = changes.confirm.newValue;
-            return;
-        }
+            var data = {};
 
-        // If not the images object has been changed, return
-        if (!changes.images) {
-            return;
-        }
+            // If it has a dedicated high res link
+            if (imageEl.closest('.high_res_link')) {
 
-        // If the changes is empty, then the array has been cleared, so remove all ticks
-        if (!changes.images.newValue) {
+                data.url = imageEl.closest('.high_res_link').href;
 
-            $$('.__downloaded').forEach(function (el) {
-                el.classList.remove('__downloaded');
-            });
+                // If it has /image/ in the URL, it's probably from Tumblr
+                if (imageEl.closest('.high_res_link').href.match(/\/image\/\d+/)) {
 
-            if (IS_ARCHIVE) {
-                $$('.__downloaded_archive').forEach(function (el) {
-                    el.classList.remove('__downloaded_archive');
+                    data.isHD = 'tumblr_high_res';
+
+                // If it's a straight up link to an image, it's probably external
+                } else if (imageEl.closest('.high_res_link').href.match(TID.match.imageURL)) {
+
+                    data.isHD = 'external_high_res';
+
+                }
+
+            // If it's a link to an image
+            } else if (imageEl.closest('a') && imageEl.closest('a').href.match(TID.match.imageExt)) {
+
+                // Get the link's image size and the current image's size
+                var imageLinkSize = imageEl.closest('a').href.match(TID.match.imageSize)[0];
+                var originalImageSize = imageEl.src.match(TID.match.imageSize)[0];
+
+                // If the link's image size is bigger, HD is available
+                if (parseInt(imageLinkSize, 10) > parseInt(originalImageSize, 10)) {
+
+                    data = {
+                        isHD: 'tumblr_high_res',
+                        url: imageEl.closest('a').href
+                    };
+
+                }
+
+            }
+
+            // In case no HD or correct URL found
+            if (!data.isHD) {
+                data.isHD = false;
+            }
+            if (!data.url) {
+                data.url = imageEl.src;
+            }
+
+            return data;
+
+        },
+
+        /**
+         * Check if a HD version is available by trying to load a 1280 version of the image
+         */
+        availableHDImage: function (url, callbackSuccess, callbackError) {
+
+            var image = new Image();
+
+            image.onload = function () {
+                callbackSuccess.call(this, image.src);
+            };
+
+            image.onerror = function () {
+
+                // Next try the 500 version (if not already)
+                if (!url.match(/_500\./)) {
+                    image.src = url.replace(/(_\d+\.)/, '_500.');
+                } else {
+                    callbackError.call(this, url);
+                }
+
+            };
+
+            // First try the 1280 version
+            image.src = url.replace(/(_\d+\.)/, '_1280.');
+
+        },
+
+        /**
+         * Download an image using the native Chrome API
+         */
+        downloadImage: function (url, imageID) {
+
+            if (!TID.isArchivePage) {
+
+                TID.sendMessage({message: 'download', url: url});
+
+            } else {
+
+                TID.availableHDImage(url, function (url) {
+                    TID.sendMessage({message: 'download', url: url});
+                }, function (url) {
+                    TID.sendMessage({message: 'download', url: url});
                 });
+
             }
 
-            return;
+            TID.rememberImage(imageID);
 
+        },
+
+        /**
+         * Update local storage with the image's ID
+         */
+        rememberImage: function (imageID) {
+
+            chrome.storage.local.get({images: []}, function (object) {
+
+                if (object.images.indexOf(imageID) === -1) {
+                    object.images.push(imageID);
+                    chrome.storage.local.set(object);
+                }
+
+            });
+
+        },
+
+        /**
+         * Send a message to the background page
+         */
+        sendMessage: function (message, callback) {
+
+            if (typeof message !== 'object') {
+                message = {message: message};
+            }
+
+            if (callback) {
+                chrome.runtime.sendMessage(message, callback);
+            } else {
+                chrome.runtime.sendMessage(message);
+            }
+
+        },
+
+        /**
+         * Add a tick to a button with a certain image ID
+         */
+        addTick: function (imageID) {
+            var el = $('.' + TID.classes.download + '[data-image-id="' + imageID + '"]');
+            if (el) {
+                el.classList.add(TID.classes.downloaded);
+            }
+        },
+
+        /**
+         * Remove all ticks from all buttons
+         */
+        removeAllTicks: function () {
+            $$('.' + TID.classes.downloaded).forEach(function (el) {
+                el.classList.remove(TID.classes.downloaded);
+            });
+        },
+
+        /**
+         * Show a download confirmation dialogue
+         */
+        confirmDialog: function () {
+            return confirm('You\'ve already downloaded this image before.\n\n' +
+                           'Are you sure you want to download it again?');
         }
 
-        // Get the element of the image with the last ID added to the array
-        var changedImage;
-        if (IS_ARCHIVE) {
+    };
 
-            changedImage = $('.post_thumbnail_container.has_imageurl[data-imageurl*="' + changes.images.newValue.pop() + '"]');
-            if (changedImage) {
-                // Add the tick and downloaded class
-                changedImage.parentNode.parentNode.parentNode.querySelector('.__download_archive').classList.add('__downloaded_archive');
-            }
-
-        } else {
-
-            changedImage = $('img[src*="' + changes.images.newValue.pop() + '"]');
-            if (changedImage) {
-                // Add the tick and downloaded class to the image
-                changedImage.classList.add('__downloaded');
-            }
-
-        }
-
-    });
-
-    // Add page action button
-    msg('show_page_action');
+    TID.run();
 
 }());
