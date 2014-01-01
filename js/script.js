@@ -315,7 +315,8 @@
                     data.isHD = 'tumblr_high_res';
 
                 // If it's a straight up link to an image, it's probably external
-                } else if (imageEl.closest('.high_res_link').href.match(TID.match.imageURL)) {
+                // } else if (imageEl.closest('.high_res_link').href.match(TID.match.imageURL)) {
+                } else {
 
                     data.isHD = 'external_high_res';
 
