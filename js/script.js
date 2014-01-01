@@ -455,7 +455,7 @@
         },
 
         /**
-         * Show a download confirmation dialogue
+         * Show a download confirmation dialog
          */
         confirmDialog: function () {
             return confirm('You\'ve already downloaded this image before.\n\n' +
