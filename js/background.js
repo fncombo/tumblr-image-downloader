@@ -105,7 +105,7 @@ _gaq.push(['_trackPageview']);
             break;
 
         default:
-            _gaq.push(['_trackEvent', request.action[0], request.action[1]]);
+            _gaq.push(['_trackEvent', request.message[0], request.message[1]]);
             break;
 
         }
