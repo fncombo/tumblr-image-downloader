@@ -373,7 +373,7 @@
             image.onload = function () {
 
                 // Double check if a valid image was loaded - http://stackoverflow.com/a/1977898
-                if (typeof image.naturalWidth !== 'undefined' && image.naturalWidth === 0) {
+                if (!image.naturalWidth || !image.naturalHeight) {
                     image.onerror();
                 } else {
                     callbackSuccess.call(this, image.src);
