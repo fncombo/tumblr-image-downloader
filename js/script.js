@@ -362,29 +362,48 @@
         },
 
         /**
-         * Check if a HD version is available by trying to load a 1280 version of the image
+         * Check if a HD version is available by trying to load different resolutions
          */
         availableHDImage: function (url, callbackSuccess, callbackError) {
 
             var image = new Image();
+            var resolutions = ['_1280.', '_500.', '_400.', '_250.', '_100.'];
+            var curentResolution = 0;
 
             image.onload = function () {
-                callbackSuccess.call(this, image.src);
-            };
 
-            image.onerror = function () {
-
-                // Next try the 500 version (if not already)
-                if (!url.match(/_500\./)) {
-                    image.src = url.replace(TID.match.tumblrImgRes, '_500.');
+                // Double check if a valid image was loaded - http://stackoverflow.com/a/1977898
+                if (typeof image.naturalWidth !== 'undefined' && image.naturalWidth === 0) {
+                    image.onerror();
                 } else {
-                    callbackError.call(this, url);
+                    callbackSuccess.call(this, image.src);
                 }
 
             };
 
-            // First try the 1280 version
-            image.src = url.replace(TID.match.tumblrImgRes, '_1280.');
+            image.onerror = function () {
+
+                curentResolution += 1;
+
+                // Keep loading next biggest resolution until an image is loaded
+                if (curentResolution !== resolutions.length - 1) {
+
+                    // http://stackoverflow.com/a/17656617
+                    setTimeout(function () {
+                        image.src = url.replace(TID.match.tumblrImgRes, resolutions[curentResolution]);
+                    }, 0);
+
+                } else {
+
+                    // No better resolution was found
+                    callbackError.call(this, url);
+
+                }
+
+            };
+
+            // Try to load the biggest resolution first
+            image.src = url.replace(TID.match.tumblrImgRes, resolutions[curentResolution]);
 
         },
 
