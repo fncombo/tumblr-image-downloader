@@ -17,5 +17,8 @@
         "Settings now sync across multiple options pages.",
         "Files are now downloaded using the native chrome.downloads API.",
         "Improved detection of infinite scrolling."
+    ],
+    [
+        "General improvements."
     ]
 ]
