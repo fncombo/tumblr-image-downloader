@@ -1,49 +1,13 @@
 'use strict';
 
-/* globals chrome */
+/* globals chrome, $, $$ */
 
 (function () {
-
-    // Get a single element
-    function $(selector, context) {
-        return (context || document).querySelector(selector);
-    }
-
-    // Get all elements
-    function $$(selector, context) {
-        return Array.prototype.slice.call((context || document).querySelectorAll(selector));
-    }
-
-    // Check if an element matches a selector (future-proof)
-    Element.prototype.matchesSelector = function (selector) {
-        return 'matches' in Element ? this.matches(selector) : this.webkitMatchesSelector(selector);
-    };
-
-    // Get the closest parent element by a selector
-    Element.prototype.closest = function (selector) {
-        var parent = this.parentNode;
-        if (parent.nodeType !== 1) {
-            return false;
-        }
-        if (parent.matchesSelector(selector)) {
-            return parent;
-        }
-        return parent.closest(selector);
-    };
-
-    // Get a specific ancestor element
-    Element.prototype.ancestor = function (depth) {
-        var ancestor = this;
-        while (depth) {
-            depth = depth -= 1;
-            ancestor = ancestor.parentNode;
-        }
-        return ancestor;
-    };
 
     var TID = {
 
         downloadedImages: [],
+        directories: [],
         confirm: true,
         isArchivePage: !!window.location.pathname.match(/(archive)/i),
         isInfiniteScrolling: !$('#pagination').clientHeight,
@@ -52,6 +16,9 @@
             ignore: '__TID_ignore',
             download: '__TID_download',
             downloaded: '__TID_downloaded',
+            downloadDiv: '__TID_download_div',
+            list: '__TID_list',
+            help: '__TID_help',
             parent: '__TID_parent',
             photoset: '__TID_photoset',
             highlight: '__TID_highlight'
@@ -111,6 +78,17 @@
 
                     }
 
+                // If the save directories were modified
+                } else if (changes.saveDirectories) {
+
+                    TID.directories = changes.saveDirectories.newValue;
+
+                    var list = TID.formatDirectories();
+
+                    $$('.' + TID.classes.list + ' ul').forEach(function (el) {
+                        el.innerHTML = list;
+                    });
+
                 }
 
             });
@@ -134,13 +112,73 @@
 
             // Update the downloaded images array
             chrome.storage.local.get({images: []}, function (object) {
+
                 TID.downloadedImages = object.images;
-                TID.addButtons();
+
+                // Get list of directories
+                TID.getDirectories(function () {
+
+                    TID.addButtons();
+
+                });
+
             });
 
             // Get the confirmation settings
             chrome.storage.local.get({confirm: TID.confirm}, function (object) {
                 TID.confirm = object.confirm;
+            });
+
+            // Download list events
+            document.addEventListener('click', function (event) {
+
+                // Set up downloading via directory list buttons
+                if (event.target.matchesSelector('.' + TID.classes.list + ' li:not(.' + TID.classes.help + ')')) {
+
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    var parent = event.target.ancestor(3);
+                    var imageID = parent.getAttribute('data-image-id');
+
+                    if (TID.hasDownloaded(imageID)) {
+                        return;
+                    }
+
+                    var url = parent.getAttribute('data-download-url');
+                    var directory = event.target.getAttribute('data-directory');
+
+                    TID.downloadImage(url, imageID, directory);
+
+                    TID.sendMessage(['Downloaded Image', 'To Directory']);
+
+                // Set up link to the options page
+                } else if (event.target.matchesSelector('.' + TID.classes.help)) {
+
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    TID.sendMessage('open_settings');
+
+                }
+
+            }, true);
+
+        },
+
+        /**
+         * Get the list of all user-defined directories
+         */
+        getDirectories: function (callback) {
+
+            chrome.storage.sync.get({saveDirectories: []}, function (object) {
+
+                if (object.saveDirectories.length) {
+                    TID.directories = object.saveDirectories;
+                }
+
+                callback.call(this);
+
             });
 
         },
@@ -195,12 +233,29 @@
          */
         createDownloadButton: function (imageID, isHD, url) {
 
-            // Basic button stuff and meta data
+            // Core container
             var el = document.createElement('div');
-            el.innerText = 'Download';
+            el.classList.add(TID.classes.download);
             el.setAttribute('data-download-url', url);
             el.setAttribute('data-image-id', imageID);
-            el.classList.add(TID.classes.download);
+
+            // Main download button
+            var download = document.createElement('div');
+            download.classList.add(TID.classes.downloadDiv);
+            download.innerText = 'Download';
+            el.appendChild(download);
+
+            // Directories drop-down
+            var directories = document.createElement('div');
+            directories.classList.add(TID.classes.list);
+            directories.innerHTML += '<span>&#9660;</span>';
+
+            var list = document.createElement('ul');
+            list.innerHTML = TID.formatDirectories();
+
+
+            directories.appendChild(list);
+            el.appendChild(directories);
 
             // Check if the image has already been downloaded
             if (TID.downloadedImages.indexOf(imageID) !== -1) {
@@ -209,22 +264,22 @@
 
             // If any type of HD, add message
             if (isHD) {
-                el.innerHTML += '&nbsp;<strong>HD</strong>';
+                download.innerHTML += '&nbsp;<strong>HD</strong>';
             }
 
             // If HD is from an external site, add an arrow and a tooltip
             if (isHD === 'external_high_res') {
-                el.innerHTML += '&#10138;';
-                el.title = 'HD image is from an external site';
+                download.innerHTML += '&#10138;';
+                download.title = 'HD image is from an external site';
             }
 
-            el.onclick = function (event) {
+            download.onclick = function (event) {
 
                 // Prevent any default/Tumblr events
                 event.stopPropagation();
                 event.preventDefault();
 
-                if (TID.confirm && TID.downloadedImages.indexOf(imageID) !== -1 && !TID.confirmDialog()) {
+                if (TID.hasDownloaded(imageID)) {
                     return;
                 }
 
@@ -410,18 +465,18 @@
         /**
          * Download an image using the native Chrome API
          */
-        downloadImage: function (url, imageID) {
+        downloadImage: function (url, imageID, directory) {
 
             if (!TID.isArchivePage) {
 
-                TID.sendMessage({message: 'download', url: url});
+                TID.sendMessage({message: 'download', url: url, directory: directory});
 
             } else {
 
                 TID.availableHDImage(url, function (url) {
-                    TID.sendMessage({message: 'download', url: url});
+                    TID.sendMessage({message: 'download', url: url, directory: directory});
                 }, function (url) {
-                    TID.sendMessage({message: 'download', url: url});
+                    TID.sendMessage({message: 'download', url: url, directory: directory});
                 });
 
             }
@@ -488,6 +543,37 @@
         confirmDialog: function () {
             return confirm('You\'ve already downloaded this image before.\n\n' +
                            'Are you sure you want to download it again?');
+        },
+
+        /**
+         * Format the list of download directoried
+         */
+        formatDirectories: function () {
+
+            if (TID.directories.length) {
+
+                var list = '';
+
+                TID.directories.forEach(function (directory) {
+                    var name = directory.replace(/(.+\/)/, '<span>$1</span>').replace(/\/(?!\w+>)/g, '<strong>&#8260;</strong>');
+                    list += '<li title="Download inside: ' + directory + '" data-directory="' + directory + '">' + name + '</li>';
+                });
+
+                return list;
+
+            } else {
+
+                return '<li class="' + TID.classes.help + '">You can specify custom download\nlocations in the settings.\nClick to configure.</li>';
+
+            }
+
+        },
+
+        /**
+         * Check if the image has already been downloaded and prompt the user if needed
+         */
+        hasDownloaded: function (imageID) {
+            return TID.confirm && TID.downloadedImages.indexOf(imageID) !== -1 && !TID.confirmDialog();
         }
 
     };

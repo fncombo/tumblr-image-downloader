@@ -32,9 +32,7 @@ a.__TID_parent img {
 }
 
 .__TID_download {
-    background: #2c4762;
     display: inline-block;
-    padding: 0.3em 0.6em;
     position: absolute;
     top: 0;
     left: 0;
@@ -43,7 +41,13 @@ a.__TID_parent img {
     cursor: pointer;
 }
 
-.__TID_download:hover {
+.__TID_download_div {
+    background: #2c4762;
+    display: inline-block;
+    padding: 0.3em 0.6em;
+}
+
+.__TID_download_div:hover {
     background: #15212e;
 }
 
@@ -55,6 +59,70 @@ a.__TID_parent img {
     opacity: 1;
 }
 
-.__TID_downloaded:before {
+.__TID_downloaded .__TID_download_div:before {
     content: '\2713\00A0';
+}
+
+.__TID_list {
+    background: #2c4762;
+    display: inline-block;
+    position: relative;
+    opacity: 0.5;
+}
+
+.__TID_download:hover .__TID_list {
+    opacity: 1;
+}
+
+.__TID_list > span {
+    display: block;
+    padding: 0.3em 0.6em;
+}
+
+.__TID_list:hover > span {
+    background: #15212e;
+}
+
+.__TID_list:before {
+    content: '';
+    display: block;
+    margin-left: 100%;
+}
+
+.__TID_list ul {
+    background: #2c4762;
+    min-width: 31px;
+    display: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: pre;
+    list-style: none;
+    z-index: 99999999;
+}
+
+.__TID_list:hover ul {
+    display: block;
+}
+
+.__TID_list li {
+    padding: 0.3em 0.6em;
+}
+
+.__TID_list li:hover {
+    background: #15212e;
+}
+
+.__TID_list strong {
+    display: inline-block;
+    padding: 0 0.15em;
+    color: #fff;
+    pointer-events: none;
+}
+
+.__TID_list ul span {
+    color: hsla(0, 0%, 100%, 0.75);
+    pointer-events: none;
 }

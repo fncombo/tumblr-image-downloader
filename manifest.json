@@ -19,7 +19,10 @@
         "http://*.tumblr.com/archive",
         "http://*.tumblr.com/archive/*"
         ],
-      "js": ["js/script.js"],
+      "js": [
+        "js/core.js",
+        "js/script.js"
+      ],
       "css": ["css/style.css"],
       "run_at": "document_idle",
       "all_frames": false

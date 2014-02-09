@@ -9,6 +9,12 @@ _gaq.push(['_trackPageview']);
 (function () {
 
     /**
+     * Preferred save directory
+     */
+    var defaultDirectory;
+    var saveDirectory;
+
+    /**
      * Analytics code
      */
     var ga = document.createElement('script');
@@ -55,7 +61,7 @@ _gaq.push(['_trackPageview']);
         request.open('GET', 'js/updates.json', true);
         request.send();
 
-        // Respond to buton clicks
+        // Respond to button clicks
         chrome.notifications.onButtonClicked.addListener(function (notificationID, buttonIndex) {
             if (notificationID === notificationID) {
                 switch (buttonIndex) {
@@ -81,8 +87,34 @@ _gaq.push(['_trackPageview']);
             chrome.tabs.create({url: 'html/options.html'});
             break;
         case 'update':
+
             updateNotification();
+
+            // Move the confirmation setting to synced storage
+            chrome.storage.local.get({confirm: false}, function (object) {
+                chrome.storage.sync.set(object);
+            });
+
             break;
+        }
+
+    });
+
+    /**
+     * Override file names by adding the user's directory of choice
+     */
+    chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, suggest) {
+
+        if (downloadItem.byExtensionId !== chrome.i18n.getMessage("@@extension_id")) {
+            return;
+        }
+
+        if (saveDirectory) {
+            suggest({filename: saveDirectory + '/' + downloadItem.filename});
+        } else if (defaultDirectory) {
+            suggest({filename: defaultDirectory + '/' + downloadItem.filename});
+        } else {
+            suggest({filename: downloadItem.filename});
         }
 
     });
@@ -99,9 +131,14 @@ _gaq.push(['_trackPageview']);
             break;
 
         case 'download':
+            saveDirectory = request.directory ? request.directory : false;
             chrome.downloads.download({
                 url: request.url
             });
+            break;
+
+        case 'open_settings':
+            chrome.tabs.create({url: 'html/options.html'});
             break;
 
         default:
@@ -117,6 +154,22 @@ _gaq.push(['_trackPageview']);
      */
     chrome.pageAction.onClicked.addListener(function () {
         chrome.tabs.create({url: 'html/options.html'});
+    });
+
+    /**
+     * Get default save directory
+     */
+    chrome.storage.sync.get({defaultDirectory: false}, function (object) {
+        defaultDirectory = object.defaultDirectory;
+    });
+
+    /**
+     * Keep default directory updated
+     */
+    chrome.storage.onChanged.addListener(function (changes) {
+        if (changes.defaultDirectory) {
+            defaultDirectory = changes.defaultDirectory.newValue;
+        }
     });
 
 }());
