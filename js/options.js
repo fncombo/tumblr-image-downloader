@@ -280,7 +280,7 @@
 
         } else if (changes.defaultDirectory) {
 
-            $('#default-directory').value = changes.defaultDirectory.newValue;
+            $('#default-directory').value = 'newValue' in changes.defaultDirectory ? changes.defaultDirectory.newValue : '';
 
         }
 
