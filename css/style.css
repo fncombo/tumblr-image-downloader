@@ -51,12 +51,16 @@ a.__TID_parent img {
     background: #15212e;
 }
 
-.post.post_micro .__TID_download {
-    position: relative;
-    top: -10px;
-    left: -10px;
+.post.post_micro.has_hover.masonry-brick .__TID_download {
+    position: absolute;
+    top: 0;
+    left: 0;
     border-radius: 0 3px 3px 3px;
     opacity: 1;
+}
+
+.post.post_micro.has_hover.masonry-brick .__TID_list {
+    display: none;
 }
 
 .__TID_downloaded .__TID_download_div:before {
