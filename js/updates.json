@@ -20,5 +20,11 @@
     ],
     [
         "General improvements."
+    ],
+    [
+        "You can now specify custom download locations!",
+        "Set a default download directory where to save all your images.",
+        "Your directory and confirmation settings now sync across your Google account.",
+        "General fixes and improvements."
     ]
 ]
