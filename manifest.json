@@ -23,7 +23,7 @@
         "js/core.js",
         "js/script.js"
       ],
-      "css": ["css/style.css"],
+      "css": ["style/style.css"],
       "run_at": "document_idle",
       "all_frames": false
     }

@@ -2,172 +2,76 @@
 
 <meta charset="utf-8">
 <title>Options | Tumblr Image Downloader</title>
-
-<style>
-    * {
-        box-sizing: border-box;
-    }
-    html, body {
-        background: #2c4762;
-        height: 100%;
-        text-align: center;
-        font-size: 14px;
-        font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
-        color: hsl(0, 0%, 27%);
-        margin: 0;
-        padding: 0;
-    }
-    body:before, body:after {
-        content: '';
-        display: block;
-        height: 2rem;
-    }
-    main {
-        background: #fff;
-        width: 700px;
-        margin: 0 auto;
-        padding: 2rem;
-        border-radius: 6px;
-        text-align: left;
-    }
-    hr {
-        border: none;
-        border-top: 1px solid hsl(0, 0%, 75%);
-        margin: 1.5rem 0;
-    }
-    h1 {
-        font-size: 1.25rem;
-        margin: 0 0 1.25rem 0;
-    }
-    p {
-        margin: 0.5rem 0 0;
-    }
-    a {
-        color: hsl(0, 0%, 20%);
-    }
-    a:hover {
-        text-decoration: none;
-    }
-    button {
-        background: hsl(210, 10%, 65%);
-        border: none;
-        border-radius: 2px;
-        margin: 1rem 0;
-        padding: 0.5rem 0.75rem;
-        font-weight: bolder;
-        color: #fff;
-        cursor: pointer;
-    }
-    button:hover {
-        background: hsl(210, 10%, 55%);
-    }
-    footer {
-        font-size: 0.85rem;
-    }
-    input {
-        width: 30rem;
-        padding: 0.5rem 0.75rem;
-        border: 1px solid hsl(0, 0%, 85%);
-        border-radius: 2px;
-        position: relative;
-        top: -0.1rem;
-    }
-    input:focus {
-        border-color: hsl(0, 0%, 65%);
-        outline: none;
-    }
-    #download-directories {
-        list-style: none;
-        padding-left: 0;
-    }
-    .fake {
-        opacity: 0;
-        visibility: hidden;
-    }
-    .moving {
-        pointer-events: none;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-        z-index: 999999;
-    }
-    .default, .isDefault {
-        margin: 0 0 0 1rem;
-        padding: 0.15rem 0.3rem;
-        opacity: 0;
-    }
-    .isDefault {
-        opacity: 1;
-    }
-    .move {
-        cursor: ns-resize;
-        padding: 0.5rem 1rem;
-        opacity: 0.3;
-    }
-    .delete {
-        cursor: pointer;
-        padding: 0.5rem 1rem;
-        opacity: 0;
-    }
-    li:hover .move, li:hover .delete, input:focus + .delete {
-        opacity: 0.6;
-    }
-    li:hover .default {
-        opacity: 1;
-    }
-    li .move:hover, li .delete:hover {
-        opacity: 0.9;
-    }
-    .blank .move, .blank .delete, .blank .default {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
-    #clear-default-directory {
-        margin: 0 0 0 1rem;
-    }
-</style>
+<link rel="stylesheet" href="../style/background.css">
 
 <main>
 
-    <h1><img src="../img/icon38.png"> Tumblr Image Downloader</h1>
+    <h1 id="ext">
+        <span id="logo"><img src="../img/icon38.png"></span>
+        <span id="name">Tumblr Image Downloader</span>
+    </h1>
+
     <p>Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don't forget to <a href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank">rate it</a> on the Chrome Web Store.</p>
-    <ul>
-        <li>Created with love by <a href="http://twitter.com/fncombo" target="_blank">fncombo</a></li>
-        <li>View project source on <a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank">GitHub</a></li>
-        <li>View <a href="updates.html">updates history</a></li>
-    </ul>
+
     <p>If you have any feature requests or find that something is not working, please report it <a href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug" target="_blank">here</a> before leaving a negative review.</p>
 
-    <hr>
-
-    <h1>Custom Download Locations</h1>
-    <p>Define a list of custom locations inside your downloads folder that you will be able to quickly choose from when saving an image.</p>
-    <p>Separate folders inside folders with a forward slash <code>/</code>. If the folder doesn't exist, it will automatically be created.</p>
-    <!-- <p>Saving will automatically update options on all currently open pages.</p> -->
-    <ul id="download-directories">
-    </ul>
-    <p>Default location (blank for your normal downloads folder):</p>
-    <p><input type="text" id="default-directory"></p>
-    <button id="save-directories">Save</button>
+    <nav>
+        <a href="http://twitter.com/fncombo" target="_blank">By fncombo</a>
+        <a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank">Source on GitHub</a>
+        <a href="updates.html">Update history</a>
+    </nav>
 
     <hr>
 
-    <h1>Clear list of downloaded images</h1>
-    <p>Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a tick &#10003; next to the download button.</p>
-    <p>This will permanently forget all the images you have downloaded so far.</p>
-    <button id="clear">Clear <strong id="image-count">0</strong> remembered images</button>
+    <section>
+        <div>
+            <h1>Locations</h1>
+        </div>
+        <div>
+            <p>Define a list of custom locations inside your downloads folder that you will be able to quickly choose from when saving an image.</p>
+            <p>Separate folders inside folders with a <code>/</code> forward slash. If the folder doesn't exist, it will automatically be created.</p>
+            <ul id="download-directories">
+            </ul>
+            <p>Default location (blank for your normal downloads folder):</p>
+            <p><input type="text" id="default-directory"></p>
+            <button id="save-directories">Save</button>
+        </div>
+    </section>
 
     <hr>
 
-    <h1>Confirm downloading again</h1>
-    <p>Toggle whether to bring up a confirmation dialog when downloading an already downloaded image. This will affect the settings on any currently open pages.</p>
-    <p>Currently <strong id="current-status">enabled</strong></p>
-    <button id="confirm">Disable</button>
+    <section>
+        <div>
+            <h1>Downloaded Images</h1>
+        </div>
+        <div>
+            <p>Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a &#10003; tick next to the download button.</p>
+            <p><button id="clear">Clear <strong id="image-count">0</strong> remembered images</button></p>
+            <p class="desc">This will permanently forget all the images you have downloaded so far.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <div>
+            <h1>Confirmation</h1>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" id="confirm">
+                <span>&nbsp;</span>
+                <!-- <i>disabled</i> -->
+            </label>
+            <p class="desc">Toggle whether to bring up a confirmation dialog when downloading an already downloaded image.</p>
+        </div>
+    </section>
 
     <hr>
 
     <footer>
-        <p>Please remember to respect the images' owners and follow their rules and usage guidelines :)</p>
+        <p>Changing settings will affect any currently open pages.</p>
+        <p>Please remember to respect the images' owners and follow their rules and usage guidelines :) This extension is only supposed to enable you to collect those images for yourself, not redistribute them without the original author's permission.</p>
         <p>Tumblr Image Downloader is not affiliated with or supported by Tumblr in any way.</p>
     </footer>
 

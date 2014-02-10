@@ -1,0 +1,281 @@
+@import "normalize.css";
+
+$tumblr-color: #2c4762;
+$tumblr-color-hover: #15212e;
+
+$tumblr-light-color: #529ecc;
+
+$tumblr-gray: hsl(210, 10%, 65%);
+$tumblr-gray-hover: hsl(210, 10%, 55%);
+
+$text-primary-color: hsl(0, 0%, 27%);
+$text-primary-color-hover: hsl(0, 0%, 37%);
+
+$text-secondary-color: hsl(0, 0%, 60%);
+$text-secondary-color-hover: hsl(0, 0%, 50%);
+
+$border: hsl(0, 0%, 85%);
+$border-active: hsl(0, 0%, 65%);
+
+$text-base-size: 14px;
+
+$border-radius: 6px;
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: #2c4762;
+    text-align: center;
+    font-size: $text-base-size;
+    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
+    color: $text-primary-color;
+
+    &:before, &:after {
+        content: '';
+        display: block;
+        height: 2rem;
+    }
+
+}
+
+main {
+    background: #fff;
+    width: 625px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: $border-radius;
+    text-align: left;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid hsl(0, 0%, 95%);
+    margin: 1.5rem 0;
+}
+
+h1 {
+    font-weight: bolder;
+    font-size: $text-base-size;
+    margin: 0;
+    margin: 0;
+}
+
+p {
+    margin: 0 0 1rem 0;
+
+    &.desc {
+        color: $tumblr-gray;
+    }
+
+    &:last-child {
+        margin: 0;
+    }
+
+}
+
+a {
+    color: $tumblr-color;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+}
+
+section {
+
+    & > div:first-child {
+        display: inline-block;
+        width: 29.5%;
+        vertical-align: top;
+    }
+
+    & > div:last-child {
+        display: inline-block;
+        width: 69.5%;
+        vertical-align: top;
+    }
+
+}
+
+#ext {
+    margin: 0 0 1rem 0;
+}
+
+#logo, #name {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#logo {
+    height: 38px;
+    margin: 0 0.5rem 0 0;
+}
+
+nav {
+    margin: 2rem 0;
+}
+
+button, nav a {
+    background: $tumblr-gray;
+    border: none;
+    border-radius: 2px;
+    padding: 0.5rem 0.75rem;
+    font-weight: bolder;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        background: $tumblr-gray-hover;
+    }
+
+}
+
+input {
+    width: 20rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid $border;
+    border-radius: 2px;
+    position: relative;
+    top: -0.1rem;
+
+    &:focus {
+        border-color: $border-active;
+        outline: none;
+    }
+
+}
+
+#download-directories {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+        padding: 0.1rem 0;
+    }
+
+    .move {
+        cursor: ns-resize;
+        padding: 0.5rem 1rem;
+        opacity: 0.3;
+        font-size: 1.1rem;
+    }
+
+    .moving {
+        pointer-events: none;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        z-index: 999999;
+    }
+
+    .delete {
+        cursor: pointer;
+        padding: 0.5rem;
+        opacity: 0;
+        font-size: 1.1rem;
+    }
+
+    .fake {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    input:focus + .delete {
+        opacity: 0.3;
+    }
+
+    li:hover .move, li:hover .delete {
+        opacity: 0.6;
+    }
+
+    li:hover .default {
+        opacity: 1;
+    }
+
+    li .move:hover, li .delete:hover {
+        opacity: 0.9;
+    }
+
+    .blank .move, .blank .delete, .blank .default {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+}
+
+label {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+input[type="checkbox"] {
+    display: none;
+
+    & ~ span {
+        display: inline-block;
+        margin: 0 0.5rem 1rem 0;
+        position: relative;
+        width: $border-radius*4;
+        height: $border-radius*2.4;
+        background: $tumblr-gray;
+        border-radius: $border-radius;
+        cursor: pointer;
+        -webkit-user-select: none;
+    }
+
+    &:checked ~ span {
+        background: $tumblr-light-color;
+    }
+
+    & ~ span:before {
+        content: '';
+        display: block;
+        width: $border-radius*1.6;
+        height: $border-radius*1.6;
+        background: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    &:not(:checked) ~ span:before {
+        left: $border-radius*0.3;
+    }
+
+    &:checked ~ span:before {
+        right: $border-radius*0.4;
+    }
+
+    & ~ span:after {
+        content: 'Disabled';
+        position: relative;
+        left: 2rem;
+        top: -1px;
+    }
+
+    &:checked ~ span:after {
+        content: 'Enabled';
+    }
+
+}
+
+label i {
+    display: inline-block;
+    font-style: normal;
+}
+
+footer {
+    font-size: 0.8rem;
+    color: $tumblr-gray;
+
+    p {
+        margin: 0 0 0.5rem 0;
+    }
+
+}

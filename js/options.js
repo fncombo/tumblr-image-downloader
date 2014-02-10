@@ -34,13 +34,7 @@
      * Adjust the confrim settings HTML
      */
     function adjustConfirmSettings(value) {
-        if (value) {
-            $('#confirm').innerText = 'Disable';
-            $('#current-status').innerText = 'enabled';
-        } else {
-            $('#current-status').innerText = 'disabled';
-            $('#confirm').innerText = 'Enable';
-        }
+        $('#confirm').checked = value;
     }
 
     /**
@@ -152,14 +146,8 @@
      * Change confirmation settings
      */
     $('#confirm').onclick = function () {
-
-        var newSetting = this.innerText === 'Enable' ? true : false;
-        this.innerText = newSetting ? 'Disable' : 'Enable';
-        $('#current-status').innerText = newSetting ? 'enabled' : 'disabled';
-        chrome.storage.sync.set({confirm: newSetting});
-
-        sendMessage(['Download Confirmation', newSetting ? 'Enabled' : 'Disabled']);
-
+        chrome.storage.sync.set({confirm: this.checked});
+        sendMessage(['Download Confirmation', this.checked ? 'Enabled' : 'Disabled']);
     };
 
     /**
