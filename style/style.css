@@ -36,17 +36,10 @@ a.__TID_parent img {
     position: absolute;
     top: 0;
     left: 0;
-    color: #fff;
     opacity: 0;
     cursor: pointer;
     z-index: 9999999999;
     white-space: pre;
-    font-size: 14px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
-    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
-    line-height: 1.4;
 }
 
 .__TID_download_div {
@@ -137,4 +130,16 @@ a.__TID_parent img {
 .__TID_list ul span {
     color: hsla(0, 0%, 100%, 0.75);
     pointer-events: none;
+}
+
+.__TID_download, .__TID_download * {
+    color: #fff !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    font-weight: normal !important;
+    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif !important;
+    line-height: 1.4 !important;
+    text-shadow: none !important;
+    cursor: pointer !important;
 }
