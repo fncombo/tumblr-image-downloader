@@ -8,6 +8,7 @@
     var offsetX = 0;
     var moveDirection = false;
     var moveDirectionLast = 0;
+    var ctrlKey = false;
     var directoryPlaceholders = [
         'Tumblr Images/Animals/Cats',
         'GIFs/Cats',
@@ -162,10 +163,37 @@
      */
     listen('keyup', '#download-directories input', function (event, el) {
 
-        if (event.keyCode === 38) { // up arrow
-            el.parentNode.previousSibling.querySelector('input').focus();
-        } else if (event.keyCode === 40) { // down arrow
-            el.parentNode.nextSibling.querySelector('input').focus();
+        if (ctrlKey) {
+
+            var parent = el.parentNode;
+            var toMove;
+
+            if (parent.classList.contains('blank')) {
+                return;
+            }
+
+            if (event.keyCode === 38 && parent.previousElementSibling) {
+                toMove = parent.previousElementSibling;
+                parent.parentNode.insertBefore(toMove.cloneNode(true), parent.nextElementSibling);
+                parent.parentNode.removeChild(toMove);
+            } else if (event.keyCode === 40 && !parent.nextElementSibling.classList.contains('blank')) {
+                toMove = parent.nextElementSibling;
+                if (!toMove.classList.contains('blank')) {
+                    parent.parentNode.insertBefore(toMove.cloneNode(true), parent);
+                    parent.parentNode.removeChild(toMove);
+                }
+            }
+
+        } else {
+
+            try {
+                if (event.keyCode === 38) {
+                    el.parentNode.previousElementSibling.querySelector('input').focus();
+                } else if (event.keyCode === 40) {
+                    el.parentNode.nextElementSibling.querySelector('input').focus();
+                }
+            } catch (e) {}
+
         }
 
         if (!el.value.length) {
@@ -238,11 +266,24 @@
             currentItem.style.position = 'relative';
             currentItem.style.top = '0px';
             currentItem.classList.remove('moving');
+            currentItem = false;
 
             window.removeEventListener('mousemove', moving, false);
 
         }
 
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.keyCode === 17) {
+            ctrlKey = true;
+        }
+    });
+
+    document.addEventListener('keyup', function (event) {
+        if (event.keyCode === 17) {
+            ctrlKey = false;
+        }
     });
 
     /**
