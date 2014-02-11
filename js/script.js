@@ -39,11 +39,10 @@
         },
 
         match: {
-            imageSize: new RegExp('\\d+(?=\\.(jpe?g|png|gif)$)', 'i'),
-            imageName: new RegExp('tumblr_(\\w+)(?=_\\d+\\.{1}(jpe?g|png|gif)$)', 'i'),
+            imageSize: new RegExp('\\d+(?=\\.(?:jpe?g|png|gif)$)', 'i'),
+            imageName: new RegExp('tumblr_(\\w+)(?=_\\d+\\.(?:jpe?g|png|gif)$)', 'i'),
             imageExt: new RegExp('(jpe?g|png|gif)$', 'i'),
-            imageURL: new RegExp('[^\\/]+\\.{1}(jpe?g|png|gif)$', 'i'),
-            image1280: new RegExp('_1280\.(jpe?g|png|gif)$', 'i'),
+            image1280: new RegExp('_1280\.(?:jpe?g|png|gif)$', 'i'),
             tumblrDomain: new RegExp('tumblr\\.com', 'i'),
             tumblrImgRes: new RegExp('(_\\d+\\.)')
         },
@@ -425,7 +424,7 @@
             var imageID = url.match(TID.match.imageName);
 
             // If matched correctly
-            if (imageID && imageID.length === 3) {
+            if (imageID && imageID.length === 2) {
                 // Return the ID
                 return imageID[1];
             }
@@ -459,7 +458,6 @@
                     }
 
                 // If it's a straight up link to an image, it's probably external
-                // } else if (imageEl.closest('.high_res_link').href.match(TID.match.imageURL)) {
                 } else {
 
                     data.isHD = 'external_high_res';
