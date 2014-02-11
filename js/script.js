@@ -10,7 +10,7 @@
         directories: [],
         confirm: true,
         isArchivePage: !!window.location.pathname.match(/(archive)/i),
-        isInfiniteScrolling: !$('#pagination').clientHeight,
+        isInfiniteScrolling: $('#pagination') ? $('#pagination').clientHeight : false,
 
         classes: {
             ignore: '__TID_ignore',
