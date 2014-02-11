@@ -43,6 +43,7 @@
             imageName: new RegExp('tumblr_(\\w+)(?=_\\d+\\.{1}(jpe?g|png|gif)$)', 'i'),
             imageExt: new RegExp('(jpe?g|png|gif)$', 'i'),
             imageURL: new RegExp('[^\\/]+\\.{1}(jpe?g|png|gif)$', 'i'),
+            image1280: new RegExp('_1280\.(jpe?g|png|gif)$', 'i'),
             tumblrDomain: new RegExp('tumblr\\.com', 'i'),
             tumblrImgRes: new RegExp('(_\\d+\\.)')
         },
@@ -201,7 +202,20 @@
                     var imageID = TID.getImageID(mutation.target.src);
 
                     // Get the button of the image with that ID from the page
-                    var button = $('.' + TID.classes.download + '[data-image-id=' + imageID + ']').cloneNode(true);
+                    var button = $('.' + TID.classes.download + '[data-image-id=' + imageID + ']');
+
+                    if (button) {
+
+                        button = button.cloneNode(true);
+
+                    // If the button doesn't exist because we're not on the dashboard, make one
+                    // Use the "src" attribute from the image because Tumblr will automatically give us the largest one
+                    } else {
+
+                        var imageHDAvailable = mutation.target.src.match(TID.match.image1280) !== null ? true : false;
+                        button = TID.createDownloadButton(imageID, imageHDAvailable, mutation.target.src);
+
+                    }
 
                     // Get half the image's height and width
                     var top = Math.round(mutation.target.clientHeight / 2);

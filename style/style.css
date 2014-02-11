@@ -41,6 +41,12 @@ a.__TID_parent img {
     cursor: pointer;
     z-index: 9999999999;
     white-space: pre;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
+    line-height: 1.4;
 }
 
 .__TID_download_div {
