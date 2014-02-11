@@ -17,7 +17,7 @@ a.__TID_parent img {
     margin-bottom: 0 !important;
 }
 
-.__TID_parent:hover .__TID_download {
+.__TID_parent:hover .__TID_download, #tumblr_lightbox_center_link:hover .__TID_download {
     opacity: 1;
 }
 
@@ -39,6 +39,8 @@ a.__TID_parent img {
     color: #fff;
     opacity: 0;
     cursor: pointer;
+    z-index: 9999999999;
+    white-space: pre;
 }
 
 .__TID_download_div {

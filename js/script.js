@@ -132,25 +132,55 @@
             // Download list events
             document.addEventListener('click', function (event) {
 
+                var parent;
+                var url;
+                var imageID;
+                var isHD;
+                var directory;
+
                 // Set up downloading via directory list buttons
                 if (event.target.matchesSelector('.' + TID.classes.list + ' li:not(.' + TID.classes.help + ')')) {
 
                     event.stopPropagation();
                     event.preventDefault();
 
-                    var parent = event.target.ancestor(3);
-                    var imageID = parent.getAttribute('data-image-id');
+                    parent = event.target.ancestor(3);
+                    imageID = parent.getAttribute('data-image-id');
 
                     if (TID.hasDownloaded(imageID)) {
                         return;
                     }
 
-                    var url = parent.getAttribute('data-download-url');
-                    var directory = event.target.getAttribute('data-directory');
+                    url = parent.getAttribute('data-download-url');
+                    directory = event.target.getAttribute('data-directory');
 
                     TID.downloadImage(url, imageID, directory);
 
                     TID.sendMessage(['Downloaded Image', 'To Directory']);
+
+                // Set up downloading via normal download button
+                } else if (event.target.matchesSelector('.' + TID.classes.downloadDiv)) {
+
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    parent = event.target.parentNode;
+                    imageID = parent.getAttribute('data-image-id');
+
+                    if (TID.hasDownloaded(imageID)) {
+                        return;
+                    }
+
+                    url = parent.getAttribute('data-download-url');
+                    isHD = parent.getAttribute('data-hd') === 'true' ? true : false;
+
+                    TID.downloadImage(url, imageID);
+
+                    if (!TID.isArchivePage) {
+                        TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
+                    } else {
+                        TID.sendMessage(['Downloaded Image', 'Archive']);
+                    }
 
                 // Set up link to the options page
                 } else if (event.target.matchesSelector('.' + TID.classes.help)) {
@@ -163,6 +193,62 @@
                 }
 
             }, true);
+
+            // Create a DOM mutation observer for the lightbox middle image
+            var centerImageObserver = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+
+                    var imageID = TID.getImageID(mutation.target.src);
+
+                    // Get the button of the image with that ID from the page
+                    var button = $('.' + TID.classes.download + '[data-image-id=' + imageID + ']').cloneNode(true);
+
+                    // Get half the image's height and width
+                    var top = Math.round(mutation.target.clientHeight / 2);
+                    var left = Math.round(mutation.target.clientWidth / 2);
+
+                    // Give the button correct offsets
+                    button.style.position = 'relative';
+                    button.style.top = '-' + top + 'px';
+                    button.style.left = '-' + left + 'px';
+
+                    // Remove any existing buttons
+                    $$('.' + TID.classes.download, mutation.target.parentNode).forEach(function (el) {
+                        el.remove();
+                    });
+
+                    // Append the button
+                    mutation.target.parentNode.appendChild(button);
+
+                });
+            });
+
+            // Create a DOM mutation observer for the body
+            var lightboxObserver = new MutationObserver(function (mutations) {
+                mutations.forEach(function (el) {
+
+                    var i = 0;
+                    var l = el.addedNodes.length;
+
+                    for (; i < l; i += 1) {
+
+                        if (el.addedNodes[i].id === 'tumblr_lightbox') {
+
+                            centerImageObserver.observe($('#tumblr_lightbox_center_image'), {
+                                attributes: true, attributeFilter: ['src']
+                            });
+
+                            break;
+
+                        }
+
+                    }
+
+                });
+            });
+
+            // Start observing
+            lightboxObserver.observe($('body'), {childList: true});
 
         },
 
@@ -238,6 +324,7 @@
             el.classList.add(TID.classes.download);
             el.setAttribute('data-download-url', url);
             el.setAttribute('data-image-id', imageID);
+            el.setAttribute('data-hd', isHD);
 
             // Main download button
             var download = document.createElement('div');
@@ -272,26 +359,6 @@
                 download.innerHTML += '&#10138;';
                 download.title = 'HD image is from an external site';
             }
-
-            download.onclick = function (event) {
-
-                // Prevent any default/Tumblr events
-                event.stopPropagation();
-                event.preventDefault();
-
-                if (TID.hasDownloaded(imageID)) {
-                    return;
-                }
-
-                TID.downloadImage(url, imageID);
-
-                if (!TID.isArchivePage) {
-                    TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
-                } else {
-                    TID.sendMessage(['Downloaded Image', 'Archive']);
-                }
-
-            };
 
             el.onmouseover = function () {
 
@@ -522,10 +589,9 @@
          * Add a tick to a button with a certain image ID
          */
         addTick: function (imageID) {
-            var el = $('.' + TID.classes.download + '[data-image-id="' + imageID + '"]');
-            if (el) {
+            $$('.' + TID.classes.download + '[data-image-id="' + imageID + '"]').forEach(function (el) {
                 el.classList.add(TID.classes.downloaded);
-            }
+            });
         },
 
         /**
