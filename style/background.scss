@@ -82,6 +82,12 @@ a {
         text-decoration: none;
     }
 
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
+        border-radius: 2px;
+    }
+
 }
 
 section {
