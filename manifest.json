@@ -10,14 +10,8 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*.tumblr.com/tagged/*",
-        "http://*.tumblr.com/blog/*",
-        "http://*.tumblr.com/dashboard",
-        "http://*.tumblr.com/dashboard/*",
-        "http://*.tumblr.com/likes",
-        "http://*.tumblr.com/likes/*",
-        "http://*.tumblr.com/archive",
-        "http://*.tumblr.com/archive/*"
+        "http://*.tumblr.com/*",
+        "https://*.tumblr.com/*"
         ],
       "js": [
         "js/core.js",
