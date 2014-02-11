@@ -32,7 +32,7 @@
     }
 
     /**
-     * Adjust the confrim settings HTML
+     * Adjust the confirm settings HTML
      */
     function adjustConfirmSettings(value) {
         $('#confirm').checked = value;
@@ -152,7 +152,7 @@
     };
 
     /**
-     * Remove unneeded slahes at the start and at the end
+     * Remove unneeded slashes at the start and at the end
      */
     listen('focusout', '#download-directories input, #default-directory', function (event, el) {
         el.value = sanitizeDirectory(el.value);
@@ -284,7 +284,7 @@
     });
 
     /**
-     * Listen to ctrl key being release
+     * Listen to ctrl key being released
      */
     document.addEventListener('keyup', function (event) {
         if (event.keyCode === 17) {
