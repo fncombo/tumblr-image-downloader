@@ -132,6 +132,11 @@ button, nav a {
         background: $tumblr-gray-hover;
     }
 
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
+    }
+
 }
 
 input {
@@ -195,8 +200,9 @@ input {
         opacity: 1;
     }
 
-    li .move:hover, li .delete:hover {
+    li .move:hover, li .delete:hover, li .delete:focus {
         opacity: 0.9;
+        outline: none;
     }
 
     .blank .move, .blank .delete, .blank .default {
@@ -210,10 +216,12 @@ input {
 label {
     -webkit-user-select: none;
     user-select: none;
+
 }
 
 input[type="checkbox"] {
-    display: none;
+    position: absolute;
+    opacity: 0;
 
     & ~ span {
         display: inline-block;
@@ -229,6 +237,11 @@ input[type="checkbox"] {
 
     &:checked ~ span {
         background: $tumblr-light-color;
+    }
+
+    &:focus ~ span {
+        outline: none;
+        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
     }
 
     & ~ span:before {

@@ -52,7 +52,7 @@
         html += skipLi ? '' : '<li>';
         html += '<span class="move">&#9776;</span>';
         html += '<input type="text" placeholder="' + directoryPlaceholders[Math.floor(Math.random() * directoryPlaceholders.length)] + '" value="' + (value ? value : '') + '">';
-        html += '<span class="delete">&cross;</span>';
+        html += '<span class="delete" tabindex="0">&cross;</span>';
         html += skipLi ? '' : '</li>';
         return html;
     }
