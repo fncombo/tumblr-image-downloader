@@ -26,5 +26,10 @@
         "Set a default download location where to save all your images.",
         "Your locations and confirmation settings now sync across your Google account.",
         "General fixes and improvements."
+    ],
+    [
+        "You can now download images from slideshows on Tumblelogs! (That is, anywhere where you can bring up a full image view.)",
+        "Added support for SSL-enabled dashboards.",
+        "Redesigned the options page to resemble that of Tumblr's."
     ]
 ]

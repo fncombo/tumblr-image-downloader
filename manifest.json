@@ -1,6 +1,6 @@
 {
   "name": "Tumblr Image Downloader",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "description": "Download images from your Tumblr dashboard, like, archive, and search pages with a single click.",
   "permissions": [
     "storage",
