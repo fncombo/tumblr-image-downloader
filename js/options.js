@@ -154,7 +154,7 @@
     /**
      * Remove unneeded slahes at the start and at the end
      */
-    listen('focusout', '#download-directories input', function (event, el) {
+    listen('focusout', '#download-directories input, #default-directory', function (event, el) {
         el.value = sanitizeDirectory(el.value);
     });
 
