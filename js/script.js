@@ -353,7 +353,6 @@
             var list = document.createElement('ul');
             list.innerHTML = TID.formatDirectories();
 
-
             directories.appendChild(list);
             el.appendChild(directories);
 
@@ -624,7 +623,7 @@
         },
 
         /**
-         * Format the list of download directoried
+         * Format the list of download directories
          */
         formatDirectories: function () {
 
