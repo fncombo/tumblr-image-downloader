@@ -274,12 +274,18 @@
 
     });
 
+    /**
+     * Listen to ctrl key pressing down
+     */
     document.addEventListener('keydown', function (event) {
         if (event.keyCode === 17) {
             ctrlKey = true;
         }
     });
 
+    /**
+     * Listen to ctrl key being release
+     */
     document.addEventListener('keyup', function (event) {
         if (event.keyCode === 17) {
             ctrlKey = false;
