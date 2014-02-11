@@ -87,14 +87,7 @@ _gaq.push(['_trackPageview']);
             chrome.tabs.create({url: 'html/options.html'});
             break;
         case 'update':
-
             updateNotification();
-
-            // Move the confirmation setting to synced storage
-            chrome.storage.local.get({confirm: false}, function (object) {
-                chrome.storage.sync.set(object);
-            });
-
             break;
         }
 
