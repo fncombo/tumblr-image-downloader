@@ -297,15 +297,15 @@
      */
     chrome.storage.onChanged.addListener(function (changes) {
 
-        if (changes.confirm) {
+        if (changes.hasOwnProperty('confirm')) {
 
             adjustConfirmSettings(changes.confirm.newValue);
 
-        } else if (changes.images) {
+        } else if (changes.hasOwnProperty('images')) {
 
-            $('#image-count').innerText = 'newValue' in changes.images ? changes.images.newValue.length : 0;
+            $('#image-count').innerText = changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0;
 
-        } else if (changes.saveDirectories) {
+        } else if (changes.hasOwnProperty('saveDirectories')) {
 
             $('#download-directories').innerHTML = '';
             changes.saveDirectories.newValue.forEach(function (directory) {
@@ -313,9 +313,9 @@
             });
             addBlank();
 
-        } else if (changes.defaultDirectory) {
+        } else if (changes.hasOwnProperty('defaultDirectory')) {
 
-            $('#default-directory').value = 'newValue' in changes.defaultDirectory ? changes.defaultDirectory.newValue : '';
+            $('#default-directory').value = changes.defaultDirectory.hasOwnProperty('newValue') ? changes.defaultDirectory.newValue : '';
 
         }
 

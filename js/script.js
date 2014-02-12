@@ -55,18 +55,18 @@
             chrome.storage.onChanged.addListener(function (changes) {
 
                 // If the download confirmation setting was changed, adjust the local setting
-                if (changes.confirm) {
+                if (changes.hasOwnProperty('confirm')) {
 
                     TID.confirm = changes.confirm.newValue;
 
                 // If the images storage was updated
-                } else if (changes.images) {
+                } else if (changes.hasOwnProperty('images')) {
 
                     // Update the downloaded images array
                     TID.downloadedImages = changes.images.newValue || [];
 
                     // If the new value is empty, all images have been cleared, remove all ticks
-                    if (!changes.images.newValue) {
+                    if (!changes.images.hasOwnProperty('newValue')) {
 
                         TID.removeAllTicks();
 
@@ -79,7 +79,7 @@
                     }
 
                 // If the save directories were modified
-                } else if (changes.saveDirectories) {
+                } else if (changes.hasOwnProperty('saveDirectories')) {
 
                     TID.directories = changes.saveDirectories.newValue;
 

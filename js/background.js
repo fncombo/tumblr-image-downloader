@@ -182,7 +182,7 @@ _gaq.push(['_trackPageview']);
      * Keep default directory updated
      */
     chrome.storage.onChanged.addListener(function (changes) {
-        if (changes.defaultDirectory) {
+        if (changes.hasOwnProperty('defaultDirectory') && changes.defaultDirectory.hasOwnProperty('newValue')) {
             defaultDirectory = changes.defaultDirectory.newValue;
         }
     });
