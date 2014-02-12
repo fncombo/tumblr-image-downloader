@@ -143,3 +143,7 @@ a.__TID_parent img {
     text-shadow: none !important;
     cursor: pointer !important;
 }
+
+.__TID_download strong {
+    font-weight: bolder !important;
+}
