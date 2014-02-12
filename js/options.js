@@ -52,7 +52,7 @@
         var html = '';
         html += skipLi ? '' : '<li>';
         html += '<span class="move">&#9776;</span>';
-        html += '<input type="text" placeholder="' + directoryPlaceholders[Math.floor(Math.random() * directoryPlaceholders.length)] + '" value="' + (value ? value : '') + '">';
+        html += '<input type="text" placeholder="' + randomPlaceholder() + '" value="' + (value ? value : '') + '">';
         html += '<span class="delete" tabindex="0">&cross;</span>';
         html += skipLi ? '' : '</li>';
         return html;
@@ -129,6 +129,13 @@
         li.innerHTML = '<input type="text">';
         where.parentNode.insertBefore(li, where);
 
+    }
+
+    /**
+     * Get a random placeholder value
+     */
+    function randomPlaceholder() {
+        return directoryPlaceholders[Math.floor(Math.random() * directoryPlaceholders.length)];
     }
 
     /**
@@ -345,7 +352,7 @@
      * Get default save directory
      */
     chrome.storage.sync.get({defaultDirectory: false}, function (object) {
-        $('#default-directory').setAttribute('placeholder', directoryPlaceholders[Math.floor(Math.random() * directoryPlaceholders.length)]);
+        $('#default-directory').setAttribute('placeholder', randomPlaceholder());
         $('#default-directory').value = object.defaultDirectory ? object.defaultDirectory : '';
     });
 

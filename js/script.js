@@ -699,15 +699,23 @@
                 var list = '';
 
                 TID.directories.forEach(function (directory) {
-                    var name = directory.replace(/(.+\/)/, '<span>$1</span>').replace(/\/(?!\w+>)/g, '<strong>&#8260;</strong>');
-                    list += '<li title="Download inside: ' + directory + '" data-directory="' + directory + '">' + name + '</li>';
+
+                    var name = directory.replace(/(.+\/)/, '<span>$1</span>')
+                                        .replace(/\/(?!\w+>)/g, '<strong>&#8260;</strong>');
+
+                    list += '<li title="Download inside: ' + directory + '" data-directory="' + directory + '">';
+                    list += name;
+                    list += '</li>';
+
                 });
 
                 return list;
 
             } else {
 
-                return '<li class="' + TID.classes.help + '">You can specify custom download\nlocations in the settings.\nClick to configure.</li>';
+                return '<li class="' + TID.classes.help + '">' +
+                       'You can specify custom download\nlocations in the settings.\n' +
+                       'Click to configure.</li>';
 
             }
 
