@@ -168,6 +168,29 @@
     /**
      * Make sure there is always at least one blank input
      */
+    listen('input', '#download-directories input', function (event, el) {
+
+        if (!el.value.length) {
+
+            el.parentNode.classList.add('blank');
+            $$('#download-directories .blank').slice(0, -1).forEach(function (el) {
+                el.remove();
+            });
+
+        } else {
+            el.parentNode.classList.remove('blank');
+        }
+
+        if (!$$('#download-directories .blank').length) {
+            addBlank();
+        }
+
+    });
+
+    /**
+     * Navigate between list item inputs using the arrow keys
+     * Move list item inputs with ctrl+arrow keys
+     */
     listen('keyup', '#download-directories input', function (event, el) {
 
         if (ctrlKey) {
@@ -201,21 +224,6 @@
                 }
             } catch (e) {}
 
-        }
-
-        if (!el.value.length) {
-
-            el.parentNode.classList.add('blank');
-            $$('#download-directories .blank').slice(0, -1).forEach(function (el) {
-                el.remove();
-            });
-
-        } else {
-            el.parentNode.classList.remove('blank');
-        }
-
-        if (!$$('#download-directories .blank').length) {
-            addBlank();
         }
 
     });
