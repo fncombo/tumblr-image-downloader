@@ -9,7 +9,7 @@
         downloadedImages: [],
         directories: [],
         confirm: true,
-        isArchivePage: !!window.location.pathname.match(/(archive)/i),
+        isArchivePage: !!window.location.pathname.match(/\/archive(?:\/|$)/i),
         isInfiniteScrolling: $('#pagination') ? $('#pagination').clientHeight : false,
 
         classes: {
