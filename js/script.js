@@ -217,8 +217,8 @@
                     }
 
                     // Get half the image's height and width
-                    var top = Math.round(mutation.target.clientHeight / 2);
-                    var left = Math.round(mutation.target.clientWidth / 2);
+                    var top = Math.floor(mutation.target.clientHeight / 2);
+                    var left = Math.floor(mutation.target.clientWidth / 2);
 
                     // Give the button correct offsets
                     button.style.position = 'relative';
