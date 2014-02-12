@@ -13,6 +13,8 @@ _gaq.push(['_trackPageview']);
      */
     var defaultDirectory;
     var saveDirectory;
+    var lastTabID;
+    var lastImageID;
 
     /**
      * Analytics code
@@ -102,6 +104,21 @@ _gaq.push(['_trackPageview']);
             return;
         }
 
+        // If the link does not appear to link to an image
+        if (!downloadItem.mime.match(/image/)) {
+
+            // Cancel the download
+            chrome.downloads.cancel(downloadItem.id);
+
+            // Prompt the user
+            chrome.tabs.sendMessage(lastTabID, {
+                message: 'not_image',
+                imageID: lastImageID,
+                directory: saveDirectory
+            });
+
+        }
+
         if (saveDirectory) {
             suggest({filename: saveDirectory + '/' + downloadItem.filename});
         } else if (defaultDirectory) {
@@ -124,10 +141,15 @@ _gaq.push(['_trackPageview']);
             break;
 
         case 'download':
-            saveDirectory = request.directory ? request.directory : false;
+
+            saveDirectory = request.directory;
+            lastTabID = sender.tab.id;
+            lastImageID = request.imageID;
+
             chrome.downloads.download({
                 url: request.url
             });
+
             break;
 
         case 'open_settings':

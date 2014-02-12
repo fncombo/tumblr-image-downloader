@@ -263,6 +263,34 @@
             // Start observing
             lightboxObserver.observe($('body'), {childList: true});
 
+            // Listen to connections from the background script
+            chrome.runtime.onMessage.addListener(function (request) {
+
+                switch (request.message) {
+
+                case 'not_image':
+
+                    TID.forgetImage(request.imageID);
+                    TID.removeTick(request.imageID);
+
+                    var sure = confirm('Oops! The external link doesn\'t appear to be an image.\n\n' +
+                                       'Would you like to download the normal image from Tumblr instead?');
+
+                    if (sure) {
+
+                        var button = $('.' + TID.classes.download + '[data-image-id="' + request.imageID + '"]');
+                        var image = button.parentNode.querySelector('img');
+
+                        TID.downloadImage(image.src, request.imageID, request.directory);
+
+                    }
+
+                    break;
+
+                }
+
+            });
+
         },
 
         /**
@@ -545,16 +573,29 @@
          */
         downloadImage: function (url, imageID, directory) {
 
+            if (!directory) {
+                directory = false;
+            }
+
+            function sendMessage(url) {
+                TID.sendMessage({
+                    message: 'download',
+                    url: url,
+                    directory: directory,
+                    imageID: imageID
+                });
+            }
+
             if (!TID.isArchivePage) {
 
-                TID.sendMessage({message: 'download', url: url, directory: directory});
+                sendMessage(url);
 
             } else {
 
                 TID.availableHDImage(url, function (url) {
-                    TID.sendMessage({message: 'download', url: url, directory: directory});
+                    sendMessage(url);
                 }, function (url) {
-                    TID.sendMessage({message: 'download', url: url, directory: directory});
+                    sendMessage(url);
                 });
 
             }
@@ -572,6 +613,23 @@
 
                 if (object.images.indexOf(imageID) === -1) {
                     object.images.push(imageID);
+                    chrome.storage.local.set(object);
+                }
+
+            });
+
+        },
+
+        /**
+         * Remove the image's ID from local storage
+         */
+        forgetImage: function (imageID) {
+
+            chrome.storage.local.get({images: []}, function (object) {
+
+                if (object.images.indexOf(imageID) !== -1) {
+                    var index = object.images.indexOf(imageID);
+                    object.images.splice(index, 1);
                     chrome.storage.local.set(object);
                 }
 
@@ -602,6 +660,15 @@
         addTick: function (imageID) {
             $$('.' + TID.classes.download + '[data-image-id="' + imageID + '"]').forEach(function (el) {
                 el.classList.add(TID.classes.downloaded);
+            });
+        },
+
+        /**
+         * Remove tick from a certain imageID
+         */
+        removeTick: function (imageID) {
+            $$('.' + TID.classes.downloaded + '[data-image-id="' + imageID + '"]').forEach(function (el) {
+                el.classList.remove(TID.classes.downloaded);
             });
         },
 
