@@ -168,3 +168,4 @@ tile*.png
 *.ai
 *.psd
 *.sublime*
+node_modules/
