@@ -207,7 +207,6 @@ TID.initMutationObservers = function () {
 
 /**
  * Initialize all Chrome event listeners
- * @return {[type]} [description]
  */
 TID.initChromeListeners = function () {
 
