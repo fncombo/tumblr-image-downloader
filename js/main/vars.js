@@ -11,6 +11,9 @@ TID.directories = [];
 // Store user's download confirmation setting
 TID.confirm = true;
 
+// Store user's tick setting
+TID.showTicks = true;
+
 // Check if the current page is a Tumblelog's archive page
 TID.isArchivePage = !!window.location.pathname.match(/\/archive(?:\/|$)/i);
 
@@ -19,6 +22,7 @@ TID.isInfiniteScrolling = $('#pagination') ? $('#pagination').clientHeight : fal
 
 // List of all the classes used
 TID.classes = {
+    showTicks: '__TID_show_ticks',
     ignore: '__TID_ignore',
     download: '__TID_download',
     downloaded: '__TID_downloaded',

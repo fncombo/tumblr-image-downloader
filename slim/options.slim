@@ -65,9 +65,20 @@ main
       h1 Confirmation
     div
       label
-        input#confirm type="checkbox"
+        input#confirm type="checkbox" data-message="Download Confirmation"
         span
       p.desc Toggle whether to bring up a confirmation dialog when downloading an already downloaded image.
+
+  hr
+
+  section
+    div
+      h1 Show Ticks
+    div
+      label
+        input#showTicks type="checkbox" data-message="Show Ticks"
+        span
+      p.desc Show just the tick on downloaded images even when you're not hovering over them.
 
   hr
 

@@ -34,8 +34,8 @@
     /**
      * Adjust the confirm settings HTML
      */
-    function adjustConfirmSettings(value) {
-        $('#confirm').checked = value;
+    function adjustCheckbox(id, value) {
+        $('#' + id).checked = value;
     }
 
     /**
@@ -151,12 +151,14 @@
     };
 
     /**
-     * Change confirmation settings
+     * Change checkbox settings
      */
-    $('#confirm').onclick = function () {
-        chrome.storage.sync.set({confirm: this.checked});
-        sendMessage(['Download Confirmation', this.checked ? 'Enabled' : 'Disabled']);
-    };
+    listen('click', 'input[type="checkbox"]', function (event, el) {
+        var object = {};
+        object[el.id] = el.checked;
+        chrome.storage.sync.set(object);
+        sendMessage([el.getAttribute('data-message'), el.checked ? 'Enabled' : 'Disabled']);
+    });
 
     /**
      * Remove unneeded slashes at the start and at the end
@@ -368,7 +370,14 @@
      * Get current settings for confirmation
      */
     chrome.storage.sync.get({confirm: true}, function (object) {
-        adjustConfirmSettings(object.confirm);
+        adjustCheckbox('confirm', object.confirm);
+    });
+
+    /**
+     * Get current settings for ticks
+     */
+    chrome.storage.sync.get({showTicks: true}, function (object) {
+        adjustCheckbox('showTicks', object.showTicks);
     });
 
 }());

@@ -30,3 +30,15 @@ TID.removeAllTicks = function () {
         el.classList.remove(TID.classes.downloaded);
     });
 };
+
+/**
+ * Toggle whether or not show ticks on downloaded images
+ * @param  {Boolean} setting True of false
+ */
+TID.showDownloadedTicks = function (setting) {
+    if (setting) {
+        $('body').classList.add(TID.classes.showTicks);
+    } else {
+        $('body').classList.remove(TID.classes.showTicks);
+    }
+};

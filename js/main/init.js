@@ -45,6 +45,12 @@ TID.run = function () {
         TID.confirm = object.confirm;
     });
 
+    // Get the tick settings
+    chrome.storage.sync.get({showTicks: true}, function (object) {
+        TID.showTicks = object.showTicks;
+        TID.showDownloadedTicks(object.showTicks);
+    });
+
     TID.initChromeListeners();
     TID.initMutationObservers();
     TID.initDOMEvents();
@@ -242,6 +248,12 @@ TID.initChromeListeners = function () {
             $$('.' + TID.classes.list + ' ul').forEach(function (el) {
                 el.innerHTML = list;
             });
+
+        // If the tick setting was changed
+        } else if(changes.hasOwnProperty('showTicks')) {
+
+            TID.showTicks = changes.showTicks.newValue;
+            TID.showDownloadedTicks(changes.showTicks.newValue);
 
         }
 
