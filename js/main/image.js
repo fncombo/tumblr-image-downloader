@@ -4,6 +4,9 @@
 
 /**
  * Get the Tumblr image ID from an image URL
+ * @param  {String}  url URL to extract an image ID from
+ * @return {String}      Returns the ID of the image if one was found
+ * @return {Boolean}     Returns a false boolean if no ID was found
  */
 TID.getImageID = function (url) {
 
@@ -22,6 +25,8 @@ TID.getImageID = function (url) {
 
 /**
  * Check if a HD version of the image is available using the markup
+ * @param  {Element} imageEl HTML element of the image <img>
+ * @return {Object}          Object containing various information about the image
  */
 TID.getImageData = function (imageEl) {
 
@@ -83,6 +88,9 @@ TID.getImageData = function (imageEl) {
 
 /**
  * Check if a HD version is available by trying to load different resolutions
+ * @param  {String}   url             A Tumblr URL of an image to check for
+ * @param  {Function} callbackSuccess Callback function if a bigger image was found
+ * @param  {Function} callbackError   Callback function if no bigger image was found
  */
 TID.availableHDImage = function (url, callbackSuccess, callbackError) {
 
@@ -129,6 +137,9 @@ TID.availableHDImage = function (url, callbackSuccess, callbackError) {
 
 /**
  * Download an image using the native Chrome API
+ * @param  {String} url       URL of the image to download
+ * @param  {String} imageID   ID of the image to remember
+ * @param  {String} directory Directory to download to
  */
 TID.downloadImage = function (url, imageID, directory) {
 
@@ -165,6 +176,7 @@ TID.downloadImage = function (url, imageID, directory) {
 
 /**
  * Update local storage with the image's ID
+ * @param  {String} imageID ID of the image to remember
  */
 TID.rememberImage = function (imageID) {
 
@@ -181,6 +193,7 @@ TID.rememberImage = function (imageID) {
 
 /**
  * Remove the image's ID from local storage
+ * @param  {String} imageID ID of the image to remove
  */
 TID.forgetImage = function (imageID) {
 

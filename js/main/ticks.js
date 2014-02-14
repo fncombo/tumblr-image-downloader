@@ -4,6 +4,7 @@
 
 /**
  * Add a tick to a button with a certain image ID
+ * @param {String} imageID ID of the image to add a tick to
  */
 TID.addTick = function (imageID) {
     $$('.' + TID.classes.download + '[data-image-id="' + imageID + '"]').forEach(function (el) {
@@ -13,6 +14,7 @@ TID.addTick = function (imageID) {
 
 /**
  * Remove tick from a certain imageID
+ * @param  {String} imageID ID of the image to remove a tick from
  */
 TID.removeTick = function (imageID) {
     $$('.' + TID.classes.downloaded + '[data-image-id="' + imageID + '"]').forEach(function (el) {
@@ -21,7 +23,7 @@ TID.removeTick = function (imageID) {
 };
 
 /**
- * Remove all ticks from all buttons
+ * Remove all ticks from all images
  */
 TID.removeAllTicks = function () {
     $$('.' + TID.classes.downloaded).forEach(function (el) {

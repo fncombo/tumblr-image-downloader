@@ -48,7 +48,11 @@ TID.addButtons = function () {
 };
 
 /**
- * Create the download button
+ * Create a download button
+ * @param  {String}  imageID The ID of the image to create a button for
+ * @param  {Boolean} isHD    Whether or not a HD version of the image is available
+ * @param  {String}  url     The URL of the image to be used for downloading
+ * @return {Element}         Final HTML element of the button
  */
 TID.createDownloadButton = function (imageID, isHD, url) {
 

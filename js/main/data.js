@@ -4,6 +4,7 @@
 
 /**
  * Get the list of all user-defined directories
+ * @param  {Function} callback Callback function
  */
 TID.getDirectories = function (callback) {
 
@@ -22,6 +23,7 @@ TID.getDirectories = function (callback) {
 
 /**
  * Get the current document height
+ * @return {Integer} Current height of the document
  */
 TID.getDocumentHeight = function () {
     return document.documentElement.scrollHeight;

@@ -4,6 +4,7 @@
 
 /**
  * Show a download confirmation dialog
+ * @return {Boolean} Whether or not the user agreed
  */
 TID.confirmDialog = function () {
     return confirm('You\'ve already downloaded this image before.\n\n' +
@@ -12,6 +13,7 @@ TID.confirmDialog = function () {
 
 /**
  * Format the list of download directories
+ * @return {String} A string containing HTML for the list of directories
  */
 TID.formatDirectories = function () {
 

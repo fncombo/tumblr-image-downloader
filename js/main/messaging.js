@@ -4,6 +4,8 @@
 
 /**
  * Send a message to the background page
+ * @param  {Object}   message  Object containing the message and any other information
+ * @param  {Function} callback If specified, the callback function to be executed
  */
 TID.sendMessage = function (message, callback) {
 
