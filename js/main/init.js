@@ -2,51 +2,12 @@
 
 /* globals TID, chrome, $, $$ */
 
+/**
+ * Populate the TID object with live data and initialize all events/listeners
+ */
 TID.run = function () {
 
     TID.sendMessage('show_page_action');
-
-    // Monitor storage changes
-    chrome.storage.onChanged.addListener(function (changes) {
-
-        // If the download confirmation setting was changed, adjust the local setting
-        if (changes.hasOwnProperty('confirm')) {
-
-            TID.confirm = changes.confirm.newValue;
-
-        // If the images storage was updated
-        } else if (changes.hasOwnProperty('images')) {
-
-            // Update the downloaded images array
-            TID.downloadedImages = changes.images.newValue || [];
-
-            // If the new value is empty, all images have been cleared, remove all ticks
-            if (!changes.images.hasOwnProperty('newValue')) {
-
-                TID.removeAllTicks();
-
-            // New image has been added, get the last ID and add a tick to it
-            } else {
-
-                var imageID = changes.images.newValue[changes.images.newValue.length - 1];
-                TID.addTick(imageID);
-
-            }
-
-        // If the save directories were modified
-        } else if (changes.hasOwnProperty('saveDirectories')) {
-
-            TID.directories = changes.saveDirectories.newValue;
-
-            var list = TID.formatDirectories();
-
-            $$('.' + TID.classes.list + ' ul').forEach(function (el) {
-                el.innerHTML = list;
-            });
-
-        }
-
-    });
 
     // Keep adding new buttons for pages with endless scrolling
     if (TID.isInfiniteScrolling || TID.isArchivePage) {
@@ -83,6 +44,17 @@ TID.run = function () {
     chrome.storage.local.get({confirm: TID.confirm}, function (object) {
         TID.confirm = object.confirm;
     });
+
+    TID.initChromeListeners();
+    TID.initMutationObservers();
+    TID.initDOMEvents();
+
+};
+
+/**
+ * Initialize all DOM events
+ */
+TID.initDOMEvents = function () {
 
     // Download list events
     document.addEventListener('click', function (event) {
@@ -148,6 +120,13 @@ TID.run = function () {
         }
 
     }, true);
+
+};
+
+/**
+ * Initialize all DOM mutation observers
+ */
+TID.initMutationObservers = function () {
 
     // Create a DOM mutation observer for the lightbox middle image
     var centerImageObserver = new MutationObserver(function (mutations) {
@@ -218,6 +197,56 @@ TID.run = function () {
     // Start observing
     lightboxObserver.observe($('body'), {childList: true});
 
+};
+
+/**
+ * Initialize all Chrome event listeners
+ * @return {[type]} [description]
+ */
+TID.initChromeListeners = function () {
+
+    // Monitor storage changes
+    chrome.storage.onChanged.addListener(function (changes) {
+
+        // If the download confirmation setting was changed, adjust the local setting
+        if (changes.hasOwnProperty('confirm')) {
+
+            TID.confirm = changes.confirm.newValue;
+
+        // If the images storage was updated
+        } else if (changes.hasOwnProperty('images')) {
+
+            // Update the downloaded images array
+            TID.downloadedImages = changes.images.newValue || [];
+
+            // If the new value is empty, all images have been cleared, remove all ticks
+            if (!changes.images.hasOwnProperty('newValue')) {
+
+                TID.removeAllTicks();
+
+            // New image has been added, get the last ID and add a tick to it
+            } else {
+
+                var imageID = changes.images.newValue[changes.images.newValue.length - 1];
+                TID.addTick(imageID);
+
+            }
+
+        // If the save directories were modified
+        } else if (changes.hasOwnProperty('saveDirectories')) {
+
+            TID.directories = changes.saveDirectories.newValue;
+
+            var list = TID.formatDirectories();
+
+            $$('.' + TID.classes.list + ' ul').forEach(function (el) {
+                el.innerHTML = list;
+            });
+
+        }
+
+    });
+
     // Listen to connections from the background script
     chrome.runtime.onMessage.addListener(function (request) {
 
@@ -245,17 +274,5 @@ TID.run = function () {
         }
 
     });
-
-};
-
-TID.initDOMEvents = function () {
-
-};
-
-TID.initMutationObservers = function () {
-
-};
-
-TID.initChromeListeners = function () {
 
 };
