@@ -41,7 +41,7 @@ TID.run = function () {
     });
 
     // Get the confirmation settings
-    chrome.storage.sync.get({confirm: TID.confirm}, function (object) {
+    chrome.storage.sync.get({confirm: true}, function (object) {
         TID.confirm = object.confirm;
     });
 
