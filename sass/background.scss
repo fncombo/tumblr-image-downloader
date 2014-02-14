@@ -91,6 +91,7 @@ a {
 }
 
 section {
+    position: relative;
 
     & > div:first-child {
         display: inline-block;
