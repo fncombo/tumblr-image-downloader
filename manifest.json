@@ -14,16 +14,19 @@
         "https://*.tumblr.com/*"
         ],
       "js": [
-        "js/core.js",
-        "js/script.js"
+        "js/main.js"
       ],
-      "css": ["style/style.css"],
+      "css": [
+        "css/style.css"
+      ],
       "run_at": "document_idle",
       "all_frames": false
     }
   ],
   "background": {
-    "scripts": ["js/background.js"]
+    "scripts": [
+      "js/background.js"
+    ]
   },
   "options_page": "html/options.html",
   "page_action": {

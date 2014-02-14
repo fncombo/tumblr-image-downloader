@@ -1,0 +1,72 @@
+doctype html
+html
+
+  meta charset="utf-8"
+  title Options | Tumblr Image Downloader
+  link rel="stylesheet" href="../css/background.css"
+
+  main
+
+    h1#ext
+      span#logo
+        img src="../img/icon38.png"
+      span#name Tumblr Image Downloader
+
+    p
+      | Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don't forget to <a href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank">rate it</a> on the Chrome Web Store.
+
+    p
+      | If you have any feature requests or find that something is not working, please report it <a href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug" target="_blank">here</a> before leaving a negative review.
+
+    nav
+      a href="http://twitter.com/fncombo" target="_blank" By fncombo
+      a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank" Source on GitHub
+      a href="updates.html" target="_blank" Update history
+
+    hr
+
+    section
+      div
+        h1 Locations
+      div
+        p Define a list of custom locations inside your downloads folder that you will be able to quickly choose from when saving an image.
+        ul#download-directories
+        p Default location (blank for your normal downloads folder):
+        p
+          input#default-directory
+        p
+          button#save-directories Save
+        p.desc
+          | Separate folders inside folders with a <code>/</code> forward slash. If the folder doesn't exist, it will automatically be created.
+
+    hr
+
+    section
+      div
+        h1 Download Images
+      div
+        p Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a &#10003; tick next to the download button.
+        p
+          button#clear
+            | Clear <strong id="image-count">0</strong> remembered images
+        p.desc This will permanently forget all the images you have downloaded so far.
+
+    hr
+
+    section
+      div
+        h1 Confirmation
+      div
+        label
+          input#confirm type="checkbox"
+          span &nbsp;
+        p.desc Toggle whether to bring up a confirmation dialog when downloading an already downloaded image.
+
+    hr
+
+    footer
+      p Changing settings will affect any currently open pages.
+      p Please remember to respect the images' owners and follow their rules and usage guidelines :) This extension is only supposed to enable you to collect those images for yourself, not redistribute them without the original author's permission.
+      p Tumblr Image Downloader is not affiliated with or supported by Tumblr in any way.
+
+    script src="../js/options.js"

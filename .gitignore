@@ -162,10 +162,19 @@ pip-log.txt
 # Mac crap
 .DS_Store
 
-# Misc extension stuff
+# Ignore not needed images
 screenshot*.png
 tile*.png
+
+# Ignore Photoshop and Illustrator files
 *.ai
 *.psd
+
+# Ignore editor-specific files
 *.sublime*
+
+# Ignore node.js files and directories
 node_modules/
+
+# Ignore the built extension directory
+extension/

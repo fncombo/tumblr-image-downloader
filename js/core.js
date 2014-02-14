@@ -1,5 +1,7 @@
 'use strict';
 
+/*jshint unused:false */
+
 // Get a single element
 function $(selector, context) {
     return (context || document).querySelector(selector);
