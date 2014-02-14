@@ -367,7 +367,7 @@
     /**
      * Get current settings for confirmation
      */
-    chrome.storage.sync.get({confirm: false}, function (object) {
+    chrome.storage.sync.get({confirm: true}, function (object) {
         adjustConfirmSettings(object.confirm);
     });
 
