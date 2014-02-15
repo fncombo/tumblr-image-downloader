@@ -14,23 +14,11 @@ TID.getImageID = function (url) {
 
     // If matched correctly, return the Tumblr image ID
     if (imageID && imageID.length === 2) {
-
         return imageID[1];
-
-    // Try to match regular image file name
-    } else {
-
-        var imageFileName = url.match(TID.match.imageFileName);
-
-        // Matched correctly and found an image file name
-        if (imageFileName && imageFileName.length === 2) {
-            return imageFileName[1];
-        }
-
     }
 
-    // Couldn't find an ID
-    return false;
+    // Return the whole URL
+    return url;
 
 };
 

@@ -222,14 +222,7 @@ TID.initMutationObservers = function () {
 
                 var url = mutation.target.src;
                 var imageID = TID.getImageID(url);
-
-                if (!imageID) {
-                    return;
-                }
-
                 var isExternal = !!mutation.target.classList.contains('inline_external_image');
-
-                // Create a button for this image
                 var button = TID.createDownloadButton(imageID, false, url, isExternal);
 
                 // Remove any existing butons

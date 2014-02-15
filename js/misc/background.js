@@ -104,8 +104,22 @@ _gaq.push(['_trackPageview']);
             return;
         }
 
+        // If a valid image
+        if (
+            downloadItem.danger === 'safe' &&
+            (downloadItem.filename.match(/\.(?:jpe?g|png|gif)$/, 'i') || downloadItem.mime.match(/image/))
+        ) {
+
+            if (saveDirectory) {
+                suggest({filename: saveDirectory + '/' + downloadItem.filename});
+            } else if (defaultDirectory) {
+                suggest({filename: defaultDirectory + '/' + downloadItem.filename});
+            } else {
+                suggest({filename: downloadItem.filename});
+            }
+
         // If the link does not appear to link to an image
-        if (!downloadItem.mime.match(/image/)) {
+        } else {
 
             // Cancel the download
             chrome.downloads.cancel(downloadItem.id);
@@ -117,14 +131,6 @@ _gaq.push(['_trackPageview']);
                 directory: saveDirectory
             });
 
-        }
-
-        if (saveDirectory) {
-            suggest({filename: saveDirectory + '/' + downloadItem.filename});
-        } else if (defaultDirectory) {
-            suggest({filename: defaultDirectory + '/' + downloadItem.filename});
-        } else {
-            suggest({filename: downloadItem.filename});
         }
 
     });
