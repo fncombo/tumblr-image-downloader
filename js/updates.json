@@ -1,16 +1,16 @@
 [
     [
-        "Now works on your dashboard, likes page, and search pages!",
+        "Now works on your dashboard, like, and search pages.",
         "Improved visual styling.",
         "Improved options page.",
         "General fixes and improvements."
     ],
     [
         "A whole new set of icons.",
-        "Added a button to the access the options page from the address bar."
+        "Added a button to the options page in the address bar."
     ],
     [
-        "You can now download images straight from someone's archive!"
+        "You can now download images straight from someone&rsquo;s archive."
     ],
     [
         "Completely refactored the code to be more extensible and maintainable in the future.",
@@ -19,21 +19,25 @@
         "Improved detection of infinite scrolling."
     ],
     [
-        "General improvements."
+        "General fixes and improvements."
     ],
     [
-        "You can now specify custom download locations!",
+        "You can now specify custom download locations.",
         "Set a default download location where to save all your images.",
         "Your locations and confirmation settings now sync across your Google account.",
         "General fixes and improvements."
     ],
     [
-        "You can now download images from slideshows on Tumblelogs! (That is, anywhere where you can bring up a full image view.)",
+        "You can now download images from slideshows on Tumblelogs. (That is, anywhere where you can bring up a full image view.)",
         "Added support for SSL-enabled dashboards.",
-        "Redesigned the options page to resemble that of Tumblr's."
+        "Redesigned the options page to resemble that of Tumblr&rsquo;s."
     ],
     [
-        "External links that don't lead to images will now trigger a confirmation pop-up.",
+        "External links that don&rsquo;t lead to images will now trigger a confirmation pop-up.",
         "Lots of code adjustments and bug fixes."
+    ],
+    [
+        "Expand inline images in posts to bring up the download button.",
+        "Downloaded images now show a small tick even when you&rsquo;re not hovering over them. You can disable this in the options."
     ]
 ]
