@@ -5,8 +5,7 @@
 /**
  * Get the Tumblr image ID from an image URL
  * @param  {String}  url URL to extract an image ID from
- * @return {String}      Returns the ID of the image if one was found
- * @return {Boolean}     Returns a false boolean if no ID was found
+ * @return {String}      Returns the ID of the image if one was found, otherwise the URL
  */
 TID.getImageID = function (url) {
 
