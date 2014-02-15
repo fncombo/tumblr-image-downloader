@@ -39,5 +39,8 @@
     [
         "Expand inline images in posts to bring up the download button.",
         "Downloaded images now show a small tick even when you&rsquo;re not hovering over them. You can disable this in the options."
+    ],
+    [
+        "Fixed a bug where images without a MIME type would not download correctly."
     ]
 ]
