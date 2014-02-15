@@ -55,6 +55,7 @@ TID.selectors = {
 TID.match = {
     imageSize: new RegExp('\\d+(?=\\.(?:jpe?g|png|gif)$)', 'i'),
     imageName: new RegExp('tumblr_(\\w+)(?=_\\d+\\.(?:jpe?g|png|gif)$)', 'i'),
+    imageFileName: new RegExp('([^/]+)\\.(?:jpe?g|png|gif)', 'i'),
     imageExt: new RegExp('(jpe?g|png|gif)$', 'i'),
     image1280: new RegExp('_1280\\.(?:jpe?g|png|gif)$', 'i'),
     tumblrDomain: new RegExp('tumblr\\.com', 'i'),

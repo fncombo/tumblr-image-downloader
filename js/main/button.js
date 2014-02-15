@@ -49,12 +49,13 @@ TID.addButtons = function () {
 
 /**
  * Create a download button
- * @param  {String}  imageID The ID of the image to create a button for
- * @param  {Boolean} isHD    Whether or not a HD version of the image is available
- * @param  {String}  url     The URL of the image to be used for downloading
- * @return {Element}         Final HTML element of the button
+ * @param  {String}  imageID    The ID of the image to create a button for
+ * @param  {Boolean} isHD       Whether or not a HD version of the image is available
+ * @param  {String}  url        The URL of the image to be used for downloading
+ * @param  {Boolean} isExternal Whether to show a simple external arrow
+ * @return {Element}            Final HTML element of the button
  */
-TID.createDownloadButton = function (imageID, isHD, url) {
+TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
 
     // Core container
     var el = document.createElement('div');
@@ -92,8 +93,16 @@ TID.createDownloadButton = function (imageID, isHD, url) {
 
     // If HD is from an external site, add an arrow and a tooltip
     if (isHD === 'external_high_res') {
+
         download.innerHTML += '&#10138;';
         download.title = 'HD image is from an external site';
+
+    // If image is just from an external side (not necessarily HD)
+    } else if (isExternal) {
+
+        download.innerHTML += '&#10138;';
+        download.title = 'Image is from an external site';
+
     }
 
     el.onmouseover = function () {

@@ -203,6 +203,65 @@ TID.initMutationObservers = function () {
     // Start observing
     lightboxObserver.observe($('body'), {childList: true});
 
+    // Create a DOM mutation observer for inline post images
+    var inlineImageObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+
+            var blockEl;
+
+            if (
+                (
+                    !mutation.target.classList.contains('inline_external_image') &&
+                    !mutation.target.classList.contains('inline_image')
+                ) ||
+                (
+                    mutation.target.classList.contains('inline_external_image') &&
+                    mutation.target.classList.contains('enlarged')
+                )
+            ) {
+
+                var url = mutation.target.src;
+                var imageID = TID.getImageID(url);
+
+                if (!imageID) {
+                    return;
+                }
+
+                var isExternal = !!mutation.target.classList.contains('inline_external_image');
+
+                // Create a button for this image
+                var button = TID.createDownloadButton(imageID, false, url, isExternal);
+
+                // Remove any existing butons
+                $$('.' + TID.classes.download, mutation.target.parentNode).forEach(function (el) {
+                    el.remove();
+                });
+
+                // Append the button
+                blockEl = mutation.target.closest('p, div:not(.post_container)');
+                blockEl.classList.add(TID.classes.parent);
+                blockEl.appendChild(button);
+
+            } else {
+
+                // Remove any buttons
+                blockEl = mutation.target.closest('p, div:not(.post_container)');
+                $$('.' + TID.classes.download, blockEl).forEach(function (el) {
+                    el.remove();
+                });
+
+            }
+
+        });
+    });
+
+    // Observe each inline image
+    $$('.inline_image, .inline_external_image').forEach(function (el) {
+        inlineImageObserver.observe(el, {
+            attributes: true, attributeFilter: ['src', 'class']
+        });
+    });
+
 };
 
 /**

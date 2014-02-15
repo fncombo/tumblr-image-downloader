@@ -12,10 +12,21 @@ TID.getImageID = function (url) {
 
     var imageID = url.match(TID.match.imageName);
 
-    // If matched correctly
+    // If matched correctly, return the Tumblr image ID
     if (imageID && imageID.length === 2) {
-        // Return the ID
+
         return imageID[1];
+
+    // Try to match regular image file name
+    } else {
+
+        var imageFileName = url.match(TID.match.imageFileName);
+
+        // Matched correctly and found an image file name
+        if (imageFileName && imageFileName.length === 2) {
+            return imageFileName[1];
+        }
+
     }
 
     // Couldn't find an ID
