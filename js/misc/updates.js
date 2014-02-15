@@ -27,7 +27,7 @@
 
             update.forEach(function (text) {
                 var el = document.createElement('li');
-                el.innerText = text;
+                el.innerHTML = text;
                 ul.appendChild(el);
             });
 
