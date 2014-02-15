@@ -33,7 +33,7 @@ TID.removeAllTicks = function () {
 
 /**
  * Toggle whether or not show ticks on downloaded images
- * @param  {Boolean} setting True of false
+ * @param  {Boolean} setting True or false
  */
 TID.showDownloadedTicks = function (setting) {
     $('body').classList[setting ? 'add' : 'remove'](TID.classes.showTicks);
