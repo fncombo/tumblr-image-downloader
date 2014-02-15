@@ -12,14 +12,14 @@ main
     span#name Tumblr Image Downloader
 
   p
-    | Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don't forget to
-    a<> href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank" rate it
-    | on the Chrome Web Store.
+    | Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don&rsquo;t forget to
+    a< href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank" rate it on the Chrome Web Store
+    | .
 
   p
-    | If you have any feature requests or find that something is not working, please report it
-    a<> href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug" target="_blank" here
-    | before leaving a negative review.
+    | If you have any feature requests or find that something is not working, please
+    a<> href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug" target="_blank" leave your feedback here
+    | before giving a negative review.
 
   nav
     a href="http://fncombo.me" target="_blank" By fncombo
@@ -32,17 +32,19 @@ main
     div
       h1 Locations
     div
-      p Define a list of custom locations inside your downloads folder that you will be able to quickly choose from when saving an image.
+      p Specify a list of custom locations inside your downloads folder that you can quickly choose from when saving an image.
       ul#download-directories
-      p Default location (blank for your normal downloads folder):
+      p Default location (blank for your normal downloads folder).
       p
         input#default-directory
       p
         button#save-directories Save
       p.desc
-        | Separate folders inside folders with a
+        | Separate sub-folders with a
         code<> &#47;
-        | forward slash. If the folder doesn't exist, it will automatically be created.
+        | forward slash. If the folder doesn&rsquo;t exist, it will automatically be created.
+      p.desc The default location is where your images will download when you click the normal download button.
+
 
   hr
 
@@ -50,13 +52,13 @@ main
     div
       h1 Download Images
     div
-      p Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a &#10003; tick next to the download button.
+      p Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a &#10003; tick in the download button.
       p
         button#clear
           | Clear
           strong<> id="image-count" 0
           | remembered images
-      p.desc This will permanently forget all the images you have downloaded so far.
+      p.desc This will permanently forget all the images you have downloaded so far. (The information about which images you download never leaves your computer.)
 
   hr
 
@@ -78,13 +80,13 @@ main
       label
         input#showTicks type="checkbox" data-message="Show Ticks"
         span
-      p.desc Show just the tick on downloaded images even when you're not hovering over them.
+      p.desc Show a tick on downloaded images even when you&rsquo;re not hovering over them.
 
   hr
 
   footer
     p Changing settings will affect any currently open pages.
-    p Please remember to respect the images' owners and follow their rules and usage guidelines :) This extension is only supposed to enable you to collect those images for yourself, not redistribute them without the original author's permission.
+    p Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines :) This extension is only supposed to enable you to collect those images for yourself, not redistribute them without the original author&rsquo;s permission.
     p Tumblr Image Downloader is not affiliated with or supported by Tumblr in any way.
 
   script src="../js/options.js"
