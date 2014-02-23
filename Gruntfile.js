@@ -25,7 +25,19 @@ module.exports = function(grunt) {
             build: {
                 files: [
                     {
-                        src: ['js/core.js', 'js/main/*.js'],
+                        src: [
+                            'js/core.js',
+                            'js/main/vars.js',
+                            'js/main/button.js',
+                            'js/main/checks.js',
+                            'js/main/data.js',
+                            'js/main/image.js',
+                            'js/main/messaging.js',
+                            'js/main/ticks.js',
+                            'js/main/ui.js',
+                            'js/main/init.js',
+                            'js/main/run.js'
+                        ],
                         dest: 'extension/js/main.js'
                     },
                     {
