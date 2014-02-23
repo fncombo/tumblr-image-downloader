@@ -18,7 +18,7 @@ TID.showTicks = true;
 TID.isArchivePage = !!window.location.pathname.match(/\/archive(?:\/|$)/i);
 
 // Check whether infinite scrolling is on or off
-TID.isInfiniteScrolling = $('#pagination') ? $('#pagination').clientHeight : false;
+TID.isInfiniteScrolling = $('#pagination') ? !$('#pagination').clientHeight : false;
 
 // List of all the classes used
 TID.classes = {

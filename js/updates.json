@@ -42,5 +42,8 @@
     ],
     [
         "Fixed a bug where images without a MIME type would not download correctly."
+    ],
+    [
+        "Fixed a bug where infinite scrolling was not being detected properly."
     ]
 ]
