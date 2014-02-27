@@ -34,8 +34,8 @@
     /**
      * Adjust the confirm settings HTML
      */
-    function adjustCheckbox(id, value) {
-        $('#' + id).checked = value;
+    function adjustCheckbox(key, value) {
+        $('input[data-for="' + key + '"]').checked = value;
     }
 
     /**
@@ -155,7 +155,7 @@
      */
     listen('click', 'input[type="checkbox"]', function (event, el) {
         var object = {};
-        object[el.id] = el.checked;
+        object[el.getAttribute('data-for')] = el.checked;
         chrome.storage.sync.set(object);
         sendMessage([el.getAttribute('data-message'), el.checked ? 'Enabled' : 'Disabled']);
     });
@@ -367,17 +367,18 @@
     });
 
     /**
-     * Get current settings for confirmation
+     * Get current settings for all the checkboxes
      */
-    chrome.storage.sync.get({confirm: true}, function (object) {
-        adjustCheckbox('confirm', object.confirm);
-    });
+    $$('input[data-for]').forEach(function (el) {
 
-    /**
-     * Get current settings for ticks
-     */
-    chrome.storage.sync.get({showTicks: true}, function (object) {
-        adjustCheckbox('showTicks', object.showTicks);
+        var object = {};
+        var key = el.getAttribute('data-for');
+        object[key] = el.getAttribute('data-for') === 'true' ? true : false;
+
+        chrome.storage.sync.get(object, function (object) {
+            adjustCheckbox(key, object[key]);
+        });
+
     });
 
 }());
