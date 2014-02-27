@@ -14,6 +14,9 @@ TID.confirm = true;
 // Store user's tick setting
 TID.showTicks = true;
 
+// Store the enable location dropdown setting
+TID.enableLocations = true;
+
 // Check if the current page is a Tumblelog's archive page
 TID.isArchivePage = !!window.location.pathname.match(/\/archive(?:\/|$)/i);
 
@@ -23,6 +26,7 @@ TID.isInfiniteScrolling = $('#pagination') ? !$('#pagination').clientHeight : fa
 // List of all the classes used
 TID.classes = {
     showTicks: '__TID_show_ticks',
+    hideLocations: '__TID_hide_locations',
     ignore: '__TID_ignore',
     download: '__TID_download',
     downloaded: '__TID_downloaded',

@@ -51,6 +51,11 @@ TID.run = function () {
         TID.showDownloadedTicks(object.showTicks);
     });
 
+    // Get location setting
+    chrome.storage.sync.get({enableLocations: true}, function (object) {
+        TID.toggleLocations(object.enableLocations);
+    });
+
     TID.initChromeListeners();
     TID.initMutationObservers();
     TID.initDOMEvents();
@@ -305,6 +310,10 @@ TID.initChromeListeners = function () {
 
             TID.showTicks = changes.showTicks.newValue;
             TID.showDownloadedTicks(changes.showTicks.newValue);
+
+        } else if (changes.hasOwnProperty('enableLocations')) {
+
+            TID.toggleLocations(changes.enableLocations.newValue);
 
         }
 

@@ -43,3 +43,7 @@ TID.formatDirectories = function () {
     }
 
 };
+
+TID.toggleLocations = function (show) {
+    $('body').classList[show ? 'remove' : 'add'](TID.classes.hideLocations);
+};
