@@ -145,7 +145,6 @@
     function adjustControls(key) {
         var el = $('input[data-for="' + key + '"]');
         var controls = el.getAttribute('data-controls');
-        console.log(el, controls);
         if (controls) {
             $('#' + controls +'-on').classList[el.checked ? 'remove' : 'add']('hide');
             $('#' + controls + '-off').classList[!el.checked ? 'remove' : 'add']('hide');

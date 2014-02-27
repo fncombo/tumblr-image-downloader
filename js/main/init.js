@@ -302,7 +302,7 @@ TID.initChromeListeners = function () {
             });
 
         // If the tick setting was changed
-        } else if(changes.hasOwnProperty('showTicks')) {
+        } else if (changes.hasOwnProperty('showTicks')) {
 
             TID.settings.showTicks.onUpdate(changes);
 

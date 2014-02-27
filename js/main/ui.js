@@ -44,6 +44,10 @@ TID.formatDirectories = function () {
 
 };
 
+/**
+ * Toggle whether or not to show the dropdown for download locaitons
+ * @param  {Boolean} show Whether or not to show the dropdown
+ */
 TID.toggleLocations = function (show) {
     $('body').classList[show ? 'remove' : 'add'](TID.classes.hideLocations);
 };
