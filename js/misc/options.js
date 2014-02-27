@@ -388,7 +388,7 @@
 
         var object = {};
         var key = el.getAttribute('data-for');
-        object[key] = el.getAttribute('data-for') === 'true' ? true : false;
+        object[key] = el.getAttribute('data-default') === 'true' ? true : false;
 
         chrome.storage.sync.get(object, function (object) {
             adjustCheckbox(key, object[key]);
