@@ -36,5 +36,5 @@ TID.removeAllTicks = function () {
  * @param  {Boolean} setting True or false
  */
 TID.showDownloadedTicks = function (setting) {
-    $('body').classList[setting ? 'add' : 'remove'](TID.classes.showTicks);
+    document.body.classList[setting ? 'add' : 'remove'](TID.classes.showTicks);
 };

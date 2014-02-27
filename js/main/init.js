@@ -202,7 +202,7 @@ TID.initMutationObservers = function () {
     });
 
     // Start observing
-    lightboxObserver.observe($('body'), {childList: true});
+    lightboxObserver.observe(document.body, {childList: true});
 
     // Create a DOM mutation observer for inline post images
     var inlineImageObserver = new MutationObserver(function (mutations) {

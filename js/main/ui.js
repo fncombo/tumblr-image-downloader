@@ -49,5 +49,5 @@ TID.formatDirectories = function () {
  * @param  {Boolean} show Whether or not to show the dropdown
  */
 TID.toggleLocations = function (show) {
-    $('body').classList[show ? 'remove' : 'add'](TID.classes.hideLocations);
+    document.body.classList[show ? 'remove' : 'add'](TID.classes.hideLocations);
 };
