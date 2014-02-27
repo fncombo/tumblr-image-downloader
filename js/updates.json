@@ -45,5 +45,8 @@
     ],
     [
         "Fixed a bug where infinite scrolling was not being detected properly."
+    ],
+    [
+        "Added the ability to disable download locations dropdown in the options."
     ]
 ]
