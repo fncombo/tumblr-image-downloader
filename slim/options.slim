@@ -32,18 +32,24 @@ main
     div
       h1 Locations
     div
-      p Specify a list of custom locations inside your downloads folder that you can quickly choose from when saving an image.
-      ul#download-directories
-      p Default location (blank for your normal downloads folder).
-      p
-        input#default-directory
-      p
-        button#save-directories Save
-      p.desc
-        | Separate sub-folders with a
-        code<> &#47;
-        | forward slash. If the folder doesn&rsquo;t exist, it will automatically be created.
-      p.desc The default location is where your images will download when you click the normal download button.
+      label
+        input type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
+        span
+      #locations-off
+        p.desc Enable to specify a list of custom locations to download images to.
+      #locations-on
+        p Specify a list of custom locations inside your downloads folder that you can quickly choose from when saving an image.
+        ul#download-directories
+        p Default location (blank for your normal downloads folder).
+        p
+          input#default-directory
+        p
+          button#save-directories Save
+        p.desc
+          | Separate sub-folders with a
+          code<> &#47;
+          | forward slash. If the folder doesn&rsquo;t exist, it will automatically be created.
+        p.desc The default location is where your images will download when you click the normal download button.
 
 
   hr

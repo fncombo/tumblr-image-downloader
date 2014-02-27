@@ -36,6 +36,7 @@
      */
     function adjustCheckbox(key, value) {
         $('input[data-for="' + key + '"]').checked = value;
+        adjustControls(key);
     }
 
     /**
@@ -139,6 +140,19 @@
     }
 
     /**
+     * Adjust any controls for checkboxes
+     */
+    function adjustControls(key) {
+        var el = $('input[data-for="' + key + '"]');
+        var controls = el.getAttribute('data-controls');
+        console.log(el, controls);
+        if (controls) {
+            $('#' + controls +'-on').classList[el.checked ? 'remove' : 'add']('hide');
+            $('#' + controls + '-off').classList[!el.checked ? 'remove' : 'add']('hide');
+        }
+    }
+
+    /**
      * Clear list of downloaded images from options
      */
     $('#clear').onclick = function () {
@@ -155,9 +169,11 @@
      */
     listen('click', 'input[type="checkbox"]', function (event, el) {
         var object = {};
-        object[el.getAttribute('data-for')] = el.checked;
+        var key = el.getAttribute('data-for');
+        object[key] = el.checked;
         chrome.storage.sync.set(object);
         sendMessage([el.getAttribute('data-message'), el.checked ? 'Enabled' : 'Disabled']);
+        adjustControls(key);
     });
 
     /**
