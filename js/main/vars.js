@@ -8,14 +8,42 @@ TID.downloadedImages = [];
 // Store list of download directories - always up-to-date
 TID.directories = [];
 
-// Store user's download confirmation setting
-TID.confirm = true;
+// List of all settings and things they should do
+TID.settings = {
 
-// Store user's tick setting
-TID.showTicks = true;
+    confirm: {
+        default: true,
+        onLoad: function (object) {
+            TID.confirm = object.confirm;
+        },
+        onUpdate: function (changes) {
+            TID.confirm = changes.confirm.newValue;
+        }
+    },
 
-// Store the enable location dropdown setting
-TID.enableLocations = true;
+    showTicks: {
+        default: true,
+        onLoad: function (object) {
+            TID.showTicks = object.showTicks;
+            TID.showDownloadedTicks(object.showTicks);
+        },
+        onUpdate: function (changes) {
+            TID.showTicks = changes.showTicks.newValue;
+            TID.showDownloadedTicks(changes.showTicks.newValue);
+        }
+    },
+
+    enableLocations: {
+        default: true,
+        onLoad: function (object) {
+            TID.toggleLocations(object.enableLocations);
+        },
+        onUpdate: function (changes) {
+            TID.toggleLocations(changes.enableLocations.newValue);
+        }
+    }
+
+};
 
 // Check if the current page is a Tumblelog's archive page
 TID.isArchivePage = !!window.location.pathname.match(/\/archive(?:\/|$)/i);

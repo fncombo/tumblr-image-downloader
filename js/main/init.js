@@ -40,21 +40,17 @@ TID.run = function () {
 
     });
 
-    // Get the confirmation settings
-    chrome.storage.sync.get({confirm: true}, function (object) {
-        TID.confirm = object.confirm;
-    });
+    // Get all the settings
+    for (var setting in TID.settings) {
+        if (TID.settings.hasOwnProperty(setting)) {
 
-    // Get the tick settings
-    chrome.storage.sync.get({showTicks: true}, function (object) {
-        TID.showTicks = object.showTicks;
-        TID.showDownloadedTicks(object.showTicks);
-    });
+            var object = {};
+            object[setting] = TID.settings[setting].default;
 
-    // Get location setting
-    chrome.storage.sync.get({enableLocations: true}, function (object) {
-        TID.toggleLocations(object.enableLocations);
-    });
+            chrome.storage.sync.get(object, TID.settings[setting].onLoad);
+
+        }
+    }
 
     TID.initChromeListeners();
     TID.initMutationObservers();
@@ -273,7 +269,7 @@ TID.initChromeListeners = function () {
         // If the download confirmation setting was changed, adjust the local setting
         if (changes.hasOwnProperty('confirm')) {
 
-            TID.confirm = changes.confirm.newValue;
+            TID.settings.confirm.onUpdate(changes);
 
         // If the images storage was updated
         } else if (changes.hasOwnProperty('images')) {
@@ -308,12 +304,11 @@ TID.initChromeListeners = function () {
         // If the tick setting was changed
         } else if(changes.hasOwnProperty('showTicks')) {
 
-            TID.showTicks = changes.showTicks.newValue;
-            TID.showDownloadedTicks(changes.showTicks.newValue);
+            TID.settings.showTicks.onUpdate(changes);
 
         } else if (changes.hasOwnProperty('enableLocations')) {
 
-            TID.toggleLocations(changes.enableLocations.newValue);
+            TID.settings.enableLocations.onUpdate(changes);
 
         }
 
