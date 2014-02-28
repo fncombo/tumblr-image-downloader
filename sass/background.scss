@@ -91,7 +91,6 @@ a {
 }
 
 section {
-    position: relative;
 
     & > div:first-child {
         display: inline-block;
@@ -228,6 +227,7 @@ input {
 }
 
 label {
+    position: relative;
     -webkit-user-select: none;
     user-select: none;
 }
