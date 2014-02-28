@@ -105,33 +105,19 @@ TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
 
     }
 
-    el.onmouseover = function () {
+    el.onmouseover = el.onmouseout = function (event) {
+
+        var action = event.type === 'mouseover' ? 'add' : 'remove';
 
         if (!TID.isArchivePage) {
 
             if (el.ancestor(2).classList.contains('photoset_row')) {
-                el.ancestor(2).classList.add(TID.classes.photoset);
+                el.ancestor(2).classList[action](TID.classes.photoset);
             }
 
         } else {
 
-            el.ancestor(3).classList.add(TID.classes.highlight);
-
-        }
-
-    };
-
-    el.onmouseout = function () {
-
-        if (!TID.isArchivePage) {
-
-            if (el.ancestor(2).classList.contains('photoset_row')) {
-                el.ancestor(2).classList.remove(TID.classes.photoset);
-            }
-
-        } else {
-
-            el.ancestor(3).classList.remove(TID.classes.highlight);
+            el.ancestor(3).classList[action](TID.classes.highlight);
 
         }
 
