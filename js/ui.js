@@ -3,15 +3,6 @@
 /* globals TID */
 
 /**
- * Show a download confirmation dialog
- * @return {Boolean} Whether or not the user agreed
- */
-TID.confirmDialog = function () {
-    return confirm('You\'ve already downloaded this image before.\n\n' +
-                   'Are you sure you want to download it again?');
-};
-
-/**
  * Format the list of download directories
  * @return {String} A string containing HTML for the list of directories
  */
@@ -50,4 +41,47 @@ TID.formatDirectories = function () {
  */
 TID.toggleLocations = function (show) {
     document.body.classList[show ? 'remove' : 'add'](TID.classes.hideLocations);
+};
+
+TID.showDialog = function (message, options, callback) {
+
+    if (!(options instanceof Array)) {
+        options = [options];
+    }
+
+    var i = 0;
+    var l = options.length;
+    var html = '';
+
+    html += '<div class="' + TID.classes.overlay + '">';
+    html += '<div class="' + TID.classes.dialog + '">';
+    html += '<div class="' + TID.classes.dialogMessage + '">' + message + '</div>';
+
+    options.forEach(function (option, i) {
+        html += '<div class="' + TID.classes.dialogButton + '" id="' + TID.classes.dialogButton + '-' + i + '" data-i="' + i + '">';
+        html += option;
+        html += '</div>';
+    });
+
+    html += '</div>';
+    html += '</div>';
+
+    $('body').innerHTML += html;
+
+    function removeListeners() {
+        for (i = 0, l = options.lenth; i < l; i += 1) {
+            $('#' + TID.classes.dialogButton + '-' + i).removeEventListener('click', listener, true);
+        }
+    }
+
+    function listener(event) {
+        callback.call(event, event.target.getAttribute('data-i'));
+        removeListeners();
+        $('.' + TID.classes.overlay).remove();
+    }
+
+    for (; i < l; i += 1) {
+        $('#' + TID.classes.dialogButton + '-' + i).addEventListener('click', listener, true);
+    }
+
 };

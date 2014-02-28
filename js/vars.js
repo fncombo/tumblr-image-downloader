@@ -66,7 +66,11 @@ TID.classes = {
     help: '__TID_help',
     parent: '__TID_parent',
     photoset: '__TID_photoset',
-    highlight: '__TID_highlight'
+    highlight: '__TID_highlight',
+    overlay: '__TID_overlay',
+    dialog: '__TID_dialog',
+    dialogMessage: '__TID_dialog_message',
+    dialogButton: '__TID_dialog_button'
 };
 
 // List of all the selectors used - dynamically generated based on page

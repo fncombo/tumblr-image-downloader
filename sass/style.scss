@@ -1,6 +1,13 @@
+$tumblr-color: #2c4762;
+$tumblr-color-hover: #15212e;
 $color-normal: #2c4762;
 $color-hover: #15212e;
 $opacity: 0.5;
+$border-radius: 6px;
+$tumblr-gray: hsl(210, 10%, 65%);
+$tumblr-gray-hover: hsl(210, 10%, 55%);
+$text-primary-color: hsl(0, 0%, 27%);
+$text-primary-color-hover: hsl(0, 0%, 37%);
 
 .__TID_photoset {
     overflow: visible !important;
@@ -195,6 +202,83 @@ a.__TID_parent {
 
     .__TID_list {
         display: none !important;
+    }
+
+}
+
+@-webkit-keyframes overlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes dialog {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(1.5);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: scale(1);
+    }
+}
+
+.__TID_overlay {
+    background: hsla(0, 0%, 0, 0.9);
+    text-align: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999999999;
+    -webkit-animation: overlay 0.05s linear forwards;
+
+    &:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: -0.25em;
+        height: 100%;
+    }
+
+}
+
+.__TID_dialog {
+    background: #fff;
+    border-radius: $border-radius;
+    padding: 2em 3em;
+    display: inline-block;
+    vertical-align: middle;
+    color: $text-primary-color;
+    -webkit-animation: dialog 0.15s cubic-bezier(0.175, 0.885, 0.320, 1.275) forwards; // easeOutBack
+}
+
+.__TID_dialog_message {
+}
+
+.__TID_dialog_button {
+    background: $tumblr-gray;
+    display: inline-block;
+    border: none;
+    border-radius: 2px;
+    padding: 0.5rem 0.75rem;
+    margin: 1em 0.5em 0;
+    font-weight: bolder;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        background: $tumblr-gray-hover;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
     }
 
 }

@@ -80,17 +80,26 @@ TID.initDOMEvents = function () {
 
             parent = event.target.ancestor(3);
             imageID = parent.getAttribute('data-image-id');
-
-            if (TID.hasDownloaded(imageID)) {
-                return;
-            }
-
             url = parent.getAttribute('data-download-url');
             directory = event.target.getAttribute('data-directory');
 
-            TID.downloadImage(url, imageID, directory);
+            // If not downloaded yet, download it
+            if (!TID.hasDownloaded(imageID)) {
 
-            TID.sendMessage(['Downloaded Image', 'To Directory']);
+                TID.downloadImage(url, imageID, directory);
+                TID.sendMessage(['Downloaded Image', 'To Directory']);
+
+            // If already downloaded and confirm is on, show message
+            } else if (TID.confirm) {
+
+                TID.confirmDuplicateDownload(function (accept) {
+                    if (accept) {
+                        TID.downloadImage(url, imageID, directory);
+                        TID.sendMessage(['Downloaded Image', 'To Directory']);
+                    }
+                });
+
+            }
 
         // Set up downloading via normal download button
         } else if (event.target.matchesSelector('.' + TID.classes.downloadDiv)) {
@@ -100,20 +109,37 @@ TID.initDOMEvents = function () {
 
             parent = event.target.parentNode;
             imageID = parent.getAttribute('data-image-id');
-
-            if (TID.hasDownloaded(imageID)) {
-                return;
-            }
-
             url = parent.getAttribute('data-download-url');
             isHD = parent.getAttribute('data-hd') === 'true' ? true : false;
 
-            TID.downloadImage(url, imageID);
+            // If not downloaded yet, download it
+            if (!TID.hasDownloaded(imageID)) {
 
-            if (!TID.isArchivePage) {
-                TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
-            } else {
-                TID.sendMessage(['Downloaded Image', 'Archive']);
+                TID.downloadImage(url, imageID);
+
+                if (!TID.isArchivePage) {
+                    TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
+                } else {
+                    TID.sendMessage(['Downloaded Image', 'Archive']);
+                }
+
+            // If already downloaded and confirm is on, show message
+            } else if (TID.confirm) {
+
+                TID.confirmDuplicateDownload(function (accept) {
+                    if (accept) {
+
+                        TID.downloadImage(url, imageID);
+
+                        if (!TID.isArchivePage) {
+                            TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
+                        } else {
+                            TID.sendMessage(['Downloaded Image', 'Archive']);
+                        }
+
+                    }
+                });
+
             }
 
         // Set up link to the options page
