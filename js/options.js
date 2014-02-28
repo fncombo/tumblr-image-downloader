@@ -19,12 +19,27 @@ chrome.storage.local.get({images: []}, function (object) {
 
 // Clear list of downloaded images from options
 $('#clear').onclick = function () {
-    if (confirm('Are you absolutely sure? This cannot be undone!')) {
-        chrome.storage.local.remove('images');
-        $('#image-count').innerText = '0';
-        alert('List of downloaded images has been cleared successfully.');
-        TID.sendMessage(['Cleared Storage', 'Cleared Images']);
-    }
+
+    var message = 'Are you sure you want to clear all remembered images?<br>This cannot be undone!';
+    var buttons = ['Yes', 'No'];
+
+    TID.showDialog(message, buttons, function (i) {
+
+        switch (i) {
+
+            case '0':
+                chrome.storage.local.remove('images');
+                $('#image-count').innerText = '0';
+                TID.sendMessage(['Cleared Storage', 'Cleared Images']);
+                break;
+
+            case '1':
+                break;
+
+        }
+
+    }, '#dialog-placeholder');
+
 };
 
 /**
