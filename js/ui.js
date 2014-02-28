@@ -43,7 +43,14 @@ TID.toggleLocations = function (show) {
     document.body.classList[show ? 'remove' : 'add'](TID.classes.hideLocations);
 };
 
-TID.showDialog = function (message, options, callback) {
+/**
+ * Displays a dialog with a custom message, buttons, and events for those buttons
+ * @param  {String}   message  Message of the dialog
+ * @param  {Array}    options  Array of buttons
+ * @param  {Function} callback The callback to call when a button is clicked
+ * @param  {String}   parent   Selector of an option parent element to put the HTML into
+ */
+TID.showDialog = function (message, options, callback, parent) {
 
     if (!(options instanceof Array)) {
         options = [options];
@@ -66,7 +73,7 @@ TID.showDialog = function (message, options, callback) {
     html += '</div>';
     html += '</div>';
 
-    $('body').innerHTML += html;
+    $(parent || 'body').innerHTML += html;
 
     function removeListeners() {
         for (i = 0, l = options.lenth; i < l; i += 1) {
