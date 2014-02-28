@@ -351,7 +351,7 @@ TID.initChromeListeners = function () {
             TID.removeTick(request.imageID);
 
             var message = 'Oops! The external link doesn\'t appear to be an image.<br>What would you like to do?';
-            var buttons = ['Download the normal image from Tumblr', 'Go the link in a new tab'];
+            var buttons = ['Download the image from Tumblr', 'Go the link in a new tab', 'Cancel'];
 
 
             TID.showDialog(message, buttons, function (i) {
@@ -371,6 +371,9 @@ TID.initChromeListeners = function () {
                         message: 'open_tab',
                         url: request.url
                     });
+                    break;
+
+                case '2':
                     break;
 
                 }
