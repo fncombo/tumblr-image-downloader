@@ -45,6 +45,10 @@ a.__TID_parent {
     z-index: 9999999999;
     white-space: pre;
 
+    body.editing & {
+        z-index: initial;
+    }
+
     &,
     div,
     ul,
