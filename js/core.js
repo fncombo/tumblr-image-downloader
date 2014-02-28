@@ -33,7 +33,7 @@ Element.prototype.closest = function (selector) {
 Element.prototype.ancestor = function (depth) {
     var ancestor = this;
     while (depth) {
-        depth = depth -= 1;
+        depth -= 1;
         ancestor = ancestor.parentNode;
     }
     return ancestor;
