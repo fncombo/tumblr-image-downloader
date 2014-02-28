@@ -79,8 +79,8 @@ TID.initDOMEvents = function () {
             event.preventDefault();
 
             parent = event.target.ancestor(3);
-            imageID = parent.getAttribute('data-image-id');
-            url = parent.getAttribute('data-download-url');
+            imageID = parent.dataset.imageId;
+            url = parent.dataset.downloadUrl;
             directory = event.target.dataset.directory;
 
             // If not downloaded yet, download it
@@ -108,8 +108,8 @@ TID.initDOMEvents = function () {
             event.preventDefault();
 
             parent = event.target.parentNode;
-            imageID = parent.getAttribute('data-image-id');
-            url = parent.getAttribute('data-download-url');
+            imageID = parent.dataset.imageId;
+            url = parent.dataset.downloadUrl;
             isHD = parent.dataset.hd === 'true' ? true : false;
 
             // If not downloaded yet, download it
