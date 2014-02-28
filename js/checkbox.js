@@ -9,7 +9,7 @@
 TID.adjustControls = function (key) {
 
     var el = $('input[data-for="' + key + '"]');
-    var controls = el.getAttribute('data-controls');
+    var controls = el.dataset.controls;
 
     if (controls) {
         $('#' + controls +'-on').classList[el.checked ? 'remove' : 'add']('hide');
@@ -35,8 +35,8 @@ TID.adjustCheckbox = function (key, value) {
 TID.getCheckboxValue = function (el) {
 
     var object = {};
-    var key = el.getAttribute('data-for');
-    object[key] = el.getAttribute('data-default') === 'true' ? true : false;
+    var key = el.dataset.for;
+    object[key] = el.dataset.default === 'true' ? true : false;
 
     chrome.storage.sync.get(object, function (object) {
         TID.adjustCheckbox(key, object[key]);
@@ -52,12 +52,12 @@ TID.getCheckboxValue = function (el) {
 TID.checkboxChange = function (event, el) {
 
     var object = {};
-    var key = el.getAttribute('data-for');
+    var key = el.dataset.for;
     object[key] = el.checked;
 
     chrome.storage.sync.set(object);
 
-    TID.sendMessage([el.getAttribute('data-message'), el.checked ? 'Enabled' : 'Disabled']);
+    TID.sendMessage([el.dataset.message, el.checked ? 'Enabled' : 'Disabled']);
     TID.adjustControls(key);
 
 };

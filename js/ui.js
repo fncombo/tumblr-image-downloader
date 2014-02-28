@@ -82,7 +82,7 @@ TID.showDialog = function (message, options, callback, parent) {
     }
 
     function listener(event) {
-        callback.call(event, event.target.getAttribute('data-i'));
+        callback.call(event, event.target.dataset.i);
         removeListeners();
         $('.' + TID.classes.overlay).remove();
     }

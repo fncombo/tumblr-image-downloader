@@ -34,7 +34,7 @@ TID.addButtons = function () {
 
         } else {
 
-            var url = el.getAttribute('data-imageurl');
+            var url = el.dataset.imageurl;
             button = TID.createDownloadButton(TID.getImageID(url), false, url);
 
             // Append the button
