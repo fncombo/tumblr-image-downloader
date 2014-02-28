@@ -56,7 +56,8 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         chrome.tabs.sendMessage(TID.vars.lastTabID, {
             message: 'not_image',
             imageID: TID.vars.lastImageID,
-            directory: TID.vars.saveDirectory
+            directory: TID.vars.saveDirectory,
+            url: downloadItem.url
         });
 
     }
@@ -86,6 +87,10 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
     case 'open_settings':
         chrome.tabs.create({url: 'html/options.html'});
+        break;
+
+    case 'open_tab':
+        chrome.tabs.create({url: request.url});
         break;
 
     default:

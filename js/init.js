@@ -350,17 +350,32 @@ TID.initChromeListeners = function () {
             TID.forgetImage(request.imageID);
             TID.removeTick(request.imageID);
 
-            var sure = confirm('Oops! The external link doesn\'t appear to be an image.\n\n' +
-                               'Would you like to download the normal image from Tumblr instead?');
+            var message = 'Oops! The external link doesn\'t appear to be an image.<br>What would you like to do?';
+            var buttons = ['Download the normal image from Tumblr', 'Go the link in a new tab'];
 
-            if (sure) {
 
-                var button = $('.' + TID.classes.download + '[data-image-id="' + request.imageID + '"]');
-                var image = button.parentNode.querySelector('img');
+            TID.showDialog(message, buttons, function (i) {
 
-                TID.downloadImage(image.src, request.imageID, request.directory);
+                switch (i) {
 
-            }
+                case '0':
+
+                    var button = $('.' + TID.classes.download + '[data-image-id="' + request.imageID + '"]');
+                    var image = button.parentNode.querySelector('img');
+                    TID.downloadImage(image.src, request.imageID, request.directory);
+
+                    break;
+
+                case '1':
+                    TID.sendMessage({
+                        message: 'open_tab',
+                        url: request.url
+                    });
+                    break;
+
+                }
+
+            });
 
             break;
 
