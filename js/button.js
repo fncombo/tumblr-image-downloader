@@ -60,9 +60,9 @@ TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
     // Core container
     var el = document.createElement('div');
     el.classList.add(TID.classes.download);
-    el.setAttribute('data-download-url', url);
-    el.setAttribute('data-image-id', imageID);
-    el.setAttribute('data-hd', isHD);
+    el.dataset.downloadUrl = url;
+    el.dataset.imageId = imageID;
+    el.dataset.hd = isHD;
 
     // Main download button
     var download = document.createElement('div');
