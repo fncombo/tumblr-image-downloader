@@ -14,7 +14,7 @@
         "https://*.tumblr.com/*"
         ],
       "js": [
-        "js/main.js"
+        "js/extension.js"
       ],
       "css": [
         "css/style.css"

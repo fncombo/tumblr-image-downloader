@@ -20,11 +20,28 @@ TID.getDirectories = function (callback) {
 
 };
 
-
 /**
  * Get the current document height
  * @return {Integer} Current height of the document
  */
 TID.getDocumentHeight = function () {
     return document.documentElement.scrollHeight;
+};
+
+/**
+ * Get updates history from the JSON file and trigger the updates notification
+ * @param  {Function} callback Callback to call once got the messages
+ */
+TID.getUpdates = function (callback) {
+
+    var request = new XMLHttpRequest();
+
+    request.onload = function () {
+        var messages = JSON.parse(request.responseText);
+        callback.call(this, messages);
+    };
+
+    request.open('GET', '/js/updates.json', true);
+    request.send();
+
 };

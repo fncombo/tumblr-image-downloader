@@ -2,6 +2,9 @@
 
 /* globals TID */
 
+// Misc extension global variables
+TID.vars = {};
+
 // Store all downloaded images' IDs - always up-to-date
 TID.downloadedImages = [];
 

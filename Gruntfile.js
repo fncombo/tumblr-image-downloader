@@ -27,30 +27,40 @@ module.exports = function(grunt) {
                     {
                         src: [
                             'js/core.js',
-                            'js/main/vars.js',
-                            'js/main/button.js',
-                            'js/main/checks.js',
-                            'js/main/data.js',
-                            'js/main/image.js',
-                            'js/main/messaging.js',
-                            'js/main/ticks.js',
-                            'js/main/ui.js',
-                            'js/main/init.js',
-                            'js/main/run.js'
+                            'js/vars.js',
+                            'js/button.js',
+                            'js/checks.js',
+                            'js/data.js',
+                            'js/image.js',
+                            'js/messaging.js',
+                            'js/ticks.js',
+                            'js/ui.js',
+                            'js/init.js',
+                            'js/run.js'
                         ],
-                        dest: 'extension/js/main.js'
+                        dest: 'extension/js/extension.js'
                     },
                     {
-                        src: ['js/core.js', 'js/misc/background.js'],
+                        src: [
+                            'js/core.js',
+                            'js/vars.js',
+                            'js/messaging.js',
+                            'js/data.js',
+                            'js/ui.js',
+                            'js/directoryEvents.js',
+                            'js/directory.js',
+                            'js/checkbox.js'
+                        ],
+                        dest: 'extension/js/support.js'
+                    },
+                    {
+                        src: [
+                            'js/analytics.js',
+                            'js/data.js',
+                            'js/notifications.js',
+                            'js/background.js'
+                        ],
                         dest: 'extension/js/background.js'
-                    },
-                    {
-                        src: ['js/core.js', 'js/misc/options.js'],
-                        dest: 'extension/js/options.js'
-                    },
-                    {
-                        src: ['js/core.js', 'js/misc/updates.js'],
-                        dest: 'extension/js/updates.js'
                     }
                 ]
             }
@@ -62,7 +72,7 @@ module.exports = function(grunt) {
                 compress: true,
                 beautify: false,
                 report: false,
-                sourceMap: true,
+                sourceMap: false,
                 wrap: false,
                 preserveComments: false
             },
@@ -71,10 +81,9 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: [
-                            'extension/js/*.js',
-                            '!extension/js/*.min.js'
+                            'extension/js/*.js'
                         ],
-                        ext: '.min.js'
+                        ext: '.js'
                     }
                 ]
             }
@@ -82,7 +91,7 @@ module.exports = function(grunt) {
 
         sass: {
             options: {
-                style: 'expanded',
+                style: 'compressed',
                 precision: 3,
                 noCache: true
             },
@@ -104,7 +113,7 @@ module.exports = function(grunt) {
 
         slim :{
             options: {
-                pretty: true
+                pretty: false
             },
             build: {
                 files: [
@@ -128,7 +137,7 @@ module.exports = function(grunt) {
                     '*',
                     '**/*'
                 ],
-                tasks: 'default'
+                tasks: 'development'
             }
         },
 
@@ -141,6 +150,15 @@ module.exports = function(grunt) {
                             'img/icon*.png',
                             'js/*.json',
                             'manifest.json'
+                        ],
+                        dest: 'extension/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        src: [
+                            'js/options.js',
+                            'js/updates.js'
                         ],
                         dest: 'extension/',
                         filter: 'isFile'
@@ -158,7 +176,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-slim');
 
-    grunt.registerTask('default', [
+    grunt.registerTask('development', [
+        'concat',
+        'sass',
+        'slim',
+        'copy'
+    ]);
+
+    grunt.registerTask('production', [
         'concat',
         'uglify',
         'sass',
