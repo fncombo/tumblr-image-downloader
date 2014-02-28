@@ -185,10 +185,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('production', [
         'concat',
-        'uglify',
         'sass',
         'slim',
-        'copy'
+        'copy',
+        'uglify'
     ]);
 
 };
