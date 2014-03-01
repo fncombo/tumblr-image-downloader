@@ -48,9 +48,8 @@ TID.toggleLocations = function (show) {
  * @param  {String}   message  Message of the dialog
  * @param  {Array}    options  Array of buttons
  * @param  {Function} callback The callback to call when a button is clicked
- * @param  {String}   parent   Selector of an option parent element to put the HTML into
  */
-TID.showDialog = function (message, options, callback, parent) {
+TID.showDialog = function (message, options, callback) {
 
     if (!(options instanceof Array)) {
         options = [options];
@@ -73,7 +72,22 @@ TID.showDialog = function (message, options, callback, parent) {
     html += '</div>';
     html += '</div>';
 
-    $(parent || 'body').innerHTML += html;
+    // Create a new element using DOM functions and append to that
+    // as appending straight to the body unbinds events...
+    var tempContainer = $('.' + TID.classes.tempContainer);
+
+    if (tempContainer) {
+
+        tempContainer.innerHTML = html;
+
+    } else {
+
+        tempContainer = document.createElement('div');
+        tempContainer.classList.add(TID.classes.tempContainer);
+        tempContainer.innerHTML = html;
+        document.body.appendChild(tempContainer);
+
+    }
 
     function removeListeners() {
         for (i = 0, l = options.lenth; i < l; i += 1) {

@@ -38,7 +38,7 @@ $('#clear').onclick = function () {
 
         }
 
-    }, '#dialog-placeholder');
+    });
 
 };
 

@@ -56,6 +56,7 @@ TID.isInfiniteScrolling = $('#pagination') ? !$('#pagination').clientHeight : fa
 
 // List of all the classes used
 TID.classes = {
+    tempContainer: '__TID_temp_container',
     showTicks: '__TID_show_ticks',
     hideLocations: '__TID_hide_locations',
     ignore: '__TID_ignore',
