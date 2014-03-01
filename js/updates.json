@@ -48,5 +48,10 @@
     ],
     [
         "Added the ability to disable download locations dropdown in the options."
+    ],
+    [
+        "New, pretty dialog boxes instead of the normal Chrome pop-ups.",
+        "Fixed a bug where the download button would be visible above the editing view (such as when reblogging).",
+        "Lots of code and performance improvements and other bug fixes."
     ]
 ]
