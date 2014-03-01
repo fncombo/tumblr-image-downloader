@@ -83,14 +83,14 @@ TID.initDOMEvents = function () {
             url = parent.dataset.downloadUrl;
             directory = event.target.dataset.directory;
 
-            // If not downloaded yet, download it
-            if (!TID.hasDownloaded(imageID)) {
+            // If don't care about confirmation or not downloaded yet, download
+            if (!TID.confirm || (TID.confirm && !TID.hasDownloaded(imageID))) {
 
                 TID.downloadImage(url, imageID, directory);
                 TID.sendMessage(['Downloaded Image', 'To Directory']);
 
-            // If already downloaded and confirm is on, show message
-            } else if (TID.confirm) {
+            // Otherwise ask for confirmation
+            } else if (TID.hasDownloaded(imageID)) {
 
                 TID.confirmDuplicateDownload(function (accept) {
                     if (accept) {
@@ -112,8 +112,8 @@ TID.initDOMEvents = function () {
             url = parent.dataset.downloadUrl;
             isHD = parent.dataset.hd === 'true' ? true : false;
 
-            // If not downloaded yet, download it
-            if (!TID.hasDownloaded(imageID)) {
+            // If don't care about confirmation or not downloaded yet, download
+            if (!TID.confirm || (TID.confirm && !TID.hasDownloaded(imageID))) {
 
                 TID.downloadImage(url, imageID);
 
@@ -123,8 +123,8 @@ TID.initDOMEvents = function () {
                     TID.sendMessage(['Downloaded Image', 'Archive']);
                 }
 
-            // If already downloaded and confirm is on, show message
-            } else if (TID.confirm) {
+            // Otherwise ask for confirmation
+            } else if (TID.hasDownloaded(imageID)) {
 
                 TID.confirmDuplicateDownload(function (accept) {
                     if (accept) {
