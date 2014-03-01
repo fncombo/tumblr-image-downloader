@@ -92,6 +92,12 @@ module.exports = function(grunt) {
             }
         },
 
+        'json-minify': {
+            build: {
+                files: 'extension/**/*.json'
+            }
+        },
+
         sass: {
             options: {
                 style: 'compressed',
@@ -179,6 +185,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-slim');
+    grunt.loadNpmTasks('grunt-json-minify');
 
     grunt.registerTask('development', [
         'concat',
@@ -192,6 +199,7 @@ module.exports = function(grunt) {
         'sass',
         'slim',
         'copy',
+        'json-minify',
         'uglify'
     ]);
 
