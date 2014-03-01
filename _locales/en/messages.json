@@ -1,0 +1,279 @@
+/**
+ * Author: fncombo
+ */
+{
+    /**
+     * Extension name and description
+     */
+    "extensionName": {
+        "message": "Tumblr Image Downloader",
+        "description": "The name of the extension. The word Tumblr must be English."
+    },
+    "extensionDescription": {
+        "message": "Download images from your Tumblr dashboard, like, archive, and search pages with a single click.",
+        "description": "The description of the extension. The word Tumblr must be English."
+    },
+
+
+
+    /**
+     * Background pages
+     */
+    "optionsTitle": {
+        "message": "Options",
+        "description": "Title for the options page."
+    },
+    "updateHistoryTitle": {
+        "message": "Update History",
+        "description": "Title for the update history page."
+    },
+
+    "installMessage": {
+        "message": "Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don&rsquo;t forget to <a>rate it on the Chrome Web Store</a>.",
+        "description": "A message displayed on all background extension pages. Leave the <a>, and replace Chrome Web Store with the locale-specific name."
+    },
+    "supportMessage": {
+        "message": "If you have any feature requests or find that something is not working, please <a>leave your feedback here</a> before giving a negative review.",
+        "description": "A message displayed on all background extension pages. Leave the <a>."
+    },
+
+    "authorLink": {
+        "message": "By fncombo",
+        "description": "Link text to the extension author's page."
+    },
+    "githubLink": {
+        "message": "Source on GitHub",
+        "description": "Link text to the GitHub repository."
+    },
+
+    "updatesLink": {
+        "message": "Update history",
+        "description": "Link text to the update history page."
+    },
+    "optionsLink": {
+        "message": "Options",
+        "description": "Link text to the options page."
+    },
+
+
+
+    /**
+     * Options footer
+     */
+    "optionsSettingsHelp": {
+        "message": "Changing settings will affect any currently open pages.",
+        "description": "Help text at the bottom of the options page."
+    },
+    "optionsGuidelinesHelp": {
+        "message": "Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines :) This extension is only supposed to enable you to collect those images for yourself, not redistribute them without the original author&rsquo;s permission.",
+        "description": "Help text at the bottom of the options page."
+    },
+    "optionsAffiliactionHelp": {
+        "message": "Tumblr Image Downloader is not affiliated with or supported by Tumblr in any way.",
+        "description": "Help text at the bottom of the options page."
+    },
+
+
+    /**
+     * Location options
+     */
+    "locationsTitle": {
+        "message": "Locations",
+        "description": "Title for the locations section on the options page."
+    },
+    "locationsDescription": {
+        "message": "Specify a list of custom locations inside your downloads folder that you can quickly choose from when saving an image.",
+        "description": "Description of the download locations option."
+    },
+    "locationsDefaultDescription": {
+        "message": "Default location (blank for your normal downloads folder).",
+        "description": "Description of the default download location option."
+    },
+    "locationsSeparatorHelp": {
+        "message": "Separate sub-folders with a <code>/</code> forward slash. If the folder doesn&rsquo;t exist, it will automatically be created.",
+        "description": "Help text explaining how to nest directories. Wrap the / (directory separator character) inside a <code> tag."
+    },
+    "locationsDefaultHelp": {
+        "message": "The default location is where your images will download when you click the normal download button.",
+        "description": "Help text explaining what the default directory is."
+    },
+    "locationsDisabledHelp": {
+        "message": "Enable to specify a list of custom locations to download images to.",
+        "description": "Help text shown when the locations option is disabled."
+    },
+
+
+
+    /**
+     * Remembered images options
+     */
+    "rememberedImagesTitle": {
+        "message": "Remembered Images",
+        "description": "Title for the remembered images section on the options page."
+    },
+    "rememberedImagesDescription": {
+        "message": "Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a ✓ tick in the download button.",
+        "description": "Description of the remembered images option."
+    },
+    "rememberedImagesHelp": {
+        "message": "This will permanently forget all the images you have downloaded so far. (The information about which images you download never leaves your computer.)",
+        "description": "Help text explaining what the clear remembered images button does."
+    },
+    "rememberedImagesClearButton": {
+        "message": "Clear # remembered images",
+        "description": "Button text to clear all remembered images. The # will be replaced with the amount of images, and should be wrapped in a <span> tag."
+    },
+    "rememberedImagesClearConfirmation": {
+        "message": "Are you sure you want to clear all remembered images?<br>This cannot be undone!",
+        "description": "Dialog message confirming whether the users is sure they want to delete all remembered images."
+    },
+
+
+
+    /**
+     * Confirmation options
+     */
+    "confirmationTitle": {
+        "message": "Confirmation",
+        "description": "Title for the confirmation section on the options page."
+    },
+    "confirmationHelp": {
+        "message": "Toggle whether to bring up a confirmation dialog when downloading an already downloaded image.",
+        "description": "Help text explaining what the confirm option does."
+    },
+
+
+
+    /**
+     * Show ticks options
+     */
+    "showTicksTitle": {
+        "message": "Show Ticks",
+        "description": "Title for the show ticks section on the options page."
+    },
+    "showTicksHelp": {
+        "message": "Show a tick on downloaded images even when you&rsquo;re not hovering over them.",
+        "description": "Help text explaining what the show ticks option does."
+    },
+
+
+
+    /**
+     * Update history
+     */
+    "currentVersionTitle": {
+        "message": "Current Version #",
+        "description": "Title for the current version section on the update history page. The # will be replaced with the current version number, such as 0.9"
+    },
+    "previousVersionTitle": {
+        "message": "Previous Versions",
+        "description": "Title for the previous versions section on the update history page."
+    },
+
+
+
+    /**
+     * Generic text/buttons
+     */
+    "cancel": {
+        "message": "Cancel",
+        "description": "Generic cancel button text."
+    },
+    "yes": {
+        "message": "Yes",
+        "description": "Button text used in dialogs."
+    },
+    "no": {
+        "message": "No",
+        "description": "Button text used in dialogs."
+    },
+    "save": {
+        "message": "Save",
+        "description": "Button text for saving options."
+    },
+    "enabled": {
+        "message": "Enabled",
+        "description": "General enabled option message."
+    },
+    "disabled": {
+        "message": "Disabled",
+        "description": "General disabled option message."
+    },
+
+
+
+    /**
+     * Dialogs
+     */
+    "confirmDuplicateDownload": {
+        "message": "You've already downloaded this image before.<br>Are you sure you want to download it again?",
+        "description": "Dialog message when the user tries to download the same image again."
+    },
+    "linkNotImage": {
+        "message": "Oops! The external link doesn't appear to be an image.<br>What would you like to do?",
+        "description": "Dialog message when the external download URL isn't an image."
+    },
+    "downloadFromTumblr": {
+        "message": "Download the image from Tumblr",
+        "description": "Button text for download an image from Tumblr when the external URL isn't an image."
+    },
+    "openLinkInNewTab": {
+        "message": "Go the link in a new tab",
+        "description": "Button text for opening a link in a new tab."
+    },
+
+
+
+    /**
+     * Download buttons
+     */
+    "download": {
+        "message": "Download",
+        "description": "Text on the download buttons."
+    },
+    "downloadHD": {
+        "message": "Download <strong>HD</strong>",
+        "description": "Text on the download buttons for HD images. Put the HD part inside a <strong> tag."
+    },
+    "extenalImageTitle": {
+        "message": "Image is from an external site.",
+        "description": "Title for buttons whose images are from an external site."
+    },
+    "extenalHDImageTitle": {
+        "message": "HD image is from an external site.",
+        "description": "Title for buttons whose HD images are from an external site."
+    },
+    "downloadDirectoryTitle": {
+        "message": "Download inside: $DIRECTORY$",
+        "description": "Title for directory download buttons, specifying where the image is going to be downloaded.",
+        "placeholders": {
+            "directory": {
+                "content": "$1",
+                "example": "Tumblr/GIFs"
+            }
+        }
+    },
+    "noConfiguredDirectories": {
+        "message": "You can specify custom download<br>locations in the settings.<br>Click to configure.",
+        "description": "Message for when there are no configured directories. Try to keep the text concise and the lines under 30 characters."
+    },
+
+
+
+    /**
+     * Update notification
+     */
+    "notificationUpdateTitle": {
+        "message": "Tumblr Image Downloader Update",
+        "description": "Title of the notification displayed when the extension is updated."
+    },
+    "notificationRateButton": {
+        "message": "Rate this extension if you find it useful :)",
+        "description": "Button to the Chrome Web Store page in the notification displayed when the extension is updated."
+    },
+    "notificationUpdateHistoryButton": {
+        "message": "Update history",
+        "description": "Button to the update history page in the notification displayed when the extension is updated."
+    }
+
+}

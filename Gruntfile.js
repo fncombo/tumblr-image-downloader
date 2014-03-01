@@ -27,6 +27,7 @@ module.exports = function(grunt) {
                     {
                         src: [
                             'js/core.js',
+                            'js/i18n.js',
                             'js/vars.js',
                             'js/button.js',
                             'js/checks.js',
@@ -43,6 +44,7 @@ module.exports = function(grunt) {
                     {
                         src: [
                             'js/core.js',
+                            'js/i18n.js',
                             'js/vars.js',
                             'js/messaging.js',
                             'js/data.js',
@@ -55,6 +57,7 @@ module.exports = function(grunt) {
                     },
                     {
                         src: [
+                            'js/i18n.js',
                             'js/analytics.js',
                             'js/data.js',
                             'js/notifications.js',
@@ -149,6 +152,7 @@ module.exports = function(grunt) {
                         src: [
                             'img/icon*.png',
                             'js/*.json',
+                            '_locales/*/*',
                             'manifest.json'
                         ],
                         dest: 'extension/',

@@ -350,8 +350,8 @@ TID.initChromeListeners = function () {
             TID.forgetImage(request.imageID);
             TID.removeTick(request.imageID);
 
-            var message = 'Oops! The external link doesn\'t appear to be an image.<br>What would you like to do?';
-            var buttons = ['Download the image from Tumblr', 'Go the link in a new tab', 'Cancel'];
+            var message = TID.i18n('linkNotImage');
+            var buttons = [TID.i18n('downloadFromTumblr'), TID.i18n('openLinkInNewTab'), TID.i18n('cancel')];
 
 
             TID.showDialog(message, buttons, function (i) {

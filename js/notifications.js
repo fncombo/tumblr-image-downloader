@@ -48,8 +48,8 @@ TID.showUpdateNotification = function () {
 
         // Buttons
         var buttons = [
-            {title: 'Rate this extension if you find it useful :)'},
-            {title: 'Updates history'}
+            {title: TID.i18n('notificationRateButton')},
+            {title: TID.i18n('notificationUpdateHistoryButton')}
         ];
 
         // Callbacks
@@ -67,7 +67,7 @@ TID.showUpdateNotification = function () {
         // Create a notification
         TID.showNotification(
             'icon80.png',
-            'Tumblr Image Downloader Update',
+            TID.i18n('notificationUpdateTitle'),
             message,
             buttons,
             buttonCallbacks

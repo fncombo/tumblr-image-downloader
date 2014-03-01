@@ -260,14 +260,14 @@ input[type="checkbox"] {
     }
 
     & ~ span:after {
-        content: 'Disabled';
+        content: '__MSG_disabled__';
         position: relative;
         left: 2rem;
         top: -1px;
     }
 
     &:checked ~ span:after {
-        content: 'Enabled';
+        content: '__MSG_enabled__';
     }
 
 }

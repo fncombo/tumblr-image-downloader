@@ -3,6 +3,34 @@
 /* globals TID, chrome, $, $$, listen */
 
 /**
+ * Text
+ */
+
+TID.i18nize();
+
+var installMessage = $('#installMessage a');
+installMessage.href = 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop';
+installMessage.target = '_blank';
+
+var supportMessage = $('#supportMessage a');
+supportMessage.href = 'https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug';
+supportMessage.target = '_blank';
+
+/**
+ * Image count
+ */
+
+TID.adjustImageCount = function (amount) {
+    var clear = $('#clear');
+    clear.innerHTML = clear.innerHTML.replace(/(?:\d+|#)/, amount);
+};
+
+// Get number of remembered images
+chrome.storage.local.get({images: []}, function (object) {
+    TID.adjustImageCount(object.images.length);
+});
+
+/**
  * Checkboxes
  */
 
@@ -12,16 +40,11 @@ $$('input[data-for]').forEach(TID.getCheckboxValue);
 // Change checkbox settings
 listen('click', 'input[type="checkbox"]', TID.checkboxChange);
 
-// Get number of remembered images
-chrome.storage.local.get({images: []}, function (object) {
-    $('#image-count').innerText = object.images.length;
-});
-
 // Clear list of downloaded images from options
 $('#clear').onclick = function () {
 
-    var message = 'Are you sure you want to clear all remembered images?<br>This cannot be undone!';
-    var buttons = ['Yes', 'No'];
+    var message = TID.i18n('rememberedImagesClearConfirmation');
+    var buttons = [TID.i18n('yes'), TID.i18n('no')];
 
     TID.showDialog(message, buttons, function (i) {
 
@@ -29,7 +52,7 @@ $('#clear').onclick = function () {
 
             case '0':
                 chrome.storage.local.remove('images');
-                $('#image-count').innerText = '0';
+                TID.adjustImageCount(0);
                 TID.sendMessage(['Cleared Storage', 'Cleared Images']);
                 break;
 
@@ -129,7 +152,7 @@ chrome.storage.onChanged.addListener(function (changes) {
 
     } else if (changes.hasOwnProperty('images')) {
 
-        $('#image-count').innerText = changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0;
+        TID.adjustImageCount(changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0);
 
     } else if (changes.hasOwnProperty('saveDirectories')) {
 

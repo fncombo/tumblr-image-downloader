@@ -1,7 +1,7 @@
 doctype html
 
 meta charset="utf-8"
-title Options | Tumblr Image Downloader
+title i18n-content="optionsTitle"
 link rel="stylesheet" href="../css/background.css"
 
 main
@@ -9,91 +9,79 @@ main
   h1#ext
     span#logo
       img src="../img/icon38.png"
-    span#name Tumblr Image Downloader
+    span#name i18n-content="extensionName"
 
-  p
-    | Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don&rsquo;t forget to
-    a< href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank" rate it on the Chrome Web Store
-    | .
+  p id="installMessage" i18n-content="installMessage"
 
-  p
-    | If you have any feature requests or find that something is not working, please
-    a<> href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug" target="_blank" leave your feedback here
-    | before giving a negative review.
+  p id="supportMessage" i18n-content="supportMessage"
 
   nav
-    a href="http://fncombo.me" target="_blank" By fncombo
-    a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank" Source on GitHub
-    a href="updates.html" Update history
+    a href="http://fncombo.me" target="_blank" i18n-content="authorLink"
+    a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank"  i18n-content="githubLink"
+    a href="updates.html" i18n-content="updatesLink"
 
   hr
 
   section
     div
-      h1 Locations
+      h1 i18n-content="locationsTitle"
     div
       label
         input type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
         span
       #locations-off
-        p.desc Enable to specify a list of custom locations to download images to.
+        p.desc i18n-content="locationsDisabledHelp"
       #locations-on
-        p Specify a list of custom locations inside your downloads folder that you can quickly choose from when saving an image.
+        p i18n-content="locationsDescription"
         ul#download-directories
-        p Default location (blank for your normal downloads folder).
+        p i18n-content="locationsDefaultDescription"
         p
           input#default-directory
         p
-          button#save-directories Save
-        p.desc
-          | Separate sub-folders with a
-          code<> &#47;
-          | forward slash. If the folder doesn&rsquo;t exist, it will automatically be created.
-        p.desc The default location is where your images will download when you click the normal download button.
+          button#save-directories i18n-content="save"
+        p.desc i18n-content="locationsSeparatorHelp"
+        p.desc i18n-content="locationsDefaultHelp"
 
 
   hr
 
   section
     div
-      h1 Download Images
+      h1 i18n-content="rememberedImagesTitle"
     div
-      p Tumblr Image Downloader automatically remembers all the images you have downloaded and puts a &#10003; tick in the download button.
+      p i18n-content="rememberedImagesDescription"
       p
-        button#clear
-          | Clear
-          strong<> id="image-count" 0
-          | remembered images
-      p.desc This will permanently forget all the images you have downloaded so far. (The information about which images you download never leaves your computer.)
+        button#clear i18n-content="rememberedImagesClearButton"
+      p.desc i18n-content="rememberedImagesHelp"
 
   hr
 
   section
     div
-      h1 Confirmation
+      h1 i18n-content="confirmationTitle"
     div
       label
         input type="checkbox" data-for="confirm" data-default="true" data-message="Download Confirmation"
         span
-      p.desc Toggle whether to bring up a confirmation dialog when downloading an already downloaded image.
+      p.desc i18n-content="confirmationHelp"
 
   hr
 
   section
     div
-      h1 Show Ticks
+      h1 i18n-content="showTicksTitle"
     div
       label
         input type="checkbox" data-for="showTicks" data-default="true" data-message="Show Ticks"
         span
-      p.desc Show a tick on downloaded images even when you&rsquo;re not hovering over them.
+      p.desc i18n-content="showTicksHelp"
 
   hr
 
   footer
-    p Changing settings will affect any currently open pages.
-    p Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines :) This extension is only supposed to enable you to collect those images for yourself, not redistribute them without the original author&rsquo;s permission.
-    p Tumblr Image Downloader is not affiliated with or supported by Tumblr in any way.
+    p i18n-content="optionsSettingsHelp"
+    p i18n-content="optionsGuidelinesHelp"
+    p i18n-content="optionsAffiliactionHelp"
 
   script src="../js/support.js"
   script src="../js/options.js"

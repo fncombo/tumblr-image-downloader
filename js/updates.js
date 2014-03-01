@@ -2,8 +2,27 @@
 
 /* globals TID, chrome */
 
+/**
+ * Text
+ */
+
+TID.i18nize();
+
+var installMessage = $('#installMessage a');
+installMessage.href = 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop';
+installMessage.target = '_blank';
+
+var supportMessage = $('#supportMessage a');
+supportMessage.href = 'https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug';
+supportMessage.target = '_blank';
+
+/**
+ * Updates
+ */
+
 // Populate the version value
-document.querySelector('#version').innerText = chrome.runtime.getManifest().version;
+var currentVersion = document.querySelector('#currentVersion');
+currentVersion.innerHTML = currentVersion.innerHTML.replace('#', chrome.runtime.getManifest().version);
 
 // Get the updates
 TID.getUpdates(function (updates) {

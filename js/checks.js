@@ -17,8 +17,8 @@ TID.hasDownloaded = function (imageID) {
  */
 TID.confirmDuplicateDownload = function (callback) {
 
-    var message = 'You\'ve already downloaded this image before.<br>Are you sure you want to download it again?';
-    var buttons = ['Yes', 'No'];
+    var message = TID.i18n('confirmDuplicateDownload');
+    var buttons = [TID.i18n('yes'), TID.i18n('no')];
 
     function buttonsCallback (i) {
         callback.call(undefined, i === '0' ? true : false);

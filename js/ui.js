@@ -17,7 +17,7 @@ TID.formatDirectories = function () {
             var name = directory.replace(/(.+\/)/, '<span>$1</span>')
                                 .replace(/\/(?!\w+>)/g, '<strong>&#8260;</strong>');
 
-            list += '<li title="Download inside: ' + directory + '" data-directory="' + directory + '">';
+            list += '<li title="' + TID.i18n('downloadDirectoryTitle', directory) + '" data-directory="' + directory + '">';
             list += name;
             list += '</li>';
 
@@ -27,9 +27,7 @@ TID.formatDirectories = function () {
 
     } else {
 
-        return '<li class="' + TID.classes.help + '">' +
-               'You can specify custom download\nlocations in the settings.\n' +
-               'Click to configure.</li>';
+        return '<li class="' + TID.classes.help + '">' + TID.i18n('noConfiguredDirectories') + '</li>';
 
     }
 

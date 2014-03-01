@@ -1,7 +1,7 @@
 doctype html
 
 meta charset="utf-8"
-title Updates | Tumblr Image Downloader
+title i18n-content="updateHistoryTitle"
 link rel="stylesheet" href="../css/background.css"
 
 main
@@ -9,32 +9,24 @@ main
   h1#ext
     span#logo
       img src="../img/icon38.png"
-    span#name Tumblr Image Downloader
+    span#name i18n-content="extensionName"
 
-  p
-    | Thank you for installing Tumblr Image Downloader! If you like this extension and find it useful, please don&rsquo;t forget to
-    a< href="https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop" target="_blank" rate it on the Chrome Web Store
-    | .
+  p id="installMessage" i18n-content="installMessage"
 
-  p
-    | If you have any feature requests or find that something is not working, please
-    a<> href="https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug" target="_blank" leave your feedback here
-    | before giving a negative review.
+  p id="supportMessage" i18n-content="supportMessage"
 
   nav
-    a href="http://fncombo.me" target="_blank" By fncombo
-    a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank" Source on GitHub
-    a href="options.html" Options
+    a href="http://fncombo.me" target="_blank" i18n-content="authorLink"
+    a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank"  i18n-content="githubLink"
+    a href="options.html" i18n-content="optionsLink"
 
   hr
 
-  h1
-    | Current Version
-    span#version<
+  h1 id="currentVersion" i18n-content="currentVersionTitle"
 
   #current
 
-  h1 Previous Versions
+  h1 i18n-content="previousVersionTitle"
 
   #previous
 

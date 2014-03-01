@@ -67,7 +67,7 @@ TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
     // Main download button
     var download = document.createElement('div');
     download.classList.add(TID.classes.downloadDiv);
-    download.innerText = 'Download';
+    download.innerText = TID.i18n('download');
     el.appendChild(download);
 
     // Directories drop-down
@@ -88,20 +88,20 @@ TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
 
     // If any type of HD, add message
     if (isHD) {
-        download.innerHTML += '&nbsp;<strong>HD</strong>';
+        download.innerHTML = TID.i18n('downloadHD');
     }
 
     // If HD is from an external site, add an arrow and a tooltip
     if (isHD === 'external_high_res') {
 
         download.innerHTML += '&#10138;';
-        download.title = 'HD image is from an external site';
+        download.title = TID.i18n('extenalHDImageTitle');
 
     // If image is just from an external side (not necessarily HD)
     } else if (isExternal) {
 
         download.innerHTML += '&#10138;';
-        download.title = 'Image is from an external site';
+        download.title = TID.i18n('extenalImageTitle');
 
     }
 
