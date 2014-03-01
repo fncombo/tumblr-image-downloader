@@ -1,13 +1,4 @@
-$tumblr-color: #2c4762;
-$tumblr-color-hover: #15212e;
-$color-normal: #2c4762;
-$color-hover: #15212e;
-$opacity: 0.5;
-$border-radius: 6px;
-$tumblr-gray: hsl(210, 10%, 65%);
-$tumblr-gray-hover: hsl(210, 10%, 55%);
-$text-primary-color: hsl(0, 0%, 27%);
-$text-primary-color-hover: hsl(0, 0%, 37%);
+@import "vars.scss";
 
 @-webkit-keyframes overlay {
     from {
@@ -39,6 +30,15 @@ $text-primary-color-hover: hsl(0, 0%, 37%);
     right: 0;
     z-index: 9999999999;
     -webkit-animation: overlay 0.05s linear forwards;
+    color: $text-primary-color !important;
+    font-size: $text-base-size !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    font-weight: normal !important;
+    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif !important;
+    line-height: 1.4 !important;
+    text-shadow: none !important;
+    cursor: pointer !important;
 
     &:before {
         content: '';
@@ -56,7 +56,6 @@ $text-primary-color-hover: hsl(0, 0%, 37%);
     padding: 2em 3em;
     display: inline-block;
     vertical-align: middle;
-    color: $text-primary-color;
     -webkit-animation: dialog 0.15s cubic-bezier(0.175, 0.885, 0.320, 1.275) forwards; // easeOutBack
 }
 
