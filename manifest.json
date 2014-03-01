@@ -1,7 +1,7 @@
 {
-  "name": "Tumblr Image Downloader",
-  "version": "0.9",
-  "description": "Download images from your Tumblr dashboard, like, archive, and search pages with a single click.",
+  "name": "__MSG_extensionName__",
+  "version": "0.9.1",
+  "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "permissions": [
     "storage",
@@ -35,7 +35,7 @@
       "19": "img/icon19.png",
       "38": "img/icon38.png"
     },
-    "default_title": "Tumblr Image Downloader Options"
+    "default_title": "__MSG_optionsButtonTitle__"
   },
   "icons": {
     "16": "img/icon16.png",

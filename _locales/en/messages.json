@@ -19,6 +19,10 @@
     /**
      * Background pages
      */
+    "optionsButtonTitle": {
+        "message": "Tumblr Image Downloader Options",
+        "description": "Tooltip text for the page action button that opens the options page."
+    },
     "optionsTitle": {
         "message": "Options",
         "description": "Title for the options page."
