@@ -6,42 +6,37 @@ link rel="stylesheet" href="../css/background.css"
 
 main
 
-  h1#ext
-    span#logo
-      img src="../img/icon38.png"
-    span#name i18n-content="extensionName"
+  header
+    h1
+      img src="../img/icon128.png" width="38" height="38"
+      span i18n-content="extensionName"
+    nav
+      a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank"  i18n-content="githubLink"
+      a href="updates.html" i18n-content="updatesLink"
 
   p id="installMessage" i18n-content="installMessage"
 
   p id="supportMessage" i18n-content="supportMessage"
 
-  nav
-    a href="http://fncombo.me" target="_blank" i18n-content="authorLink"
-    a href="https://github.com/fncombo/tumblr-image-downloader" target="_blank"  i18n-content="githubLink"
-    a href="updates.html" i18n-content="updatesLink"
+  #translate
+    p Do you have experience translating and want to make Tumblr Image Downloader even better? Send an email to <strong>tumblrimagedownloader@gmail.com</strong> and we&rsquo;ll get in touch with you!
 
-  hr
+  hr.strong
 
   section
     div
-      h1 i18n-content="locationsTitle"
+      h1 i18n-content="generalOptionsTitle"
     div
-      label
-        input type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
-        span
-      #locations-off
-        p.desc i18n-content="locationsDisabledHelp"
-      #locations-on
-        p i18n-content="locationsDescription"
-        ul#download-directories
-        p i18n-content="locationsDefaultDescription"
-        p
-          input#default-directory
-        p
-          button#save-directories i18n-content="save"
-        p.desc i18n-content="locationsSeparatorHelp"
-        p.desc i18n-content="locationsDefaultHelp"
-
+      p.toggle-group
+        label
+          input type="checkbox" data-for="confirm" data-default="true"
+          span
+          span i18n-content="confirmationHelp"
+      p.toggle-group
+        label
+          input type="checkbox" data-for="showTicks" data-default="true"
+          span
+          span i18n-content="showTicksHelp"
 
   hr
 
@@ -52,31 +47,33 @@ main
       p i18n-content="rememberedImagesDescription"
       p
         button#clear i18n-content="rememberedImagesClearButton"
-      p.desc i18n-content="rememberedImagesHelp"
+      p.desc i18n-content="rememberedImagesDisclaimer"
 
   hr
 
   section
     div
-      h1 i18n-content="confirmationTitle"
+      h1 i18n-content="locationsTitle"
     div
-      label
-        input type="checkbox" data-for="confirm" data-default="true" data-message="Download Confirmation"
-        span
-      p.desc i18n-content="confirmationHelp"
+      p.toggleGroup
+        label
+          input.toggle type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
+          span
+      #locations-off
+        p.desc i18n-content="locationsDisabledHelp"
+      #locations-on
+        p i18n-content="locationsDescription"
+        ul#download-directories
+        p i18n-content="locationsDefaultDescription"
+        p
+          input#default-directory
+        p
+          button#save-directories i18n-content="save"
+          span.saved i18n-content="saved"
+        p.desc i18n-content="locationsSeparatorHelp"
+        p.desc i18n-content="locationsDefaultHelp"
 
-  hr
-
-  section
-    div
-      h1 i18n-content="showTicksTitle"
-    div
-      label
-        input type="checkbox" data-for="showTicks" data-default="true" data-message="Show Ticks"
-        span
-      p.desc i18n-content="showTicksHelp"
-
-  hr
+  hr.strong
 
   footer
     p i18n-content="optionsSettingsHelp"

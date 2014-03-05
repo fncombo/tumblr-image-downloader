@@ -7,10 +7,10 @@ html, body {
 }
 
 body {
-    background: #2c4762;
+    background: $tumblr-color;
     text-align: center;
     font-size: $text-base-size;
-    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-family: $font-family;
     color: $text-primary-color;
 
     &:before, &:after {
@@ -34,13 +34,19 @@ hr {
     border: none;
     border-top: 1px solid hsl(0, 0%, 95%);
     margin: 1.5rem 0;
+
+    &.strong {
+        border-top: 1px solid hsl(0, 0%, 90%);
+        border-bottom: 1px solid hsl(0, 0%, 90%);
+    }
+
 }
 
 h1 {
-    font-weight: bolder;
+    font-weight: bold;
     font-size: $text-base-size;
     margin: 0;
-    margin: 0;
+    padding: 0;
 }
 
 p {
@@ -48,6 +54,7 @@ p {
 
     &.desc {
         color: $tumblr-gray;
+        font-size: $text-smaller;
     }
 
     &:last-child {
@@ -65,77 +72,64 @@ a {
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
-        border-radius: 2px;
+        font-weight: bolder;
+    }
+
+}
+
+header {
+    display: flex;
+    margin: 0 0 1.5rem 0;
+    align-items: center;
+
+    & > nav, & > h1 {
+        flex: 1 1 auto;
+    }
+
+    h1 {
+        display: flex;
+        align-items: center;
+
+        img {
+            flex: 0 0 38px;
+            margin: 0 0.25rem 0 0;
+        }
+
+    }
+
+    nav {
+        text-align: right;
+    }
+
+    a {
+        @extend .base-button;
+        margin: 0 0 0 0.25rem;
     }
 
 }
 
 section {
+    display: flex;
 
     & > div:first-child {
-        display: inline-block;
-        width: 29.5%;
-        vertical-align: top;
+        flex: 0 0 27%;
     }
 
     & > div:last-child {
-        display: inline-block;
-        width: 69.5%;
-        vertical-align: top;
+        flex: 0 0 73%;
     }
 
 }
 
-#ext {
-    margin: 0 0 1rem 0;
-}
-
-#logo, #name {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-#logo {
-    height: 38px;
-    margin: 0 0.5rem 0 0;
-}
-
-nav {
-    margin: 2rem 0;
-
-    a {
-        margin: 0 0.25rem 0 0;
-    }
-
-}
-
-button, nav a {
-    background: $tumblr-gray;
-    border: none;
-    border-radius: 2px;
-    padding: 0.5rem 0.75rem;
-    font-weight: bolder;
-    color: #fff;
-    cursor: pointer;
-    text-decoration: none;
-
-    &:hover {
-        background: $tumblr-gray-hover;
-    }
-
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
-    }
-
+button {
+    @extend .base-button;
 }
 
 input {
     width: 20rem;
     padding: 0.5rem 0.75rem;
     border: 1px solid $border;
-    border-radius: 2px;
+    border-radius: $input-radius;
     position: relative;
     top: -0.1rem;
 
@@ -154,9 +148,13 @@ input {
         padding: 0.1rem 0;
     }
 
+    input {
+        margin: 0 0.5rem 0 0;
+    }
+
     .move {
         cursor: ns-resize;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem;
         opacity: 0.3;
         font-size: 1.1rem;
     }
@@ -207,6 +205,24 @@ input {
 
 }
 
+.toggle-group {
+
+    label {
+        display: flex;
+        align-items: center;
+    }
+
+    input + span {
+        flex: 0 0 25px;
+        margin: 0 0.5rem 0 0;
+    }
+
+    span:last-child {
+        flex: 1 1 auto;
+    }
+
+}
+
 label {
     position: relative;
     -webkit-user-select: none;
@@ -217,76 +233,98 @@ input[type="checkbox"] {
     position: absolute;
     opacity: 0;
 
-    & ~ span {
+    $slider-height: $border-radius * 2.4;
+    $button-size: $slider-height * 0.7;
+    $offset: $button-size * 0.15;
+
+    & + span {
         display: inline-block;
-        margin: 0 0.5rem 1rem 0;
+        margin: 0 0.5rem 0 0;
         position: relative;
-        width: $border-radius*4;
-        height: $border-radius*2.4;
+        width: 25px;
+        height: 14px;
         background: $tumblr-gray;
-        border-radius: $border-radius;
+        border-radius: 7px;
         cursor: pointer;
         -webkit-user-select: none;
     }
 
-    &:checked ~ span {
+    &:checked + span {
         background: $tumblr-light-color;
     }
 
-    &:focus ~ span {
+    &:focus + span {
         outline: none;
         box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
     }
 
-    & ~ span:before {
+    & + span:before {
         content: '';
-        display: block;
-        width: $border-radius*1.6;
-        height: $border-radius*1.6;
         background: #fff;
         border-radius: 50%;
+        display: block;
+        height: 10px;
+        width: 10px;
         position: absolute;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
+        top: 2px;
     }
 
-    &:not(:checked) ~ span:before {
-        left: $border-radius*0.3;
+    &:not(:checked) + span:before {
+        left: 2px;
     }
 
-    &:checked ~ span:before {
-        right: $border-radius*0.4;
+    &:checked + span:before {
+        left: 25px - 2px - 10px;
     }
 
-    & ~ span:after {
+    &.toggle + span:after {
         content: '__MSG_disabled__';
         position: relative;
         left: 2rem;
         top: -1px;
     }
 
-    &:checked ~ span:after {
+    &.toggle:checked + span:after {
         content: '__MSG_enabled__';
     }
 
 }
 
-label i {
-    display: inline-block;
-    font-style: normal;
-}
+.saved {
+    opacity: 0;
+    visibility: hidden;
+    margin: 0 0.5rem;
+    font-size: $text-smaller;
+    color: $tumblr-green;
+    font-weight: bold;
+    -webkit-transform: scale(0.75);
+    transform: scale(0.75);
+    -webkit-transition: all 0.1s $bezier;
+    transition: all 0.1s $bezier;
 
-footer {
-    font-size: 0.8rem;
-    color: $tumblr-gray;
-
-    p {
-        margin: 0 0 0.5rem 0;
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
 
 }
 
+footer {
+    font-size: $text-smaller;
+    color: $tumblr-gray;
+}
+
 .hide {
     display: none;
+}
+
+#translate {
+    background: $tumblr-green;
+    color: #fff;
+    border-radius: $border-radius;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    text-align: center;
 }

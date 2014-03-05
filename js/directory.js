@@ -48,8 +48,8 @@ TID.sanitizeDirectory = function (directory) {
 TID.generateDirectoryInput = function (value, skipLi) {
     var html = '';
     html += skipLi ? '' : '<li>';
-    html += '<span class="move">&#9776;</span>';
     html += '<input type="text" placeholder="' + TID.randomPlaceholder() + '" value="' + (value ? value : '') + '">';
+    html += '<span class="move">&#9776;</span>';
     html += '<span class="delete" tabindex="0">&cross;</span>';
     html += skipLi ? '' : '</li>';
     return html;
@@ -87,6 +87,12 @@ TID.addBlankDirectory = function () {
  */
 TID.saveDirectories = function () {
 
+    var saved = 0;
+
+    function savedCallback () {
+        saved += 1;
+    }
+
     var directories = [];
     var defaultDirectory = TID.sanitizeDirectory($('#default-directory').value);
 
@@ -101,12 +107,33 @@ TID.saveDirectories = function () {
         return self.indexOf(value) === index;
     });
 
-    chrome.storage.sync.set({saveDirectories: directories});
+    chrome.storage.sync.set({saveDirectories: directories}, savedCallback);
 
     if (defaultDirectory.length) {
-        chrome.storage.sync.set({defaultDirectory: defaultDirectory});
+        chrome.storage.sync.set({defaultDirectory: defaultDirectory}, savedCallback);
     } else {
         chrome.storage.sync.remove('defaultDirectory');
     }
+
+    var interval = setInterval(function () {
+        if (saved === 2) {
+
+            var el = $('#save-directories').nextElementSibling;
+            el.classList.add('show');
+
+            setTimeout(function () {
+                el.classList.remove('show');
+            }, 1000);
+
+            clearInterval(interval);
+
+            $('#download-directories').innerHTML = '';
+            directories.forEach(function (directory) {
+                $('#download-directories').innerHTML += TID.generateDirectoryInput(directory);
+            });
+            TID.addBlankDirectory();
+
+        }
+    });
 
 };
