@@ -110,6 +110,8 @@ module.exports = function(grunt) {
                         expand: true,
                         src: [
                             'sass/*.scss',
+                            '!sass/vars.scss',
+                            '!sass/dialog.scss',
                             '!sass/normalize.scss'
                         ],
                         flatten: true,
