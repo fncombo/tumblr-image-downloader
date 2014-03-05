@@ -53,5 +53,9 @@
         "New, pretty dialog boxes instead of the normal Chrome pop-ups.",
         "Fixed a bug where the download button would be visible above the editing view (such as when reblogging).",
         "Lots of code and performance improvements and other bug fixes."
+    ],
+    [
+        "Improved the options page and the general design.",
+        "Have experience translating? Check out the options page for more info!"
     ]
 ]
