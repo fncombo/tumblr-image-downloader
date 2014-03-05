@@ -1,6 +1,8 @@
 $tumblr-color: #2c4762;
 $tumblr-color-hover: #15212e;
 
+$tumblr-green: #61c292;
+
 $tumblr-light-color: #529ecc;
 
 $tumblr-gray: hsl(210, 10%, 65%);
@@ -16,5 +18,33 @@ $border: hsl(0, 0%, 85%);
 $border-active: hsl(0, 0%, 65%);
 
 $text-base-size: 14px;
+$text-smaller: 0.8rem;
+
+$font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
 
 $border-radius: 6px;
+$input-radius: 2px;
+
+$bezier: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+
+.base-button {
+    background: $tumblr-gray;
+    border: none;
+    border-radius: $input-radius;
+    padding: 0.4rem 0.6rem;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: $text-smaller;
+
+    &:hover {
+        background: $tumblr-gray-hover;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
+    }
+
+}
