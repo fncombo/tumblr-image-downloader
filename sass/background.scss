@@ -21,6 +21,11 @@ body {
 
 }
 
+#static *, #static *:before, #static *:after {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
 main {
     background: #fff;
     width: 625px;
@@ -267,6 +272,8 @@ input[type="checkbox"] {
         width: 10px;
         position: absolute;
         top: 2px;
+        -webkit-transition: left 0.1s $bezier;
+        transition: left 0.1s $bezier;
     }
 
     &:not(:checked) + span:before {

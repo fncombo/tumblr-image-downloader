@@ -17,6 +17,13 @@ supportMessage.href = 'https://chrome.google.com/webstore/support/ipocoligdfkbgn
 supportMessage.target = '_blank';
 
 /**
+ * Remove the #static ID after a while to stop initial checkbox sliders from animating on load
+ */
+setTimeout(function () {
+    $('#static').removeAttribute('id');
+}, 100);
+
+/**
  * Image count
  */
 
