@@ -130,7 +130,10 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['slim/*.slim'],
+                        src: [
+                            'slim/*.slim',
+                            '!slim/*.include.slim'
+                        ],
                         flatten: true,
                         dest: 'extension/html/',
                         ext: '.html'
