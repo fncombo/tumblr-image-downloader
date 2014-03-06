@@ -21,11 +21,11 @@ TID.directoryEvents.mousedown = function (event, el) {
         return;
     }
 
+    TID.addFakeDirectory(TID.vars.currentItem);
+
     TID.vars.currentItem.classList.add('moving');
     TID.vars.currentItem.style.position = 'absolute';
     TID.vars.currentItem.style.top = (event.clientY + window.pageYOffset) + 'px';
-
-    TID.addFakeDirectory(TID.vars.currentItem);
 
     TID.vars.moveDirection = false;
     TID.vars.moveDirectionLast = 0;
