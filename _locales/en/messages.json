@@ -62,7 +62,7 @@
         "description": "Help text at the bottom of the options page."
     },
     "optionsGuidelinesHelp": {
-        "message": "Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines. This extension is only supposed to enable you to collect images for yourself, not redistribute or use them without the original author&rsquo;s permission.",
+        "message": "Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines. This extension is only supposed to enable you to collect images for yourself, not redistribute or use them without the original artist&rsquo;s permission.",
         "description": "Help text at the bottom of the options page."
     },
     "optionsAffiliactionHelp": {
