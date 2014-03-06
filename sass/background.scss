@@ -165,10 +165,14 @@ input {
     }
 
     .moving {
+        margin: -18px 0 0 0;
         pointer-events: none;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
         z-index: 999999;
+
+        .delete {
+            display: none;
+        }
+
     }
 
     .delete {
