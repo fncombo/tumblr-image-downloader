@@ -101,11 +101,6 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
 });
 
-// Clicking on page action button
-chrome.pageAction.onClicked.addListener(function () {
-    chrome.tabs.create({url: 'html/options.html'});
-});
-
 // Get default save directory
 chrome.storage.sync.get({defaultDirectory: false}, function (object) {
     TID.vars.defaultDirectory = object.defaultDirectory;

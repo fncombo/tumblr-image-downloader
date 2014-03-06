@@ -35,7 +35,8 @@
       "19": "img/icon19.png",
       "38": "img/icon38.png"
     },
-    "default_title": "__MSG_optionsButtonTitle__"
+    "default_title": "__MSG_optionsButtonTitle__",
+    "default_popup": "html/popup.html"
   },
   "icons": {
     "16": "img/icon16.png",

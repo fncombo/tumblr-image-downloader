@@ -1,0 +1,22 @@
+doctype html
+
+meta charset="utf-8"
+title i18n-content="optionsTitle"
+link rel="stylesheet" href="../css/background.css"
+link rel="stylesheet" href="../css/popup.css"
+
+main#static
+
+  header
+    h1
+      img src="../img/icon128.png" width="38" height="38"
+      span i18n-content="extensionName"
+    nav
+      a href="options.html" target="_blank" i18n-content="optionsLink"
+
+  hr.strong
+
+  == Slim::Template.new("#{File.expand_path(File.dirname(__FILE__))}/slim/options.include.slim").render
+
+  script src="../js/support.js"
+  script src="../js/options.js"

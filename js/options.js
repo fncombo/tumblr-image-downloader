@@ -8,13 +8,17 @@
 
 TID.i18nize();
 
-var installMessage = $('#installMessage a');
-installMessage.href = 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop';
-installMessage.target = '_blank';
+if ($('#installMessage') && $('#supportMessage')) {
 
-var supportMessage = $('#supportMessage a');
-supportMessage.href = 'https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug';
-supportMessage.target = '_blank';
+    var installMessage = $('#installMessage a');
+    installMessage.href = 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop';
+    installMessage.target = '_blank';
+
+    var supportMessage = $('#supportMessage a');
+    supportMessage.href = 'https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug';
+    supportMessage.target = '_blank';
+
+}
 
 /**
  * Remove the #static ID after a while to stop initial checkbox sliders from animating on load
