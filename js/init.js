@@ -321,10 +321,10 @@ TID.initChromeListeners = function () {
 
             TID.directories = changes.saveDirectories.newValue;
 
-            var list = TID.formatDirectories();
+            TID.formattedDirectories = TID.formatDirectories();
 
             $$('.' + TID.classes.list + ' ul').forEach(function (el) {
-                el.innerHTML = list;
+                el.innerHTML = TID.formattedDirectories;
             });
 
         // If the tick setting was changed

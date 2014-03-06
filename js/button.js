@@ -12,7 +12,8 @@ TID.addButtons = function () {
     $$(TID.selectors.images()).forEach(function (el) {
 
         // Skip images that are not part of the actual post
-        if (el.ancestor(2).classList.contains('caption') || el.ancestor(2).nodeName === 'BLOCKQUOTE') {
+        var ancestor = el.ancestor(2);
+        if (ancestor.classList.contains('caption') || ancestor.nodeName === 'BLOCKQUOTE') {
             return;
         }
 
@@ -73,16 +74,12 @@ TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
     // Directories drop-down
     var directories = document.createElement('div');
     directories.classList.add(TID.classes.list);
-    directories.innerHTML += '<span>&#9660;</span>';
+    directories.innerHTML += '<span>&#9660;</span><ul>' + TID.formattedDirectories + '</ul>';
 
-    var list = document.createElement('ul');
-    list.innerHTML = TID.formatDirectories();
-
-    directories.appendChild(list);
     el.appendChild(directories);
 
     // Check if the image has already been downloaded
-    if (TID.downloadedImages.indexOf(imageID) !== -1) {
+    if (TID.hasDownloaded(imageID)) {
         el.classList.add(TID.classes.downloaded);
     }
 

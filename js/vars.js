@@ -10,6 +10,7 @@ TID.downloadedImages = [];
 
 // Store list of download directories - always up-to-date
 TID.directories = [];
+TID.formattedDirectories = '';
 
 // List of all settings and things they should do
 TID.settings = {

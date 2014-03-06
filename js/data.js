@@ -14,6 +14,8 @@ TID.getDirectories = function (callback) {
             TID.directories = object.saveDirectories;
         }
 
+        TID.formattedDirectories = TID.formatDirectories();
+
         callback.call(this);
 
     });
