@@ -108,8 +108,9 @@ TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
 
         if (!TID.isArchivePage) {
 
-            if (el.ancestor(2).classList.contains('photoset_row')) {
-                el.ancestor(2).classList[action](TID.classes.photoset);
+            var ancestor = el.ancestor(2);
+            if (ancestor.classList.contains('photoset_row')) {
+                ancestor.classList[action](TID.classes.photoset);
             }
 
         } else {
