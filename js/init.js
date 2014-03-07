@@ -215,7 +215,8 @@ TID.initMutationObservers = function () {
                 if (el.addedNodes[i].id === 'tumblr_lightbox') {
 
                     centerImageObserver.observe($('#tumblr_lightbox_center_image'), {
-                        attributes: true, attributeFilter: ['src']
+                        attributes: true,
+                        attributeFilter: ['src']
                     });
 
                     break;
@@ -228,7 +229,9 @@ TID.initMutationObservers = function () {
     });
 
     // Start observing
-    lightboxObserver.observe(document.body, {childList: true});
+    lightboxObserver.observe(document.body, {
+        childList: true
+    });
 
     // Create a DOM mutation observer for inline post images
     var inlineImageObserver = new MutationObserver(function (mutations) {
