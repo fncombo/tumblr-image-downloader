@@ -8,28 +8,24 @@
  */
 TID.formatDirectories = function () {
 
-    if (TID.directories.length) {
-
-        var list = '';
-
-        TID.directories.forEach(function (directory) {
-
-            var name = directory.replace(/(.+\/)/, '<span>$1</span>')
-                                .replace(/\/(?!\w+>)/g, '<strong>&#8260;</strong>');
-
-            list += '<li title="' + TID.i18n('downloadDirectoryTitle', directory) + '" data-directory="' + directory + '">';
-            list += name;
-            list += '</li>';
-
-        });
-
-        return list;
-
-    } else {
-
+    if (!TID.directories.length) {
         return '<li class="' + TID.classes.help + '">' + TID.i18n('noConfiguredDirectories') + '</li>';
-
     }
+
+    var list = '';
+
+    TID.directories.forEach(function (directory) {
+
+        var name = directory.replace(/(.+\/)/, '<span>$1</span>')
+                            .replace(/\/(?!\w+>)/g, '<strong>&#8260;</strong>');
+
+        list += '<li title="' + TID.i18n('downloadDirectoryTitle', directory) + '" data-directory="' + directory + '">';
+        list += name;
+        list += '</li>';
+
+    });
+
+    return list;
 
 };
 
