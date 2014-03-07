@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID */
+/* globals TID, $ */
 
 /**
  * Format the list of download directories

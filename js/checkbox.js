@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome */
+/* globals TID, chrome, $ */
 
 /**
  * Adjust the controls that belong to a checkbox

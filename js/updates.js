@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome */
+/* globals TID, chrome, $ */
 
 /**
  * Text

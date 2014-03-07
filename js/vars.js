@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID */
+/* globals TID, $ */
 
 // Misc extension global variables
 TID.vars = {};
