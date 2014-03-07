@@ -28,7 +28,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 // Override file names by adding the user's directory of choice
 chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, suggest) {
 
-    if (downloadItem.byExtensionId !== chrome.i18n.getMessage("@@extension_id")) {
+    if (downloadItem.byExtensionId !== chrome.i18n.getMessage('@@extension_id')) {
         return;
     }
 
