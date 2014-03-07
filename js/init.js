@@ -278,7 +278,8 @@ TID.initMutationObservers = function () {
     // Observe each inline image
     $$('.inline_image, .inline_external_image').forEach(function (el) {
         inlineImageObserver.observe(el, {
-            attributes: true, attributeFilter: ['src', 'class']
+            attributes: true,
+            attributeFilter: ['src', 'class']
         });
     });
 
