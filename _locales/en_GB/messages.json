@@ -1,12 +1,2 @@
-/**
- * Author: fncombo
- */
 {
-    /**
-     * Confirmation options
-     */
-    "confirmationHelp": {
-        "message": "Toggle whether to bring up a confirmation dialogue when downloading an already downloaded image."
-    }
-
 }
