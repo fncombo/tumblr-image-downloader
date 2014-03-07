@@ -14,7 +14,9 @@ chrome.runtime.onInstalled.addListener(function (details) {
     switch (details.reason) {
 
     case 'install':
-        chrome.tabs.create({url: 'html/options.html'});
+        chrome.tabs.create({
+            url: 'html/options.html'
+        });
         break;
 
     case 'update':
@@ -39,11 +41,17 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
     ) {
 
         if (TID.vars.saveDirectory) {
-            suggest({filename: TID.vars.saveDirectory + '/' + downloadItem.filename});
+            suggest({
+                filename: TID.vars.saveDirectory + '/' + downloadItem.filename
+            });
         } else if (TID.vars.defaultDirectory) {
-            suggest({filename: TID.vars.defaultDirectory + '/' + downloadItem.filename});
+            suggest({
+                filename: TID.vars.defaultDirectory + '/' + downloadItem.filename
+            });
         } else {
-            suggest({filename: downloadItem.filename});
+            suggest({
+                filename: downloadItem.filename
+            });
         }
 
     // If the link does not appear to link to an image
@@ -86,11 +94,15 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         break;
 
     case 'open_settings':
-        chrome.tabs.create({url: 'html/options.html'});
+        chrome.tabs.create({
+            url: 'html/options.html'
+        });
         break;
 
     case 'open_tab':
-        chrome.tabs.create({url: request.url});
+        chrome.tabs.create({
+            url: request.url
+        });
         break;
 
     default:

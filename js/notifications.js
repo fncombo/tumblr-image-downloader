@@ -48,18 +48,26 @@ TID.showUpdateNotification = function () {
 
         // Buttons
         var buttons = [
-            {title: TID.i18n('notificationRateButton')},
-            {title: TID.i18n('notificationUpdateHistoryButton')}
+            {
+                title: TID.i18n('notificationRateButton')
+            },
+            {
+                title: TID.i18n('notificationUpdateHistoryButton')
+            }
         ];
 
         // Callbacks
         var buttonCallbacks = function (buttonIndex) {
             switch (buttonIndex) {
             case 0:
-                chrome.tabs.create({url: 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop/reviews'});
+                chrome.tabs.create({
+                    url: 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop/reviews'
+                });
                 break;
             case 1:
-                chrome.tabs.create({url: 'html/updates.html'});
+                chrome.tabs.create({
+                    url: 'html/updates.html'
+                });
                 break;
             }
         };
