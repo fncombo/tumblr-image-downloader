@@ -80,36 +80,49 @@ TID.directoryEvents.mouseup = function () {
  */
 TID.directoryEvents.keyup = function (event, el) {
 
-    if (TID.vars.ctrlKey) {
+    var acceptedKeys = [38, 40];
+    var keyCode = event.keyCode;
+
+    // Skip keys that are not up/down arrows
+    if (acceptedKeys.indexOf(keyCode) === -1) {
+        return;
+    }
+
+    if (TID.vars.ctrlKey && !el.parentNode.classList.contains('blank')) {
 
         var parent = el.parentNode;
         var toMove;
 
-        if (parent.classList.contains('blank')) {
-            return;
-        }
+        if (keyCode === 38 && parent.previousElementSibling) {
 
-        if (event.keyCode === 38 && parent.previousElementSibling) {
             toMove = parent.previousElementSibling;
             parent.parentNode.insertBefore(toMove.cloneNode(true), parent.nextElementSibling);
             parent.parentNode.removeChild(toMove);
-        } else if (event.keyCode === 40 && !parent.nextElementSibling.classList.contains('blank')) {
+
+        } else if (keyCode === 40 && !parent.nextElementSibling.classList.contains('blank')) {
+
             toMove = parent.nextElementSibling;
+
             if (!toMove.classList.contains('blank')) {
                 parent.parentNode.insertBefore(toMove.cloneNode(true), parent);
                 parent.parentNode.removeChild(toMove);
             }
+
         }
 
-    } else {
+    } else if (!TID.vars.ctrlKey) {
 
-        try {
-            if (event.keyCode === 38) {
-                el.parentNode.previousElementSibling.querySelector('input').focus();
-            } else if (event.keyCode === 40) {
-                el.parentNode.nextElementSibling.querySelector('input').focus();
-            }
-        } catch (e) {}
+        var toGo;
+
+        if (keyCode === 38) {
+            toGo = el.parentNode.previousElementSibling;
+        } else if (keyCode === 40) {
+            toGo = el.parentNode.nextElementSibling;
+        }
+
+        if (toGo) {
+            toGo.querySelector('input').focus();
+        }
 
     }
 
