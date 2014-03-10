@@ -9,6 +9,11 @@ TID.run = function () {
 
     TID.sendMessage('show_page_action');
 
+    // Add a class to the body on archive pages
+    if (TID.isArchivePage) {
+        document.body.classList.add(TID.classes.archivePage);
+    }
+
     // Keep adding new buttons for pages with endless scrolling
     if (TID.isInfiniteScrolling || TID.isArchivePage) {
 

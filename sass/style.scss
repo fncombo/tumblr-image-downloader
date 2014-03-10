@@ -33,10 +33,6 @@ a.__TID_parent {
     opacity: $opacity;
 }
 
-.post.post_micro .__TID_highlight {
-    box-shadow: inset 0 0 0 1px $tumblr-color-hover, inset 0 0 0 2px #fff;
-}
-
 .__TID_download {
     display: inline-block;
     position: absolute;
@@ -99,16 +95,46 @@ a.__TID_parent {
 
 }
 
-.post.post_micro.has_hover.masonry-brick .__TID_download {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 0 3px 3px 3px;
-    opacity: 1;
-}
+.__TID_archive {
 
-.post.post_micro.has_hover.masonry-brick .__TID_list {
-    display: none;
+    .post {
+        overflow: visible;
+
+        &.__TID_highlight {
+            z-index: 9999999999999;
+
+            .post_glass {
+                box-shadow: inset 0 0 0 1px $tumblr-color-hover, inset 0 0 0 2px #fff;
+            }
+
+        }
+
+        .__TID_download {
+            top: auto;
+            bottom: 100%;
+        }
+
+        &:hover {
+
+            .post_content,
+            .post_content_inner,
+            .post_thumbnail_container,
+            .post_glass {
+                border-top-left-radius: 0;
+            }
+
+            .__TID_download_div {
+                opacity: 1;
+            }
+
+            .__TID_list  {
+                opacity: $opacity;
+            }
+
+        }
+
+    }
+
 }
 
 .__TID_show_ticks .__TID_parent:not(:hover) .__TID_downloaded:before,

@@ -39,7 +39,7 @@ TID.addButtons = function () {
             button = TID.createDownloadButton(TID.getImageID(url), false, url);
 
             // Append the button
-            container = el.closest('.post').querySelector('.post_micro_glass .hover_inner');
+            container = el.closest('.post');
             container.insertBefore(button, container.firstChild);
 
         }
@@ -115,7 +115,7 @@ TID.createDownloadButton = function (imageID, isHD, url, isExternal) {
 
         } else {
 
-            el.ancestor(3).classList[action](TID.classes.highlight);
+            el.parentNode.classList[action](TID.classes.highlight);
 
         }
 
