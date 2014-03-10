@@ -175,7 +175,8 @@ chrome.storage.onChanged.addListener(function (changes) {
 
     } else if (changes.hasOwnProperty('defaultDirectory')) {
 
-        $('#default-directory').value = changes.defaultDirectory.hasOwnProperty('newValue') ? changes.defaultDirectory.newValue : '';
+        var newValue = changes.defaultDirectory.hasOwnProperty('newValue') ? changes.defaultDirectory.newValue : '';
+        $('#default-directory').value = newValue;
 
     }
 
