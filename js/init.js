@@ -66,40 +66,13 @@ TID.initDOMEvents = function () {
     // Download list events
     document.addEventListener('click', function (event) {
 
-        var parent;
-        var url;
-        var imageID;
-        var isHD;
-        var directory;
-
         // Set up downloading via directory list buttons
         if (event.target.matchesSelector('.' + TID.classes.list + ' li:not(.' + TID.classes.help + ')')) {
 
             event.stopPropagation();
             event.preventDefault();
 
-            parent = event.target.ancestor(3);
-            imageID = parent.dataset.imageId;
-            url = parent.dataset.downloadUrl;
-            directory = event.target.dataset.directory;
-
-            // If don't care about confirmation or not downloaded yet, download
-            if (!TID.confirm || (TID.confirm && !TID.hasDownloaded(imageID))) {
-
-                TID.downloadImage(url, imageID, directory);
-                TID.sendMessage(['Downloaded Image', 'To Directory']);
-
-            // Otherwise ask for confirmation
-            } else if (TID.hasDownloaded(imageID)) {
-
-                TID.confirmDuplicateDownload(function (accept) {
-                    if (accept) {
-                        TID.downloadImage(url, imageID, directory);
-                        TID.sendMessage(['Downloaded Image', 'To Directory']);
-                    }
-                });
-
-            }
+            TID.downloadFromDirectory(event);
 
         // Set up downloading via normal download button
         } else if (event.target.matchesSelector('.' + TID.classes.downloadDiv)) {
@@ -107,40 +80,7 @@ TID.initDOMEvents = function () {
             event.stopPropagation();
             event.preventDefault();
 
-            parent = event.target.parentNode;
-            imageID = parent.dataset.imageId;
-            url = parent.dataset.downloadUrl;
-            isHD = parent.dataset.hd === 'true' ? true : false;
-
-            // If don't care about confirmation or not downloaded yet, download
-            if (!TID.confirm || (TID.confirm && !TID.hasDownloaded(imageID))) {
-
-                TID.downloadImage(url, imageID);
-
-                if (!TID.isArchivePage) {
-                    TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
-                } else {
-                    TID.sendMessage(['Downloaded Image', 'Archive']);
-                }
-
-            // Otherwise ask for confirmation
-            } else if (TID.hasDownloaded(imageID)) {
-
-                TID.confirmDuplicateDownload(function (accept) {
-                    if (accept) {
-
-                        TID.downloadImage(url, imageID);
-
-                        if (!TID.isArchivePage) {
-                            TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
-                        } else {
-                            TID.sendMessage(['Downloaded Image', 'Archive']);
-                        }
-
-                    }
-                });
-
-            }
+            TID.downloadFromButton(event);
 
         // Set up link to the options page
         } else if (event.target.matchesSelector('.' + TID.classes.help)) {

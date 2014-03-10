@@ -36,6 +36,7 @@ module.exports = function(grunt) {
                             'js/messaging.js',
                             'js/ticks.js',
                             'js/ui.js',
+                            'js/events.js',
                             'js/init.js',
                             'js/run.js'
                         ],
