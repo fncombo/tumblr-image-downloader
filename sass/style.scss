@@ -97,6 +97,18 @@ a.__TID_parent {
 
 .__TID_archive {
 
+    &.__TID_show_ticks .post:not(:hover) .__TID_downloaded:after {
+        content: '\2713';
+        display: block;
+        background: $tumblr-color;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 0.3em 0.6em;
+        font-size: 0.75em;
+        border-radius: $border-radius 0 $border-radius 0;
+    }
+
     .post {
         overflow: visible;
 
