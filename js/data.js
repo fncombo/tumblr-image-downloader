@@ -16,7 +16,7 @@ TID.getDirectories = function (callback) {
 
         TID.formattedDirectories = TID.formatDirectories();
 
-        callback.call(this);
+        callback.call(undefined);
 
     });
 
@@ -40,7 +40,7 @@ TID.getUpdates = function (callback) {
 
     request.onload = function () {
         var messages = JSON.parse(request.responseText);
-        callback.call(this, messages);
+        callback.call(undefined, messages);
     };
 
     request.open('GET', '/js/updates.json', true);

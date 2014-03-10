@@ -102,7 +102,7 @@ TID.availableHDImage = function (url, callbackSuccess, callbackError) {
         if (!image.naturalWidth || !image.naturalHeight) {
             image.onerror();
         } else {
-            callbackSuccess.call(this, image.src);
+            callbackSuccess.call(undefined, image.src);
         }
 
     };
@@ -122,7 +122,7 @@ TID.availableHDImage = function (url, callbackSuccess, callbackError) {
         } else {
 
             // No better resolution was found
-            callbackError.call(this, url);
+            callbackError.call(undefined, url);
 
         }
 

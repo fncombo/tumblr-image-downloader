@@ -45,7 +45,7 @@ Element.prototype.ancestor = function (depth) {
 function listen(event, selector, listener) {
     document.addEventListener(event, function (event) {
         if (event.target.matchesSelector(selector)) {
-            listener.call(this, event, event.target);
+            listener.call(undefined, event, event.target);
         }
     }, false);
 }
