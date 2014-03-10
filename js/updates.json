@@ -60,5 +60,10 @@
     [
         "You can now quickly access options from the icon in the address bar on Tumblr pages.",
         "Have experience translating? Check out the options page for more info!"
+    ],
+    [
+        "General code optimizations and improvements.",
+        "Downloading to a directory now works in archives.",
+        "Revamped the download button styling in archives."
     ]
 ]
