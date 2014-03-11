@@ -32,7 +32,9 @@ setTimeout(function () {
  */
 
 TID.adjustImageCount = function (amount) {
+    var locale = TID.i18n('@@ui_locale').replace('_', '-');
     var clear = $('#clear');
+    amount = amount.toLocaleString(locale);
     clear.innerHTML = clear.innerHTML.replace(/(?:\d+|#)/, amount);
 };
 
