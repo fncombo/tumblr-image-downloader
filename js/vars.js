@@ -2,6 +2,10 @@
 
 /* globals TID, $ */
 
+if (typeof DEBUG === 'undefined') {
+    window.DEBUG = true;
+}
+
 // Misc extension global variables
 TID.vars = {};
 
