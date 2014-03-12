@@ -73,7 +73,13 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 mangle: true,
-                compress: true,
+                compress: {
+                    drop_console: true,
+                    dead_code: true,
+                    global_defs: {
+                        'DEBUG': false
+                    }
+                },
                 beautify: false,
                 report: false,
                 sourceMap: false,
