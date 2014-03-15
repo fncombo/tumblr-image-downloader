@@ -65,5 +65,9 @@
         "General code optimizations and improvements.",
         "Downloading to a directory now works in archives.",
         "Revamped the download button styling in archives."
+    ],
+    [
+        "Performance improvements.",
+        "Bug fixes."
     ]
 ]
