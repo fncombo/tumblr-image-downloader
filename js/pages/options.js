@@ -6,7 +6,7 @@
  * Text
  */
 
-TID.i18nize();
+TID.processHTMLMessages();
 
 if ($('#installMessage') && $('#supportMessage')) {
 
@@ -32,7 +32,7 @@ setTimeout(function () {
  */
 
 TID.adjustImageCount = function (amount) {
-    var locale = TID.i18n('@@ui_locale').replace('_', '-');
+    var locale = TID.msg('@@ui_locale').replace('_', '-');
     var clear = $('#clear');
     amount = amount.toLocaleString(locale);
     clear.innerHTML = clear.innerHTML.replace(/(?:\d+|#)/, amount);
@@ -48,18 +48,18 @@ chrome.storage.local.get({images: []}, function (object) {
  */
 
 // Get current settings for all the checkboxes
-$$('input[data-for]').forEach(TID.getCheckboxValue);
+$$('input[data-for]').forEach(TID.checkboxes.getValue);
 
 // Change checkbox settings
-listen('click', 'input[type="checkbox"]', TID.checkboxChange);
+listen('click', 'input[type="checkbox"]', TID.checkboxes.onChange);
 
 // Clear list of downloaded images from options
 $('#clear').onclick = function () {
 
-    var message = TID.i18n('rememberedImagesClearConfirmation');
-    var buttons = [TID.i18n('yes'), TID.i18n('no')];
+    var message = TID.msg('rememberedImagesClearConfirmation');
+    var buttons = [TID.msg('yes'), TID.msg('no')];
 
-    TID.showDialog(message, buttons, function (i) {
+    TID.ui.showDialog(message, buttons, function (i) {
 
         switch (i) {
 
@@ -86,32 +86,32 @@ $('#clear').onclick = function () {
 chrome.storage.sync.get({saveDirectories: []}, function (object) {
 
     object.saveDirectories.forEach(function (directory) {
-        $('#download-directories').innerHTML += TID.generateDirectoryInput(directory);
+        $('#download-directories').innerHTML += TID.directories.generateInput(directory);
     });
 
-    TID.addBlankDirectory();
+    TID.directories.addBlank();
 
 });
 
 // Get default save directory
 chrome.storage.sync.get({defaultDirectory: false}, function (object) {
-    $('#default-directory').setAttribute('placeholder', TID.randomPlaceholder());
+    $('#default-directory').setAttribute('placeholder', TID.directories.getPlaceholder());
     $('#default-directory').value = object.defaultDirectory ? object.defaultDirectory : '';
 });
 
 // Sanitize directory inputs on focusout
 listen('focusout', '#download-directories input, #default-directory', function (event, el) {
-    el.value = TID.sanitizeDirectory(el.value);
+    el.value = TID.directories.sanitize(el.value);
 });
 
 // Handle the addition and removal of the blank directory input
-listen('input', '#download-directories input', TID.directoryEvents.input);
+listen('input', '#download-directories input', TID.events.input);
 
 // Move directory inputs with ctrl + arrow keys
-listen('keyup', '#download-directories input', TID.directoryEvents.keyup);
+listen('keyup', '#download-directories input', TID.events.keyup);
 
 // Save the directories
-$('#save-directories').onclick = TID.saveDirectories;
+$('#save-directories').onclick = TID.directories.save;
 
 // Delete a directory
 listen('click', '#download-directories .delete', function (event, el) {
@@ -123,10 +123,10 @@ listen('click', '#download-directories .delete', function (event, el) {
  */
 
 // Start moving a directory
-listen('mousedown', '#download-directories .move', TID.directoryEvents.mousedown);
+listen('mousedown', '#download-directories .move', TID.events.mousedown);
 
 // Stop moving a directory
-window.addEventListener('mouseup', TID.directoryEvents.mouseup);
+window.addEventListener('mouseup', TID.events.mouseup);
 
 /**
  * Ctrl keys
@@ -153,15 +153,15 @@ chrome.storage.onChanged.addListener(function (changes) {
 
     if (changes.hasOwnProperty('confirm')) {
 
-        TID.adjustCheckbox('confirm', changes.confirm.newValue);
+        TID.checkboxes.setValue('confirm', changes.confirm.newValue);
 
     } else if (changes.hasOwnProperty('showTicks')) {
 
-        TID.adjustCheckbox('showTicks', changes.showTicks.newValue);
+        TID.checkboxes.setValue('showTicks', changes.showTicks.newValue);
 
     } else if (changes.hasOwnProperty('enableLocations')) {
 
-        TID.adjustCheckbox('enableLocations', changes.enableLocations.newValue);
+        TID.checkboxes.setValue('enableLocations', changes.enableLocations.newValue);
 
     } else if (changes.hasOwnProperty('images')) {
 
@@ -171,9 +171,9 @@ chrome.storage.onChanged.addListener(function (changes) {
 
         $('#download-directories').innerHTML = '';
         changes.saveDirectories.newValue.forEach(function (directory) {
-            $('#download-directories').innerHTML += TID.generateDirectoryInput(directory);
+            $('#download-directories').innerHTML += TID.directories.generateInput(directory);
         });
-        TID.addBlankDirectory();
+        TID.directories.addBlank();
 
     } else if (changes.hasOwnProperty('defaultDirectory')) {
 

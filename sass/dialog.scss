@@ -20,7 +20,7 @@
     }
 }
 
-.__TID_overlay {
+.TID-overlay {
     background: hsla(0, 0%, 0, 0.8);
     text-align: center;
     position: fixed;
@@ -50,7 +50,7 @@
 
 }
 
-.__TID_dialog {
+.TID-dialog {
     background: #fff;
     border-radius: $border-radius;
     padding: 1.5em 2.25em;
@@ -60,10 +60,10 @@
     animation: dialog 0.15s $bezier forwards; // easeOutBack
 }
 
-.__TID_dialog_message {
+.TID-dialog-message {
 }
 
-.__TID_dialog_button {
+.TID-dialog-button {
     @extend .base-button;
     display: inline-block;
     margin: 1em 0.5em 0;

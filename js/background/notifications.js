@@ -2,17 +2,19 @@
 
 /* globals TID, chrome */
 
+TID.notifications = { };
+
 /**
  * Create and show a notification
- * @param  {String}   icon            Name of the icon in the images folder
- * @param  {String}   title           Title of the notification
- * @param  {String}   message         Message of the notification
- * @param  {Array}    buttons         Array of objects wit the button parameters
- * @param  {Function} buttonCallbacks A function to handle the button clicks
+ * @param {string}   icon            Name of the icon in the images folder
+ * @param {string}   title           Title of the notification
+ * @param {string}   message         Message of the notification
+ * @param {Array}    buttons         Array of objects wit the button parameters
+ * @param {Function} buttonCallbacks A function to handle the button clicks
  */
-TID.showNotification = function (icon, title, message, buttons, buttonCallbacks) {
+TID.notifications.show = function (icon, title, message, buttons, buttonCallbacks) {
 
-    var notificationID;
+    var thisNotificationID;
 
     // Create a notification
     chrome.notifications.create('', {
@@ -22,13 +24,13 @@ TID.showNotification = function (icon, title, message, buttons, buttonCallbacks)
         iconUrl: '../img/' + icon,
         buttons: buttons
     }, function (id) {
-        notificationID = id;
+        thisNotificationID = id;
     });
 
     // Respond to button clicks
     if (buttons && buttonCallbacks) {
         chrome.notifications.onButtonClicked.addListener(function (notificationID, buttonIndex) {
-            if (notificationID === notificationID) {
+            if (notificationID === thisNotificationID) {
                 buttonCallbacks.call(undefined, buttonIndex);
             }
         });
@@ -39,7 +41,7 @@ TID.showNotification = function (icon, title, message, buttons, buttonCallbacks)
 /**
  * Shows an update notification containing the last update message
  */
-TID.showUpdateNotification = function () {
+TID.notifications.showUpdate = function () {
 
     TID.getUpdates(function (updates) {
 
@@ -49,10 +51,10 @@ TID.showUpdateNotification = function () {
         // Buttons
         var buttons = [
             {
-                title: TID.i18n('notificationRateButton')
+                title: TID.msg('notificationRateButton')
             },
             {
-                title: TID.i18n('notificationUpdateHistoryButton')
+                title: TID.msg('notificationUpdateHistoryButton')
             }
         ];
 
@@ -73,9 +75,9 @@ TID.showUpdateNotification = function () {
         };
 
         // Create a notification
-        TID.showNotification(
+        TID.notifications.show(
             'icon80.png',
-            TID.i18n('notificationUpdateTitle'),
+            TID.msg('notificationUpdateTitle'),
             message,
             buttons,
             buttonCallbacks

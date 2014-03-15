@@ -6,7 +6,7 @@
  * Text
  */
 
-TID.i18nize();
+TID.processHTMLMessages();
 
 var installMessage = $('#installMessage a');
 installMessage.href = 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop';

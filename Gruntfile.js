@@ -11,13 +11,10 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 stripBanners: false,
-                banner: "/*!\n" +
-                        " * Built on\n" +
-                        " * <%= grunt.template.today('yyyy-mm-dd') %>\n" +
-                        " */\n\n" +
-                        "'use strict';\n\n" +
-                        "/* globals TID, chrome, $, $$ */\n\n" +
-                        "window.TID = {};\n\n",
+                banner: '/*!\n' +
+                        ' * Built on <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                        ' */\n\n' +
+                        '\'use strict\';\n\n',
                 process: function (src) {
                     return src.split('\n').splice(4).join('\n');
                 }
@@ -26,43 +23,43 @@ module.exports = function(grunt) {
                 files: [
                     {
                         src: [
-                            'js/core.js',
-                            'js/i18n.js',
-                            'js/vars.js',
-                            'js/button.js',
-                            'js/checks.js',
-                            'js/data.js',
-                            'js/image.js',
-                            'js/messaging.js',
-                            'js/ticks.js',
-                            'js/ui.js',
-                            'js/events.js',
-                            'js/init.js',
-                            'js/run.js'
+                            'js/main/core.js',
+                            'js/main/main.js',
+                            'js/main/init.js',
+                            'js/main/runtime.js',
+                            'js/main/messages.js',
+                            'js/main/directories.js',
+                            'js/main/images.js',
+                            'js/main/events.js',
+                            'js/main/buttons.js',
+                            'js/main/ticks.js',
+                            'js/main/ui.js',
+                            'js/main/run.js'
                         ],
                         dest: 'extension/js/extension.js'
                     },
                     {
                         src: [
-                            'js/core.js',
-                            'js/i18n.js',
-                            'js/vars.js',
-                            'js/messaging.js',
-                            'js/data.js',
-                            'js/ui.js',
-                            'js/directoryEvents.js',
-                            'js/directory.js',
-                            'js/checkbox.js'
+                            'js/main/core.js',
+                            'js/main/main.js',
+                            'js/main/init.js',
+                            'js/main/runtime.js',
+                            'js/main/messages.js',
+                            'js/main/ui.js',
+                            'js/background/checkboxes.js',
+                            'js/background/directories.js',
+                            'js/background/events.js',
+                            'js/background/updates.js',
                         ],
                         dest: 'extension/js/support.js'
                     },
                     {
                         src: [
-                            'js/i18n.js',
-                            'js/analytics.js',
-                            'js/data.js',
-                            'js/notifications.js',
-                            'js/background.js'
+                            'js/main/main.js',
+                            'js/main/messages.js',
+                            'js/background/updates.js',
+                            'js/background/notifications.js',
+                            'js/pages/background.js'
                         ],
                         dest: 'extension/js/background.js'
                     }
@@ -72,14 +69,8 @@ module.exports = function(grunt) {
 
         uglify: {
             options: {
-                mangle: true,
-                compress: {
-                    drop_console: true,
-                    dead_code: true,
-                    global_defs: {
-                        'DEBUG': false
-                    }
-                },
+                mangle: false,
+                compress: false,
                 beautify: false,
                 report: false,
                 sourceMap: false,
@@ -149,6 +140,38 @@ module.exports = function(grunt) {
             }
         },
 
+        copy: {
+            javascript: {
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: [
+                            'js/pages/*.js',
+                            '!js/pages/background.js'
+                        ],
+                        dest: 'extension/js/',
+                        filter: 'isFile'
+                    }
+                ]
+            },
+            misc: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'img/icon*.png',
+                            '_locales/*/*',
+                            'updates.json',
+                            'manifest.json'
+                        ],
+                        dest: 'extension/',
+                        filter: 'isFile'
+                    }
+                ]
+            }
+        },
+
         watch: {
             options: {
                 spawn: false
@@ -159,33 +182,24 @@ module.exports = function(grunt) {
                     '**/*'
                 ],
                 tasks: 'development'
-            }
-        },
-
-        copy: {
-            buildExtension: {
+            },
+            javascript: {
                 files: [
-                    {
-                        expand: true,
-                        src: [
-                            'img/icon*.png',
-                            'js/*.json',
-                            '_locales/*/*',
-                            'manifest.json'
-                        ],
-                        dest: 'extension/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        src: [
-                            'js/options.js',
-                            'js/updates.js'
-                        ],
-                        dest: 'extension/',
-                        filter: 'isFile'
-                    }
+                    'js/*.js',
+                    'js/**/*.js'
+                ],
+                tasks: [
+                    'concat',
+                    'copy:javascript'
                 ]
+            },
+            sass: {
+                files: ['**/*.scss'],
+                tasks: 'sass'
+            },
+            slim: {
+                files: ['**/*.slim'],
+                tasks: 'slim'
             }
         }
 

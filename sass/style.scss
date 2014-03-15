@@ -1,19 +1,17 @@
 @import "dialog.scss";
 @import "vars.scss";
 
-$opacity: 0.5;
-
-.__TID_photoset {
+.TID-photoset {
     overflow: visible !important;
     position: relative;
     z-index: 99999999;
 }
 
-.__TID_parent {
+.TID-parent {
     position: relative !important;
 }
 
-a.__TID_parent {
+a.TID-parent {
     display: inline-block;
     margin-bottom: -5px !important;
 
@@ -23,17 +21,14 @@ a.__TID_parent {
 
 }
 
-.__TID_parent:hover .__TID_download_div,
-#tumblr_lightbox_center_link:hover .__TID_download_div {
+.TID-parent:hover .TID-download-div,
+.TID-parent:hover .TID-list,
+#tumblr_lightbox_center_link:hover .TID-download-div,
+#tumblr_lightbox_center_link:hover .TID-list {
     opacity: 1;
 }
 
-.__TID_parent:hover .__TID_list,
-#tumblr_lightbox_center_link:hover .__TID_list  {
-    opacity: $opacity;
-}
-
-.__TID_download {
+.TID-download {
     display: inline-block;
     position: absolute;
     top: 0;
@@ -73,18 +68,18 @@ a.__TID_parent {
         box-shadow: 0 0 0 1px $tumblr-color-hover;
     }
 
-    .__TID_download_div,
-    .__TID_list {
+    .TID-download-div,
+    .TID-list {
         opacity: 0;
     }
 
-    &:hover .__TID_list {
-        opacity: 1 !important;
+    &:hover .TID-list {
+        background: $tumblr-color;
     }
 
 }
 
-.__TID_download_div {
+.TID-download-div {
     background: $tumblr-color;
     display: inline-block;
     padding: 0.3em 0.6em;
@@ -95,9 +90,9 @@ a.__TID_parent {
 
 }
 
-.__TID_archive {
+.TID-archive {
 
-    &.__TID_show_ticks .post:not(:hover) .__TID_downloaded:after {
+    &.TID-show-ticks .post:not(:hover) .TID-downloaded:after {
         content: '\2713';
         display: block;
         background: $tumblr-color;
@@ -112,7 +107,7 @@ a.__TID_parent {
     .post {
         overflow: visible;
 
-        &.__TID_highlight {
+        &.TID-highlight {
             z-index: 9999999999999;
 
             .post_glass {
@@ -121,12 +116,17 @@ a.__TID_parent {
 
         }
 
-        .__TID_download {
+        .TID-download {
             top: auto;
             bottom: 100%;
         }
 
-        &:hover {
+        .TID-download-div, .TID-list {
+            display: none;
+        }
+
+
+        &.is_photo:hover {
 
             .post_content,
             .post_content_inner,
@@ -135,12 +135,15 @@ a.__TID_parent {
                 border-top-left-radius: 0;
             }
 
-            .__TID_download_div {
+            .TID-download-div {
+                display: inline-block;
                 opacity: 1;
             }
 
-            .__TID_list  {
-                opacity: $opacity;
+            .TID-list  {
+                display: inline-block;
+                opacity: 1;
+                background: $tumblr-color-transparent;
             }
 
         }
@@ -149,22 +152,21 @@ a.__TID_parent {
 
 }
 
-.__TID_show_ticks .__TID_parent:not(:hover) .__TID_downloaded:before,
-.__TID_show_ticks #tumblr_lightbox_center_link:not(:hover) .__TID_downloaded:before,
-.__TID_downloaded .__TID_download_div:before {
+.TID-show-ticks .TID-parent:not(:hover) .TID-downloaded:before,
+.TID-show-ticks #tumblr_lightbox_center_link:not(:hover) .TID-downloaded:before,
+.TID-downloaded .TID-download-div:before {
     content: '\2713\00A0';
 }
 
-.__TID_show_ticks .__TID_parent:not(:hover) .__TID_downloaded:before,
-.__TID_show_ticks #tumblr_lightbox_center_link:not(:hover) .__TID_downloaded:before {
-    opacity: $opacity;
-    background: $tumblr-color;
+.TID-show-ticks .TID-parent:not(:hover) .TID-downloaded:before,
+.TID-show-ticks #tumblr_lightbox_center_link:not(:hover) .TID-downloaded:before {
+    background: $tumblr-color-transparent;
     display: inline-block;
     padding: 0.3em 0.3em 0.3em 0.6em;
 }
 
-.__TID_list {
-    background: $tumblr-color;
+.TID-list {
+    background: $tumblr-color-transparent;
     display: inline-block;
     position: relative;
 
@@ -230,9 +232,9 @@ a.__TID_parent {
 
 }
 
-.__TID_hide_locations {
+.TID-hide-locations {
 
-    .__TID_list {
+    .TID-list {
         display: none !important;
     }
 

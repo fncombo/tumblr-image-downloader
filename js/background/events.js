@@ -3,14 +3,14 @@
 /* globals TID, $, $$ */
 
 // Object to store all the directory events
-TID.directoryEvents = {};
+TID.events = {};
 
 /**
  * Clicking on the button to move an input
- * @param  {Object}  event The triggered event
- * @param  {Element} el    The element event was triggered on
+ * @param {object}  event The triggered event
+ * @param {Element} el    The element event was triggered on
  */
-TID.directoryEvents.mousedown = function (event, el) {
+TID.events.mousedown = function (event, el) {
 
     event.preventDefault();
     event.stopPropagation();
@@ -21,7 +21,7 @@ TID.directoryEvents.mousedown = function (event, el) {
         return;
     }
 
-    TID.addFakeDirectory(TID.vars.currentItem);
+    TID.directories.addFake(TID.vars.currentItem);
 
     TID.vars.currentItem.classList.add('moving');
     TID.vars.currentItem.style.position = 'absolute';
@@ -31,15 +31,15 @@ TID.directoryEvents.mousedown = function (event, el) {
     TID.vars.moveDirectionLast = 0;
     TID.vars.offsetX = event.clientX;
 
-    window.addEventListener('mousemove', TID.directoryEvents.mousemove, false);
+    window.addEventListener('mousemove', TID.events.mousemove, false);
 
 };
 
 /**
  * Event handler for moving a directory input with the mouse
- * @param  {Object} event The triggered event
+ * @param {object} event The triggered event
  */
-TID.directoryEvents.mousemove = function (event) {
+TID.events.mousemove = function (event) {
 
     // true = up, false = down
     TID.vars.moveDirection = event.clientY - TID.vars.moveDirectionLast < 0 ? true : false;
@@ -48,14 +48,14 @@ TID.directoryEvents.mousemove = function (event) {
     var li = document.elementFromPoint(TID.vars.offsetX, event.clientY).closest('li');
 
     if (li && !li.classList.contains('fake') && !li.classList.contains('blank')) {
-        TID.addFakeDirectory(TID.vars.moveDirection ? li : li.nextSibling);
+        TID.directories.addFake(TID.vars.moveDirection ? li : li.nextSibling);
     }
 
     TID.vars.currentItem.style.top = (event.clientY + window.pageYOffset) + 'px';
 
 };
 
-TID.directoryEvents.mouseup = function () {
+TID.events.mouseup = function () {
 
     if (TID.vars.currentItem) {
 
@@ -67,7 +67,7 @@ TID.directoryEvents.mouseup = function () {
         TID.vars.currentItem.classList.remove('moving');
         TID.vars.currentItem = false;
 
-        window.removeEventListener('mousemove', TID.directoryEvents.mousemove, false);
+        window.removeEventListener('mousemove', TID.events.mousemove, false);
 
     }
 
@@ -75,10 +75,10 @@ TID.directoryEvents.mouseup = function () {
 
 /**
  * Moving directories with Ctrl and arrow keys
- * @param  {Object} event The triggered event
- * @param  {[type]} el    The element event was triggered on
+ * @param {object}  event The triggered event
+ * @param {Element} el    The element event was triggered on
  */
-TID.directoryEvents.keyup = function (event, el) {
+TID.events.keyup = function (event, el) {
 
     var acceptedKeys = [38, 40];
     var keyCode = event.keyCode;
@@ -130,10 +130,10 @@ TID.directoryEvents.keyup = function (event, el) {
 
 /**
  * Adds and removes blank fields as needed when inputs change
- * @param  {Object}  event The triggered event
- * @param  {Element} el    The element event was triggered on
+ * @param {object}  event The triggered event
+ * @param {Element} el    The element event was triggered on
  */
-TID.directoryEvents.input = function (event, el) {
+TID.events.input = function (event, el) {
 
     if (!el.value.length) {
 
@@ -143,11 +143,13 @@ TID.directoryEvents.input = function (event, el) {
         });
 
     } else {
+
         el.parentNode.classList.remove('blank');
+
     }
 
     if (!$$('#download-directories .blank').length) {
-        TID.addBlankDirectory();
+        TID.directories.addBlank();
     }
 
 };

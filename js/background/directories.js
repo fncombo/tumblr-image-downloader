@@ -2,11 +2,13 @@
 
 /* globals TID, chrome, $, $$ */
 
+TID.directories = { };
+
 /**
  * Get a random placeholder value for directories
- * @return {String} A random sample directory
+ * @return {string} A random sample directory
  */
-TID.randomPlaceholder = function () {
+TID.directories.getPlaceholder = function () {
 
     var placeholders = [
         'Tumblr Images/Funny',
@@ -30,10 +32,10 @@ TID.randomPlaceholder = function () {
 
 /**
  * Sanitizes a directory input
- * @param  {String} directory The directory to sanitize
- * @return {String}           The sanitizes directory string
+ * @param  {string} directory The directory to sanitize
+ * @return {string}           The sanitizes directory string
  */
-TID.sanitizeDirectory = function (directory) {
+TID.directories.sanitize = function (directory) {
     return directory.trim()
                     .replace(/(^\/+|\/+$|\\|:|\*|\?|"|<|>|\|)+/g, '')
                     .replace(/\/{2,}/, '/');
@@ -41,14 +43,14 @@ TID.sanitizeDirectory = function (directory) {
 
 /**
  * Generate a directory input
- * @param  {String}  value  The value of the input
- * @param  {Boolean} skipLi Whether or not to skip the <li> tag
- * @return {String}         Return the HTML for the directory input
+ * @param  {string}  value  The value of the input
+ * @param  {boolean} skipLi Whether or not to skip the <li> tag
+ * @return {string}         Return the HTML for the directory input
  */
-TID.generateDirectoryInput = function (value, skipLi) {
+TID.directories.generateInput = function (value, skipLi) {
     var html = '';
     html += skipLi ? '' : '<li>';
-    html += '<input type="text" placeholder="' + TID.randomPlaceholder() + '" value="' + (value ? value : '') + '">';
+    html += '<input type="text" placeholder="' + TID.directories.getPlaceholder() + '" value="' + (value || '') + '">';
     html += '<span class="move">&#9776;</span>';
     html += '<span class="delete" tabindex="0">&cross;</span>';
     html += skipLi ? '' : '</li>';
@@ -59,7 +61,7 @@ TID.generateDirectoryInput = function (value, skipLi) {
  * Adds a fake invisible input
  * @param {Element} where Which element to add the input before
  */
-TID.addFakeDirectory = function (where) {
+TID.directories.addFake = function (where) {
 
     $$('#download-directories .fake').forEach(function (el) {
         el.remove();
@@ -75,30 +77,30 @@ TID.addFakeDirectory = function (where) {
 /**
  * Add a blank directory input to the list
  */
-TID.addBlankDirectory = function () {
+TID.directories.addBlank = function () {
     var li = document.createElement('li');
     li.classList.add('blank');
-    li.innerHTML = TID.generateDirectoryInput(false, true);
+    li.innerHTML = TID.directories.generateInput(false, true);
     $('#download-directories').appendChild(li);
 };
 
 /**
  * Save all directories to chrome storage
  */
-TID.saveDirectories = function () {
+TID.directories.save = function () {
 
     var saved = 0;
 
-    function savedCallback () {
+    function savedCallback() {
         saved += 1;
     }
 
     var directories = [];
-    var defaultDirectory = TID.sanitizeDirectory($('#default-directory').value);
+    var defaultDirectory = TID.directories.sanitize($('#default-directory').value);
 
     $$('#download-directories li:not(.blank):not(.fake) input').forEach(function (el) {
         if (el.value.length) {
-            directories.push(TID.sanitizeDirectory(el.value));
+            directories.push(TID.directories.sanitize(el.value));
         }
     });
 
@@ -129,9 +131,9 @@ TID.saveDirectories = function () {
 
             $('#download-directories').innerHTML = '';
             directories.forEach(function (directory) {
-                $('#download-directories').innerHTML += TID.generateDirectoryInput(directory);
+                $('#download-directories').innerHTML += TID.directories.generateInput(directory);
             });
-            TID.addBlankDirectory();
+            TID.directories.addBlank();
 
         }
     });

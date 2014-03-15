@@ -2,11 +2,17 @@
 
 /* globals TID, chrome */
 
-// Misc extension global variables
-TID.vars = {};
-
 // Add Google Analytics
-TID.addAnalytics();
+window._gaq = window._gaq || [];
+window._gaq.push(['_setAccount', 'UA-40682860-1']);
+window._gaq.push(['_trackPageview']);
+
+var ga = document.createElement('script');
+ga.type = 'text/javascript';
+ga.async = true;
+ga.src = 'https://ssl.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(ga, s);
 
 // When the extension is first installed, updated, or when Chrome is updated
 chrome.runtime.onInstalled.addListener(function (details) {
@@ -20,7 +26,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
         break;
 
     case 'update':
-        TID.showUpdateNotification();
+        TID.notifications.showUpdate();
         break;
 
     }
@@ -30,7 +36,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 // Override file names by adding the user's directory of choice
 chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, suggest) {
 
-    if (downloadItem.byExtensionId !== chrome.i18n.getMessage('@@extension_id')) {
+    if (downloadItem.byExtensionId !== TID.msg('@@extension_id')) {
         return;
     }
 
@@ -53,6 +59,16 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
                 filename: downloadItem.filename
             });
         }
+
+        chrome.storage.local.get({images: []}, function (object) {
+
+            // Only add the ID if it doesn't already exist
+            if (object.images.indexOf(TID.vars.lastImageID) === -1) {
+                object.images.push(TID.vars.lastImageID);
+                chrome.storage.local.set(object);
+            }
+
+        });
 
     // If the link does not appear to link to an image
     } else {
@@ -120,7 +136,13 @@ chrome.storage.sync.get({defaultDirectory: false}, function (object) {
 
 // Keep default directory updated
 chrome.storage.onChanged.addListener(function (changes) {
-    if (changes.hasOwnProperty('defaultDirectory') && changes.defaultDirectory.hasOwnProperty('newValue')) {
-        TID.vars.defaultDirectory = changes.defaultDirectory.newValue;
+    if (changes.hasOwnProperty('defaultDirectory')) {
+
+        if (changes.defaultDirectory.hasOwnProperty('newValue')) {
+            TID.vars.defaultDirectory = changes.defaultDirectory.newValue;
+        } else {
+            TID.vars.defaultDirectory = false;
+        }
+
     }
 });
