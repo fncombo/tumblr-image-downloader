@@ -36,7 +36,6 @@ TID.settings.list = {
 TID.regex = {
     imageSize: /(_)(\d+)(\.(?:jpe?g|png|gif)$)/,
     imageID: /\/tumblr_(?:inline_)?(?:(\w+)_\d+|(\w+))(?=\.(?:jpe?g|png|gif)$)/,
-    imageFileName: /([^\/]+)\.(?:jpe?g|png|gif)/,
     imageExt: /(jpe?g|png|gif)$/,
     image1280: /_1280\.(?:jpe?g|png|gif)$/,
     tumblrDomain: /tumblr\.com\//
