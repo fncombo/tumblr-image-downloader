@@ -242,7 +242,8 @@ TID.events.initMutationObservers = function () {
     var centerImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
 
-            var imageID = TID.images.getID(mutation.target.src);
+            var el = mutation.target;
+            var imageID = TID.images.getID(el.src);
 
             // Get the button of the image with that ID from the page
             var button = $('.' + TID.classes.download + '[data-image-id="' + imageID + '"]');
@@ -255,12 +256,12 @@ TID.events.initMutationObservers = function () {
             // Use the "src" attribute from the image because Tumblr will automatically give us the largest one
             } else {
 
-                var isHD = TID.regex.image1280.test(mutation.target.src);
+                var isHD = TID.regex.image1280.test(el.src);
                 var data = {
                     imageID: imageID,
                     isHD: isHD,
                     HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
-                    url: mutation.target.src
+                    url: el.src
                 };
                 button = TID.buttons.create(data);
 
@@ -268,16 +269,16 @@ TID.events.initMutationObservers = function () {
 
             // Give the button correct offsets
             button.style.position = 'relative';
-            button.style.top = mutation.target.style.top;
-            button.style.left = mutation.target.style.left;
+            button.style.top = el.style.top;
+            button.style.left = el.style.left;
 
             // Remove any existing buttons
-            $$('.' + TID.classes.download, mutation.target.parentNode).forEach(function (el) {
+            $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
                 el.remove();
             });
 
             // Append the button
-            mutation.target.parentNode.appendChild(button);
+            el.parentNode.appendChild(button);
 
         });
     });
@@ -313,42 +314,43 @@ TID.events.initMutationObservers = function () {
     var inlineImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
 
+            var el = mutation.target;
             var blockEl;
 
             if (
                 (
-                    !mutation.target.classList.contains('inline_external_image') &&
-                    !mutation.target.classList.contains('inline_image')
+                    !el.classList.contains('inline_external_image') &&
+                    !el.classList.contains('inline_image')
                 ) ||
                 (
-                    mutation.target.classList.contains('inline_external_image') &&
-                    mutation.target.classList.contains('enlarged')
+                    el.classList.contains('inline_external_image') &&
+                    el.classList.contains('enlarged')
                 )
             ) {
 
-                var isExternal = !!mutation.target.classList.contains('inline_external_image');
+                var isExternal = !!el.classList.contains('inline_external_image');
                 var data = {
-                    imageID: TID.images.getID(mutation.target.src),
+                    imageID: TID.images.getID(el.src),
                     isHD: false,
                     HDType: isExternal ? TID.HDTypes.externalHighRes : TID.HDTypes.none,
-                    url: mutation.target.src
+                    url: el.src
                 };
                 var button = TID.buttons.create(data);
 
                 // Remove any existing butons
-                $$('.' + TID.classes.download, mutation.target.parentNode).forEach(function (el) {
+                $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
                     el.remove();
                 });
 
                 // Append the button
-                blockEl = mutation.target.closest('p, div:not(.post_container)');
+                blockEl = el.closest('p, div:not(.post_container)');
                 blockEl.classList.add(TID.classes.parent);
-                blockEl.insertBefore(button, mutation.target);
+                blockEl.insertBefore(button, el);
 
             } else {
 
                 // Remove any buttons
-                blockEl = mutation.target.closest('p, div:not(.post_container)');
+                blockEl = el.closest('p, div:not(.post_container)');
                 $$('.' + TID.classes.download, blockEl).forEach(function (el) {
                     el.remove();
                 });
