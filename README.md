@@ -10,15 +10,23 @@ Tumblr Image Downloader is a Google Chrome extension for Tumblr. It enables you 
 For the full description, please visit the [extension page][0].
 
 ## Contributing
-If you would like to contribute, simply fork this repository, work your magic, and submit a pull request. Remember to follow the current style of the code and comment and test it well.
+If you would like to contribute, simply fork this repository, make a new branch, work your magic, and submit a pull request. Remember to follow the current style of the code and comment and test it well.
 
 You will need:
 * Node.js
-* Ruby and Slim
+* Grunt
+* Ruby
+* Slim gem
 
-To install all the dependencies, simply run `npm install` in the repository, and you're good to go! You can use `grunt watch` to automatically re-compile the extension every time you make a change, or run either `grunt development` or `grunt production` manually. (The production build is the same as development, except it also minifies all the JavaScript.)
+To install all the dependencies, simply run `npm install` in the repository, and you're good to go!
 
-To add the extension to Chrome, go to Settings > Extensions, and open the "extension" folder that is created after you run Grunt.
+You can use
+* `grunt watch` or `grunt watch:all` to automatically re-compile the extension every time you make a change
+* `grunt watch:javascript`, `grunt watch:sass` or `grunt watch:slim` to watch only specific types of files
+
+To manually build the extension, run `grunt development` or `grunt production`. The production build is the same as development, but it also minifies JavaScript.
+
+To add the extension to Chrome, go to `Settings > Extensions`, and open the `extension` folder that is created after you run Grunt.
 
 ---
 
