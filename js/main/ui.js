@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, $ */
+/* globals TID, $, $$ */
 
 TID.ui = { };
 
@@ -23,7 +23,7 @@ TID.ui.showDialog = function (message, options, callback) {
     html += '<div class="' + TID.classes.dialogMessage + '">' + message + '</div>';
 
     options.forEach(function (option, i) {
-        html += '<div class="' + TID.classes.dialogButton + '" id="' + TID.classes.dialogButton + '-' + i + '" data-i="' + i + '">';
+        html += '<div class="' + TID.classes.dialogButton + '" data-i="' + i + '">';
         html += option;
         html += '</div>';
     });
@@ -44,21 +44,21 @@ TID.ui.showDialog = function (message, options, callback) {
     tempContainer.innerHTML = html;
     document.body.appendChild(tempContainer);
 
-    function removeListeners() {
-        for (var i = 0, l = options.lenth; i < l; i += 1) {
-            $('#' + TID.classes.dialogButton + '-' + i).removeEventListener('click', listener, true);
-        }
-    }
-
     function listener(event) {
+
         callback.call(event, event.target.dataset.i);
-        removeListeners();
+
+        $$('.' + TID.classes.dialogButton).forEach(function (el) {
+            el.removeEventListener('click', listener, true);
+        });
+
         $('.' + TID.classes.overlay).remove();
+
     }
 
-    for (var i = 0, l = options.length; i < l; i += 1) {
-        $('#' + TID.classes.dialogButton + '-' + i).addEventListener('click', listener, true);
-    }
+    $$('.' + TID.classes.dialogButton).forEach(function (el) {
+        el.addEventListener('click', listener, true);
+    });
 
 };
 
