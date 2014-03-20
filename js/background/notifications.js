@@ -6,15 +6,21 @@ TID.notifications = { };
 
 /**
  * Create and show a notification
- * @param {string}   icon            Name of the icon in the images folder
- * @param {string}   title           Title of the notification
- * @param {string}   message         Message of the notification
- * @param {Array}    buttons         Array of objects wit the button parameters
- * @param {Function} buttonCallbacks A function to handle the button clicks
+ * @param {string} icon    Name of the icon in the images folder
+ * @param {string} title   Title of the notification
+ * @param {string} message Message of the notification
+ * @param {Array}  buttons Array of objects with the button title, and lick callback
  */
-TID.notifications.show = function (icon, title, message, buttons, buttonCallbacks) {
+TID.notifications.show = function (icon, title, message, buttons) {
 
     var thisNotificationID;
+    var notificationButtons = [];
+
+    buttons.forEach(function (button) {
+        notificationButtons.push({
+            title: button.title
+        });
+    });
 
     // Create a notification
     chrome.notifications.create('', {
@@ -22,19 +28,17 @@ TID.notifications.show = function (icon, title, message, buttons, buttonCallback
         title: title,
         message: message,
         iconUrl: '../img/' + icon,
-        buttons: buttons
+        buttons: notificationButtons
     }, function (id) {
         thisNotificationID = id;
     });
 
     // Respond to button clicks
-    if (buttons && buttonCallbacks) {
-        chrome.notifications.onButtonClicked.addListener(function (notificationID, buttonIndex) {
-            if (notificationID === thisNotificationID) {
-                buttonCallbacks.call(undefined, buttonIndex);
-            }
-        });
-    }
+    chrome.notifications.onButtonClicked.addListener(function (notificationID, buttonIndex) {
+        if (notificationID === thisNotificationID) {
+            buttons[buttonIndex].callback.call(undefined);
+        }
+    });
 
 };
 
@@ -51,36 +55,29 @@ TID.notifications.showUpdate = function () {
         // Buttons
         var buttons = [
             {
-                title: TID.msg('notificationRateButton')
+                title: TID.msg('notificationRateButton'),
+                callback: function () {
+                    chrome.tabs.create({
+                        url: 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop/reviews'
+                    });
+                }
             },
             {
-                title: TID.msg('notificationUpdateHistoryButton')
+                title: TID.msg('notificationUpdateHistoryButton'),
+                callback: function () {
+                    chrome.tabs.create({
+                        url: 'html/updates.html'
+                    });
+                }
             }
         ];
-
-        // Callbacks
-        var buttonCallbacks = function (buttonIndex) {
-            switch (buttonIndex) {
-            case 0:
-                chrome.tabs.create({
-                    url: 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop/reviews'
-                });
-                break;
-            case 1:
-                chrome.tabs.create({
-                    url: 'html/updates.html'
-                });
-                break;
-            }
-        };
 
         // Create a notification
         TID.notifications.show(
             'icon80.png',
             TID.msg('notificationUpdateTitle'),
             message,
-            buttons,
-            buttonCallbacks
+            buttons
         );
 
     });
