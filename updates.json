@@ -69,5 +69,9 @@
     [
         "Performance improvements.",
         "Bug fixes."
+    ],
+    [
+        "Added the download button to the single image view page.",
+        "General fixes and improvements."
     ]
 ]
