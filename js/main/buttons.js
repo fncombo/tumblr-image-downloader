@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, $$ */
+/* globals TID, $, $$ */
 
 TID.buttons = { };
 
@@ -38,9 +38,18 @@ TID.buttons.add = function () {
         } else {
 
             button = TID.buttons.create(TID.images.getData(el));
-            var parent = el.parentNode;
-            parent.classList.add(TID.classes.parent);
-            parent.prependChild(button);
+
+            if (TID.isSinglePage) {
+
+                $('#nav_image').appendChild(button);
+
+            } else {
+
+                var parent = el.parentNode;
+                parent.classList.add(TID.classes.parent);
+                parent.prependChild(button);
+
+            }
 
         }
 

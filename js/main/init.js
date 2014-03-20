@@ -72,6 +72,9 @@ TID.classes = {
 // Check if the current page is a Tumblelog's archive page
 TID.isArchivePage = !!window.location.pathname.match(/\/archive(?:\/|$)/i);
 
+// Check if the current page is a single image view
+TID.isSinglePage = document.body.classList.contains('single_image');
+
 // Check whether infinite scrolling is on or off
 TID.isInfiniteScrolling = $('#pagination') ? !$('#pagination').clientHeight : false;
 
@@ -82,6 +85,8 @@ TID.selectors = { };
 if (TID.isArchivePage) {
     TID.selectors.images = '.post.post_micro.is_photo ' +
         '.post_thumbnail_container.has_imageurl:not(.' + TID.classes.ignore + ')';
+} else if (TID.isSinglePage) {
+    TID.selectors.images = '#content-image';
 } else {
     TID.selectors.images = '.post.is_photo .post_content img:not(.' + TID.classes.ignore + '), ' +
         '.post.is_photoset .post_content img:not(.' + TID.classes.ignore + ')';
