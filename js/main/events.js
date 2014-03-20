@@ -126,6 +126,11 @@ TID.events.initDocumentEvents = function () {
 
         }
 
+        // Clicking on the overlay should cancel the dialog
+        if (el.matchesSelector('.' + TID.classes.overlay)) {
+            $$('.' + TID.classes.dialogButton).pop().click();
+        }
+
     }, true);
 
 };
