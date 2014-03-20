@@ -139,6 +139,17 @@ TID.images.getData = function (el) {
         url: el.src
     };
 
+    if (TID.isSinglePage) {
+
+        data.isHD = TID.regex.image1280.test(data.url);
+        if (data.isHD) {
+            data.HDType = TID.HDTypes.tumblrHighRes;
+        }
+
+        return data;
+
+    }
+
     // Try to get the high resolution link
     var highResLink = el.closest('.high_res_link', 5);
 
