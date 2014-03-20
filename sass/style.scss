@@ -196,6 +196,11 @@ a.TID-parent {
         span {
             color: hsla(0, 0%, 100%, 0.75);
             pointer-events: none;
+
+            span {
+                padding: 0 0.15em;
+            }
+
         }
 
     }
@@ -216,18 +221,10 @@ a.TID-parent {
     & > span {
         display: block;
         padding: 0.3em 0.6em;
-
     }
 
     &:hover > span {
         background: $tumblr-color-hover;
-    }
-
-    & strong {
-        display: inline-block;
-        padding: 0 0.25em;
-        color: #fff;
-        pointer-events: none;
     }
 
 }
