@@ -46,7 +46,7 @@ TID.notifications.showUpdate = function () {
     TID.getUpdates(function (updates) {
 
         var lastUpdate = updates[updates.length - 1];
-        var message = '• ' + lastUpdate.join('\n• ');
+        var message = '\u2022 ' + lastUpdate.join('\n\u2022 ');
 
         // Buttons
         var buttons = [
