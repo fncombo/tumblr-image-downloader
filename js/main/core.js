@@ -72,6 +72,9 @@ Element.prototype.prependChild = function (el) {
 
 /**
  * Listen for an event on an element
+ * @param {string}   event    Name of the event
+ * @param {string}   selector Element selector
+ * @param {Function} listener The event listener
  */
 function listen(event, selector, listener) {
     document.addEventListener(event, function (event) {
