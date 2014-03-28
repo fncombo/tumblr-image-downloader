@@ -3,6 +3,7 @@ Tumblr Image Downloader
 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)][grunt]
 [![Code Climate](https://codeclimate.com/github/fncombo/tumblr-image-downloader.png)][codeclimate]
+[![Dependency Status](https://gemnasium.com/fncombo/tumblr-image-downloader.svg)][gemnasium]
 
 
 Tumblr Image Downloader is a Google Chrome extension for Tumblr. It enables you to download images in a single click by putting a download button above every image on the page.
@@ -36,3 +37,4 @@ To add the extension to Chrome, go to `Settings > Extensions`, and open the `ext
 [codeclimate]: https://codeclimate.com/github/fncombo/tumblr-image-downloader
 [chromestore]: https://chrome.google.com/webstore/detail/tumblr-image-saver/ipocoligdfkbgncimgfaffpaglmedpop
 [screenshot]: http://i.imgur.com/EFzzGk3.jpg
+[gemnasium]: https://gemnasium.com/fncombo/tumblr-image-downloader
