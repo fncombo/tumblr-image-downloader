@@ -1,12 +1,12 @@
 {
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.3.2",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-slim": "~0.1.0",
-    "grunt-contrib-sass": "~0.7.2",
-    "grunt-json-minify": "^0.4.0"
+    "grunt": "^0.4.4",
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-sass": "^0.7.3",
+    "grunt-json-minify": "^0.4.0",
+    "grunt-slim": "^0.1.0"
   }
 }
