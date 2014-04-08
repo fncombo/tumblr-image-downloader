@@ -73,5 +73,8 @@
     [
         "Added the download button to the single image view page.",
         "General fixes and improvements."
+    ],
+    [
+        "Improvements to the locations options. You can now always specify a default location."
     ]
 ]
