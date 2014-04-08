@@ -104,7 +104,8 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         TID.vars.lastImageID = request.imageID;
 
         chrome.downloads.download({
-            url: request.url
+            url: request.url,
+            saveAs: false
         });
 
         break;
