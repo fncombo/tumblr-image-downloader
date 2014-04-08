@@ -110,13 +110,17 @@ listen('input', '#download-directories input', TID.events.input);
 // Move directory inputs with ctrl + arrow keys
 listen('keyup', '#download-directories input', TID.events.keyup);
 
-// Save the directories
-$('#save-directories').onclick = TID.directories.save;
-
 // Delete a directory
 listen('click', '#download-directories .delete', function (event, el) {
     el.closest('li').remove();
 });
+
+/**
+ * Saving directories
+ */
+$('#default-directory').onkeyup = TID.directories.saveDefault;
+$('#default-directory').onchange = TID.directories.saveDefault;
+$('#save-directories').onclick = TID.directories.saveMore;
 
 /**
  * Moving directories

@@ -30,20 +30,22 @@ section
   div
     h1 msg-content="locationsTitle"
   div
-    p.toggle-group
-      label
-        input.toggle type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
-        span
-        span
-    #locations-off
-      p.desc msg-content="locationsDisabledHelp"
-    #locations-on
-      p msg-content="locationsDescription"
-      ul#download-directories
-      p msg-content="locationsDefaultDescription"
-      p
-        input#default-directory
-      p
-        button#save-directories msg-content="save"
-        span.saved msg-content="saved"
-      p.desc msg-content="locationsSeparatorHelp"
+    p msg-content="locationsDefaultDescription"
+    p
+      input#default-directory
+    p.desc msg-content="locationsSeparatorHelp"
+    p msg-content="locationsMoreDescription"
+    div.indent
+      p.toggle-group
+        label
+          input.toggle type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
+          span
+          span
+      #locations-off
+        p.desc msg-content="locationsDisabledHelp"
+      #locations-on
+        p msg-content="locationsDescription"
+        ul#download-directories
+        p
+          button#save-directories msg-content="save"
+          span.saved msg-content="saved"

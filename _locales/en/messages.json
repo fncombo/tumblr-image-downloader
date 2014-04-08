@@ -83,8 +83,12 @@
         "description": "Description of the download locations option."
     },
     "locationsDefaultDescription": {
-        "message": "Default download location (blank for your normal downloads folder).",
+        "message": "Default download location (blank for your normal downloads folder):",
         "description": "Description of the default download location option."
+    },
+    "locationsMoreDescription": {
+        "message": "Additional download locations:",
+        "description": "Description of the additional download locations option."
     },
     "locationsSeparatorHelp": {
         "message": "Separate sub-folders with a <code>/</code> forward slash. If the folder doesn&rsquo;t exist, it will automatically be created.",

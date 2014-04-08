@@ -87,16 +87,21 @@ TID.directories.addBlank = function () {
 /**
  * Save all directories to chrome storage
  */
-TID.directories.save = function () {
+TID.directories.saveDefault = function () {
 
-    var saved = 0;
+    var defaultDirectory = TID.directories.sanitize($('#default-directory').value);
 
-    function savedCallback() {
-        saved += 1;
+    if (defaultDirectory.length) {
+        chrome.storage.sync.set({defaultDirectory: defaultDirectory});
+    } else {
+        chrome.storage.sync.remove('defaultDirectory');
     }
 
+};
+
+TID.directories.saveMore = function () {
+
     var directories = [];
-    var defaultDirectory = TID.directories.sanitize($('#default-directory').value);
 
     $$('#download-directories li:not(.blank):not(.fake) input').forEach(function (el) {
         if (el.value.length) {
@@ -109,25 +114,14 @@ TID.directories.save = function () {
         return self.indexOf(value) === index;
     });
 
-    chrome.storage.sync.set({saveDirectories: directories}, savedCallback);
-
-    if (defaultDirectory.length) {
-        chrome.storage.sync.set({defaultDirectory: defaultDirectory}, savedCallback);
-    } else {
-        chrome.storage.sync.remove('defaultDirectory');
-    }
-
-    var interval = setInterval(function () {
-        if (saved === 2) {
+    chrome.storage.sync.set({saveDirectories: directories}, function () {
 
             var el = $('#save-directories').nextElementSibling;
             el.classList.add('show');
 
             setTimeout(function () {
                 el.classList.remove('show');
-            }, 1000);
-
-            clearInterval(interval);
+            }, 2000);
 
             $('#download-directories').innerHTML = '';
             directories.forEach(function (directory) {
@@ -135,7 +129,6 @@ TID.directories.save = function () {
             });
             TID.directories.addBlank();
 
-        }
     });
 
 };
