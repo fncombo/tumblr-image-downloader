@@ -87,7 +87,7 @@
         "description": "Description of the default download location option."
     },
     "locationsMoreDescription": {
-        "message": "Additional download locations:",
+        "message": "Additional download locations",
         "description": "Description of the additional download locations option."
     },
     "locationsSeparatorHelp": {

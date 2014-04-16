@@ -34,13 +34,12 @@ section
     p
       input#default-directory
     p.desc msg-content="locationsSeparatorHelp"
-    p msg-content="locationsMoreDescription"
     div.indent
       p.toggle-group
         label
-          input.toggle type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
+          input type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
           span
-          span
+          span msg-content="locationsMoreDescription"
       #locations-off
         p.desc msg-content="locationsDisabledHelp"
       #locations-on
