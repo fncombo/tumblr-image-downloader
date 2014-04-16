@@ -83,7 +83,7 @@
         "description": "Description of the download locations option."
     },
     "locationsDefaultDescription": {
-        "message": "Default download location (blank for your normal downloads folder):",
+        "message": "Default download location (blank for your normal downloads folder)",
         "description": "Description of the default download location option."
     },
     "locationsMoreDescription": {
