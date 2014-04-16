@@ -12,6 +12,11 @@ section
         input type="checkbox" data-for="showTicks" data-default="true"
         span
         span msg-content="showTicksHelp"
+    p.toggle-group
+        label
+          input type="checkbox" data-for="analyticsOptOut" data-default="false"
+          span
+          span msg-content="analyticsOptOut"
 
 hr
 
@@ -19,10 +24,18 @@ section
   div
     h1 msg-content="rememberedImagesTitle"
   div
-    p msg-content="rememberedImagesDescription"
-    p
-      button#clear msg-content="rememberedImagesClearButton"
-    p.desc msg-content="rememberedImagesDisclaimer"
+    p.toggle-group
+        label
+          input.toggle type="checkbox" data-for="rememberImages" data-default="true" data-message="Enable Remembering" data-controls="rememberImages"
+          span
+          span
+    #rememberImages-off
+      p.desc msg-content="rememberedImagesDisabledHelp"
+    #rememberImages-on
+      p msg-content="rememberedImagesDescription"
+      p
+        button#clear msg-content="rememberedImagesClearButton"
+      p.desc msg-content="rememberedImagesDisclaimer"
 
 hr
 

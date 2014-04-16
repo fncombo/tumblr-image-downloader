@@ -124,6 +124,10 @@
         "message": "Are you sure you want to forget all images?<br>This cannot be undone!",
         "description": "Dialog message confirming whether the users is sure they want to delete all remembered images."
     },
+    "rememberedImagesDisabledHelp": {
+        "message": "Enable to automatically keep track of all the images you download.",
+        "description": "Help text shown when the remember images option is disabled."
+    },
 
 
 
@@ -141,6 +145,10 @@
     "showTicksHelp": {
         "message": "Always show a tick on downloaded images",
         "description": "Help text explaining what the show ticks option does."
+    },
+    "analyticsOptOut": {
+        "message": "Opt out of Google Analytics",
+        "description": "Help text explaining what the out out of analytics option does."
     },
 
 
