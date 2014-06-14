@@ -146,8 +146,8 @@
         "message": "Always show a tick on downloaded images",
         "description": "Help text explaining what the show ticks option does."
     },
-    "analyticsOptOut": {
-        "message": "Opt out of Google Analytics",
+    "enableAnalytics": {
+        "message": "Enable Google Analytics (restart Chrome to take effect)",
         "description": "Help text explaining what the out out of analytics option does."
     },
 
