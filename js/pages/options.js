@@ -155,19 +155,17 @@ document.addEventListener('keyup', function (event) {
  */
 chrome.storage.onChanged.addListener(function (changes) {
 
-    if (changes.hasOwnProperty('confirm')) {
+    // Check for tickbox changes
+    var tickboxes = ['confirm', 'showTicks', 'enableAnalytics', 'rememberImages', 'enableLocations'];
 
-        TID.checkboxes.setValue('confirm', changes.confirm.newValue);
+    tickboxes.forEach(function (tickbox) {
+        if (changes.hasOwnProperty(tickbox)) {
+            TID.checkboxes.setValue(tickbox, changes[tickbox].newValue);
+        }
+    });
 
-    } else if (changes.hasOwnProperty('showTicks')) {
-
-        TID.checkboxes.setValue('showTicks', changes.showTicks.newValue);
-
-    } else if (changes.hasOwnProperty('enableLocations')) {
-
-        TID.checkboxes.setValue('enableLocations', changes.enableLocations.newValue);
-
-    } else if (changes.hasOwnProperty('images')) {
+    // Check for any other changes
+    if (changes.hasOwnProperty('images')) {
 
         TID.adjustImageCount(changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0);
 
