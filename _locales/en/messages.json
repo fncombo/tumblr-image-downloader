@@ -7,7 +7,7 @@
         "description": "The name of the extension. The word Tumblr must be English."
     },
     "extensionDescription": {
-        "message": "Download images from your dashboard, archives, and search pages with a single click.",
+        "message": "Download images from your Tumblr dashboard and other pages with a single click.",
         "description": "The description of the extension. The word Tumblr must be English."
     },
 
@@ -62,11 +62,11 @@
         "description": "Help text at the bottom of the options page."
     },
     "optionsGuidelinesHelp": {
-        "message": "Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines. This extension is only supposed to enable you to collect images for yourself, not redistribute or use them without the original artist&rsquo;s permission.",
+        "message": "Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines. This extension is only supposed to enable you to collect images for yourself, not redistribute or use them without the original owner&rsquo;s permission.",
         "description": "Help text at the bottom of the options page."
     },
     "optionsAffiliactionHelp": {
-        "message": "Tumblr Image Downloader is not affiliated with or supported by Tumblr in any way.",
+        "message": "Tumblr Image Downloader is not an official Tumblr extension and is not affiliated with or supported by Tumblr in any way. All logos and trademarks belong to their respective owners. This is an open-source, nonprofit project.",
         "description": "Help text at the bottom of the options page."
     },
 
