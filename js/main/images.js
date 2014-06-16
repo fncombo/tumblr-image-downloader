@@ -151,7 +151,7 @@ TID.images.getData = function (el) {
     }
 
     // Try to get the high resolution link
-    var highResLink = el.closest('.high_res_link', 5);
+    var highResLink = el.closest('.high_res_link, .normal_res_link', 5);
 
     // Try to get the wrapping link tag
     var wrapLink = highResLink.nodeName === 'A' ? highResLink : el.closest('a', 5);
