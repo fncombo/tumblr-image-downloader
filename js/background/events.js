@@ -97,7 +97,7 @@ TID.events.keyup = function (event, el) {
 
             toMove = parent.previousElementSibling;
             parent.parentNode.insertBefore(toMove.cloneNode(true), parent.nextElementSibling);
-            parent.parentNode.removeChild(toMove);
+            toMove.remove();
 
         } else if (keyCode === 40 && !parent.nextElementSibling.classList.contains('blank')) {
 
@@ -105,7 +105,7 @@ TID.events.keyup = function (event, el) {
 
             if (!toMove.classList.contains('blank')) {
                 parent.parentNode.insertBefore(toMove.cloneNode(true), parent);
-                parent.parentNode.removeChild(toMove);
+                toMove.remove();
             }
 
         }
