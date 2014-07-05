@@ -78,6 +78,14 @@ $('#clear').onclick = function () {
 
 };
 
+// Turn on/off Google Analytics
+listen('click', 'input[data-for="enableAnalytics"]', function (event, el) {
+    TID.sendMessage({
+        message: 'toggle_analytics',
+        value: el.checked
+    });
+});
+
 /**
  * Directories
  */

@@ -2,25 +2,33 @@
 
 /* globals TID, chrome */
 
-// Add Google Analytics
-window._gaq = window._gaq || [];
-window._gaq.push(['_setAccount', 'UA-40682860-1']);
-window._gaq.push(['_trackPageview']);
+function activateAnalytics() {
+
+    // Add Google Analytics
+    window._gaq = window._gaq || [];
+    window._gaq.push(['_setAccount', 'UA-40682860-1']);
+    window._gaq.push(['_trackPageview']);
+
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+
+}
+
+function deactivateAnalytics() {
+    document.querySelector('script[src*="google-analytics"]').remove();
+    delete window._gaq;
+    delete window._gat;
+}
 
 // Only add analytics if they haven't disabled it
 chrome.storage.sync.get({enableAnalytics: true}, function (object) {
-
     if (object.enableAnalytics) {
-
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = 'https://ssl.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-
+        activateAnalytics();
     }
-
 });
 
 // When the extension is first installed, updated, or when Chrome is updated
@@ -131,8 +139,18 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         });
         break;
 
+    case 'toggle_analytics':
+        if (request.value) {
+            activateAnalytics();
+        } else {
+            deactivateAnalytics();
+        }
+        break;
+
     default:
-        window._gaq.push(['_trackEvent', request.message[0], request.message[1]]);
+        if (window.hasOwnProperty('_gaq')) {
+            window._gaq.push(['_trackEvent', request.message[0], request.message[1]]);
+        }
         break;
 
     }

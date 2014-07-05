@@ -147,7 +147,7 @@
         "description": "Help text explaining what the show ticks option does."
     },
     "enableAnalytics": {
-        "message": "Enable Google Analytics (restart Chrome to take effect)",
+        "message": "Allow Google Analytics to collect anonymous usage data",
         "description": "Help text explaining what the out out of analytics option does."
     },
 
