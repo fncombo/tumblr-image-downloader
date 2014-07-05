@@ -29,12 +29,7 @@ To manually build the extension, run `grunt development` or `grunt production`. 
 
 To add the extension to Chrome, go to `Settings > Extensions`, and open the `extension` folder that is created after you run Grunt.
 
----
-
-![Screenshot][screenshot]
-
 [grunt]: http://gruntjs.com
 [codeclimate]: https://codeclimate.com/github/fncombo/tumblr-image-downloader
 [chromestore]: https://chrome.google.com/webstore/detail/tumblr-image-saver/ipocoligdfkbgncimgfaffpaglmedpop
-[screenshot]: http://i.imgur.com/EFzzGk3.jpg
 [gemnasium]: https://gemnasium.com/fncombo/tumblr-image-downloader
