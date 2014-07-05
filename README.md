@@ -24,6 +24,7 @@ To install all the dependencies, simply run `npm install` in the repository, and
 You can use
 * `grunt watch` or `grunt watch:all` to automatically re-compile the extension every time you make a change
 * `grunt watch:javascript`, `grunt watch:sass` or `grunt watch:slim` to watch only specific types of files
+* `grunt watch:javascriptSass` to watch both JavaScipt and Sass files
 
 To manually build the extension, run `grunt development` or `grunt production`. The production build is the same as development, but it also minifies JavaScript.
 
