@@ -26,7 +26,13 @@ $font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
 $border-radius: 6px;
 $input-radius: 2px;
 
-$bezier: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+$easeOutBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+$easeInCirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+$easeOutCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+$easeInCubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
 
 .base-button {
     background: $tumblr-gray;

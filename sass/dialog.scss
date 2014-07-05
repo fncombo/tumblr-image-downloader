@@ -56,8 +56,8 @@
     padding: 1.5em 2.25em;
     display: inline-block;
     vertical-align: middle;
-    -webkit-animation: dialog 0.15s $bezier forwards; // easeOutBack
-    animation: dialog 0.15s $bezier forwards; // easeOutBack
+    -webkit-animation: dialog 0.15s $easeOutBack forwards;
+    animation: dialog 0.15s $easeOutBack forwards;
 }
 
 .TID-dialog-message {

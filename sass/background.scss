@@ -280,8 +280,8 @@ input[type="checkbox"] {
         width: 10px;
         position: absolute;
         top: 2px;
-        -webkit-transition: left 0.1s $bezier;
-        transition: left 0.1s $bezier;
+        -webkit-transition: left 0.1s $easeOutBack;
+        transition: left 0.1s $easeOutBack;
     }
 
     &:not(:checked) + span:before {
@@ -314,8 +314,8 @@ input[type="checkbox"] {
     font-weight: bold;
     -webkit-transform: scale(0.75);
     transform: scale(0.75);
-    -webkit-transition: all 0.1s $bezier;
-    transition: all 0.1s $bezier;
+    -webkit-transition: all 0.1s $easeOutBack;
+    transition: all 0.1s $easeOutBack;
 
     &.show {
         opacity: 1;
