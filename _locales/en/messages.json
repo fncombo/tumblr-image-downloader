@@ -3,7 +3,7 @@
      * Extension name and description
      */
     "extensionName": {
-        "message": "Tumblr Image Downloader",
+        "message": "Image Downloader for Tumblr",
         "description": "The name of the extension. The word Tumblr must be English."
     },
     "extensionDescription": {
@@ -30,7 +30,7 @@
     },
 
     "installMessage": {
-        "message": "Find Tumblr Image Downloader useful? Don&rsquo;t forget to <a>rate it on the Chrome Web Store</a>.",
+        "message": "Find Image Downloader for Tumblr useful? Don&rsquo;t forget to <a>rate it on the Chrome Web Store</a>.",
         "description": "A message displayed on all background extension pages. Leave the <a>, and replace Chrome Web Store with the locale-specific name."
     },
     "supportMessage": {
@@ -66,7 +66,7 @@
         "description": "Help text at the bottom of the options page."
     },
     "optionsAffiliactionHelp": {
-        "message": "Tumblr Image Downloader is not an official Tumblr extension and is not affiliated with or supported by Tumblr in any way.",
+        "message": "Image Downloader for Tumblr is not an official Tumblr extension and is not affiliated with or supported by Tumblr in any way.",
         "description": "Help text at the bottom of the options page."
     },
 
