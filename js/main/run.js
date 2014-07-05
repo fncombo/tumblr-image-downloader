@@ -23,29 +23,24 @@ TID.run = function () {
         });
     });
 
-    // Keep adding new buttons for pages with endless scrolling
-    if (TID.isInfiniteScrolling || TID.isArchivePage) {
+    var previousHeight = TID.getDocumentHeight();
 
-        var previousHeight = TID.getDocumentHeight();
+    document.onscroll = function () {
 
-        document.onscroll = function () {
+        // If the height has changed, try adding buttons to new images (if any)
+        if (previousHeight !== TID.getDocumentHeight()) {
 
-            // If the height has changed, try adding buttons to new images (if any)
-            if (previousHeight !== TID.getDocumentHeight()) {
+            previousHeight = TID.getDocumentHeight();
 
-                previousHeight = TID.getDocumentHeight();
+            // Add buttons to new images
+            TID.buttons.add();
 
-                // Add buttons to new images
-                TID.buttons.add();
+            // Observe any new elements as needed
+            TID.events.initMutationObservers();
 
-                // Observe any new elements as needed
-                TID.events.initMutationObservers();
+        }
 
-            }
-
-        };
-
-    }
+    };
 
     // Update settings
     Object.keys(TID.settings.list).forEach(function (setting) {

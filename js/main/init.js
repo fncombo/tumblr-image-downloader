@@ -75,9 +75,6 @@ TID.isArchivePage = /\/archive(?:\/|$)/.test(window.location.pathname);
 // Check if the current page is a single image view
 TID.isSinglePage = document.body.classList.contains('single_image');
 
-// Check whether infinite scrolling is on or off
-TID.isInfiniteScrolling = $('#pagination') ? !$('#pagination').clientHeight : false;
-
 // Selectors for HTML elements based on the current page
 TID.selectors = { };
 
