@@ -223,6 +223,18 @@ module.exports = function(grunt) {
                 files: ['**/*.scss'],
                 tasks: 'sass'
             },
+            javascriptSass: {
+                files: [
+                    'js/*.js',
+                    'js/**/*.js',
+                    '**/*.scss'
+                ],
+                tasks: [
+                    'concat',
+                    'copy:javascript',
+                    'sass'
+                ]
+            },
             slim: {
                 files: ['**/*.slim'],
                 tasks: 'slim'
