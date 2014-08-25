@@ -84,7 +84,7 @@ Element.prototype.prependChild = function (el) {
 function listen(event, selector, listener) {
     document.addEventListener(event, function (event) {
         if (event.target.matchesSelector(selector)) {
-            listener.call(undefined, event, event.target);
+            listener(event, event.target);
         }
     }, false);
 }

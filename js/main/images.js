@@ -155,7 +155,7 @@ TID.images.checkHD = function (url, callbackSuccess, callbackError) {
         if (!image.naturalWidth || !image.naturalHeight) {
             image.onerror();
         } else {
-            callbackSuccess.call(undefined, image.src);
+            callbackSuccess(image.src);
         }
     };
 
@@ -170,7 +170,7 @@ TID.images.checkHD = function (url, callbackSuccess, callbackError) {
             }, 0);
         } else {
             // No better resolution was found
-            callbackError.call(undefined, url);
+            callbackError(url);
         }
     };
 

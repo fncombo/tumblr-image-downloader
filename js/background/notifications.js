@@ -35,7 +35,7 @@ TID.notifications.show = function (icon, title, message, buttons) {
     // Respond to button clicks
     chrome.notifications.onButtonClicked.addListener(function (notificationID, buttonIndex) {
         if (notificationID === thisNotificationID) {
-            buttons[buttonIndex].callback.call(undefined);
+            buttons[buttonIndex].callback();
         }
     });
 };

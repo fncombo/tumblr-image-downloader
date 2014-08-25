@@ -111,14 +111,14 @@ TID.storage.imageExists = function (imageId, callback) {
 
     request.onsuccess = function (event) {
         if (event.target.result) {
-            callback.call(undefined, true);
+            callback(true);
         } else {
-            callback.call(undefined, false);
+            callback(false);
         }
     };
 
     request.onerror = function () {
-        callback.call(undefined, false);
+        callback(false);
     };
 };
 

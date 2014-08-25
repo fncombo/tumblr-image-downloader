@@ -23,7 +23,7 @@ TID.directories.update = function (callback) {
         TID.directories.html = TID.directories.format();
 
         if (callback) {
-            callback.call(undefined);
+            callback();
         }
     });
 };

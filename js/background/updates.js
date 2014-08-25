@@ -11,7 +11,7 @@ TID.getUpdates = function (callback) {
 
     request.onload = function () {
         var messages = JSON.parse(request.responseText);
-        callback.call(undefined, messages);
+        callback(messages);
     };
 
     request.open('GET', '/updates.json', true);

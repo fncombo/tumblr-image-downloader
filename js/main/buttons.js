@@ -105,6 +105,6 @@ TID.buttons.create = function (imageData, callback) {
 
         console.log(el);
 
-        callback.call(undefined, el);
+        callback(el);
     });
 };

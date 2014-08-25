@@ -67,7 +67,7 @@ TID.ui.confirmDialog = function (callback) {
     var buttons = [TID.msg('yes'), TID.msg('no')];
 
     function buttonsCallback (i) {
-        callback.call(undefined, i === '0' ? true : false);
+        callback(i === '0' ? true : false);
     }
 
     TID.ui.showDialog(message, buttons, buttonsCallback);
