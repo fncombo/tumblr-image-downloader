@@ -5,7 +5,7 @@
 function activateAnalytics() {
     console.log('Enabling analytics');
 
-    window['ga-disable-UA-52792308-1'] = false;
+    window['ga-disable-' + TID.trackingId] = false;
 
     /**
      * Google Analytics (analytics.js) script
@@ -36,7 +36,7 @@ function activateAnalytics() {
         m.parentNode.insertBefore(a, m);
     }(window, document, 'script', 'ga'));
 
-    ga('create', 'UA-52792308-1', 'auto');
+    ga('create', TID.trackingId, 'auto');
     ga('set', 'checkProtocolTask', function () {});
     ga('require', 'displayfeatures');
     ga('send', 'pageview');
@@ -45,7 +45,7 @@ function activateAnalytics() {
 function deactivateAnalytics() {
     console.log('Disabling analytics');
 
-    window['ga-disable-UA-40682860-1'] = true;
+    window['ga-disable-UA-' + TID.trackingId] = true;
 
     document.querySelector('script[src*="google-analytics"]').remove();
 
