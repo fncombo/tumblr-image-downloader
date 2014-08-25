@@ -37,8 +37,11 @@ TID.adjustImageCount = function (amount) {
 };
 
 // Get number of remembered images
-chrome.storage.local.get({images: []}, function (object) {
-    TID.adjustImageCount(object.images.length);
+TID.sendMessage({
+    message: 'storage',
+    action: 'count'
+}, function (count) {
+    TID.adjustImageCount(count);
 });
 
 /**
@@ -59,8 +62,12 @@ $('#clear').onclick = function () {
     TID.ui.showDialog(message, buttons, function (i) {
         switch (i) {
             case '0':
-                chrome.storage.local.remove('images');
                 TID.adjustImageCount(0);
+
+                TID.sendMessage({
+                    message: 'storage',
+                    action: 'clear'
+                });
                 TID.sendMessage(['Cleared Storage', 'Cleared Images']);
                 break;
 
@@ -163,7 +170,7 @@ chrome.storage.onChanged.addListener(function (changes) {
 
     // Check for any other changes
     if (changes.hasOwnProperty('images')) {
-        TID.adjustImageCount(changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0);
+        // TID.adjustImageCount(changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0);
     } else if (changes.hasOwnProperty('saveDirectories')) {
         $('#download-directories').innerHTML = '';
 

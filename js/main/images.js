@@ -4,22 +4,6 @@
 
 TID.images = {};
 
-// Storage of all the downloaded images
-TID.images.downloaded = [];
-
-/**
- * Update the current page's image storage array
- */
-TID.images.update = function (callback) {
-    chrome.storage.local.get({images: []}, function (object) {
-        TID.images.downloaded = object.images;
-
-        if (callback) {
-            callback.call(undefined);
-        }
-    });
-};
-
 /**
  * Get the image's Tumblr ID or the whole URL
  * @param  {String} url The URL to search for the ID in
@@ -46,13 +30,11 @@ TID.images.getID = function (url) {
  * @param {String} imageId ID or URL of the image to remove
  */
 TID.images.remove = function (imageId) {
-    chrome.storage.local.get({images: []}, function (object) {
-        // Only remove the ID if it exists
-        if (object.images.indexOf(imageId) !== -1) {
-            var index = object.images.indexOf(imageId);
-
-            object.images.splice(index, 1);
-            chrome.storage.local.set(object);
+    TID.sendMessage({
+        message: 'storage',
+        action: 'removeImage',
+        data: {
+            imageId: imageId
         }
     });
 };
@@ -60,10 +42,17 @@ TID.images.remove = function (imageId) {
 /**
  * Check whether an image exists in storage
  * @param  {String}  imageId ID or URL of the image to search for
+ * @param  {Function} callback Callback
  * @return {Boolean}         Whether or not the image exists
  */
-TID.images.exists = function (imageId) {
-    return TID.images.downloaded.indexOf(imageId) !== -1 ? true : false;
+TID.images.exists = function (imageId, callback) {
+    chrome.runtime.sendMessage({
+        message: 'storage',
+        action: 'imageExists',
+        data: {
+            imageId: imageId
+        }
+    }, callback);
 };
 
 /**
@@ -201,9 +190,12 @@ TID.images.download = function (url, imageId, directory) {
     function sendMessage(url) {
         TID.sendMessage({
             message: 'download',
-            url: url,
-            directory: directory,
-            imageId: imageId
+            data: {
+                url: url,
+                directory: directory,
+                imageId: imageId,
+                pageUrl: window.location.href
+            }
         });
     }
 

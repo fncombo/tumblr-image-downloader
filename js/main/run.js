@@ -17,11 +17,9 @@ TID.run = function () {
         document.body.classList.add(TID.classes.archivePage);
     }
 
-    // Add buttons after updating images storage and directories
-    TID.images.update(function () {
-        TID.directories.update(function () {
-            TID.buttons.add();
-        });
+    // Add buttons after updating directories list
+    TID.directories.update(function () {
+        TID.buttons.add();
     });
 
     var previousHeight = TID.getDocumentHeight();

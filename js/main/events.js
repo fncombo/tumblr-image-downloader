@@ -13,33 +13,35 @@ TID.events.buttonImageDownload = function (event) {
     var imageId = parent.dataset.imageId;
     var url = parent.dataset.url;
     var isHD = parent.dataset.hd === 'true' ? true : false;
-    var hasDownloaded = TID.images.exists(imageId);
 
     console.log('Downloading image from button', imageId);
 
-    // If don't care about confirmation or not downloaded yet, download
-    if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
-        TID.images.download(url, imageId);
+    TID.images.exists(imageId, function (hasDownloaded) {
 
-        if (TID.isArchivePage) {
-            TID.sendMessage(['Downloaded Image', 'Archive']);
-        } else {
-            TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
-        }
-    // Otherwise ask for confirmation
-    } else if (hasDownloaded) {
-        TID.ui.confirmDialog(function (accept) {
-            if (accept) {
-                TID.images.download(url, imageId);
+        // If don't care about confirmation or not downloaded yet, download
+        if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
+            TID.images.download(url, imageId);
 
-                if (TID.isArchivePage) {
-                    TID.sendMessage(['Downloaded Image', 'Archive']);
-                } else {
-                    TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
-                }
+            if (TID.isArchivePage) {
+                TID.sendMessage(['Downloaded Image', 'Archive']);
+            } else {
+                TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
             }
-        });
-    }
+        // Otherwise ask for confirmation
+        } else if (hasDownloaded) {
+            TID.ui.confirmDialog(function (accept) {
+                if (accept) {
+                    TID.images.download(url, imageId);
+
+                    if (TID.isArchivePage) {
+                        TID.sendMessage(['Downloaded Image', 'Archive']);
+                    } else {
+                        TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
+                    }
+                }
+            });
+        }
+    });
 };
 
 /**
@@ -51,23 +53,24 @@ TID.events.directoryImageDownload = function (event) {
     var imageId = parent.dataset.imageId;
     var url = parent.dataset.url;
     var directory = event.target.dataset.directory;
-    var hasDownloaded = TID.images.exists(imageId);
 
     console.log('Downloading image from dropdown', imageId);
 
-    // If don't care about confirmation or not downloaded yet, download
-    if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
-        TID.images.download(url, imageId, directory);
-        TID.sendMessage(['Downloaded Image', 'To Directory']);
-    // Otherwise ask for confirmation
-    } else if (hasDownloaded) {
-        TID.ui.confirmDialog(function (accept) {
-            if (accept) {
-                TID.images.download(url, imageId, directory);
-                TID.sendMessage(['Downloaded Image', 'To Directory']);
-            }
-        });
-    }
+    TID.images.exists(imageId, function (hasDownloaded) {
+        // If don't care about confirmation or not downloaded yet, download
+        if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
+            TID.images.download(url, imageId, directory);
+            TID.sendMessage(['Downloaded Image', 'To Directory']);
+        // Otherwise ask for confirmation
+        } else if (hasDownloaded) {
+            TID.ui.confirmDialog(function (accept) {
+                if (accept) {
+                    TID.images.download(url, imageId, directory);
+                    TID.sendMessage(['Downloaded Image', 'To Directory']);
+                }
+            });
+        }
+    });
 };
 
 /**
@@ -125,23 +128,6 @@ TID.events.initStorageListener = function () {
 
     chrome.storage.onChanged.addListener(function (changes) {
 
-        // A new image was downloaded
-        if (changes.hasOwnProperty('images')) {
-            // Update the downloaded images array
-            TID.images.downloaded = changes.images.newValue || [];
-
-            // If the new value is empty, all images have been cleared, remove all ticks
-            if (!changes.images.hasOwnProperty('newValue')) {
-                TID.ticks.removeAll();
-            // New image has been added, get the last ID and add a tick to it
-            } else {
-                var imageId = changes.images.newValue[changes.images.newValue.length - 1];
-                TID.ticks.add(imageId);
-            }
-
-            return;
-        }
-
         // If the save directories were modified
         if (changes.hasOwnProperty('saveDirectories')) {
             TID.directories.list = changes.saveDirectories.newValue;
@@ -173,11 +159,8 @@ TID.events.initMessageListener = function () {
     chrome.runtime.onMessage.addListener(function (request) {
         switch (request.message) {
         case 'not_image':
-
-            if (!TID.images.exists(request.imageId)) {
-                TID.images.remove(request.imageId);
-                TID.ticks.remove(request.imageId);
-            }
+            TID.images.remove(request.imageId);
+            TID.ticks.remove(request.imageId);
 
             var message = TID.msg('linkNotImage');
             var buttons = [TID.msg('downloadFromTumblr'), TID.msg('openLinkInNewTab'), TID.msg('cancel')];
@@ -197,7 +180,18 @@ TID.events.initMessageListener = function () {
                     break;
                 }
             });
+            break;
 
+        case 'image_downloaded':
+            TID.ticks.add(request.data.imageId);
+            break;
+
+        case 'image_removed':
+            TID.ticks.remove(request.data.imageId);
+            break;
+
+        case 'storage_cleared':
+            TID.ticks.removeAll();
             break;
         }
     });
@@ -214,38 +208,28 @@ TID.events.initMutationObservers = function () {
         mutations.forEach(function (mutation) {
             var el = mutation.target;
             var imageId = TID.images.getID(el.src);
+            var isHD = TID.regex.image1280.test(el.src);
+            var data = {
+                imageId: imageId,
+                isHD: isHD,
+                HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
+                url: el.src
+            };
 
-            // Get the button of the image with that ID from the page
-            var button = $('.' + TID.classes.download + '[data-image-id="' + imageId + '"]');
+            TID.buttons.create(data, function (button) {
+                // Give the button correct offsets
+                button.style.position = 'relative';
+                button.style.top = el.style.top;
+                button.style.left = el.style.left;
 
-            if (button) {
-                button = button.cloneNode(true);
-            // If the button doesn't exist because we're not on the dashboard, make one
-            // Use the "src" attribute from the image because Tumblr will automatically give us the largest one
-            } else {
-                var isHD = TID.regex.image1280.test(el.src);
-                var data = {
-                    imageId: imageId,
-                    isHD: isHD,
-                    HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
-                    url: el.src
-                };
+                // Remove any existing buttons
+                $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
+                    el.remove();
+                });
 
-                button = TID.buttons.create(data);
-            }
-
-            // Give the button correct offsets
-            button.style.position = 'relative';
-            button.style.top = el.style.top;
-            button.style.left = el.style.left;
-
-            // Remove any existing buttons
-            $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
-                el.remove();
+                // Append the button
+                el.parentNode.appendChild(button);
             });
-
-            // Append the button
-            el.parentNode.appendChild(button);
         });
     });
 
@@ -293,17 +277,18 @@ TID.events.initMutationObservers = function () {
                     HDType: isExternal ? TID.HDTypes.externalHighRes : TID.HDTypes.none,
                     url: el.src
                 };
-                var button = TID.buttons.create(data);
 
-                // Remove any existing butons
-                $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
-                    el.remove();
+                TID.buttons.create(data, function (button) {
+                    // Remove any existing butons
+                    $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
+                        el.remove();
+                    });
+
+                    // Append the button
+                    blockEl = el.closest('p, div:not(.post_container)');
+                    blockEl.classList.add(TID.classes.parent);
+                    blockEl.insertBefore(button, el);
                 });
-
-                // Append the button
-                blockEl = el.closest('p, div:not(.post_container)');
-                blockEl.classList.add(TID.classes.parent);
-                blockEl.insertBefore(button, el);
             } else {
                 // Remove any buttons
                 blockEl = el.closest('p, div:not(.post_container)');

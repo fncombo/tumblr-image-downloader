@@ -96,26 +96,48 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             downloadItem.mime.match(/image/)
         )
     ) {
+        var directory;
+
         if (TID.vars.saveDirectory) {
+            directory = TID.vars.saveDirectory;
+
             suggest({
                 filename: TID.vars.saveDirectory + '/' + downloadItem.filename
             });
         } else if (TID.vars.defaultDirectory) {
+            directory = TID.vars.defaultDirectory;
+
             suggest({
                 filename: TID.vars.defaultDirectory + '/' + downloadItem.filename
             });
         } else {
+            directory = false;
+
             suggest({
                 filename: downloadItem.filename
             });
         }
 
-        chrome.storage.local.get({images: []}, function (object) {
-            // Only add the ID if it doesn't already exist
-            if (object.images.indexOf(TID.vars.lastImageID) === -1) {
-                object.images.push(TID.vars.lastImageID);
-                chrome.storage.local.set(object);
-            }
+        // Save the image
+        TID.storage.saveImage({
+            imageId: TID.vars.lastImageId,
+            imageUrl: TID.vars.lastImageUrl,
+            pageUrl: TID.vars.lastPageUrl,
+            directory: directory
+        });
+
+        // Send message to all open tabs that the image was downloaded
+        chrome.tabs.query({
+            url: '*://*.tumblr.com/*'
+        }, function (tabs) {
+            tabs.forEach(function (tab) {
+                chrome.tabs.sendMessage(tab.id, {
+                    message: 'image_downloaded',
+                    data: {
+                        imageId: TID.vars.lastImageId
+                    }
+                });
+            });
         });
     // If the link does not appear to link to an image
     } else {
@@ -125,7 +147,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         // Prompt the user
         chrome.tabs.sendMessage(TID.vars.lastTabID, {
             message: 'not_image',
-            imageId: TID.vars.lastImageID,
+            imageId: TID.vars.lastImageId,
             directory: TID.vars.saveDirectory,
             url: downloadItem.url
         });
@@ -133,8 +155,10 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
 });
 
 // Listen to messages from other scripts
-chrome.runtime.onMessage.addListener(function (request, sender) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log('Recieved request', request, 'from', sender);
+
+    var ret = false;
 
     switch (request.message) {
     case 'show_page_action':
@@ -142,16 +166,16 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         break;
 
     case 'download':
-
-        TID.vars.saveDirectory = request.directory;
+        TID.vars.saveDirectory = request.data.directory;
         TID.vars.lastTabID = sender.tab.id;
-        TID.vars.lastImageID = request.imageId;
+        TID.vars.lastImageId = request.data.imageId;
+        TID.vars.lastImageUrl = request.data.url;
+        TID.vars.lastPageUrl = request.data.pageUrl;
 
         chrome.downloads.download({
-            url: request.url,
+            url: request.data.url,
             saveAs: false
         });
-
         break;
 
     case 'open_settings':
@@ -174,12 +198,63 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         }
         break;
 
+    case 'storage':
+        switch (request.action) {
+        case 'imageExists':
+            // Keep the messaging channel open for async
+            ret = true;
+            TID.storage.imageExists(request.data.imageId, sendResponse);
+            break;
+
+        case 'removeImage':
+            TID.storage.removeImage(request.data.imageId);
+
+            // Send message to all open tabs that the image has been removed
+            chrome.tabs.query({
+                url: '*://*.tumblr.com/*'
+            }, function (tabs) {
+                tabs.forEach(function (tab) {
+                    chrome.tabs.sendMessage(tab.id, {
+                        message: 'image_removed',
+                        data: {
+                            imageId: request.data.imageId
+                        }
+                    });
+                });
+            });
+            break;
+
+        case 'clear':
+            TID.storage.clear();
+
+            // Send message to all open tabs that all images have been removed
+            chrome.tabs.query({
+                url: '*://*.tumblr.com/*'
+            }, function (tabs) {
+                tabs.forEach(function (tab) {
+                    chrome.tabs.sendMessage(tab.id, {
+                        message: 'storage_cleared'
+                    });
+                });
+            });
+            break;
+
+        case 'count':
+            ret = true;
+
+            TID.storage.count(sendResponse);
+            break;
+        }
+        break;
+
     default:
         if (window.hasOwnProperty('ga') && typeof ga === 'function') {
             ga('send', 'event', request.message[0], request.message[1]);
         }
         break;
     }
+
+    return ret;
 });
 
 // Get default save directory
