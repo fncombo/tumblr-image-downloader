@@ -2,6 +2,16 @@
 
 /* globals TID, chrome, ga */
 
+function sendToAllTabs (message) {
+    chrome.tabs.query({
+        url: '*://*.tumblr.com/*'
+    }, function (tabs) {
+        tabs.forEach(function (tab) {
+            chrome.tabs.sendMessage(tab.id, message);
+        });
+    });
+}
+
 function activateAnalytics() {
     console.log('Enabling analytics');
 
@@ -127,17 +137,11 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         });
 
         // Send message to all open tabs that the image was downloaded
-        chrome.tabs.query({
-            url: '*://*.tumblr.com/*'
-        }, function (tabs) {
-            tabs.forEach(function (tab) {
-                chrome.tabs.sendMessage(tab.id, {
-                    message: 'image_downloaded',
-                    data: {
-                        imageId: TID.vars.lastImageId
-                    }
-                });
-            });
+        sendToAllTabs({
+            message: 'image_downloaded',
+            data: {
+                imageId: TID.vars.lastImageId
+            }
         });
     // If the link does not appear to link to an image
     } else {
@@ -210,17 +214,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             TID.storage.removeImage(request.data.imageId);
 
             // Send message to all open tabs that the image has been removed
-            chrome.tabs.query({
-                url: '*://*.tumblr.com/*'
-            }, function (tabs) {
-                tabs.forEach(function (tab) {
-                    chrome.tabs.sendMessage(tab.id, {
-                        message: 'image_removed',
-                        data: {
-                            imageId: request.data.imageId
-                        }
-                    });
-                });
+            sendToAllTabs({
+                message: 'image_removed',
+                data: {
+                    imageId: request.data.imageId
+                }
             });
             break;
 
@@ -228,14 +226,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             TID.storage.clear();
 
             // Send message to all open tabs that all images have been removed
-            chrome.tabs.query({
-                url: '*://*.tumblr.com/*'
-            }, function (tabs) {
-                tabs.forEach(function (tab) {
-                    chrome.tabs.sendMessage(tab.id, {
-                        message: 'storage_cleared'
-                    });
-                });
+            sendToAllTabs({
+                message: 'storage_cleared'
             });
             break;
 
