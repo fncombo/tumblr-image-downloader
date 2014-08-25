@@ -101,6 +101,12 @@ TID.storage.saveImage = function (imageId, imageUrl, pageUrl) {
     store.add(data);
 };
 
+TID.storage.removeImage = function (imageId) {
+    console.log('Removing imageID from the database', imageId);
+
+    TID.storage.getObjectStore('readwrite').delete(imageId);
+};
+
 TID.storage.imageExists = function (imageId, callback) {
     console.log('Checking if image exists', imageId);
 
@@ -120,6 +126,9 @@ TID.storage.imageExists = function (imageId, callback) {
     };
 };
 
+/**
+ * Clear everything stored in the database
+ */
 TID.storage.clear = function () {
     console.log('Clearing database storage');
 
