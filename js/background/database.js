@@ -83,18 +83,14 @@ TID.storage.getObjectStore = function (mode) {
 
 /**
  * Save an image that has been downloaded
- * @param  {String} imageId  Tumblr ID of the image
- * @param  {String} imageUrl Full URL to the image
- * @param  {String} pageUrl  Full URL of the page where the image was downloaded from
+ * @param {Object} data All the data about the downloaded image
  */
-TID.storage.saveImage = function (imageId, imageUrl, pageUrl) {
+TID.storage.saveImage = function (data) {
     var store = TID.storage.getObjectStore('readwrite');
-    var data = {
-        imageId: imageId,
-        time: Date.now(),
-        imageUrl: imageUrl,
-        pageUrl: pageUrl
-    };
+
+    if (!data.hasOwnProperty('time')) {
+        data.time = Date.now();
+    }
 
     console.log('Saving image', data);
 
@@ -133,4 +129,20 @@ TID.storage.clear = function () {
     console.log('Clearing database storage');
 
     TID.storage.getObjectStore('readwrite').clear();
+};
+
+/**
+ * Get the number of stored images
+ * @param {Function} callback Callback
+ */
+TID.storage.count = function (callback) {
+    var count = TID.storage.getObjectStore().count();
+
+    count.onsuccess = function (event) {
+        callback(event.target.result);
+    };
+
+    count.onerror = function () {
+        callback(0);
+    };
 };
