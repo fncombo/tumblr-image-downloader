@@ -2,13 +2,13 @@
 
 /* globals TID, chrome */
 
-TID.notifications = { };
+TID.notifications = {};
 
 /**
  * Create and show a notification
- * @param {string} icon    Name of the icon in the images folder
- * @param {string} title   Title of the notification
- * @param {string} message Message of the notification
+ * @param {String} icon    Name of the icon in the images folder
+ * @param {String} title   Title of the notification
+ * @param {String} message Message of the notification
  * @param {Array}  buttons Array of objects with the button title, and lick callback
  */
 TID.notifications.show = function (icon, title, message, buttons) {

@@ -2,11 +2,11 @@
 
 /* globals TID, chrome, $ */
 
-TID.checkboxes = { };
+TID.checkboxes = {};
 
 /**
  * Adjust the controls that belong to a checkbox
- * @param {string} key The checkbox data-for attribute
+ * @param {String} key The checkbox data-for attribute
  */
 TID.checkboxes.adjustControls = function (key) {
     var el = $('input[data-for="' + key + '"]');
@@ -20,8 +20,8 @@ TID.checkboxes.adjustControls = function (key) {
 
 /**
  * Manually set the value of a checkbox
- * @param {string}  key   The data-for attribute
- * @param {boolean} value Whether or not the checkbox should be checked
+ * @param {String}  key   The data-for attribute
+ * @param {Boolean} value Whether or not the checkbox should be checked
  */
 TID.checkboxes.setValue = function (key, value) {
     $('input[data-for="' + key + '"]').checked = value;
@@ -44,7 +44,7 @@ TID.checkboxes.getValue = function (el) {
 
 /**
  * Update storage when a checkbox is changed
- * @param {object}  event The triggered event
+ * @param {Object}  event The triggered event
  * @param {Element} el    The element event was triggered
  */
 TID.checkboxes.onChange = function (event, el) {

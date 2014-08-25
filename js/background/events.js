@@ -7,7 +7,7 @@ TID.events = {};
 
 /**
  * Clicking on the button to move an input
- * @param {object}  event The triggered event
+ * @param {Object}  event The triggered event
  * @param {Element} el    The element event was triggered on
  */
 TID.events.mousedown = function (event, el) {
@@ -35,7 +35,7 @@ TID.events.mousedown = function (event, el) {
 
 /**
  * Event handler for moving a directory input with the mouse
- * @param {object} event The triggered event
+ * @param {Object} event The triggered event
  */
 TID.events.mousemove = function (event) {
     // true = up, false = down
@@ -67,7 +67,7 @@ TID.events.mouseup = function () {
 
 /**
  * Moving directories with Ctrl and arrow keys
- * @param {object}  event The triggered event
+ * @param {Object}  event The triggered event
  * @param {Element} el    The element event was triggered on
  */
 TID.events.keyup = function (event, el) {
@@ -112,7 +112,7 @@ TID.events.keyup = function (event, el) {
 
 /**
  * Adds and removes blank fields as needed when inputs change
- * @param {object}  event The triggered event
+ * @param {Object}  event The triggered event
  * @param {Element} el    The element event was triggered on
  */
 TID.events.input = function (event, el) {

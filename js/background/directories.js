@@ -2,11 +2,11 @@
 
 /* globals TID, chrome, $, $$ */
 
-TID.directories = { };
+TID.directories = {};
 
 /**
  * Get a random placeholder value for directories
- * @return {string} A random sample directory
+ * @return {String} A random sample directory
  */
 TID.directories.getPlaceholder = function () {
     var placeholders = [
@@ -30,8 +30,8 @@ TID.directories.getPlaceholder = function () {
 
 /**
  * Sanitizes a directory input
- * @param  {string} directory The directory to sanitize
- * @return {string}           The sanitizes directory string
+ * @param  {String} directory The directory to sanitize
+ * @return {String}           The sanitizes directory string
  */
 TID.directories.sanitize = function (directory) {
     return directory.trim()
@@ -41,9 +41,9 @@ TID.directories.sanitize = function (directory) {
 
 /**
  * Generate a directory input
- * @param  {string}  value  The value of the input
- * @param  {boolean} skipLi Whether or not to skip the <li> tag
- * @return {string}         Return the HTML for the directory input
+ * @param  {String}  value  The value of the input
+ * @param  {Boolean} skipLi Whether or not to skip the <li> tag
+ * @return {String}         Return the HTML for the directory input
  */
 TID.directories.generateInput = function (value, skipLi) {
     var html = '';
@@ -81,7 +81,7 @@ TID.directories.addBlank = function () {
 };
 
 /**
- * Save all directories to chrome storage
+ * Save the default directory to chrome storage
  */
 TID.directories.saveDefault = function () {
     var defaultDirectory = TID.directories.sanitize($('#default-directory').value);
@@ -93,6 +93,9 @@ TID.directories.saveDefault = function () {
     }
 };
 
+/**
+ * Save all directories to chrome storage
+ */
 TID.directories.saveMore = function () {
     var directories = [];
 

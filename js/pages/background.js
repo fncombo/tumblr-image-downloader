@@ -3,7 +3,7 @@
 /* globals TID, chrome, ga */
 
 function activateAnalytics() {
-    console.log('enabling analytics');
+    console.log('Enabling analytics');
 
     window['ga-disable-UA-52792308-1'] = false;
 
@@ -43,7 +43,7 @@ function activateAnalytics() {
 }
 
 function deactivateAnalytics() {
-    console.log('disabling analytics');
+    console.log('Disabling analytics');
 
     window['ga-disable-UA-40682860-1'] = true;
 
@@ -65,7 +65,7 @@ chrome.storage.sync.get({
 
 // When the extension is first installed, updated, or when Chrome is updated
 chrome.runtime.onInstalled.addListener(function (details) {
-    console.log('onInstalled triggered', details.reason);
+    console.log('"onInstalled" triggered', details.reason);
 
     switch (details.reason) {
     case 'install':
@@ -86,7 +86,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         return;
     }
 
-    console.log('downloading item', downloadItem);
+    console.log('Downloading item', downloadItem);
 
     // If a valid image
     if (
@@ -134,7 +134,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
 
 // Listen to messages from other scripts
 chrome.runtime.onMessage.addListener(function (request, sender) {
-    console.log('recieved request', request, 'from', sender);
+    console.log('Recieved request', request, 'from', sender);
 
     switch (request.message) {
     case 'show_page_action':
