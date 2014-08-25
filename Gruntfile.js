@@ -69,11 +69,8 @@ module.exports = function(grunt) {
 
         uglify: {
             options: {
-                mangle: {
-                    sort: false,
-                    toplevel: false,
-                    eval: false
-                },
+                banner: '/*! Built on <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+                mangle: true,
                 compress: {
                     sequences: false,
                     properties: true,
@@ -81,21 +78,21 @@ module.exports = function(grunt) {
                     drop_debugger: true,
                     unsafe: false,
                     conditionals: false,
-                    comparisons: true,
+                    comparisons: false,
                     evaluate: false,
-                    booleans: true,
+                    booleans: false,
                     loops: false,
-                    unused: true,
+                    unused: false,
                     hoist_funs: false,
                     hoist_vars: false,
                     if_return: false,
-                    join_vars: true,
+                    join_vars: false,
                     cascade: false,
-                    warnings: true,
+                    warnings: false,
                     negate_iife: false,
                     pure_getters: false,
                     pure_funcs: false,
-                    drop_console: true,
+                    drop_console: true
                 },
                 beautify: false,
                 report: false,
