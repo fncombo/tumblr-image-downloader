@@ -15,9 +15,9 @@ If you would like to contribute, simply fork this repository, make a new branch,
 
 You will need:
 * Node.js
-* Grunt
 * Ruby
-* Slim gem
+  * Sass gem
+  * Slim gem
 
 To install all the dependencies, simply run `npm install` in the repository, and you're good to go!
 
