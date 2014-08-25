@@ -13,7 +13,7 @@ TID.storage = {};
  * @type {String|Number}
  */
 TID.storage.name = 'TID';
-TID.storage.version = 2;
+TID.storage.version = 1;
 TID.storage.store = 'images';
 
 /**
