@@ -3,7 +3,7 @@
 /* globals TID */
 
 // Global extension settings
-TID.settings = { };
+TID.settings = {};
 
 // Defaults for the settings, and callbacks for when they are loaded or changed
 TID.settings.list = {
@@ -33,7 +33,7 @@ TID.settings.list = {
 // All the regular expressions used in the extension
 TID.regex = {
     imageSize: /(_)(\d+)(\.(?:jpe?g|png|gif)$)/,
-    imageID: /\/tumblr_(?:inline_)?(?:(\w+)_\d+|(\w+))(?=\.(?:jpe?g|png|gif)$)/,
+    imageId: /\/tumblr_(?:inline_)?(?:(\w+)_\d+|(\w+))(?=\.(?:jpe?g|png|gif)$)/,
     imageExt: /(jpe?g|png|gif)$/,
     image1280: /_1280\.(?:jpe?g|png|gif)$/,
     tumblrDomain: /tumblr\.com\//
@@ -74,7 +74,7 @@ TID.isArchivePage = /\/archive(?:\/|$)/.test(window.location.pathname);
 TID.isSinglePage = document.body.classList.contains('single_image');
 
 // Selectors for HTML elements based on the current page
-TID.selectors = { };
+TID.selectors = {};
 
 // Selectors for all images on a page
 if (TID.isArchivePage) {

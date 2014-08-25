@@ -2,7 +2,7 @@
 
 /* globals TID, chrome, $, $$ */
 
-TID.events = { };
+TID.events = {};
 
 /**
  * Event to download an image from a download button
@@ -10,14 +10,16 @@ TID.events = { };
  */
 TID.events.buttonImageDownload = function (event) {
     var parent = event.target.parentNode;
-    var imageID = parent.dataset.imageId;
+    var imageId = parent.dataset.imageId;
     var url = parent.dataset.url;
     var isHD = parent.dataset.hd === 'true' ? true : false;
-    var hasDownloaded = TID.images.exists(imageID);
+    var hasDownloaded = TID.images.exists(imageId);
+
+    console.log('Downloading image from button', imageId);
 
     // If don't care about confirmation or not downloaded yet, download
     if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
-        TID.images.download(url, imageID);
+        TID.images.download(url, imageId);
 
         if (TID.isArchivePage) {
             TID.sendMessage(['Downloaded Image', 'Archive']);
@@ -28,7 +30,7 @@ TID.events.buttonImageDownload = function (event) {
     } else if (hasDownloaded) {
         TID.ui.confirmDialog(function (accept) {
             if (accept) {
-                TID.images.download(url, imageID);
+                TID.images.download(url, imageId);
 
                 if (TID.isArchivePage) {
                     TID.sendMessage(['Downloaded Image', 'Archive']);
@@ -46,20 +48,22 @@ TID.events.buttonImageDownload = function (event) {
  */
 TID.events.directoryImageDownload = function (event) {
     var parent = event.target.ancestor(3);
-    var imageID = parent.dataset.imageId;
+    var imageId = parent.dataset.imageId;
     var url = parent.dataset.url;
     var directory = event.target.dataset.directory;
-    var hasDownloaded = TID.images.exists(imageID);
+    var hasDownloaded = TID.images.exists(imageId);
+
+    console.log('Downloading image from dropdown', imageId);
 
     // If don't care about confirmation or not downloaded yet, download
     if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
-        TID.images.download(url, imageID, directory);
+        TID.images.download(url, imageId, directory);
         TID.sendMessage(['Downloaded Image', 'To Directory']);
     // Otherwise ask for confirmation
     } else if (hasDownloaded) {
         TID.ui.confirmDialog(function (accept) {
             if (accept) {
-                TID.images.download(url, imageID, directory);
+                TID.images.download(url, imageId, directory);
                 TID.sendMessage(['Downloaded Image', 'To Directory']);
             }
         });
@@ -70,6 +74,8 @@ TID.events.directoryImageDownload = function (event) {
  * Initialise all document event listeners
  */
 TID.events.initDocumentEvents = function () {
+    console.log('Initializing all document events');
+
     // Download list events
     document.addEventListener('click', function (event) {
         var el = event.target;
@@ -115,6 +121,8 @@ TID.events.initDocumentEvents = function () {
  * Initialize all Chrome storage event listeners
  */
 TID.events.initStorageListener = function () {
+    console.log('Initializing Chrome storage listeners');
+
     chrome.storage.onChanged.addListener(function (changes) {
 
         // A new image was downloaded
@@ -127,8 +135,8 @@ TID.events.initStorageListener = function () {
                 TID.ticks.removeAll();
             // New image has been added, get the last ID and add a tick to it
             } else {
-                var imageID = changes.images.newValue[changes.images.newValue.length - 1];
-                TID.ticks.add(imageID);
+                var imageId = changes.images.newValue[changes.images.newValue.length - 1];
+                TID.ticks.add(imageId);
             }
 
             return;
@@ -160,13 +168,15 @@ TID.events.initStorageListener = function () {
  * Initialize all Chrome message event listeners
  */
 TID.events.initMessageListener = function () {
+    console.log('Initializing Chrome message listeners');
+
     chrome.runtime.onMessage.addListener(function (request) {
         switch (request.message) {
         case 'not_image':
 
-            if (!TID.images.exists(request.imageID)) {
-                TID.images.remove(request.imageID);
-                TID.ticks.remove(request.imageID);
+            if (!TID.images.exists(request.imageId)) {
+                TID.images.remove(request.imageId);
+                TID.ticks.remove(request.imageId);
             }
 
             var message = TID.msg('linkNotImage');
@@ -175,8 +185,8 @@ TID.events.initMessageListener = function () {
             TID.ui.showDialog(message, buttons, function (i) {
                 switch (i) {
                 case '0':
-                    var button = $('.' + TID.classes.download + '[data-image-id="' + request.imageID + '"]');
-                    TID.images.download(button.nextElementSibling.src, request.imageID, request.directory);
+                    var button = $('.' + TID.classes.download + '[data-image-id="' + request.imageId + '"]');
+                    TID.images.download(button.nextElementSibling.src, request.imageId, request.directory);
                     break;
 
                 case '1':
@@ -197,14 +207,16 @@ TID.events.initMessageListener = function () {
  * Initialize all DOM mutation observers
  */
 TID.events.initMutationObservers = function () {
+    console.log('Initializing DOM mutation observers');
+
     // Create a DOM mutation observer for the lightbox middle image
     var centerImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
             var el = mutation.target;
-            var imageID = TID.images.getID(el.src);
+            var imageId = TID.images.getID(el.src);
 
             // Get the button of the image with that ID from the page
-            var button = $('.' + TID.classes.download + '[data-image-id="' + imageID + '"]');
+            var button = $('.' + TID.classes.download + '[data-image-id="' + imageId + '"]');
 
             if (button) {
                 button = button.cloneNode(true);
@@ -213,7 +225,7 @@ TID.events.initMutationObservers = function () {
             } else {
                 var isHD = TID.regex.image1280.test(el.src);
                 var data = {
-                    imageID: imageID,
+                    imageId: imageId,
                     isHD: isHD,
                     HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
                     url: el.src
@@ -276,7 +288,7 @@ TID.events.initMutationObservers = function () {
             ) {
                 var isExternal = !!el.classList.contains('inline_external_image');
                 var data = {
-                    imageID: TID.images.getID(el.src),
+                    imageId: TID.images.getID(el.src),
                     isHD: false,
                     HDType: isExternal ? TID.HDTypes.externalHighRes : TID.HDTypes.none,
                     url: el.src

@@ -4,13 +4,15 @@
 
 /**
  * Get the current height of the document
- * @return {integer} Current height of the document
+ * @return {Number} Current height of the document
  */
 TID.getDocumentHeight = function () {
     return document.documentElement.scrollHeight;
 };
 
 TID.run = function () {
+    console.log('Running the extension');
+
     if (TID.isArchivePage) {
         document.body.classList.add(TID.classes.archivePage);
     }
@@ -39,7 +41,7 @@ TID.run = function () {
 
     // Update settings
     Object.keys(TID.settings.list).forEach(function (setting) {
-        var object = { };
+        var object = {};
         object[setting] = TID.settings.list[setting].default;
 
         chrome.storage.sync.get(object, function (object) {

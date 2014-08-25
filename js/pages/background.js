@@ -125,7 +125,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         // Prompt the user
         chrome.tabs.sendMessage(TID.vars.lastTabID, {
             message: 'not_image',
-            imageID: TID.vars.lastImageID,
+            imageId: TID.vars.lastImageID,
             directory: TID.vars.saveDirectory,
             url: downloadItem.url
         });
@@ -145,7 +145,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
         TID.vars.saveDirectory = request.directory;
         TID.vars.lastTabID = sender.tab.id;
-        TID.vars.lastImageID = request.imageID;
+        TID.vars.lastImageID = request.imageId;
 
         chrome.downloads.download({
             url: request.url,

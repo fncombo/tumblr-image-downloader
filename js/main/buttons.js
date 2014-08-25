@@ -2,12 +2,14 @@
 
 /* globals TID, $, $$ */
 
-TID.buttons = { };
+TID.buttons = {};
 
 /**
  * Add download buttons to all images on the page
  */
 TID.buttons.add = function () {
+    console.log('Adding buttons');
+
     $$(TID.selectors.images).forEach(function (el) {
         // Skip images that are not part of the actual post
         if (!TID.isArchivePage) {
@@ -24,7 +26,7 @@ TID.buttons.add = function () {
 
         if (TID.isArchivePage) {
             button = TID.buttons.create({
-                imageID: TID.images.getID(el.dataset.imageurl),
+                imageId: TID.images.getID(el.dataset.imageurl),
                 isHD: false,
                 HDType: TID.HDTypes.none,
                 url: el.dataset.imageurl
@@ -44,27 +46,29 @@ TID.buttons.add = function () {
         }
     });
 
-    TID.sendMessage(['Added Download Buttons', 'Added']);
+    TID.sendMessage(['Download Buttons', 'Added']);
 };
 
 /**
  * Create a new download button based on the given parameters
- * @param  {object}  imageData An object containing all the image data form TID.images.getData
+ * @param  {Object}  imageData An object containing all the image data form TID.images.getData
  * @return {Element}           The element node for the constructed button
  */
 TID.buttons.create = function (imageData) {
+    console.log('Creating a button for', imageData);
+
     var div = document.createElement('div');
 
     // Core container
     var el = div.cloneNode(false);
     el.classList.add(TID.classes.download);
-    el.dataset.imageId = imageData.imageID;
+    el.dataset.imageId = imageData.imageId;
     el.dataset.isHd = imageData.isHD;
     el.dataset.hdType = imageData.HDType;
     el.dataset.url = imageData.url;
 
     // Check if the image has already been downloaded
-    if (TID.images.exists(imageData.imageID)) {
+    if (TID.images.exists(imageData.imageId)) {
         el.classList.add(TID.classes.downloaded);
     }
 

@@ -2,11 +2,11 @@
 
 /* globals TID, $, $$ */
 
-TID.ui = { };
+TID.ui = {};
 
 /**
  * Displays a dialog with a custom message, buttons, and events for those buttons
- * @param {string}   message  Message of the dialog
+ * @param {String}   message  Message of the dialog
  * @param {Array}    options  Array of buttons
  * @param {Function} callback The callback to call when a button is clicked
  */

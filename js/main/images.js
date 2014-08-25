@@ -2,7 +2,7 @@
 
 /* globals TID, chrome */
 
-TID.images = { };
+TID.images = {};
 
 // Storage of all the downloaded images
 TID.images.downloaded = [];
@@ -22,19 +22,19 @@ TID.images.update = function (callback) {
 
 /**
  * Get the image's Tumblr ID or the whole URL
- * @param  {string} url The URL to search for the ID in
- * @return {string}     The found ID or the whole URL
+ * @param  {String} url The URL to search for the ID in
+ * @return {String}     The found ID or the whole URL
  */
 TID.images.getID = function (url) {
     // Try to match the image ID
-    var imageID = url.match(TID.regex.imageID);
+    var imageId = url.match(TID.regex.imageId);
 
     // If the ID was found, return it, otherwise the whole URL
-    if (imageID) {
-        if (imageID[1]) {
-            return imageID[1];
+    if (imageId) {
+        if (imageId[1]) {
+            return imageId[1];
         } else {
-            return imageID[2];
+            return imageId[2];
         }
     } else {
         return url;
@@ -42,34 +42,14 @@ TID.images.getID = function (url) {
 };
 
 /**
- * Add an imageID or URL to storage
- * @param {string} imageID ID or URL of the image to add
+ * Remove an imageId or URL from storage
+ * @param {String} imageId ID or URL of the image to remove
  */
-/*
-TID.images.add = function (imageID) {
-
-    chrome.storage.local.get({images: []}, function (object) {
-
-        // Only add the ID if it doesn't already exist
-        if (object.images.indexOf(imageID) === -1) {
-            object.images.push(imageID);
-            chrome.storage.local.set(object);
-        }
-
-    });
-
-};
-*/
-
-/**
- * Remove an imageID or URL from storage
- * @param {string} imageID ID or URL of the image to remove
- */
-TID.images.remove = function (imageID) {
+TID.images.remove = function (imageId) {
     chrome.storage.local.get({images: []}, function (object) {
         // Only remove the ID if it exists
-        if (object.images.indexOf(imageID) !== -1) {
-            var index = object.images.indexOf(imageID);
+        if (object.images.indexOf(imageId) !== -1) {
+            var index = object.images.indexOf(imageId);
 
             object.images.splice(index, 1);
             chrome.storage.local.set(object);
@@ -79,18 +59,18 @@ TID.images.remove = function (imageID) {
 
 /**
  * Check whether an image exists in storage
- * @param  {string}  imageID ID or URL of the image to search for
- * @return {boolean}         Whether or not the image exists
+ * @param  {String}  imageId ID or URL of the image to search for
+ * @return {Boolean}         Whether or not the image exists
  */
-TID.images.exists = function (imageID) {
-    return TID.images.downloaded.indexOf(imageID) !== -1 ? true : false;
+TID.images.exists = function (imageId) {
+    return TID.images.downloaded.indexOf(imageId) !== -1 ? true : false;
 };
 
 /**
  * Replace the image size in a URL
- * @param  {string}         url     A valid Tumblr image URL
- * @param  {string|integer} newSize New newSize
- * @return {string}                 URL with the new image size
+ * @param  {String}         url     A valid Tumblr image URL
+ * @param  {String|Integer} newSize New newSize
+ * @return {String}                 URL with the new image size
  */
 TID.images.replaceSize = function (url, newSize) {
     return url.replace(TID.regex.imageSize, '$1' + newSize + '$3');
@@ -98,7 +78,7 @@ TID.images.replaceSize = function (url, newSize) {
 
 /**
  * Get the image size from a URL
- * @param  {string}          url A valid Tumblr image URL
+ * @param  {String}          url A valid Tumblr image URL
  * @return {integer|boolean}     The found image size, or false
  */
 TID.images.getSize = function (url) {
@@ -112,11 +92,11 @@ TID.images.getSize = function (url) {
 /**
  * Get data about an image from its element
  * @param  {Element} el The image element to get information for
- * @return {object}     An object containing various data about the image
+ * @return {Object}     An object containing various data about the image
  */
 TID.images.getData = function (el) {
     var data = {
-        imageID: TID.images.getID(el.src),
+        imageId: TID.images.getID(el.src),
         isHD: false,
         HDType: TID.HDTypes.none,
         url: el.src
@@ -171,7 +151,7 @@ TID.images.getData = function (el) {
 };
 /**
 * Check if a Tumblr HD version of an image is available by trying to load different resolutions
-* @param {string}   url             A Tumblr URL of an image to check for
+* @param {String}   url             A Tumblr URL of an image to check for
 * @param {Function} callbackSuccess Callback function if a bigger image was found
 * @param {Function} callbackError   Callback function if no bigger image was found
 */
@@ -211,11 +191,11 @@ TID.images.checkHD = function (url, callbackSuccess, callbackError) {
 
 /**
  * Download an image from a URL to a directory (if any)
- * @param {string} url       The URL of the image to download
- * @param {string} imageID   ID or URL of the image to remember
- * @param {string} directory The firectory to download to, if any
+ * @param {String} url       The URL of the image to download
+ * @param {String} imageId   ID or URL of the image to remember
+ * @param {String} directory The firectory to download to, if any
  */
-TID.images.download = function (url, imageID, directory) {
+TID.images.download = function (url, imageId, directory) {
     directory = directory || false;
 
     function sendMessage(url) {
@@ -223,7 +203,7 @@ TID.images.download = function (url, imageID, directory) {
             message: 'download',
             url: url,
             directory: directory,
-            imageID: imageID
+            imageId: imageId
         });
     }
 

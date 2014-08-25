@@ -4,9 +4,9 @@
 
 /**
  * Get a local message value
- * @param  {string}              name   Message's key
- * @param  {string|array|object} values Values to be used for replacing placeholders in the message
- * @return {string}                     Message value
+ * @param  {String}              name   Message's key
+ * @param  {string|Array|Object} values Values to be used for replacing placeholders in the message
+ * @return {String}                     Message value
  */
 TID.msg = function (name, values) {
     return chrome.i18n.getMessage(name, values);
