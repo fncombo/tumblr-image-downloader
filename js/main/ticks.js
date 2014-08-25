@@ -9,11 +9,9 @@ TID.ticks = { };
  * @param {string} imageID ID of the button to add a tick to
  */
 TID.ticks.add = function (imageID) {
-
     $$('.' + TID.classes.download + '[data-image-id="' + imageID + '"]').forEach(function (el) {
         el.classList.add(TID.classes.downloaded);
     });
-
 };
 
 /**
@@ -21,22 +19,18 @@ TID.ticks.add = function (imageID) {
  * @param {string} imageID ID of the button to remove a tick from
  */
 TID.ticks.remove = function (imageID) {
-
     $$('.' + TID.classes.download + '[data-image-id="' + imageID + '"]').forEach(function (el) {
         el.classList.remove(TID.classes.downloaded);
     });
-
 };
 
 /**
  * Remove ticks from all buttons
  */
 TID.ticks.removeAll = function () {
-
     $$('.' + TID.classes.downloaded).forEach(function (el) {
         el.classList.remove(TID.classes.downloaded);
     });
-
 };
 
 /**

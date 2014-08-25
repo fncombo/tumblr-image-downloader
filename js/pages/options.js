@@ -9,15 +9,13 @@
 TID.processHTMLMessages();
 
 if ($('#installMessage') && $('#supportMessage')) {
-
     var installMessage = $('#installMessage a');
-    installMessage.href = 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop';
+    installMessage.href = 'https://chrome.google.com/webstore/detail/image-downloader-for-tumblr/' + chrome.runtime.id;
     installMessage.target = '_blank';
 
     var supportMessage = $('#supportMessage a');
-    supportMessage.href = 'https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug';
+    supportMessage.href = 'https://chrome.google.com/webstore/support/' + chrome.runtime.id + '#bug';
     supportMessage.target = '_blank';
-
 }
 
 /**
@@ -55,14 +53,11 @@ listen('click', 'input[type="checkbox"]', TID.checkboxes.onChange);
 
 // Clear list of downloaded images from options
 $('#clear').onclick = function () {
-
     var message = TID.msg('rememberedImagesClearConfirmation');
     var buttons = [TID.msg('yes'), TID.msg('no')];
 
     TID.ui.showDialog(message, buttons, function (i) {
-
         switch (i) {
-
             case '0':
                 chrome.storage.local.remove('images');
                 TID.adjustImageCount(0);
@@ -71,11 +66,8 @@ $('#clear').onclick = function () {
 
             case '1':
                 break;
-
         }
-
     });
-
 };
 
 // Turn on/off Google Analytics
@@ -92,13 +84,11 @@ listen('click', 'input[data-for="enableAnalytics"]', function (event, el) {
 
 // Add existing directories into list and a blank one
 chrome.storage.sync.get({saveDirectories: []}, function (object) {
-
     object.saveDirectories.forEach(function (directory) {
         $('#download-directories').innerHTML += TID.directories.generateInput(directory);
     });
 
     TID.directories.addBlank();
-
 });
 
 // Get default save directory
@@ -162,7 +152,6 @@ document.addEventListener('keyup', function (event) {
  * Keep settings up-to-date across multiple options pages
  */
 chrome.storage.onChanged.addListener(function (changes) {
-
     // Check for tickbox changes
     var tickboxes = ['confirm', 'showTicks', 'enableAnalytics', 'rememberImages', 'enableLocations'];
 
@@ -174,22 +163,18 @@ chrome.storage.onChanged.addListener(function (changes) {
 
     // Check for any other changes
     if (changes.hasOwnProperty('images')) {
-
         TID.adjustImageCount(changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0);
-
     } else if (changes.hasOwnProperty('saveDirectories')) {
-
         $('#download-directories').innerHTML = '';
+
         changes.saveDirectories.newValue.forEach(function (directory) {
             $('#download-directories').innerHTML += TID.directories.generateInput(directory);
         });
+
         TID.directories.addBlank();
-
     } else if (changes.hasOwnProperty('defaultDirectory')) {
-
         var newValue = changes.defaultDirectory.hasOwnProperty('newValue') ? changes.defaultDirectory.newValue : '';
+
         $('#default-directory').value = newValue;
-
     }
-
 });

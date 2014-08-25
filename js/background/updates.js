@@ -7,7 +7,6 @@
  * @param {Function} callback Callback to call once got the messages
  */
 TID.getUpdates = function (callback) {
-
     var request = new XMLHttpRequest();
 
     request.onload = function () {
@@ -17,5 +16,4 @@ TID.getUpdates = function (callback) {
 
     request.open('GET', '/updates.json', true);
     request.send();
-
 };

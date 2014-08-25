@@ -1,13 +1,12 @@
 'use strict';
 
-/* globals TID, $ */
+/* globals TID */
 
 // Global extension settings
 TID.settings = { };
 
 // Defaults for the settings, and callbacks for when they are loaded or changed
 TID.settings.list = {
-
     confirm: {
         default: true,
         set: function (value) {
@@ -29,7 +28,6 @@ TID.settings.list = {
             TID.directories.setVisibility(value);
         }
     }
-
 };
 
 // All the regular expressions used in the extension

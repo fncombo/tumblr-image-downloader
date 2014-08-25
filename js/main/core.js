@@ -38,9 +38,11 @@ Element.prototype.matchesSelector = function (selector) {
  */
 Element.prototype.ancestor = function (depth) {
     var ancestor = this.parentElement;
+
     while (--depth) {
         ancestor = ancestor.parentElement || false;
     }
+
     return ancestor;
 };
 
@@ -53,12 +55,15 @@ Element.prototype.ancestor = function (depth) {
 Element.prototype.closest = function (selector, threshold) {
     threshold = threshold || 1000;
     var parent = this.parentElement;
+
     while (parent && --threshold) {
         if (parent.matchesSelector(selector)) {
             return parent;
         }
+
         parent = parent.parentElement;
     }
+
     return false;
 };
 

@@ -8,9 +8,7 @@ TID.buttons = { };
  * Add download buttons to all images on the page
  */
 TID.buttons.add = function () {
-
     $$(TID.selectors.images).forEach(function (el) {
-
         // Skip images that are not part of the actual post
         if (!TID.isArchivePage) {
             var ancestor = el.ancestor(2);
@@ -25,7 +23,6 @@ TID.buttons.add = function () {
         var button;
 
         if (TID.isArchivePage) {
-
             button = TID.buttons.create({
                 imageID: TID.images.getID(el.dataset.imageurl),
                 isHD: false,
@@ -34,29 +31,20 @@ TID.buttons.add = function () {
             });
 
             el.closest('.post').prependChild(button);
-
         } else {
-
             button = TID.buttons.create(TID.images.getData(el));
 
             if (TID.isSinglePage) {
-
                 $('#nav_image').appendChild(button);
-
             } else {
-
                 var parent = el.parentNode;
                 parent.classList.add(TID.classes.parent);
                 parent.prependChild(button);
-
             }
-
         }
-
     });
 
     TID.sendMessage(['Added Download Buttons', 'Added']);
-
 };
 
 /**
@@ -65,7 +53,6 @@ TID.buttons.add = function () {
  * @return {Element}           The element node for the constructed button
  */
 TID.buttons.create = function (imageData) {
-
     var div = document.createElement('div');
 
     // Core container
@@ -102,21 +89,14 @@ TID.buttons.create = function (imageData) {
 
     // Button hover events
     el.onmouseover = el.onmouseout = function (event) {
-
         var action = event.type === 'mouseover' ? 'add' : 'remove';
 
         if (TID.isArchivePage) {
-
             el.parentNode.classList[action](TID.classes.highlight);
-
         } else if (el.ancestor(2).classList.contains('photoset_row')) {
-
             el.ancestor(2).classList[action](TID.classes.photoset);
-
         }
-
     };
 
     return el;
-
 };

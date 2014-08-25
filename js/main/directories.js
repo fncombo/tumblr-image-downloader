@@ -13,9 +13,7 @@ TID.directories.html = '';
  * @param {Function} callback Optional callback to call when the update is done
  */
 TID.directories.update = function (callback) {
-
     chrome.storage.sync.get({saveDirectories: []}, function (object) {
-
         if (object.saveDirectories.length) {
             TID.directories.list = object.saveDirectories;
         }
@@ -25,9 +23,7 @@ TID.directories.update = function (callback) {
         if (callback) {
             callback.call(undefined);
         }
-
     });
-
 };
 
 /**
@@ -35,7 +31,6 @@ TID.directories.update = function (callback) {
  * @return {string} The formatted HTML for the download directories
  */
 TID.directories.format = function () {
-
     if (!TID.directories.list.length) {
         return '<ul><li class="' + TID.classes.help + '">' + TID.msg('noConfiguredDirectories') + '</li></ul>';
     }
@@ -43,20 +38,17 @@ TID.directories.format = function () {
     var list = '<ul>';
 
     TID.directories.list.forEach(function (directory) {
-
         var name = directory.replace(/(.+\/)/, '<span>$1</span>')
                             .replace(/\/(?!\w+>)/g, '<span>/</span>');
 
         list += '<li title="' + TID.msg('downloadDirectoryTitle', directory) + '" data-directory="' + directory + '">';
         list += name;
         list += '</li>';
-
     });
 
     list += '</ul>';
 
     return list;
-
 };
 
 /**

@@ -9,7 +9,6 @@ TID.directories = { };
  * @return {string} A random sample directory
  */
 TID.directories.getPlaceholder = function () {
-
     var placeholders = [
         'Tumblr Images/Funny',
         'Tumblr Images/Animals/Cats',
@@ -27,7 +26,6 @@ TID.directories.getPlaceholder = function () {
 
     var randomIndex = Math.floor(Math.random() * placeholders.length);
     return placeholders[randomIndex];
-
 };
 
 /**
@@ -62,7 +60,6 @@ TID.directories.generateInput = function (value, skipLi) {
  * @param {Element} where Which element to add the input before
  */
 TID.directories.addFake = function (where) {
-
     $$('#download-directories .fake').forEach(function (el) {
         el.remove();
     });
@@ -71,7 +68,6 @@ TID.directories.addFake = function (where) {
     li.classList.add('fake');
     li.innerHTML = '<input type="text">';
     where.parentNode.insertBefore(li, where);
-
 };
 
 /**
@@ -88,7 +84,6 @@ TID.directories.addBlank = function () {
  * Save all directories to chrome storage
  */
 TID.directories.saveDefault = function () {
-
     var defaultDirectory = TID.directories.sanitize($('#default-directory').value);
 
     if (defaultDirectory.length) {
@@ -96,11 +91,9 @@ TID.directories.saveDefault = function () {
     } else {
         chrome.storage.sync.remove('defaultDirectory');
     }
-
 };
 
 TID.directories.saveMore = function () {
-
     var directories = [];
 
     $$('#download-directories li:not(.blank):not(.fake) input').forEach(function (el) {
@@ -115,20 +108,17 @@ TID.directories.saveMore = function () {
     });
 
     chrome.storage.sync.set({saveDirectories: directories}, function () {
+        var el = $('#save-directories').nextElementSibling;
+        el.classList.add('show');
 
-            var el = $('#save-directories').nextElementSibling;
-            el.classList.add('show');
+        setTimeout(function () {
+            el.classList.remove('show');
+        }, 2000);
 
-            setTimeout(function () {
-                el.classList.remove('show');
-            }, 2000);
-
-            $('#download-directories').innerHTML = '';
-            directories.forEach(function (directory) {
-                $('#download-directories').innerHTML += TID.directories.generateInput(directory);
-            });
-            TID.directories.addBlank();
-
+        $('#download-directories').innerHTML = '';
+        directories.forEach(function (directory) {
+            $('#download-directories').innerHTML += TID.directories.generateInput(directory);
+        });
+        TID.directories.addBlank();
     });
-
 };

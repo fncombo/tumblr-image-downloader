@@ -11,7 +11,6 @@ TID.events = {};
  * @param {Element} el    The element event was triggered on
  */
 TID.events.mousedown = function (event, el) {
-
     event.preventDefault();
     event.stopPropagation();
 
@@ -32,7 +31,6 @@ TID.events.mousedown = function (event, el) {
     TID.vars.offsetX = event.clientX;
 
     window.addEventListener('mousemove', TID.events.mousemove, false);
-
 };
 
 /**
@@ -40,7 +38,6 @@ TID.events.mousedown = function (event, el) {
  * @param {object} event The triggered event
  */
 TID.events.mousemove = function (event) {
-
     // true = up, false = down
     TID.vars.moveDirection = event.clientY - TID.vars.moveDirectionLast < 0 ? true : false;
     TID.vars.moveDirectionLast = event.clientY;
@@ -52,13 +49,10 @@ TID.events.mousemove = function (event) {
     }
 
     TID.vars.currentItem.style.top = (event.clientY + window.pageYOffset) + 'px';
-
 };
 
 TID.events.mouseup = function () {
-
     if (TID.vars.currentItem) {
-
         var fakeEl = $('#download-directories .fake');
         fakeEl.parentNode.replaceChild(TID.vars.currentItem, fakeEl);
 
@@ -68,9 +62,7 @@ TID.events.mouseup = function () {
         TID.vars.currentItem = false;
 
         window.removeEventListener('mousemove', TID.events.mousemove, false);
-
     }
-
 };
 
 /**
@@ -79,7 +71,6 @@ TID.events.mouseup = function () {
  * @param {Element} el    The element event was triggered on
  */
 TID.events.keyup = function (event, el) {
-
     var acceptedKeys = [38, 40];
     var keyCode = event.keyCode;
 
@@ -89,29 +80,22 @@ TID.events.keyup = function (event, el) {
     }
 
     if (TID.vars.ctrlKey && !el.parentNode.classList.contains('blank')) {
-
         var parent = el.parentNode;
         var toMove;
 
         if (keyCode === 38 && parent.previousElementSibling) {
-
             toMove = parent.previousElementSibling;
             parent.parentNode.insertBefore(toMove.cloneNode(true), parent.nextElementSibling);
             toMove.remove();
-
         } else if (keyCode === 40 && !parent.nextElementSibling.classList.contains('blank')) {
-
             toMove = parent.nextElementSibling;
 
             if (!toMove.classList.contains('blank')) {
                 parent.parentNode.insertBefore(toMove.cloneNode(true), parent);
                 toMove.remove();
             }
-
         }
-
     } else if (!TID.vars.ctrlKey) {
-
         var toGo;
 
         if (keyCode === 38) {
@@ -123,9 +107,7 @@ TID.events.keyup = function (event, el) {
         if (toGo) {
             toGo.querySelector('input').focus();
         }
-
     }
-
 };
 
 /**
@@ -134,22 +116,16 @@ TID.events.keyup = function (event, el) {
  * @param {Element} el    The element event was triggered on
  */
 TID.events.input = function (event, el) {
-
     if (!el.value.length) {
-
         el.parentNode.classList.add('blank');
         $$('#download-directories .blank').slice(0, -1).forEach(function (el) {
             el.remove();
         });
-
     } else {
-
         el.parentNode.classList.remove('blank');
-
     }
 
     if (!$$('#download-directories .blank').length) {
         TID.directories.addBlank();
     }
-
 };

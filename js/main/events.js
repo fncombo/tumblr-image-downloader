@@ -9,7 +9,6 @@ TID.events = { };
  * @param {Event} event The event
  */
 TID.events.buttonImageDownload = function (event) {
-
     var parent = event.target.parentNode;
     var imageID = parent.dataset.imageId;
     var url = parent.dataset.url;
@@ -18,7 +17,6 @@ TID.events.buttonImageDownload = function (event) {
 
     // If don't care about confirmation or not downloaded yet, download
     if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
-
         TID.images.download(url, imageID);
 
         if (TID.isArchivePage) {
@@ -26,13 +24,10 @@ TID.events.buttonImageDownload = function (event) {
         } else {
             TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
         }
-
     // Otherwise ask for confirmation
     } else if (hasDownloaded) {
-
         TID.ui.confirmDialog(function (accept) {
             if (accept) {
-
                 TID.images.download(url, imageID);
 
                 if (TID.isArchivePage) {
@@ -40,12 +35,9 @@ TID.events.buttonImageDownload = function (event) {
                 } else {
                     TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
                 }
-
             }
         });
-
     }
-
 };
 
 /**
@@ -53,7 +45,6 @@ TID.events.buttonImageDownload = function (event) {
  * @param {Event} event The event
  */
 TID.events.directoryImageDownload = function (event) {
-
     var parent = event.target.ancestor(3);
     var imageID = parent.dataset.imageId;
     var url = parent.dataset.url;
@@ -62,112 +53,89 @@ TID.events.directoryImageDownload = function (event) {
 
     // If don't care about confirmation or not downloaded yet, download
     if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
-
         TID.images.download(url, imageID, directory);
         TID.sendMessage(['Downloaded Image', 'To Directory']);
-
     // Otherwise ask for confirmation
     } else if (hasDownloaded) {
-
         TID.ui.confirmDialog(function (accept) {
             if (accept) {
                 TID.images.download(url, imageID, directory);
                 TID.sendMessage(['Downloaded Image', 'To Directory']);
             }
         });
-
     }
-
 };
 
 /**
  * Initialise all document event listeners
  */
 TID.events.initDocumentEvents = function () {
-
     // Download list events
     document.addEventListener('click', function (event) {
-
         var el = event.target;
 
         // Set up downloading via normal download button
         if (el.matchesSelector('.' + TID.classes.downloadDiv)) {
-
             event.stopPropagation();
             event.preventDefault();
 
             TID.events.buttonImageDownload(event);
 
             return;
-
         }
 
         // Set up downloading via directory list buttons
         if (el.matchesSelector('.' + TID.classes.list + ' li:not(.' + TID.classes.help + ')')) {
-
             event.stopPropagation();
             event.preventDefault();
 
             TID.events.directoryImageDownload(event, event.target.dataset.directory);
 
             return;
-
         }
 
         // Set up link to the options page
         if (el.matchesSelector('.' + TID.classes.help)) {
-
             event.stopPropagation();
             event.preventDefault();
 
             TID.sendMessage('open_settings');
 
             return;
-
         }
 
         // Clicking on the overlay should cancel the dialog
         if (el.matchesSelector('.' + TID.classes.overlay)) {
             $$('.' + TID.classes.dialogButton).pop().click();
         }
-
     }, true);
-
 };
 
 /**
  * Initialize all Chrome storage event listeners
  */
 TID.events.initStorageListener = function () {
-
     chrome.storage.onChanged.addListener(function (changes) {
 
         // A new image was downloaded
         if (changes.hasOwnProperty('images')) {
-
             // Update the downloaded images array
             TID.images.downloaded = changes.images.newValue || [];
 
             // If the new value is empty, all images have been cleared, remove all ticks
             if (!changes.images.hasOwnProperty('newValue')) {
-
                 TID.ticks.removeAll();
-
             // New image has been added, get the last ID and add a tick to it
             } else {
-
                 var imageID = changes.images.newValue[changes.images.newValue.length - 1];
                 TID.ticks.add(imageID);
-
             }
 
             return;
-
         }
 
         // If the save directories were modified
         if (changes.hasOwnProperty('saveDirectories')) {
-
             TID.directories.list = changes.saveDirectories.newValue;
             TID.directories.html = TID.directories.format();
 
@@ -177,7 +145,6 @@ TID.events.initStorageListener = function () {
             });
 
             return;
-
         }
 
         // Check if any settings were updated
@@ -186,20 +153,15 @@ TID.events.initStorageListener = function () {
                 TID.settings.list[setting].set(changes[setting].newValue);
             }
         });
-
     });
-
 };
 
 /**
  * Initialize all Chrome message event listeners
  */
 TID.events.initMessageListener = function () {
-
     chrome.runtime.onMessage.addListener(function (request) {
-
         switch (request.message) {
-
         case 'not_image':
 
             if (!TID.images.exists(request.imageID)) {
@@ -211,9 +173,7 @@ TID.events.initMessageListener = function () {
             var buttons = [TID.msg('downloadFromTumblr'), TID.msg('openLinkInNewTab'), TID.msg('cancel')];
 
             TID.ui.showDialog(message, buttons, function (i) {
-
                 switch (i) {
-
                 case '0':
                     var button = $('.' + TID.classes.download + '[data-image-id="' + request.imageID + '"]');
                     TID.images.download(button.nextElementSibling.src, request.imageID, request.directory);
@@ -225,28 +185,21 @@ TID.events.initMessageListener = function () {
                         url: request.url
                     });
                     break;
-
                 }
-
             });
 
             break;
-
         }
-
     });
-
 };
 
 /**
  * Initialize all DOM mutation observers
  */
 TID.events.initMutationObservers = function () {
-
     // Create a DOM mutation observer for the lightbox middle image
     var centerImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
-
             var el = mutation.target;
             var imageID = TID.images.getID(el.src);
 
@@ -254,13 +207,10 @@ TID.events.initMutationObservers = function () {
             var button = $('.' + TID.classes.download + '[data-image-id="' + imageID + '"]');
 
             if (button) {
-
                 button = button.cloneNode(true);
-
             // If the button doesn't exist because we're not on the dashboard, make one
             // Use the "src" attribute from the image because Tumblr will automatically give us the largest one
             } else {
-
                 var isHD = TID.regex.image1280.test(el.src);
                 var data = {
                     imageID: imageID,
@@ -268,8 +218,8 @@ TID.events.initMutationObservers = function () {
                     HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
                     url: el.src
                 };
-                button = TID.buttons.create(data);
 
+                button = TID.buttons.create(data);
             }
 
             // Give the button correct offsets
@@ -284,29 +234,22 @@ TID.events.initMutationObservers = function () {
 
             // Append the button
             el.parentNode.appendChild(button);
-
         });
     });
 
     // Create a DOM mutation observer for the body
     var lightboxObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (el) {
-
             for (var i = 0, l = el.addedNodes.length; i < l; i += 1) {
-
                 if (el.addedNodes[i].id === 'tumblr_lightbox') {
-
                     centerImageObserver.observe($('#tumblr_lightbox_center_image'), {
                         attributes: true,
                         attributeFilter: ['src']
                     });
 
                     break;
-
                 }
-
             }
-
         });
     });
 
@@ -318,7 +261,6 @@ TID.events.initMutationObservers = function () {
     // Create a DOM mutation observer for inline post images
     var inlineImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
-
             var el = mutation.target;
             var blockEl;
 
@@ -332,7 +274,6 @@ TID.events.initMutationObservers = function () {
                     el.classList.contains('enlarged')
                 )
             ) {
-
                 var isExternal = !!el.classList.contains('inline_external_image');
                 var data = {
                     imageID: TID.images.getID(el.src),
@@ -351,17 +292,13 @@ TID.events.initMutationObservers = function () {
                 blockEl = el.closest('p, div:not(.post_container)');
                 blockEl.classList.add(TID.classes.parent);
                 blockEl.insertBefore(button, el);
-
             } else {
-
                 // Remove any buttons
                 blockEl = el.closest('p, div:not(.post_container)');
                 $$('.' + TID.classes.download, blockEl).forEach(function (el) {
                     el.remove();
                 });
-
             }
-
         });
     });
 
@@ -372,5 +309,4 @@ TID.events.initMutationObservers = function () {
             attributeFilter: ['src', 'class']
         });
     });
-
 };

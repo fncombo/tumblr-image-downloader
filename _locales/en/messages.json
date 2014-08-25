@@ -98,6 +98,10 @@
         "message": "Enable to specify a list of locations in your downloads folder that you can quickly choose from when downloading an image.",
         "description": "Help text shown when the locations option is disabled."
     },
+    "locationsRestriction": {
+        "message": "Due to Chrome's restrictions, you can only create locations in your default downloads folder.",
+        "description": "Help text about the download locations restriction."
+    },
 
 
 

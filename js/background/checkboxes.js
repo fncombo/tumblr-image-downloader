@@ -9,7 +9,6 @@ TID.checkboxes = { };
  * @param {string} key The checkbox data-for attribute
  */
 TID.checkboxes.adjustControls = function (key) {
-
     var el = $('input[data-for="' + key + '"]');
     var controls = el.dataset.controls;
 
@@ -17,7 +16,6 @@ TID.checkboxes.adjustControls = function (key) {
         $('#' + controls + '-on').classList[el.checked ? 'remove' : 'add']('hide');
         $('#' + controls + '-off').classList[!el.checked ? 'remove' : 'add']('hide');
     }
-
 };
 
 /**
@@ -35,7 +33,6 @@ TID.checkboxes.setValue = function (key, value) {
  * @param {Element} el The checkbox element to work with
  */
 TID.checkboxes.getValue = function (el) {
-
     var object = {};
     var key = el.dataset.for;
     object[key] = el.dataset.default === 'true' ? true : false;
@@ -43,7 +40,6 @@ TID.checkboxes.getValue = function (el) {
     chrome.storage.sync.get(object, function (object) {
         TID.checkboxes.setValue(key, object[key]);
     });
-
 };
 
 /**
@@ -52,7 +48,6 @@ TID.checkboxes.getValue = function (el) {
  * @param {Element} el    The element event was triggered
  */
 TID.checkboxes.onChange = function (event, el) {
-
     var object = {};
     var key = el.dataset.for;
     object[key] = el.checked;
@@ -61,5 +56,4 @@ TID.checkboxes.onChange = function (event, el) {
 
     TID.sendMessage([el.dataset.message, el.checked ? 'Enabled' : 'Disabled']);
     TID.checkboxes.adjustControls(key);
-
 };

@@ -184,14 +184,18 @@ a.TID-parent {
         background: $tumblr-color;
         min-width: 31px;
         display: none;
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
         position: absolute;
         top: 0;
         left: 0;
         white-space: pre;
-        list-style: none;
+        list-style: none !important;
         z-index: 99999999;
+
+        li {
+            list-style: none !important;
+        }
 
         span {
             color: hsla(0, 0%, 100%, 0.75);
@@ -211,6 +215,7 @@ a.TID-parent {
 
     li {
         padding: 0.3em 0.6em;
+        list-style: none;
 
         &:hover {
             background: $tumblr-color-hover;

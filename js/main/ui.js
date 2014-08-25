@@ -11,7 +11,6 @@ TID.ui = { };
  * @param {Function} callback The callback to call when a button is clicked
  */
 TID.ui.showDialog = function (message, options, callback) {
-
     if (!(options instanceof Array)) {
         options = [options];
     }
@@ -45,7 +44,6 @@ TID.ui.showDialog = function (message, options, callback) {
     document.body.appendChild(tempContainer);
 
     function listener(event) {
-
         callback.call(event, event.target.dataset.i);
 
         $$('.' + TID.classes.dialogButton).forEach(function (el) {
@@ -53,13 +51,11 @@ TID.ui.showDialog = function (message, options, callback) {
         });
 
         $('.' + TID.classes.overlay).remove();
-
     }
 
     $$('.' + TID.classes.dialogButton).forEach(function (el) {
         el.addEventListener('click', listener, true);
     });
-
 };
 
 /**
@@ -67,7 +63,6 @@ TID.ui.showDialog = function (message, options, callback) {
  * @param {Function} callback The callback to call once the user answers
  */
 TID.ui.confirmDialog = function (callback) {
-
     var message = TID.msg('confirmDuplicateDownload');
     var buttons = [TID.msg('yes'), TID.msg('no')];
 
@@ -76,5 +71,4 @@ TID.ui.confirmDialog = function (callback) {
     }
 
     TID.ui.showDialog(message, buttons, buttonsCallback);
-
 };

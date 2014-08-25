@@ -9,11 +9,11 @@
 TID.processHTMLMessages();
 
 var installMessage = $('#installMessage a');
-installMessage.href = 'https://chrome.google.com/webstore/detail/tumblr-image-downloader/ipocoligdfkbgncimgfaffpaglmedpop';
+installMessage.href = 'https://chrome.google.com/webstore/detail/image-downloader-for-tumblr/' + chrome.runtime.id;
 installMessage.target = '_blank';
 
 var supportMessage = $('#supportMessage a');
-supportMessage.href = 'https://chrome.google.com/webstore/support/ipocoligdfkbgncimgfaffpaglmedpop#bug';
+supportMessage.href = 'https://chrome.google.com/webstore/support/' + chrome.runtime.id + '#bug';
 supportMessage.target = '_blank';
 
 /**
@@ -26,9 +26,7 @@ currentVersion.innerHTML = currentVersion.innerHTML.replace('#', chrome.runtime.
 
 // Get the updates
 TID.getUpdates(function (updates) {
-
     updates.reverse().forEach(function (update, index) {
-
         var parent = document.querySelector('#previous');
 
         if (!index) {
@@ -49,7 +47,5 @@ TID.getUpdates(function (updates) {
         if (index !== updates.length - 1) {
             parent.appendChild(hr);
         }
-
     });
-
 });
