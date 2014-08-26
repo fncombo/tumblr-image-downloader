@@ -27,9 +27,9 @@ TID.events.buttonImageDownload = function (event) {
             TID.images.download(url, imageId);
 
             if (TID.isArchivePage) {
-                TID.sendMessage(['Downloaded Image', 'Archive']);
+                TID.trackEvent('Downloaded Image', 'Archive');
             } else {
-                TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
+                TID.trackEvent('Downloaded Image', isHD ? 'HD' : 'SD');
             }
         // Otherwise ask for confirmation
         } else if (hasDownloaded) {
@@ -38,9 +38,9 @@ TID.events.buttonImageDownload = function (event) {
                     TID.images.download(url, imageId);
 
                     if (TID.isArchivePage) {
-                        TID.sendMessage(['Downloaded Image', 'Archive']);
+                        TID.trackEvent('Downloaded Image', 'Archive');
                     } else {
-                        TID.sendMessage(['Downloaded Image', isHD ? 'HD' : 'SD']);
+                        TID.trackEvent('Downloaded Image', isHD ? 'HD' : 'SD');
                     }
                 }
             });
@@ -64,13 +64,13 @@ TID.events.directoryImageDownload = function (event) {
         // If don't care about confirmation or not downloaded yet, download
         if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
             TID.images.download(url, imageId, directory);
-            TID.sendMessage(['Downloaded Image', 'To Directory']);
+            TID.trackEvent('Downloaded Image', 'To Directory');
         // Otherwise ask for confirmation
         } else if (hasDownloaded) {
             TID.ui.confirmDialog(function (accept) {
                 if (accept) {
                     TID.images.download(url, imageId, directory);
-                    TID.sendMessage(['Downloaded Image', 'To Directory']);
+                    TID.trackEvent('Downloaded Image', 'To Directory');
                 }
             });
         }

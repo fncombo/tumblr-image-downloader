@@ -188,9 +188,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }
         break;
 
-    default:
+    case 'analytics':
         if (window.hasOwnProperty('ga') && typeof ga === 'function') {
-            ga('send', 'event', request.message[0], request.message[1]);
+            request.data.unshift('event');
+            request.data.unshift('send');
+            ga.apply(undefined, request.data);
         }
         break;
     }

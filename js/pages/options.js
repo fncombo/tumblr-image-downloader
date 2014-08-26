@@ -70,7 +70,7 @@ $('#clear').onclick = function () {
                 message: 'storage',
                 action: 'clear'
             });
-            TID.sendMessage(['Cleared Storage', 'Cleared Images']);
+            TID.trackEvent('Cleared Storage', 'Cleared Images');
             break;
 
         case '1':

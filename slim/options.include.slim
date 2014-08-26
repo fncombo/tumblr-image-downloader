@@ -4,17 +4,17 @@ section
   div
     p.toggle-group
       label
-        input type="checkbox" data-for="confirm" data-default="true"
+        input type="checkbox" data-for="confirm" data-default="true" data-message="Confirm Download Option"
         span
         span msg-content="confirmationHelp"
     p.toggle-group
       label
-        input type="checkbox" data-for="showTicks" data-default="true"
+        input type="checkbox" data-for="showTicks" data-default="true" data-message="Show Ticks Option"
         span
         span msg-content="showTicksHelp"
     p.toggle-group
         label
-          input type="checkbox" data-for="enableAnalytics" data-default="true"
+          input type="checkbox" data-for="enableAnalytics" data-default="true" data-message="Analytics Option"
           span
           span msg-content="enableAnalytics"
 
@@ -26,7 +26,7 @@ section
   div
     p.toggle-group
         label
-          input.toggle type="checkbox" data-for="rememberImages" data-default="true" data-message="Enable Remembering" data-controls="rememberImages"
+          input.toggle type="checkbox" data-for="rememberImages" data-default="true" data-message="Remember Images Option" data-controls="rememberImages"
           span
           span
     #rememberImages-off
@@ -51,7 +51,7 @@ section
     div.indent
       p.toggle-group
         label
-          input type="checkbox" data-for="enableLocations" data-default="true" data-message="Enable Locations" data-controls="locations"
+          input type="checkbox" data-for="enableLocations" data-default="true" data-message="Locations Option" data-controls="locations"
           span
           span msg-content="locationsMoreDescription"
       #locations-off
