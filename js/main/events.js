@@ -45,7 +45,7 @@ TID.events.buttonImageDownload = function (event) {
                 }
             });
         }
-    });
+    }, true);
 };
 
 /**
@@ -74,7 +74,7 @@ TID.events.directoryImageDownload = function (event) {
                 }
             });
         }
-    });
+    }, true);
 };
 
 /**

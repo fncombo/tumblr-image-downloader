@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome */
+/* globals TID, chrome, $ */
 
 /**
  * Images functions
@@ -47,16 +47,23 @@ TID.images.remove = function (imageId) {
  * Check whether an image exists in storage
  * @param  {String}   imageId  ID or URL of the image to search for
  * @param  {Function} callback Callback
+ * @param  {Boolean} fromHtml  Whether to check if an image is downloaded by looking in HTML or the database
  * @return {Boolean}           Whether or not the image exists
  */
-TID.images.exists = function (imageId, callback) {
-    chrome.runtime.sendMessage({
-        message: 'storage',
-        action: 'imageExists',
-        data: {
-            imageId: imageId
-        }
-    }, callback);
+TID.images.exists = function (imageId, callback, fromHtml) {
+    if (fromHtml) {
+        var el = !!$('.' + TID.classes.downloaded + '[data-image-id="' + imageId + '"]');
+
+        callback(el);
+    } else {
+        chrome.runtime.sendMessage({
+            message: 'storage',
+            action: 'imageExists',
+            data: {
+                imageId: imageId
+            }
+        }, callback);
+    }
 };
 
 /**
