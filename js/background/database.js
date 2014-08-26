@@ -3,7 +3,7 @@
 /* globals TID, indexedDB */
 
 /**
- * Object to keep everything database-related in one place
+ * Storage functions
  * @type {Object}
  */
 TID.storage = {};

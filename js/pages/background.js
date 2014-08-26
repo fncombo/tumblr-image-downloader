@@ -2,78 +2,26 @@
 
 /* globals TID, chrome, ga */
 
-function sendToAllTabs (message) {
-    chrome.tabs.query({
-        url: '*://*.tumblr.com/*'
-    }, function (tabs) {
-        tabs.forEach(function (tab) {
-            chrome.tabs.sendMessage(tab.id, message);
-        });
-    });
-}
+/**
+ * Regular Expressions
+ * @type {Object}
+ */
+TID.regex = TID.regex || {};
 
-function activateAnalytics() {
-    console.log('Enabling analytics');
+// Regular expression to match image files
+TID.regex.imageFile = new RegExp('\\.(?:jpe?g|png|gif)$', 'i');
 
-    window['ga-disable-' + TID.trackingId] = false;
-
-    /**
-     * Google Analytics (analytics.js) script
-     * http://goo.gl/7wc0Ff
-     * Slightly modified the punctuation and order of variables
-     * in order to to please JSHint
-     */
-    (function (i, s, o, r) {
-        i.GoogleAnalyticsObject = r; // Acts as a pointer to support renaming.
-
-        // Creates an initial ga() function.
-        // The queued commands will be executed once analytics.js loads.
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments);
-        };
-
-        // Sets the time (as an integer) this tag was executed.
-        // Used for timing hits.
-        i[r].l = Date.now();
-
-        // Insert the script tag asynchronously.
-        // Inserts above current tag to prevent blocking in
-        // addition to using the async attribute.
-        var a = s.createElement(o);
-        var m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = 'https://www.google-analytics.com/analytics.js';
-        m.parentNode.insertBefore(a, m);
-    }(window, document, 'script', 'ga'));
-
-    ga('create', TID.trackingId, 'auto');
-    ga('set', 'checkProtocolTask', function () {});
-    ga('require', 'displayfeatures');
-    ga('send', 'pageview');
-}
-
-function deactivateAnalytics() {
-    console.log('Disabling analytics');
-
-    window['ga-disable-UA-' + TID.trackingId] = true;
-
-    document.querySelector('script[src*="google-analytics"]').remove();
-
-    delete window.ga;
-    delete window.gaplugins;
-    delete window.gaGlobal;
-}
-
-// Only add analytics if they haven't disabled it
+// Only add analytics if they haven't opted out
+// Default to enabled
 chrome.storage.sync.get({
     enableAnalytics: true
 }, function (object) {
     if (object.enableAnalytics) {
-        activateAnalytics();
+        TID.activateAnalytics();
     }
 });
 
-// When the extension is first installed, updated, or when Chrome is updated
+// When the extension is first installed, updated, or when the browser is updated
 chrome.runtime.onInstalled.addListener(function (details) {
     console.log('"onInstalled" triggered', details.reason);
 
@@ -92,7 +40,8 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
 // Override file names by adding the user's directory of choice
 chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, suggest) {
-    if (downloadItem.byExtensionId !== TID.msg('@@extension_id')) {
+    // Ignore files not by the extension
+    if (downloadItem.byExtensionId !== chrome.runtime.id) {
         return;
     }
 
@@ -102,8 +51,8 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
     if (
         downloadItem.danger === 'safe' &&
         (
-            downloadItem.filename.match(/\.(?:jpe?g|png|gif)$/, 'i') ||
-            downloadItem.mime.match(/image/)
+            downloadItem.filename.match(TID.regex.imageFile) ||
+            downloadItem.mime.indexOf('image') !== -1
         )
     ) {
         var directory;
@@ -137,7 +86,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         });
 
         // Send message to all open tabs that the image was downloaded
-        sendToAllTabs({
+        TID.sendToAllTabs('*://*.tumblr.com/*', {
             message: 'image_downloaded',
             data: {
                 imageId: TID.vars.lastImageId
@@ -160,7 +109,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
 
 // Listen to messages from other scripts
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log('Recieved request', request, 'from', sender);
+    console.log('Received request', request, 'from', sender);
 
     var ret = false;
 
@@ -196,9 +145,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     case 'toggle_analytics':
         if (request.value) {
-            activateAnalytics();
+            TID.activateAnalytics();
         } else {
-            deactivateAnalytics();
+            TID.deactivateAnalytics();
         }
         break;
 
@@ -214,7 +163,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             TID.storage.removeImage(request.data.imageId);
 
             // Send message to all open tabs that the image has been removed
-            sendToAllTabs({
+            TID.sendToAllTabs('*://*.tumblr.com/*', {
                 message: 'image_removed',
                 data: {
                     imageId: request.data.imageId
@@ -226,7 +175,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             TID.storage.clear();
 
             // Send message to all open tabs that all images have been removed
-            sendToAllTabs({
+            TID.sendToAllTabs('*://*.tumblr.com/*', {
                 message: 'storage_cleared'
             });
             break;

@@ -2,6 +2,10 @@
 
 /* globals TID, chrome */
 
+/**
+ * Notifications functions
+ * @type {Object}
+ */
 TID.notifications = {};
 
 /**

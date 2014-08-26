@@ -2,6 +2,10 @@
 
 /* globals TID, chrome, $, $$ */
 
+/**
+ * Events functions
+ * @type {Object}
+ */
 TID.events = {};
 
 /**

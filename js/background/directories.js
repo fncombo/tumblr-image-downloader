@@ -2,6 +2,10 @@
 
 /* globals TID, chrome, $, $$ */
 
+/**
+ * Directories functions
+ * @type {Object}
+ */
 TID.directories = {};
 
 /**
@@ -67,6 +71,7 @@ TID.directories.addFake = function (where) {
     var li = document.createElement('li');
     li.classList.add('fake');
     li.innerHTML = '<input type="text">';
+
     where.parentNode.insertBefore(li, where);
 };
 
@@ -77,6 +82,7 @@ TID.directories.addBlank = function () {
     var li = document.createElement('li');
     li.classList.add('blank');
     li.innerHTML = TID.directories.generateInput(false, true);
+
     $('#download-directories').appendChild(li);
 };
 

@@ -2,6 +2,10 @@
 
 /* globals TID, chrome, $ */
 
+/**
+ * Checkboxes functions
+ * @type {Object}
+ */
 TID.checkboxes = {};
 
 /**
@@ -25,6 +29,7 @@ TID.checkboxes.adjustControls = function (key) {
  */
 TID.checkboxes.setValue = function (key, value) {
     $('input[data-for="' + key + '"]').checked = value;
+
     TID.checkboxes.adjustControls(key);
 };
 

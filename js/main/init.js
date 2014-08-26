@@ -2,10 +2,16 @@
 
 /* globals TID */
 
-// Global extension settings
+/**
+ * Global extension settings
+ * @type {Object}
+ */
 TID.settings = {};
 
-// Defaults for the settings, and callbacks for when they are loaded or changed
+/**
+ * Defaults for the settings, and callbacks for when they are loaded or changed
+ * @type {Object}
+ */
 TID.settings.list = {
     confirm: {
         default: true,
@@ -30,7 +36,10 @@ TID.settings.list = {
     }
 };
 
-// All the regular expressions used in the extension
+/**
+ * All the regular expressions used in the extension
+ * @type {Object}
+ */
 TID.regex = {
     imageSize: /(_)(\d+)(\.(?:jpe?g|png|gif)$)/,
     imageId: /\/tumblr_(?:inline_)?(?:(\w+)_\d+|(\w+))(?=\.(?:jpe?g|png|gif)$)/,
@@ -39,14 +48,20 @@ TID.regex = {
     tumblrDomain: /tumblr\.com\//
 };
 
-// Enumeration of types of HD images
+/**
+ * Enumeration of types of HD images
+ * @type {Object}
+ */
 TID.HDTypes = {
     none: 0,
     tumblrHighRes: 1,
     externalHighRes: 2
 };
 
-// CSS classes
+/**
+ * CSS classes
+ * @type {Object}
+ */
 TID.classes = {
     archivePage: 'TID-archive',
     tempContainer: 'TID-temp-container',
@@ -67,16 +82,24 @@ TID.classes = {
     dialogButton: 'TID-dialog-button'
 };
 
-// Check if the current page is a Tumblelog's archive page
+/**
+ * Check if the current page is a Tumblelog's archive page
+ * @type {Boolean}
+ */
 TID.isArchivePage = /\/archive(?:\/|$)/.test(window.location.pathname);
 
-// Check if the current page is a single image view
+/**
+ * Check if the current page is a single image view
+ * @type {Boolean}
+ */
 TID.isSinglePage = document.body.classList.contains('single_image');
 
-// Selectors for HTML elements based on the current page
+/**
+ * Selectors for HTML elements based on the current page
+ * @type {Object}
+ */
 TID.selectors = {};
 
-// Selectors for all images on a page
 if (TID.isArchivePage) {
     TID.selectors.images = '.post.post_micro.is_photo ' +
         '.post_thumbnail_container.has_imageurl:not(.' + TID.classes.ignore + ')';

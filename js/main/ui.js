@@ -2,6 +2,10 @@
 
 /* globals TID, $, $$ */
 
+/**
+ * UI functions
+ * @type {Object}
+ */
 TID.ui = {};
 
 /**

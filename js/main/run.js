@@ -10,6 +10,9 @@ TID.getDocumentHeight = function () {
     return document.documentElement.scrollHeight;
 };
 
+/**
+ * Run the extension! Insert buttons, activate events, etc
+ */
 TID.run = function () {
     console.log('Running the extension');
 

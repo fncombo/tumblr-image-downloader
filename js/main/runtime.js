@@ -16,3 +16,32 @@ TID.sendMessage = function (message, callback) {
 
     chrome.runtime.sendMessage(message, callback || null);
 };
+
+/**
+ * Send a message to Google Analytics
+ * https://developers.google.com/analytics/devguides/collection/analyticsjs/events#overview
+ */
+TID.trackEvent = function (category, action, label, value) {
+    var data = [];
+
+    if (category) {
+        data.push(category);
+    }
+
+    if (action) {
+        data.push(action);
+    }
+
+    if (label) {
+        data.push(label);
+    }
+
+    if (value) {
+        data.push(value);
+    }
+
+    chrome.runtime.sendMessage({
+        message: 'analytics',
+        data: data
+    });
+};

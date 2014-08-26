@@ -2,6 +2,10 @@
 
 /* globals TID, $, $$ */
 
+/**
+ * Buttons functions
+ * @type {Object}
+ */
 TID.buttons = {};
 
 /**
@@ -14,7 +18,10 @@ TID.buttons.add = function () {
         // Skip images that are not part of the actual post
         if (!TID.isArchivePage) {
             var ancestor = el.ancestor(2);
+
             if (ancestor.classList.contains('caption') || ancestor.nodeName === 'BLOCKQUOTE') {
+                console.log('Skipping image that is not part of the post');
+
                 return;
             }
         }
@@ -23,13 +30,14 @@ TID.buttons.add = function () {
         el.classList.add(TID.classes.ignore);
 
         if (TID.isArchivePage) {
-            TID.buttons.create({
+            var data = {
                 imageId: TID.images.getID(el.dataset.imageurl),
                 isHD: false,
                 HDType: TID.HDTypes.none,
                 url: el.dataset.imageurl
-            }, function (button) {
-                console.log(button);
+            };
+
+            TID.buttons.create(data, function (button) {
                 el.closest('.post').prependChild(button);
             });
         } else {
@@ -38,6 +46,7 @@ TID.buttons.add = function () {
                     $('#nav_image').appendChild(button);
                 } else {
                     var parent = el.parentNode;
+
                     parent.classList.add(TID.classes.parent);
                     parent.prependChild(button);
                 }
@@ -45,14 +54,14 @@ TID.buttons.add = function () {
         }
     });
 
-    TID.sendMessage(['Download Buttons', 'Added']);
+    TID.trackEvent('Download Buttons', 'Added');
 };
 
 /**
  * Create a new download button based on the given parameters
- * @param  {Object}  imageData An object containing all the image data form TID.images.getData
- * @param  {Function} callback Callback when the button has been created
- * @return {Element}           The element node for the constructed button
+ * @param  {Object}   imageData An object containing all the image data form TID.images.getData
+ * @param  {Function} callback  Callback when the button has been created
+ * @return {Element}            The element node for the constructed button
  */
 TID.buttons.create = function (imageData, callback) {
     console.log('Creating a button for', imageData);
@@ -102,8 +111,6 @@ TID.buttons.create = function (imageData, callback) {
                 el.ancestor(2).classList[action](TID.classes.photoset);
             }
         };
-
-        console.log(el);
 
         callback(el);
     });

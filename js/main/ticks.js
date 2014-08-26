@@ -2,6 +2,10 @@
 
 /* globals TID, $$ */
 
+/**
+ * Ticks functions
+ * @type {Object}
+ */
 TID.ticks = {};
 
 /**

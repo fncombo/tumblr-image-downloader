@@ -2,6 +2,10 @@
 
 /* globals TID, chrome */
 
+/**
+ * Images functions
+ * @type {Object}
+ */
 TID.images = {};
 
 /**
@@ -41,9 +45,9 @@ TID.images.remove = function (imageId) {
 
 /**
  * Check whether an image exists in storage
- * @param  {String}  imageId ID or URL of the image to search for
+ * @param  {String}   imageId  ID or URL of the image to search for
  * @param  {Function} callback Callback
- * @return {Boolean}         Whether or not the image exists
+ * @return {Boolean}           Whether or not the image exists
  */
 TID.images.exists = function (imageId, callback) {
     chrome.runtime.sendMessage({
@@ -68,7 +72,7 @@ TID.images.replaceSize = function (url, newSize) {
 /**
  * Get the image size from a URL
  * @param  {String}          url A valid Tumblr image URL
- * @return {integer|boolean}     The found image size, or false
+ * @return {Integer|Boolean}     The found image size, or false
  */
 TID.images.getSize = function (url) {
     // Try to match the image size
@@ -138,6 +142,7 @@ TID.images.getData = function (el) {
 
     return data;
 };
+
 /**
 * Check if a Tumblr HD version of an image is available by trying to load different resolutions
 * @param {String}   url             A Tumblr URL of an image to check for

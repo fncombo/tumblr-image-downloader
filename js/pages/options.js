@@ -6,8 +6,10 @@
  * Text
  */
 
+// Process all tags on the page with text
 TID.processHTMLMessages();
 
+// Insert correct links to the extension store page
 if ($('#installMessage') && $('#supportMessage')) {
     var installMessage = $('#installMessage a');
     installMessage.href = 'https://chrome.google.com/webstore/detail/image-downloader-for-tumblr/' + chrome.runtime.id;
@@ -18,25 +20,25 @@ if ($('#installMessage') && $('#supportMessage')) {
     supportMessage.target = '_blank';
 }
 
-/**
- * Remove the #static ID after a while to stop initial checkbox sliders from animating on load
- */
+// Remove the #static ID after a while to stop initial checkbox sliders from animating on load
 setTimeout(function () {
     $('#static').removeAttribute('id');
 }, 100);
 
 /**
- * Image count
+ * Image counts
  */
 
+// Adjust image count on the clear button
 TID.adjustImageCount = function (amount) {
     var locale = TID.msg('@@ui_locale').replace('_', '-');
     var clear = $('#clear');
+
     amount = amount.toLocaleString(locale);
     clear.innerHTML = clear.innerHTML.replace(/(?:\d+|#)/, amount);
 };
 
-// Get number of remembered images
+// Get the number of remembered images
 TID.sendMessage({
     message: 'storage',
     action: 'count'
@@ -61,18 +63,18 @@ $('#clear').onclick = function () {
 
     TID.ui.showDialog(message, buttons, function (i) {
         switch (i) {
-            case '0':
-                TID.adjustImageCount(0);
+        case '0':
+            TID.adjustImageCount(0);
 
-                TID.sendMessage({
-                    message: 'storage',
-                    action: 'clear'
-                });
-                TID.sendMessage(['Cleared Storage', 'Cleared Images']);
-                break;
+            TID.sendMessage({
+                message: 'storage',
+                action: 'clear'
+            });
+            TID.sendMessage(['Cleared Storage', 'Cleared Images']);
+            break;
 
-            case '1':
-                break;
+        case '1':
+            break;
         }
     });
 };
@@ -123,6 +125,7 @@ listen('click', '#download-directories .delete', function (event, el) {
 /**
  * Saving directories
  */
+
 $('#default-directory').onkeyup = TID.directories.saveDefault;
 $('#default-directory').onchange = TID.directories.saveDefault;
 $('#save-directories').onclick = TID.directories.saveMore;
@@ -156,8 +159,10 @@ document.addEventListener('keyup', function (event) {
 });
 
 /**
- * Keep settings up-to-date across multiple options pages
+ * Events
  */
+
+// Keep settings up-to-date across multiple options pages
 chrome.storage.onChanged.addListener(function (changes) {
     // Check for tickbox changes
     var tickboxes = ['confirm', 'showTicks', 'enableAnalytics', 'rememberImages', 'enableLocations'];

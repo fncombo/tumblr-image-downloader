@@ -2,7 +2,10 @@
 
 /* globals TID, $, $$ */
 
-// Object to store all the directory events
+/**
+ * Events functions
+ * @type {Object}
+ */
 TID.events = {};
 
 /**
@@ -51,6 +54,10 @@ TID.events.mousemove = function (event) {
     TID.vars.currentItem.style.top = (event.clientY + window.pageYOffset) + 'px';
 };
 
+/**
+ * Event handler for releasing a directory after dragging
+ * @param {Object} event The triggered event
+ */
 TID.events.mouseup = function () {
     if (TID.vars.currentItem) {
         var fakeEl = $('#download-directories .fake');
@@ -85,6 +92,7 @@ TID.events.keyup = function (event, el) {
 
         if (keyCode === 38 && parent.previousElementSibling) {
             toMove = parent.previousElementSibling;
+
             parent.parentNode.insertBefore(toMove.cloneNode(true), parent.nextElementSibling);
             toMove.remove();
         } else if (keyCode === 40 && !parent.nextElementSibling.classList.contains('blank')) {
@@ -118,6 +126,7 @@ TID.events.keyup = function (event, el) {
 TID.events.input = function (event, el) {
     if (!el.value.length) {
         el.parentNode.classList.add('blank');
+
         $$('#download-directories .blank').slice(0, -1).forEach(function (el) {
             el.remove();
         });

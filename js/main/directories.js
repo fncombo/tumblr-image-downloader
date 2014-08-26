@@ -2,10 +2,22 @@
 
 /* globals TID, chrome*/
 
+/**
+ * Directories functions
+ * @type {Object}
+ */
 TID.directories = {};
 
+/**
+ * Avilable directories
+ * @type {Array}
+ */
 TID.directories.list = [];
 
+/**
+ * HTML of all the directories
+ * @type {String}
+ */
 TID.directories.html = '';
 
 /**
