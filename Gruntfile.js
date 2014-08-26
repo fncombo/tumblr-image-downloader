@@ -16,7 +16,15 @@ module.exports = function(grunt) {
                         ' */\n\n' +
                         '\'use strict\';\n\n',
                 process: function (src) {
-                    return src.split('\n').splice(4).join('\n');
+                    var newSrc = [];
+
+                    src.split('\n').splice(4).forEach(function (line) {
+                        if (line.indexOf('console.') === -1) {
+                            newSrc.push(line);
+                        }
+                    });
+
+                    return newSrc.join('\n');
                 }
             },
             build: {
@@ -274,8 +282,8 @@ module.exports = function(grunt) {
         'sass',
         'slim',
         'copy',
-        'json-minify',
-        'uglify'
+        // 'json-minify',
+        // 'uglify'
     ]);
 
 };
