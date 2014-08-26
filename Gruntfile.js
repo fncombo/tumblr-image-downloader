@@ -60,6 +60,7 @@ module.exports = function(grunt) {
                             'js/background/updates.js',
                             'js/background/notifications.js',
                             'js/background/database.js',
+                            'js/background/tabs.js',
                             'js/pages/background.js'
                         ],
                         dest: 'extension/js/background.js'
@@ -70,11 +71,11 @@ module.exports = function(grunt) {
 
         uglify: {
             options: {
-                banner: '/*! Built on <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-                mangle: true,
+                // banner: '/*! Built on <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+                mangle: false,
                 compress: {
                     sequences: false,
-                    properties: true,
+                    properties: false,
                     dead_code: true,
                     drop_debugger: true,
                     unsafe: false,
@@ -95,11 +96,22 @@ module.exports = function(grunt) {
                     pure_funcs: false,
                     drop_console: true
                 },
-                beautify: false,
+                beautify: true,
+                indent_level: 4,
+                indent_start: 0,
+                quote_keys: false,
+                space_colon: true,
+                ascii_only: true,
+                inline_script: false,
+                width: 80,
+                max_line_len: 120,
+                bracketize: true,
+                semicolons: true,
+                preamble: null,
                 report: false,
                 sourceMap: false,
                 wrap: false,
-                preserveComments: false
+                preserveComments: true
             },
             build: {
                 files: [
@@ -122,7 +134,7 @@ module.exports = function(grunt) {
 
         sass: {
             options: {
-                style: 'compressed',
+                style: 'expanded',
                 precision: 3,
                 noCache: true
             },
@@ -146,7 +158,7 @@ module.exports = function(grunt) {
 
         slim :{
             options: {
-                pretty: false
+                pretty: true
             },
             build: {
                 files: [
