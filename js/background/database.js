@@ -13,7 +13,7 @@ TID.storage = {};
  * @type {String|Number}
  */
 TID.storage.name = 'TID';
-TID.storage.version = 1;
+TID.storage.version = 2;
 TID.storage.store = 'images';
 
 /**
@@ -68,26 +68,35 @@ TID.storage.request.onupgradeneeded = function (event) {
     console.log('IndexedDB upgrade needed');
 
     var db = event.currentTarget.result;
+    var store;
 
-    // To delete the database completely
-    // if (db.objectStoreNames.contains(TID.storage.store)) {
-    //     db.deleteObjectStore(TID.storage.store);
-    // }
+    // First time runing, create the store
+    if (!db.objectStoreNames.contains(TID.storage.store)) {
+        store = db.createObjectStore(TID.storage.store, {
+            keyPath: 'imageId',
+            autoIncrement: false
+        });
+    // Use the existing store
+    } else {
+        store = event.currentTarget.transaction.objectStore(TID.storage.store);
+    }
 
-    // Primary key
-    var store = db.createObjectStore(TID.storage.store, {
-        keyPath: 'imageId',
-        autoIncrement: false
-    });
-
-    store.createIndex('imageId', 'imageId', {
-        unique: true
-    });
+    // Create the primary key
+    if (!store.indexNames.contains('imageId')) {
+        store.createIndex('imageId', 'imageId', {
+            unique: true
+        });
+    }
 
     // Create non-unique indexes
     [
-        'time', 'imageUrl', 'pageUrl'
+        'time', 'imageUrl', 'pageUrl', 'directory'
     ].forEach(function (index) {
+        // Don't add indexes that already exist
+        if (store.indexNames.contains(index)) {
+            return;
+        }
+
         store.createIndex(index, index, {
             unique: false
         });
