@@ -282,8 +282,8 @@ module.exports = function(grunt) {
         'sass',
         'slim',
         'copy',
-        // 'json-minify',
-        // 'uglify'
+        'json-minify',
+        'uglify'
     ]);
 
 };
