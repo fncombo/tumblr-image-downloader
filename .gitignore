@@ -178,3 +178,4 @@ node_modules/
 
 # Ignore the built extension directory
 extension/
+extension.zip
