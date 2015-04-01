@@ -36,6 +36,7 @@ a.TID-parent {
     cursor: pointer;
     z-index: 9999999999;
     white-space: pre;
+    text-transform: none !important;
 
     body.editing & {
         z-index: initial;
