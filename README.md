@@ -32,5 +32,5 @@ To add the extension to Chrome, go to `Settings > Extensions`, and open the `ext
 
 [grunt]: http://gruntjs.com
 [codeclimate]: https://codeclimate.com/github/fncombo/tumblr-image-downloader
-[chromestore]: https://chrome.google.com/webstore/detail/tumblr-image-saver/ipocoligdfkbgncimgfaffpaglmedpop
+[chromestore]: https://chrome.google.com/webstore/detail/tumblr-image-saver/hbbiaibbddjmdacbifbnioekmiocclpc
 [gemnasium]: https://gemnasium.com/fncombo/tumblr-image-downloader
