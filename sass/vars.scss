@@ -1,6 +1,6 @@
-$tumblr-color: #2c4762;
-$tumblr-color-transparent: rgba(44, 71, 98, 0.666);
-$tumblr-color-hover: #15212e;
+$tumblr-color: #36465d;
+$tumblr-color-transparent: transparentize($tumblr-color, 0.444);
+$tumblr-color-hover: darken($tumblr-color, 20%);
 
 $tumblr-green: #61c292;
 
