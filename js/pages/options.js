@@ -174,9 +174,7 @@ chrome.storage.onChanged.addListener(function (changes) {
     });
 
     // Check for any other changes
-    if (changes.hasOwnProperty('images')) {
-        // TID.adjustImageCount(changes.images.hasOwnProperty('newValue') ? changes.images.newValue.length : 0);
-    } else if (changes.hasOwnProperty('saveDirectories')) {
+    if (changes.hasOwnProperty('saveDirectories')) {
         $('#download-directories').innerHTML = '';
 
         changes.saveDirectories.newValue.forEach(function (directory) {
