@@ -278,6 +278,22 @@
     "notificationUpdateHistoryButton": {
         "message": "View Update History",
         "description": "Button to the update history page in the notification displayed when the extension is updated."
+    },
+
+    /**
+     * Tips text
+     */
+    "tipsTitle": {
+        "message": "Tips",
+        "description": "Title for the tips section on the options page."
+    },
+    "tipCtrlClick": {
+        "message": "Clicking download while holding the <strong>Ctrl</strong> key will allow you to forget a remembered image. This does not delete the file from your computer.",
+        "description": "Explains to the user about ctrl+click."
+    },
+    "tipAltClick": {
+        "message": "Clicking download while holding the <strong>Alt</strong> key will attempt to show the image in the file browser. If you downloaded an image into multiple directories, this will open the location of your first download.",
+        "description": "Explains to the user about alt+click."
     }
 
 }
