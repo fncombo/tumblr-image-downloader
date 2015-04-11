@@ -10,7 +10,7 @@
 TID.processHTMLMessages();
 
 // Insert correct links to the extension store page
-    if ($('#installMessage') && $('#supportMessage')) {
+if ($('#installMessage') && $('#supportMessage')) {
     var installMessage = $('#installMessage a');
     installMessage.href = 'https://chrome.google.com/webstore/detail/image-downloader-for-tumblr/' + chrome.runtime.id;
     installMessage.target = '_blank';
