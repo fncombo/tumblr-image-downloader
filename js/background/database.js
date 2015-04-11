@@ -13,7 +13,7 @@ TID.storage = {};
  * @type {String|Number}
  */
 TID.storage.name = 'TID';
-TID.storage.version = 2;
+TID.storage.version = 4;
 TID.storage.store = 'images';
 
 /**
@@ -70,6 +70,11 @@ TID.storage.request.onupgradeneeded = function (event) {
     var db = event.currentTarget.result;
     var store;
 
+    /**
+     * Version 1 & 2
+     * Initial versions
+     */
+
     // First time runing, create the store
     if (!db.objectStoreNames.contains(TID.storage.store)) {
         store = db.createObjectStore(TID.storage.store, {
@@ -101,6 +106,54 @@ TID.storage.request.onupgradeneeded = function (event) {
             unique: false
         });
     });
+
+    /**
+     * Version 3 & 4
+     * Move from "directory" (String) to "directories" (Array)
+     * and transfer all existing recorded directories into the array
+     */
+
+    // Delete the "directory" index if "directories" exists
+    if (store.indexNames.contains('directories') && store.indexNames.contains('directories')) {
+        store.deleteIndex('directory');
+    }
+
+    // Create the "directories" index if it doesn't exist
+    if (!store.indexNames.contains('directories')) {
+        // Create the new index for directories which will be an array
+        store.createIndex('directories', 'directories', {
+            unique: false,
+            multiEntry: true
+        });
+
+        // Open a cursor to traverse through all the entries
+        // in order to migrate the data
+        var request = store.openCursor();
+
+        request.onsuccess = function (event) {
+            var cursor = event.target.result;
+
+            if (cursor) {
+                // Update each entry's value
+                var innerRequest = store.get(cursor.value.imageId);
+
+                innerRequest.onsuccess = function () {
+                    var data = innerRequest.result;
+                    data.directories = [];
+                    data.directories.push(data.directory);
+
+                    store.put(data);
+                };
+
+                cursor.continue();
+            } else {
+                // End of all entries, delete the "directory" index
+                if (store.indexNames.contains('directory')) {
+                    store.deleteIndex('directory');
+                }
+            }
+        };
+    }
 };
 
 /**
