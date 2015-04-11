@@ -37,12 +37,10 @@
         "message": "If you have a feature request or find that something is not working, <a>submit your feedback here</a>.",
         "description": "A message displayed on all background extension pages. Leave the <a>."
     },
-
     "githubLink": {
         "message": "Source on GitHub",
         "description": "Link text to the GitHub repository."
     },
-
     "updatesLink": {
         "message": "Update History",
         "description": "Link text to the update history page."
