@@ -95,6 +95,8 @@ TID.events.initDocumentEvents = function () {
             var imageId = event.target.parentNode.dataset.imageId;
 
             if (event.ctrlKey && event.target.parentNode.classList.contains(TID.classes.downloaded)) {
+                TID.trackEvent('Modified Click', 'Ctrl');
+
                 var message = TID.msg('ctrlKeyClick');
                 var buttons = [TID.msg('yes'), TID.msg('no')];
 
@@ -108,6 +110,8 @@ TID.events.initDocumentEvents = function () {
 
                 return;
             } else if (event.altKey && event.target.parentNode.classList.contains(TID.classes.downloaded)) {
+                TID.trackEvent('Modified Click', 'Alt');
+
                 TID.sendMessage({
                     message: 'storage',
                     action: 'reveal_image',
