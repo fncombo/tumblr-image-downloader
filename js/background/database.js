@@ -141,7 +141,10 @@ TID.storage.request.onupgradeneeded = function (event) {
                     var data = innerRequest.result;
                     // Move "directory" into "directories"
                     data.directories = [];
-                    data.directories.push(data.directory);
+                    // Make sure it's not false
+                    if (data.directory) {
+                        data.directories.push(data.directory);
+                    }
                     // Remove "directory"
                     delete data.directory;
 
