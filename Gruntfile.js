@@ -6,6 +6,10 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
+        paths: {
+            extension: 'extension2-test'
+        },
+
         pkg: grunt.file.readJSON('package.json'),
 
         concat: {
@@ -44,7 +48,7 @@ module.exports = function(grunt) {
                             'js/main/ui.js',
                             'js/main/run.js'
                         ],
-                        dest: 'extension/js/extension.js'
+                        dest: '<%= paths.extension %>/js/extension.js'
                     },
                     {
                         src: [
@@ -59,7 +63,7 @@ module.exports = function(grunt) {
                             'js/background/events.js',
                             'js/background/updates.js',
                         ],
-                        dest: 'extension/js/support.js'
+                        dest: '<%= paths.extension %>/js/support.js'
                     },
                     {
                         src: [
@@ -72,7 +76,7 @@ module.exports = function(grunt) {
                             'js/background/tabs.js',
                             'js/pages/background.js'
                         ],
-                        dest: 'extension/js/background.js'
+                        dest: '<%= paths.extension %>/js/background.js'
                     }
                 ]
             }
@@ -127,7 +131,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: [
-                            'extension/js/*.js'
+                            '<%= paths.extension %>/js/*.js'
                         ],
                         ext: '.js'
                     }
@@ -137,7 +141,7 @@ module.exports = function(grunt) {
 
         'json-minify': {
             build: {
-                files: 'extension/**/*.json'
+                files: '<%= paths.extension %>/**/*.json'
             }
         },
 
@@ -158,7 +162,7 @@ module.exports = function(grunt) {
                             '!sass/normalize.scss'
                         ],
                         flatten: true,
-                        dest: 'extension/css/',
+                        dest: '<%= paths.extension %>/css/',
                         ext: '.css'
                     }
                 ]
@@ -178,7 +182,7 @@ module.exports = function(grunt) {
                             '!slim/*.include.slim'
                         ],
                         flatten: true,
-                        dest: 'extension/html/',
+                        dest: '<%= paths.extension %>/html/',
                         ext: '.html'
                     }
                 ]
@@ -195,7 +199,7 @@ module.exports = function(grunt) {
                             'js/pages/*.js',
                             '!js/pages/background.js'
                         ],
-                        dest: 'extension/js/',
+                        dest: '<%= paths.extension %>/js/',
                         filter: 'isFile'
                     }
                 ]
@@ -210,7 +214,7 @@ module.exports = function(grunt) {
                             'updates.json',
                             'manifest.json'
                         ],
-                        dest: 'extension/',
+                        dest: '<%= paths.extension %>/',
                         filter: 'isFile'
                     }
                 ]
