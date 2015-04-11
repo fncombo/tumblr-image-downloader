@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
 
         paths: {
-            extension: 'extension2-test'
+            extension: 'extension'
         },
 
         pkg: grunt.file.readJSON('package.json'),
