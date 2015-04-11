@@ -86,5 +86,10 @@
     [
         "All the custom directories an image has been downloaded to will now also have a tick next to them.",
         "Bug fixes."
+    ],
+    [
+        "Hold Ctrl to forget a downloaded image.",
+        "Hold Alt to open the image in the file browser.",
+        "Support for full images inside text posts."
     ]
 ]
