@@ -91,6 +91,11 @@ TID.buttons.create = function (imageData, callback) {
         if (imageData.HDType === TID.HDTypes.externalHighRes) {
             download.innerHTML += '&#10138;';
             download.title = TID.msg('extenalHDImageTitle');
+
+            var imageDomain = imageData.url.match(TID.regex.imageDomain);
+            if (imageDomain && imageDomain.length === 2) {
+                download.title += '\n' + imageDomain;
+            }
         }
 
         el.appendChild(download);

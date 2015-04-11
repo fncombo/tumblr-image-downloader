@@ -45,6 +45,7 @@ TID.regex = {
     imageId: /\/tumblr_(?:inline_)?(?:(\w+)_\d+|(\w+))(?=\.(?:jpe?g|png|gif)$)/,
     imageExt: /(jpe?g|png|gif)$/,
     image1280: /_1280\.(?:jpe?g|png|gif)$/,
+    imageDomain: /^https?:\/\/(?:www.)?([^\/]+)/,
     tumblrDomain: /tumblr\.com\//
 };
 
