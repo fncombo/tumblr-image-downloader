@@ -78,7 +78,7 @@ TID.buttons.create = function (imageData, callback) {
 
     // Check if the image has already been downloaded
     TID.images.exists(imageData.imageId, function (exists) {
-        if (exists){
+        if (exists) {
             el.classList.add(TID.classes.downloaded);
         }
 
