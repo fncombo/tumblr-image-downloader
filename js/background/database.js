@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome, indexedDB */
+/* globals TID, chrome, indexedDB, IDBKeyRange */
 
 /**
  * Storage functions
@@ -13,7 +13,7 @@ TID.storage = {};
  * @type {String|Number}
  */
 TID.storage.name = 'TID';
-TID.storage.version = 4;
+TID.storage.version = 5;
 TID.storage.store = 'images';
 
 /**
@@ -71,7 +71,7 @@ TID.storage.request.onupgradeneeded = function (event) {
     var store;
 
     /**
-     * Version 1 & 2
+     * Version 1 - 2
      * Initial versions
      */
 
@@ -108,7 +108,7 @@ TID.storage.request.onupgradeneeded = function (event) {
     });
 
     /**
-     * Version 3 & 4
+     * Version 3 - 5
      * Move from "directory" (String) to "directories" (Array)
      * and transfer all existing recorded directories into the array
      */
@@ -139,8 +139,11 @@ TID.storage.request.onupgradeneeded = function (event) {
 
                 innerRequest.onsuccess = function () {
                     var data = innerRequest.result;
+                    // Move "directory" into "directories"
                     data.directories = [];
                     data.directories.push(data.directory);
+                    // Remove "directory"
+                    delete data.directory;
 
                     store.put(data);
                 };
@@ -184,9 +187,35 @@ TID.storage.saveImage = function (data) {
         data.time = Date.now();
     }
 
-    console.log('Saving image', data);
+    var request = store.get(data.imageId);
 
-    store.add(data);
+    request.onsuccess = function () {
+        var currentData = request.result;
+
+        if (currentData) {
+            // Make sure it's unique
+            if (currentData.directories && currentData.directories.indexOf(data.directory) === -1) {
+                currentData.directories.push(data.directory);
+            // Make sure it's not false
+            } else if (data.directory) {
+                currentData.directories = [data.directory];
+            }
+
+            console.log('Saving image (update)', currentData);
+
+            store.put(currentData);
+        } else {
+            // Make sure it's not false
+            if (data.directory) {
+                data.directories = [data.directory];
+            }
+            delete data.directory;
+
+            console.log('Saving image (insert)', data);
+
+            store.add(data);
+        }
+    };
 };
 
 /**
@@ -208,18 +237,27 @@ TID.storage.imageExists = function (imageId, callback) {
     console.log('Checking if image exists', imageId);
 
     var store = TID.storage.getObjectStore();
-    var request = store.get(imageId);
+    var request = store.openCursor(IDBKeyRange.only(imageId));
+    var data = {
+        found: false,
+        directories: []
+    };
 
     request.onsuccess = function (event) {
-        if (event.target.result) {
-            callback(true);
+        var cursor = event.target.result;
+
+        if (cursor) {
+            data.found = true;
+            data.directories = cursor.value.directories || [];
+
+            cursor.continue();
         } else {
-            callback(false);
+            callback(data);
         }
     };
 
     request.onerror = function () {
-        callback(false);
+        callback(data);
     };
 };
 

@@ -155,7 +155,8 @@ a.TID-parent {
 
 .TID-show-ticks .TID-parent:not(:hover) .TID-downloaded:before,
 .TID-show-ticks #tumblr_lightbox_center_link:not(:hover) .TID-downloaded:before,
-.TID-downloaded .TID-download-div:before {
+.TID-downloaded .TID-download-div:before,
+.TID-list .TID-downloaded:before {
     content: '\2713\00A0';
 }
 

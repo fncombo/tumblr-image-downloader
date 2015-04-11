@@ -89,7 +89,8 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         TID.sendToAllTabs('*://*.tumblr.com/*', {
             message: 'image_downloaded',
             data: {
-                imageId: TID.vars.lastImageId
+                imageId: TID.vars.lastImageId,
+                directory: directory
             }
         });
     // If the link does not appear to link to an image

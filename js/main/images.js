@@ -62,7 +62,9 @@ TID.images.exists = function (imageId, callback, fromHtml) {
             data: {
                 imageId: imageId
             }
-        }, callback);
+        }, function (response) {
+            callback(response.found, response.directories);
+        });
     }
 };
 

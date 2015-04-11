@@ -138,8 +138,11 @@ TID.events.initStorageListener = function () {
             TID.directories.html = TID.directories.format();
 
             // Update all the lists' HTML
-            $$('.' + TID.classes.list + ' ul').forEach(function (el) {
-                el.outerHTML = TID.directories.html;
+            $$('.' + TID.classes.list).forEach(function (el) {
+                TID.images.exists(el.parentNode.dataset.imageId, function (exists, directories) {
+                    var directoriesEl = TID.directories.clone(directories);
+                    el.parentNode.replaceChild(directoriesEl, el);
+                });
             });
 
             return;
@@ -187,7 +190,7 @@ TID.events.initMessageListener = function () {
             break;
 
         case 'image_downloaded':
-            TID.ticks.add(request.data.imageId);
+            TID.ticks.add(request.data.imageId, [request.data.directory]);
             break;
 
         case 'image_removed':

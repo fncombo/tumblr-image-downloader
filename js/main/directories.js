@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome*/
+/* globals TID, chrome, $, $$ */
 
 /**
  * Directories functions
@@ -75,4 +75,27 @@ TID.directories.setVisibility = function (setting) {
     console.log('Directories visibility toggled to', !!setting);
 
     document.body.classList[setting ? 'remove' : 'add'](TID.classes.hideLocations);
+};
+
+/**
+ * Create HTML for the directories for a specific download button, ticking the required directories
+ * @param  {Array} directoriesToTick Array of which directories should be ticked
+ * @return {Element}                 HTML Element of the generated directory list
+ */
+TID.directories.clone = function (directoriesToTick) {
+    var el = document.createElement('div');
+    el.classList.add(TID.classes.list);
+    el.innerHTML = '<span>&#9660;</span>' + TID.directories.html;
+
+    // Tick any directories that should be ticked (that thios images has been downloaded to)
+    if (directoriesToTick) {
+        directoriesToTick.forEach(function (directory) {
+            var listEl = $('li[data-directory="' + directory + '"]', el);
+            if (listEl) {
+                listEl.classList.add(TID.classes.downloaded);
+            }
+        });
+    }
+
+    return el;
 };

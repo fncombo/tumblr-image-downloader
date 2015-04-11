@@ -77,7 +77,7 @@ TID.buttons.create = function (imageData, callback) {
     el.dataset.url = imageData.url;
 
     // Check if the image has already been downloaded
-    TID.images.exists(imageData.imageId, function (exists) {
+    TID.images.exists(imageData.imageId, function (exists, directories) {
         if (exists) {
             el.classList.add(TID.classes.downloaded);
         }
@@ -101,10 +101,8 @@ TID.buttons.create = function (imageData, callback) {
         el.appendChild(download);
 
         // Directories drop-down
-        var directories = div.cloneNode(false);
-        directories.classList.add(TID.classes.list);
-        directories.innerHTML = '<span>&#9660;</span>' + TID.directories.html;
-        el.appendChild(directories);
+        var directoriesEl = TID.directories.clone(directories);
+        el.appendChild(directoriesEl);
 
         // Button hover events
         el.onmouseover = el.onmouseout = function (event) {

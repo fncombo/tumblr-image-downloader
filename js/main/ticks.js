@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, $$ */
+/* globals TID, $, $$ */
 
 /**
  * Ticks functions
@@ -10,11 +10,22 @@ TID.ticks = {};
 
 /**
  * Add a tick to a button
- * @param {String} imageId ID of the button to add a tick to
+ * @param {String} imageId           ID of the button to add a tick to
+ * @param {Array}  directoriesToTick Array of directories to which the image was downloaded
  */
-TID.ticks.add = function (imageId) {
+TID.ticks.add = function (imageId, directoriesToTick) {
     $$('.' + TID.classes.download + '[data-image-id="' + imageId + '"]').forEach(function (el) {
         el.classList.add(TID.classes.downloaded);
+
+        // Tick any directories that should be ticked (that thios images has been downloaded to)
+        if (directoriesToTick) {
+            directoriesToTick.forEach(function (directory) {
+                var listEl = $('li[data-directory="' + directory + '"]', el);
+                if (listEl) {
+                    listEl.classList.add(TID.classes.downloaded);
+                }
+            });
+        }
     });
 };
 
@@ -23,7 +34,8 @@ TID.ticks.add = function (imageId) {
  * @param {String} imageId ID of the button to remove a tick from
  */
 TID.ticks.remove = function (imageId) {
-    $$('.' + TID.classes.download + '[data-image-id="' + imageId + '"]').forEach(function (el) {
+    var selector = '.' + TID.classes.download + '[data-image-id="' + imageId + '"]';
+    $$(selector + ', ' + selector + ' li').forEach(function (el) {
         el.classList.remove(TID.classes.downloaded);
     });
 };
