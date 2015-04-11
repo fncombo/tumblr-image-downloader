@@ -92,6 +92,22 @@ TID.events.initDocumentEvents = function () {
             event.stopPropagation();
             event.preventDefault();
 
+            if (event.ctrlKey && event.target.parentNode.classList.contains(TID.classes.downloaded)) {
+                var message = TID.msg('ctrlKeyClick');
+                var buttons = [TID.msg('yes'), TID.msg('no')];
+
+                TID.ui.showDialog(message, buttons, function (i) {
+                    switch (i) {
+                    case '0':
+                        var imageId = event.target.parentNode.dataset.imageId;
+                        TID.images.remove(imageId);
+                        break;
+                    }
+                });
+
+                return;
+            }
+
             TID.events.buttonImageDownload(event);
 
             return;

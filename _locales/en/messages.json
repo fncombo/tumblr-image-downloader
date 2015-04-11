@@ -224,6 +224,10 @@
         "message": "Open the link in a new tab",
         "description": "Button text for opening a link in a new tab."
     },
+    "ctrlKeyClick": {
+        "message": "You held down <strong>Ctrl</strong> while clicking the download button.<br>Would you like to forget this downloaded image?<br><br>(This will <strong>not</strong> delete the image from your computer.)",
+        "description": "Dialog message when the user clicks the download button while holding down the Ctrl key."
+    },
 
 
 
