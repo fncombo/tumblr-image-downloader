@@ -222,7 +222,7 @@
         "description": "Button text for opening a link in a new tab."
     },
     "ctrlKeyClick": {
-        "message": "You held down <strong>Ctrl</strong> while clicking the download button.<br>Would you like to forget this downloaded image?<br><br>(This will <strong>not</strong> delete the image from your computer.)",
+        "message": "You held down the <strong>Ctrl</strong> key.<br>Would you like to forget this downloaded image?<br><br>This will <strong>not</strong> delete the image from your computer.",
         "description": "Dialog message when the user clicks the download button while holding down the Ctrl key."
     },
 
@@ -288,7 +288,7 @@
         "description": "Title for the tips section on the options page."
     },
     "tipCtrlClick": {
-        "message": "Clicking download while holding the <strong>Ctrl</strong> key will allow you to forget a remembered image. This does not delete the file from your computer.",
+        "message": "Clicking download while holding the <strong>Ctrl</strong> key will allow you to forget a downloaded image. This does not delete the file from your computer.",
         "description": "Explains to the user about ctrl+click."
     },
     "tipAltClick": {
