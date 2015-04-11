@@ -23,9 +23,7 @@ module.exports = function(grunt) {
                     var newSrc = [];
 
                     src.split('\n').splice(4).forEach(function (line) {
-                        if (line.indexOf('console.') === -1) {
-                            newSrc.push(line);
-                        }
+                        newSrc.push(line);
                     });
 
                     return newSrc.join('\n');
