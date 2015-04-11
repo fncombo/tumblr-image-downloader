@@ -77,9 +77,6 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             });
         }
 
-        // Remember which directory the image was downlaoded to
-        TID.vars.lastDownloadDirectory = directory;
-
     // If the link does not appear to link to an image
     } else {
         // Cancel the download
@@ -117,12 +114,21 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             url: request.data.url,
             saveAs: false
         }, function (downloadId) {
+            var directory;
+            if (TID.vars.saveDirectory) {
+                directory = TID.vars.saveDirectory;
+            } else if (TID.vars.defaultDirectory) {
+                directory = TID.vars.defaultDirectory;
+            } else {
+                directory = false;
+            }
+
             // Save the image
             TID.storage.saveImage({
                 imageId: TID.vars.lastImageId,
                 imageUrl: TID.vars.lastImageUrl,
                 pageUrl: TID.vars.lastPageUrl,
-                directory: TID.vars.lastDownloadDirectory,
+                directory: directory,
                 chromeDownloadId: downloadId
             });
 
@@ -131,7 +137,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 message: 'image_downloaded',
                 data: {
                     imageId: TID.vars.lastImageId,
-                    directory: TID.vars.lastDownloadDirectory
+                    directory: directory
                 }
             });
 
