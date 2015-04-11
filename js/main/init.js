@@ -108,5 +108,6 @@ if (TID.isArchivePage) {
     TID.selectors.images = '#content-image';
 } else {
     TID.selectors.images = '.post.is_photo .post_content img:not(.' + TID.classes.ignore + '), ' +
-        '.post.is_photoset .post_content img:not(.' + TID.classes.ignore + ')';
+        '.post.is_photoset .post_content img:not(.' + TID.classes.ignore + '), '+
+        '.post_body figure img:not(.' + TID.classes.ignore + ')';
 }
