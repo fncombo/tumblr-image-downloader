@@ -82,5 +82,9 @@
         "Improved options page.",
         "Option to disable Google Analytics.",
         "Improved high-res image detection."
+    ],
+    [
+        "All the custom directories an image has been downloaded to will now also have a tick next to them.",
+        "Bug fixes."
     ]
 ]
