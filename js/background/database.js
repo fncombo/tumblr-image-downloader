@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome, indexedDB, IDBKeyRange */
+/* globals TID, chrome, indexedDB */
 
 /**
  * Storage functions
