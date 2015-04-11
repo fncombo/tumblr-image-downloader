@@ -193,12 +193,17 @@ TID.storage.saveImage = function (data) {
         var currentData = request.result;
 
         if (currentData) {
-            // Make sure it's unique
-            if (currentData.directories && currentData.directories.indexOf(data.directory) === -1) {
-                currentData.directories.push(data.directory);
             // Make sure it's not false
-            } else if (data.directory) {
-                currentData.directories = [data.directory];
+            if (data.directory) {
+                // Create the array if it doesn't exist
+                if (!currentData.directories) {
+                    currentData.directories = [];
+                }
+
+                // Make sure it's unique
+                if (currentData.directories.indexOf(data.directory) === -1) {
+                    currentData.directories.push(data.directory);
+                }
             }
 
             console.log('Saving image (update)', currentData);
