@@ -190,7 +190,11 @@ TID.events.initMessageListener = function () {
             break;
 
         case 'image_downloaded':
-            TID.ticks.add(request.data.imageId, [request.data.directory]);
+            if (typeof request.data.directory === 'string') {
+                TID.ticks.add(request.data.imageId, [request.data.directory]);
+            } else {
+                TID.ticks.add(request.data.imageId);
+            }
             break;
 
         case 'image_removed':
