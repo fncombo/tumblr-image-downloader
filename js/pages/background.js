@@ -77,22 +77,9 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             });
         }
 
-        // Save the image
-        TID.storage.saveImage({
-            imageId: TID.vars.lastImageId,
-            imageUrl: TID.vars.lastImageUrl,
-            pageUrl: TID.vars.lastPageUrl,
-            directory: directory
-        });
+        // Remember which directory the image was downlaoded to
+        TID.vars.lastDownloadDirectory = directory;
 
-        // Send message to all open tabs that the image was downloaded
-        TID.sendToAllTabs('*://*.tumblr.com/*', {
-            message: 'image_downloaded',
-            data: {
-                imageId: TID.vars.lastImageId,
-                directory: directory
-            }
-        });
     // If the link does not appear to link to an image
     } else {
         // Cancel the download
@@ -129,6 +116,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         chrome.downloads.download({
             url: request.data.url,
             saveAs: false
+        }, function (downloadId) {
+            // Save the image
+            TID.storage.saveImage({
+                imageId: TID.vars.lastImageId,
+                imageUrl: TID.vars.lastImageUrl,
+                pageUrl: TID.vars.lastPageUrl,
+                directory: TID.vars.lastDownloadDirectory,
+                chromeDownloadId: downloadId
+            });
+
+            // Send message to all open tabs that the image was downloaded
+            TID.sendToAllTabs('*://*.tumblr.com/*', {
+                message: 'image_downloaded',
+                data: {
+                    imageId: TID.vars.lastImageId,
+                    directory: TID.vars.lastDownloadDirectory
+                }
+            });
+
         });
         break;
 
@@ -185,6 +191,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             ret = true;
 
             TID.storage.count(sendResponse);
+            break;
+
+        case 'reveal_image':
+            TID.storage.revealImage(request.data.imageId);
             break;
         }
         break;

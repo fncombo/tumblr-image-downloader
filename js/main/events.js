@@ -92,6 +92,8 @@ TID.events.initDocumentEvents = function () {
             event.stopPropagation();
             event.preventDefault();
 
+            var imageId = event.target.parentNode.dataset.imageId;
+
             if (event.ctrlKey && event.target.parentNode.classList.contains(TID.classes.downloaded)) {
                 var message = TID.msg('ctrlKeyClick');
                 var buttons = [TID.msg('yes'), TID.msg('no')];
@@ -99,9 +101,18 @@ TID.events.initDocumentEvents = function () {
                 TID.ui.showDialog(message, buttons, function (i) {
                     switch (i) {
                     case '0':
-                        var imageId = event.target.parentNode.dataset.imageId;
                         TID.images.remove(imageId);
                         break;
+                    }
+                });
+
+                return;
+            } else if (event.altKey && event.target.parentNode.classList.contains(TID.classes.downloaded)) {
+                TID.sendMessage({
+                    message: 'storage',
+                    action: 'reveal_image',
+                    data: {
+                        imageId: imageId
                     }
                 });
 

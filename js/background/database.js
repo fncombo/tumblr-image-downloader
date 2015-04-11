@@ -13,7 +13,7 @@ TID.storage = {};
  * @type {String|Number}
  */
 TID.storage.name = 'TID';
-TID.storage.version = 5;
+TID.storage.version = 6;
 TID.storage.store = 'images';
 
 /**
@@ -157,6 +157,17 @@ TID.storage.request.onupgradeneeded = function (event) {
             }
         };
     }
+
+    /**
+     * Version 6
+     * Create an index for downloadId
+     */
+
+    if (!store.indexNames.contains('chromeDownloadId')) {
+        store.createIndex('chromeDownloadId', 'chromeDownloadId', {
+            unique: false
+        });
+    }
 };
 
 /**
@@ -288,5 +299,20 @@ TID.storage.count = function (callback) {
 
     count.onerror = function () {
         callback(0);
+    };
+};
+
+/**
+ * Attempt to reveal the downloaded image in the file browser
+ * @param  {String} imageId ID of the image to reveal
+ */
+TID.storage.revealImage = function (imageId) {
+    console.log('Getting the download ID of the image', imageId);
+
+    var store = TID.storage.getObjectStore();
+    var request = store.get(imageId);
+
+    request.onsuccess = function () {
+        chrome.downloads.show(request.result.chromeDownloadId);
     };
 };
