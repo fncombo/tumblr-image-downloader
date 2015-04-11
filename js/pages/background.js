@@ -166,7 +166,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             TID.storage.imageExists(request.data.imageId, sendResponse);
             break;
 
-        case 'removeImage':
+        case 'remove_image':
             TID.storage.removeImage(request.data.imageId);
 
             // Send message to all open tabs that the image has been removed

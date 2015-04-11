@@ -36,7 +36,7 @@ TID.images.getID = function (url) {
 TID.images.remove = function (imageId) {
     TID.sendMessage({
         message: 'storage',
-        action: 'removeImage',
+        action: 'remove_image',
         data: {
             imageId: imageId
         }
