@@ -253,23 +253,19 @@ TID.storage.imageExists = function (imageId, callback) {
     console.log('Checking if image exists', imageId);
 
     var store = TID.storage.getObjectStore();
-    var request = store.openCursor(IDBKeyRange.only(imageId));
+    var request = store.get(imageId);
     var data = {
         found: false,
         directories: []
     };
 
-    request.onsuccess = function (event) {
-        var cursor = event.target.result;
-
-        if (cursor) {
+    request.onsuccess = function () {
+        if (request.result) {
             data.found = true;
-            data.directories = cursor.value.directories || [];
-
-            cursor.continue();
-        } else {
-            callback(data);
+            data.directories = request.result.directories || [];
         }
+
+        callback(data);
     };
 
     request.onerror = function () {
