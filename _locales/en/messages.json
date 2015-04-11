@@ -28,7 +28,6 @@
         "message": "Update History",
         "description": "Title for the update history page."
     },
-
     "installMessage": {
         "message": "Find Image Downloader for Tumblr useful? Don&rsquo;t forget to <a>rate it on the Chrome Web Store</a>.",
         "description": "A message displayed on all background extension pages. Leave the <a>, and replace Chrome Web Store with the locale-specific name."
