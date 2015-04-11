@@ -38,6 +38,11 @@ a.TID-parent {
     white-space: pre;
     text-transform: none !important;
 
+    #tumblr_lightbox & {
+        // Exactly how many 9s it takes to overrtide tumblr. Well done.
+        z-index: 9999999999;
+    }
+
     body.editing & {
         z-index: initial;
     }
