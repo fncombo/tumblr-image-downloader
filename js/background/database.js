@@ -189,12 +189,21 @@ TID.storage.saveImage = function (data) {
     store.add(data);
 };
 
+/**
+ * Remove an image from storage by its ID
+ * @param {String} imageId ID of the image to remove
+ */
 TID.storage.removeImage = function (imageId) {
     console.log('Removing imageID from the database', imageId);
 
     TID.storage.getObjectStore('readwrite').delete(imageId);
 };
 
+/**
+ * Check whether an image exists in storage by its ID
+ * @param {String}   imageId  ID of the image to look for
+ * @param {Function} callback Callback
+ */
 TID.storage.imageExists = function (imageId, callback) {
     console.log('Checking if image exists', imageId);
 
