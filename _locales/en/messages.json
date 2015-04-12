@@ -268,11 +268,11 @@
      * Update notification
      */
     "notificationUpdateTitle": {
-        "message": "Tumblr Image Downloader Update",
+        "message": "Image Downloader for Tumblr Update",
         "description": "Title of the notification displayed when the extension is updated."
     },
     "notificationRateButton": {
-        "message": "Rate Tumblr Image Downloader",
+        "message": "Rate Image Downloader for Tumblr",
         "description": "Button to the Chrome Web Store page in the notification displayed when the extension is updated."
     },
     "notificationUpdateHistoryButton": {
