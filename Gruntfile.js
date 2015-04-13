@@ -82,7 +82,7 @@ module.exports = function(grunt) {
 
         uglify: {
             options: {
-                // banner: '/*! Built on <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+                banner: '/*! Built on <%= grunt.template.today("yyyy-mm-dd") %> */\n',
                 mangle: false,
                 compress: {
                     sequences: false,
@@ -99,30 +99,35 @@ module.exports = function(grunt) {
                     hoist_funs: false,
                     hoist_vars: false,
                     if_return: false,
-                    join_vars: false,
+                    join_vars: true,
                     cascade: false,
                     warnings: false,
                     negate_iife: false,
                     pure_getters: false,
                     pure_funcs: false,
-                    drop_console: true
+                    drop_console: true,
+                    keep_fargs: true
                 },
-                beautify: true,
-                indent_level: 4,
-                indent_start: 0,
-                quote_keys: false,
-                space_colon: true,
-                ascii_only: true,
-                inline_script: false,
-                width: 80,
-                max_line_len: 120,
-                bracketize: true,
-                semicolons: true,
-                preamble: null,
+                beautify: {
+                    indent_level: 2,
+                    indent_start: 0,
+                    quote_keys: false,
+                    space_colon: false,
+                    ascii_only: true,
+                    inline_script: false,
+                    width: 80,
+                    max_line_len: 120,
+                    bracketize: true,
+                    semicolons: true,
+                    preamble: null,
+                    quote_style: 3
+                },
                 report: false,
                 sourceMap: false,
                 wrap: false,
-                preserveComments: true
+                preserveComments: false,
+                screwIE8: true,
+                quoteStyle: 3
             },
             build: {
                 files: [
