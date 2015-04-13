@@ -20,6 +20,16 @@ if ($('#installMessage') && $('#supportMessage')) {
     supportMessage.target = '_blank';
 }
 
+
+var locationsRestriction = $('#locations-restriction');
+$('a', locationsRestriction).href = '#';
+locationsRestriction.title = TID.msg('defaultDownloadsFolderTooltip');
+
+listen('click', '#locations-restriction a', function (event) {
+    event.preventDefault();
+    chrome.downloads.showDefaultFolder();
+});
+
 // Remove the #static ID after a while to stop initial checkbox sliders from animating on load
 setTimeout(function () {
     $('#static').removeAttribute('id');

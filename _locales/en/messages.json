@@ -96,8 +96,12 @@
         "description": "Help text shown when the locations option is disabled."
     },
     "locationsRestriction": {
-        "message": "Due to Chrome's restrictions, you can only create locations in your default downloads folder.",
-        "description": "Help text about the download locations restriction."
+        "message": "Due to Chrome's restrictions, you can only create locations in <a>your default downloads folder</a>.",
+        "description": "Help text about the download locations restriction. Leave the <a>."
+    },
+    "defaultDownloadsFolderTooltip": {
+        "message": "Open your current default downloads folder.",
+        "description": "Tooltip for the link to open the current default downloads folder."
     },
 
 
