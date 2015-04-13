@@ -363,7 +363,7 @@ TID.events.initMutationObservers = function () {
         mutations.forEach(function (el) {
             for (var i = 0, l = el.addedNodes.length; i < l; i += 1) {
                 if (el.addedNodes[i].id === 'tumblr_lightbox') {
-                    centerImageObserver.observe($('#tumblr_lightbox_center_image'), {
+                    centerImageObserver.observe($(TID.selectors.lightboxCenterImage), {
                         attributes: true,
                         attributeFilter: ['src']
                     });
