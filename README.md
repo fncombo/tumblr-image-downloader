@@ -1,6 +1,6 @@
 Image Downloader for Tumblr
 =======================
-
+[![GitHub Issues](https://img.shields.io/github/issues/fncombo/tumblr-image-downloader.svg)][github-issues]
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)][grunt]
 [![Code Climate](https://codeclimate.com/github/fncombo/tumblr-image-downloader.png)][codeclimate]
 [![Dependency Status](https://gemnasium.com/fncombo/tumblr-image-downloader.svg)][gemnasium]
@@ -34,3 +34,4 @@ To add the extension to Chrome, go to `Settings > Extensions`, and open the `ext
 [codeclimate]: https://codeclimate.com/github/fncombo/tumblr-image-downloader
 [chromestore]: https://chrome.google.com/webstore/detail/tumblr-image-saver/hbbiaibbddjmdacbifbnioekmiocclpc
 [gemnasium]: https://gemnasium.com/fncombo/tumblr-image-downloader
+[github-issues]: https://github.com/fncombo/tumblr-image-downloader/issues
