@@ -44,6 +44,7 @@ module.exports = function(grunt) {
                             'js/main/messages.js',
                             'js/main/directories.js',
                             'js/main/images.js',
+                            'js/main/modifierkeys.js',
                             'js/main/events.js',
                             'js/main/buttons.js',
                             'js/main/ticks.js',

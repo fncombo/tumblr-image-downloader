@@ -99,7 +99,7 @@ TID.events.initDocumentEvents = function () {
             imageId = button.dataset.imageId;
 
             // Check for special actions via modifier keys
-            if (TID.events.modifierKeys(event, button, imageId)) {
+            if (TID.modifierKeys.checkAll(event, button, imageId)) {
                 return;
             }
 
@@ -118,7 +118,7 @@ TID.events.initDocumentEvents = function () {
             directory = event.target.dataset.directory;
 
             // Check for special actions via modifier keys
-            if (TID.events.modifierKeys(event, button, imageId, directory)) {
+            if (TID.modifierKeys.checkAll(event, button, imageId, directory)) {
                 return;
             }
 
@@ -142,100 +142,6 @@ TID.events.initDocumentEvents = function () {
             $$('.' + TID.classes.dialogButton).pop().click();
         }
     }, true);
-};
-
-/**
- * Check for any modifier keys while clicking on a download button or download directroy
- * @param  {Event}            event     The click event
- * @param  {Element}          button    The main download button
- * @param  {String}           imageId   ID of the image being clicked on
- * @param  {String|undefined} directory Directory, if any, being clicked on
- * @return {Boolean}                    Whether or not any modifier keys were active
- */
-TID.events.modifierKeys = function (event, button, imageId, directory) {
-    var buttons = [TID.msg('yes'), TID.msg('no')];
-
-    // Ctrl-click on downloaded image should ask whether the user wants to remove it
-    if (event.ctrlKey) {
-        console.log('Pressed with CTRL key', event, button, imageId, directory);
-        TID.trackEvent('Modified Click', 'Ctrl');
-
-        // Image has been downloaded, it can be removed
-        if (button.classList.contains(TID.classes.downloaded)) {
-            TID.ui.showDialog(TID.msg('ctrlKeyClick'), buttons, function (i) {
-                switch (i) {
-                case '0':
-                    TID.images.remove(imageId);
-                    break;
-                }
-            });
-        // Image has not been downloaded, inform them about it
-        } else {
-            TID.ui.showDialog(TID.msg('ctrlKeyClickWarning'), TID.msg('okay'));
-        }
-
-        return true;
-    // Alt-click on an image should try to reveal it
-    } else if (event.altKey) {
-        console.log('Pressed with ALT key', event, button, imageId, directory);
-        TID.trackEvent('Modified Click', 'Alt');
-
-        // Image has been downloaded, try to reveal it
-        if (button.classList.contains(TID.classes.downloaded)) {
-            TID.sendMessage({
-                message: 'storage',
-                action: 'reveal_image',
-                data: {
-                    imageId: imageId
-                }
-            });
-        // Image has not been downloaded, inform them about it
-        } else {
-            TID.ui.showDialog(TID.msg('altKeyClickWarning'), TID.msg('okay'));
-        }
-
-        return true;
-    // Shift-clicking should try to download all images in a post
-    } else if (event.shiftKey) {
-        console.log('Pressed with SHIFT key', event, button, imageId, directory);
-        TID.trackEvent('Modified Click', 'Shift');
-
-        var post = button.closest(TID.selectors.post);
-
-        // If we can find the post for this image
-        if (post) {
-            var message;
-            var selector;
-            if (directory) {
-                message = TID.msg('shiftKeyClickWithDirectory', directory);
-                selector = '.' + TID.classes.list + ' li[data-directory="' + directory + '"]';
-            } else {
-                message = TID.msg('shiftKeyClickWithoutDirectory');
-                selector = '.' + TID.classes.downloadDiv;
-            }
-
-            TID.ui.showDialog(message, buttons, function (i) {
-                switch (i) {
-                case '0':
-                    // Trigger a click event on all the buttons in that post
-                    $$(selector, post).forEach(function (downloadButton, i) {
-                        // Keep downloads apart form eachother so that IndexedDB can keep up
-                        setTimeout(function () {
-                            downloadButton.click();
-                        }, 500 * i);
-                    });
-                    break;
-                }
-            });
-        // If we can't find the post for this image
-        } else {
-            TID.ui.showDialog(TID.msg('shiftKeyClickWarning'), TID.msg('okay'));
-        }
-
-        return true;
-    }
-
-    return false;
 };
 
 /**
