@@ -150,9 +150,10 @@ module.exports = function(grunt) {
 
         sass: {
             options: {
-                style: 'expanded',
+                style: 'compressed',
                 precision: 3,
-                noCache: true
+                noCache: true,
+                sourcemap: false
             },
             build: {
                 files: [
