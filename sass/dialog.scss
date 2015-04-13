@@ -31,13 +31,7 @@
     z-index: 9999999999;
     -webkit-animation: overlay 0.05s linear forwards;
     color: $text-primary-color !important;
-    font-size: $text-base-size !important;
-    font-style: normal !important;
-    font-variant: normal !important;
-    font-weight: normal !important;
-    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif !important;
-    line-height: 1.4 !important;
-    text-shadow: none !important;
+    @extend .text-reset;
     cursor: auto !important;
 
     &:before {
@@ -62,9 +56,20 @@
     vertical-align: middle;
     -webkit-animation: dialog 0.15s $easeOutBack forwards;
     animation: dialog 0.15s $easeOutBack forwards;
+    @extend .text-reset;
 }
 
 .TID-dialog-message {
+    @extend .text-reset;
+}
+
+.TID-dialog-image {
+    margin: 0.75em 0 1.5em 0;
+    max-width: 900px
+
+    img {
+        width: 100%;
+    }
 }
 
 .TID-dialog-button {

@@ -36,14 +36,19 @@ $easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
 
 .base-button {
     background: $tumblr-gray;
+    min-width: 69px;
     border: none;
     border-radius: $input-radius;
-    padding: 0.4rem 0.6rem;
-    font-weight: bold;
+    padding: 0 10px;
+    font-weight: bold !important;
     color: #fff;
     cursor: pointer;
     text-decoration: none;
-    font-size: $text-smaller;
+    line-height: 28px;
+    height: 30px;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 13px;
 
     &:hover {
         background: $tumblr-gray-hover;
@@ -54,4 +59,15 @@ $easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
         box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
     }
 
+}
+
+.text-reset {
+    font-size: $text-base-size !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    font-weight: normal !important;
+    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif !important;
+    line-height: 1.4 !important;
+    text-shadow: none !important;
+    cursor: auto !important;
 }
