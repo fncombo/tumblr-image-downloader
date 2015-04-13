@@ -2,7 +2,7 @@ Image Downloader for Tumblr
 =======================
 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)][grunt]
-[![Code Climate](https://codeclimate.com/github/fncombo/tumblr-image-downloader.png)][codeclimate]
+[![Code Climate](https://codeclimate.com/github/fncombo/tumblr-image-downloader/badges/gpa.svg)][codeclimate]
 [![Dependency Status](https://gemnasium.com/fncombo/tumblr-image-downloader.svg)][gemnasium]
 [![GitHub Issues](https://img.shields.io/github/issues/fncombo/tumblr-image-downloader.svg)][github-issues]
 
