@@ -91,5 +91,9 @@
         "Hold Ctrl to forget a downloaded image.",
         "Hold Alt to open the image in the file browser.",
         "Support for full images inside text posts."
+    ],
+    [
+        "Hold Shift to download all images in a post.",
+        "Improvements to the download confirmation dialog."
     ]
 ]
