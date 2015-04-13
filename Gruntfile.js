@@ -12,6 +12,10 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
+        clean: [
+            'extension/'
+        ],
+
         concat: {
             options: {
                 stripBanners: false,
@@ -270,6 +274,7 @@ module.exports = function(grunt) {
 
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -286,6 +291,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('production', [
+        'clean',
         'concat',
         'sass',
         'slim',
