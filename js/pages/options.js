@@ -5,31 +5,6 @@
 /**
  * Text
  */
-
-// Process all tags on the page with text
-TID.processHTMLMessages();
-
-// Insert correct links to the extension store page
-if ($('#installMessage') && $('#supportMessage')) {
-    var installMessage = $('#installMessage a');
-    installMessage.href = 'https://chrome.google.com/webstore/detail/image-downloader-for-tumblr/' + chrome.runtime.id;
-    installMessage.target = '_blank';
-
-    var supportMessage = $('#supportMessage a');
-    supportMessage.href = 'https://chrome.google.com/webstore/support/' + chrome.runtime.id + '#bug';
-    supportMessage.target = '_blank';
-}
-
-
-var locationsRestriction = $('#locations-restriction');
-$('a', locationsRestriction).href = '#';
-locationsRestriction.title = TID.msg('defaultDownloadsFolderTooltip');
-
-listen('click', '#locations-restriction a', function (event) {
-    event.preventDefault();
-    chrome.downloads.showDefaultFolder();
-});
-
 // Remove the #static ID after a while to stop initial checkbox sliders from animating on load
 setTimeout(function () {
     $('#static').removeAttribute('id');
@@ -131,6 +106,19 @@ listen('keyup', '#download-directories input', TID.events.keyup);
 listen('click', '#download-directories .delete', function (event, el) {
     el.closest('li').remove();
 });
+
+// Open up the default downloads directory
+var locationsRestriction = $('#locations-restriction');
+if (locationsRestriction) {
+    $('a', locationsRestriction).href = '#';
+    locationsRestriction.title = TID.msg('defaultDownloadsFolderTooltip');
+
+    listen('click', '#locations-restriction a', function (event) {
+        event.preventDefault();
+        chrome.downloads.showDefaultFolder();
+    });
+}
+
 
 /**
  * Saving directories
