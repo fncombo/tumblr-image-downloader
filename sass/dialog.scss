@@ -51,15 +51,13 @@
 .TID-dialog {
     background: #fff;
     border-radius: $border-radius;
+    margin: 0 1em;
     padding: 1.5em 2.25em;
     display: inline-block;
     vertical-align: middle;
     -webkit-animation: dialog 0.15s $easeOutBack forwards;
     animation: dialog 0.15s $easeOutBack forwards;
     @extend .text-reset;
-    width: 90%;
-    max-width: 900px;
-    min-width: 200px;
 }
 
 .TID-dialog-message {
@@ -68,6 +66,8 @@
 
 .TID-dialog-image {
     margin: 0.75em 0 1.5em 0;
+    max-width: 900px;
+    min-width: 200px;
 
     img {
         width: 100%;
