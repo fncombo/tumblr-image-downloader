@@ -1,6 +1,6 @@
 'use strict';
 
-/*jshint unused:false, plusplus:false */
+/*jshint unused:false, plusplus:false, freeze:false */
 
 /**
  * Select a single element by a query selector
@@ -73,6 +73,14 @@ Element.prototype.closest = function (selector, threshold) {
  */
 Element.prototype.prependChild = function (el) {
     this.insertBefore(el, this.firstChild);
+};
+
+/**
+ * Capitalize the string
+ * @return {String} The string, capitalized
+ */
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
 /**
