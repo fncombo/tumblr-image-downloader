@@ -239,7 +239,7 @@
     },
     "shiftKeyClickWithDirectory": {
         "message": "You held down the <strong>Shift</strong> key.<br>Would you like to download all images in this post to: <strong>$DIRECTORY$</strong>?",
-        "description": "Dialog message when the user clicks the download button while holding down the shift key on a button with a directory."
+        "description": "Dialog message when the user clicks the download button while holding down the shift key on a button with a directory.",
         "placeholders": {
             "directory": {
                 "content": "$1",
