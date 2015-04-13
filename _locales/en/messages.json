@@ -30,11 +30,11 @@
     },
     "installMessage": {
         "message": "Find Image Downloader for Tumblr useful? Don&rsquo;t forget to <a>rate it on the Chrome Web Store</a>.",
-        "description": "A message displayed on all background extension pages. Leave the <a>, and replace Chrome Web Store with the locale-specific name."
+        "description": "A message displayed on all background extension pages. Put the <a> around what should be the link, and replace Chrome Web Store with the locale-specific name."
     },
     "supportMessage": {
         "message": "If you have a feature request or find that something is not working, <a>submit your feedback here</a>.",
-        "description": "A message displayed on all background extension pages. Leave the <a>."
+        "description": "A message displayed on all background extension pages. Put the <a> around what should be the link."
     },
     "githubLink": {
         "message": "Source on GitHub",
@@ -97,7 +97,7 @@
     },
     "locationsRestriction": {
         "message": "Due to Chrome's restrictions, you can only create locations in <a>your default downloads folder</a>.",
-        "description": "Help text about the download locations restriction. Leave the <a>."
+        "description": "Help text about the download locations restriction. Put the <a> around what should be the link."
     },
     "defaultDownloadsFolderTooltip": {
         "message": "Open your current default downloads folder.",
@@ -235,11 +235,11 @@
     },
     "shiftKeyClickWithoutDirectory": {
         "message": "You held down the <strong>Shift</strong> key.<br>Would you like to download all images in this post?",
-        "description": ""
+        "description": "Dialog message when the user clicks the download button while holding down the shift key on a button without a directory."
     },
     "shiftKeyClickWithDirectory": {
         "message": "You held down the <strong>Shift</strong> key.<br>Would you like to download all images in this post to: <strong>$DIRECTORY$</strong>?",
-        "description": "",
+        "description": "Dialog message when the user clicks the download button while holding down the shift key on a button with a directory."
         "placeholders": {
             "directory": {
                 "content": "$1",
@@ -249,7 +249,7 @@
     },
     "shiftKeyClickWarning": {
         "message": "You held down the <strong>Shift</strong> key.<br>Use this on an image in a post download all the images in that post.",
-        "description": ""
+        "description": "Dialog message when the user clicks the download button while holding down the shift key but it is not applicable."
     },
     "ctrlKeyClick": {
         "message": "You held down the <strong>Ctrl</strong> key.<br>Would you like to forget this downloaded image?<br><br>This will <strong>not</strong> delete the image from your computer.",
@@ -257,11 +257,11 @@
     },
     "ctrlKeyClickWarning": {
         "message": "You held down the <strong>Ctrl</strong> key.<br>Use this on a downloaded image to forget it.",
-        "description": ""
+        "description": "Dialog message when the user clicks the download button while holding down the ctrl key but it is not applicable."
     },
     "altKeyClickWarning": {
         "message": "You held down the <strong>Alt</strong> key.<br>Use this on a downloaded image to reveal it in your file browser.",
-        "description": ""
+        "description": "Dialog message when the user clicks the download button while holding down the alt key but it is not applicable."
     },
 
 
