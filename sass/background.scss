@@ -60,6 +60,10 @@ p {
     &.desc {
         color: $tumblr-gray;
         font-size: $text-smaller;
+
+        a {
+            color: $tumblr-gray;
+        }
     }
 
     &:last-child {
