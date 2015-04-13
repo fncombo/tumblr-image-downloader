@@ -183,6 +183,10 @@
         "message": "No",
         "description": "Button text used in dialogs."
     },
+    "okay": {
+        "message": "Okay",
+        "description": "Button text used in dialogs."
+    },
     "save": {
         "message": "Save",
         "description": "Button text for saving options."
