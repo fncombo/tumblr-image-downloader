@@ -317,13 +317,29 @@
         "message": "Tips",
         "description": "Title for the tips section on the options page."
     },
-    "tipCtrlClick": {
-        "message": "Clicking download while holding the <strong>Ctrl</strong> key will allow you to forget a downloaded image. This does not delete the file from your computer.",
+    "tipCtrlClickTitle": {
+        "message": "<strong>Ctrl</strong>-click download",
+        "description": "Title for this modifier key description."
+    },
+    "tipCtrlClickDescription": {
+        "message": "Will forget that you downloaded that image (and remove the ✓ tick). This does <strong>not</strong> delete the file from your computer.",
         "description": "Explains to the user about ctrl+click."
     },
-    "tipAltClick": {
-        "message": "Clicking download while holding the <strong>Alt</strong> key will attempt to show the image in the file browser. If you downloaded an image into multiple directories, this will open the location of your first download.",
+    "tipAltClickTitle": {
+        "message": "<strong>Alt</strong>-click download",
+        "description": "Title for this modifier key description."
+    },
+    "tipAltClickDescription": {
+        "message": "Will attempt to show the downloaded image in the file browser. If you downloaded an image into multiple directories, this will open the location of your first download.",
         "description": "Explains to the user about alt+click."
+    },
+    "tipShiftClickTitle": {
+        "message": "<strong>Shift</strong>-click download",
+        "description": "Title for this modifier key description."
+    },
+    "tipShiftClickDescription": {
+        "message": "Will download all images in a post.",
+        "description": "Explains to the user about shift+click."
     }
 
 }
