@@ -80,7 +80,8 @@ TID.classes = {
     overlay: 'TID-overlay',
     dialog: 'TID-dialog',
     dialogMessage: 'TID-dialog-message',
-    dialogButton: 'TID-dialog-button'
+    dialogImage: 'TID-dialog-image',
+    dialogButton: 'TID-dialog-button',
 };
 
 /**
@@ -99,7 +100,9 @@ TID.isSinglePage = document.body.classList.contains('single_image');
  * Selectors for HTML elements based on the current page
  * @type {Object}
  */
-TID.selectors = {};
+TID.selectors = {
+    post: '.post_container'
+};
 
 if (TID.isArchivePage) {
     TID.selectors.images = '.post.post_micro.is_photo ' +

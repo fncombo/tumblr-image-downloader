@@ -43,7 +43,7 @@ TID.events.buttonImageDownload = function (event) {
                         TID.trackEvent('Downloaded Image', isHD ? 'HD' : 'SD');
                     }
                 }
-            });
+            }, url);
         }
     }, true);
 };
@@ -53,7 +53,7 @@ TID.events.buttonImageDownload = function (event) {
  * @param {Event} event The event
  */
 TID.events.directoryImageDownload = function (event) {
-    var parent = event.target.ancestor(3);
+    var parent = event.target.closest('.' + TID.classes.download);
     var imageId = parent.dataset.imageId;
     var url = parent.dataset.url;
     var directory = event.target.dataset.directory;
@@ -72,7 +72,7 @@ TID.events.directoryImageDownload = function (event) {
                     TID.images.download(url, imageId, directory);
                     TID.trackEvent('Downloaded Image', 'To Directory');
                 }
-            });
+            }, url);
         }
     }, true);
 };
@@ -86,40 +86,20 @@ TID.events.initDocumentEvents = function () {
     // Download list events
     document.addEventListener('click', function (event) {
         var el = event.target;
+        var button;
+        var imageId;
+        var directory;
 
         // Set up downloading via normal download button
         if (el.matchesSelector('.' + TID.classes.downloadDiv)) {
             event.stopPropagation();
             event.preventDefault();
 
-            var imageId = event.target.parentNode.dataset.imageId;
+            button = event.target.parentNode;
+            imageId = button.dataset.imageId;
 
-            if (event.ctrlKey && event.target.parentNode.classList.contains(TID.classes.downloaded)) {
-                TID.trackEvent('Modified Click', 'Ctrl');
-
-                var message = TID.msg('ctrlKeyClick');
-                var buttons = [TID.msg('yes'), TID.msg('no')];
-
-                TID.ui.showDialog(message, buttons, function (i) {
-                    switch (i) {
-                    case '0':
-                        TID.images.remove(imageId);
-                        break;
-                    }
-                });
-
-                return;
-            } else if (event.altKey && event.target.parentNode.classList.contains(TID.classes.downloaded)) {
-                TID.trackEvent('Modified Click', 'Alt');
-
-                TID.sendMessage({
-                    message: 'storage',
-                    action: 'reveal_image',
-                    data: {
-                        imageId: imageId
-                    }
-                });
-
+            // Check for special actions via modifier keys
+            if (TID.events.modifierKeys(event, button, imageId)) {
                 return;
             }
 
@@ -133,7 +113,16 @@ TID.events.initDocumentEvents = function () {
             event.stopPropagation();
             event.preventDefault();
 
-            TID.events.directoryImageDownload(event, event.target.dataset.directory);
+            button = event.target.closest('.' + TID.classes.download);
+            imageId = button.dataset.imageId;
+            directory = event.target.dataset.directory;
+
+            // Check for special actions via modifier keys
+            if (TID.events.modifierKeys(event, button, imageId, directory)) {
+                return;
+            }
+
+            TID.events.directoryImageDownload(event, directory);
 
             return;
         }
@@ -153,6 +142,108 @@ TID.events.initDocumentEvents = function () {
             $$('.' + TID.classes.dialogButton).pop().click();
         }
     }, true);
+};
+
+/**
+ * Check for any modifier keys while clicking on a download button or download directroy
+ * @param  {Event}            event     The click event
+ * @param  {Element}          button    The main download button
+ * @param  {String}           imageId   ID of the image being clicked on
+ * @param  {String|undefined} directory Directory, if any, being clicked on
+ * @return {Boolean}                    Whether or not any modifier keys were active
+ */
+TID.events.modifierKeys = function (event, button, imageId, directory) {
+    var buttons;
+
+    // Ctrl-click on downloaded image should ask whether the user wants to remove it
+    if (event.ctrlKey) {
+        console.log('Pressed with CTRL key', event, button, imageId, directory);
+        TID.trackEvent('Modified Click', 'Ctrl');
+
+        // Image has been downloaded, it can be removed
+        if (button.classList.contains(TID.classes.downloaded)) {
+            buttons = [TID.msg('yes'), TID.msg('no')];
+
+            TID.ui.showDialog(TID.msg('ctrlKeyClick'), buttons, function (i) {
+                switch (i) {
+                case '0':
+                    TID.images.remove(imageId);
+                    break;
+                }
+            });
+        // Image has not been downloaded, inform them about it
+        } else {
+            TID.ui.showDialog(TID.msg('ctrlKeyClickWarning'), TID.msg('okay'));
+        }
+
+        return true;
+    // Alt-click on an image should try to reveal it
+    } else if (event.altKey) {
+        console.log('Pressed with ALT key', event, button, imageId, directory);
+        TID.trackEvent('Modified Click', 'Alt');
+
+        // Image has been downloaded, try to reveal it
+        if (button.classList.contains(TID.classes.downloaded)) {
+            TID.sendMessage({
+                message: 'storage',
+                action: 'reveal_image',
+                data: {
+                    imageId: imageId
+                }
+            });
+        // Image has not been downloaded, inform them about it
+        } else {
+            TID.ui.showDialog(TID.msg('altKeyClickWarning'), TID.msg('okay'));
+        }
+
+        return true;
+    // Shift-clicking should try to download all images in a post
+    } else if (event.shiftKey) {
+        console.log('Pressed with SHIFT key', event, button, imageId, directory);
+        TID.trackEvent('Modified Click', 'Shift');
+
+        var post = button.closest(TID.selectors.post);
+
+        // If we can find the post for this image
+        if (post) {
+            var message;
+            if (directory) {
+                message = TID.msg('shiftKeyClickWithDirectory', directory);
+            } else {
+                message = TID.msg('shiftKeyClickWithoutDirectory');
+            }
+
+            buttons = [TID.msg('yes'), TID.msg('no')];
+
+            TID.ui.showDialog(message, buttons, function (i) {
+                switch (i) {
+                case '0':
+                    var selector;
+                    if (directory) {
+                        selector = '.' + TID.classes.list + ' li[data-directory="' + directory + '"]';
+                    } else {
+                        selector = '.' + TID.classes.downloadDiv;
+                    }
+
+                    // Trigger a click event on all the buttons in that post
+                    $$(selector, post).forEach(function (downloadButton, i) {
+                        // Keep downloads apart form eachother so that IndexedDB can keep up
+                        setTimeout(function () {
+                            downloadButton.click();
+                        }, 500 * i);
+                    });
+                    break;
+                }
+            });
+        // If we can't find the post for this image
+        } else {
+            TID.ui.showDialog(TID.msg('shiftKeyClickWarning'), TID.msg('okay'));
+        }
+
+        return true;
+    }
+
+    return false;
 };
 
 /**

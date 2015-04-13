@@ -225,9 +225,35 @@
         "message": "Open the link in a new tab",
         "description": "Button text for opening a link in a new tab."
     },
+    "shiftKeyClickWithoutDirectory": {
+        "message": "You held down the <strong>Shift</strong> key.<br>Would you like to download all images in this post?",
+        "description": ""
+    },
+    "shiftKeyClickWithDirectory": {
+        "message": "You held down the <strong>Shift</strong> key.<br>Would you like to download all images in this post to: <strong>$DIRECTORY$</strong>?",
+        "description": "",
+        "placeholders": {
+            "directory": {
+                "content": "$1",
+                "example": "Tumblr/GIFs"
+            }
+        }
+    },
+    "shiftKeyClickWarning": {
+        "message": "You held down the <strong>Shift</strong> key.<br>Use this on an image in a post download all the images in that post.",
+        "description": ""
+    },
     "ctrlKeyClick": {
         "message": "You held down the <strong>Ctrl</strong> key.<br>Would you like to forget this downloaded image?<br><br>This will <strong>not</strong> delete the image from your computer.",
         "description": "Dialog message when the user clicks the download button while holding down the Ctrl key."
+    },
+    "ctrlKeyClickWarning": {
+        "message": "You held down the <strong>Ctrl</strong> key.<br>Use this on a downloaded image to forget it.",
+        "description": ""
+    },
+    "altKeyClickWarning": {
+        "message": "You held down the <strong>Alt</strong> key.<br>Use this on a downloaded image to reveal it in your file browser.",
+        "description": ""
     },
 
 
