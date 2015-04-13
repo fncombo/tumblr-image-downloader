@@ -149,7 +149,11 @@
     },
     "enableAnalytics": {
         "message": "Allow Google Analytics to collect anonymous usage data",
-        "description": "Help text explaining what the out out of analytics option does."
+        "description": "Help text explaining what the analytics option does."
+    },
+    "enableAnalyticsDescription": {
+        "message": "Information about what pages you visit, what images you download, or any other private data does <strong>not</strong> get tracked.",
+        "description": "Additional help text explaining what the out out of analytics option does."
     },
 
 
