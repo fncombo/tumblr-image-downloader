@@ -153,7 +153,7 @@ TID.events.initDocumentEvents = function () {
  * @return {Boolean}                    Whether or not any modifier keys were active
  */
 TID.events.modifierKeys = function (event, button, imageId, directory) {
-    var buttons;
+    var buttons = [TID.msg('yes'), TID.msg('no')];
 
     // Ctrl-click on downloaded image should ask whether the user wants to remove it
     if (event.ctrlKey) {
@@ -162,8 +162,6 @@ TID.events.modifierKeys = function (event, button, imageId, directory) {
 
         // Image has been downloaded, it can be removed
         if (button.classList.contains(TID.classes.downloaded)) {
-            buttons = [TID.msg('yes'), TID.msg('no')];
-
             TID.ui.showDialog(TID.msg('ctrlKeyClick'), buttons, function (i) {
                 switch (i) {
                 case '0':
@@ -207,24 +205,18 @@ TID.events.modifierKeys = function (event, button, imageId, directory) {
         // If we can find the post for this image
         if (post) {
             var message;
+            var selector;
             if (directory) {
                 message = TID.msg('shiftKeyClickWithDirectory', directory);
+                selector = '.' + TID.classes.list + ' li[data-directory="' + directory + '"]';
             } else {
                 message = TID.msg('shiftKeyClickWithoutDirectory');
+                selector = '.' + TID.classes.downloadDiv;
             }
-
-            buttons = [TID.msg('yes'), TID.msg('no')];
 
             TID.ui.showDialog(message, buttons, function (i) {
                 switch (i) {
                 case '0':
-                    var selector;
-                    if (directory) {
-                        selector = '.' + TID.classes.list + ' li[data-directory="' + directory + '"]';
-                    } else {
-                        selector = '.' + TID.classes.downloadDiv;
-                    }
-
                     // Trigger a click event on all the buttons in that post
                     $$(selector, post).forEach(function (downloadButton, i) {
                         // Keep downloads apart form eachother so that IndexedDB can keep up
