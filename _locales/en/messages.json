@@ -114,7 +114,7 @@
         "description": "Description of the remembered images option."
     },
     "rememberedImagesDisclaimer": {
-        "message": "Information about which images you download never leaves your computer.",
+        "message": "Information about which images you download is stored locally in the browser and never leaves your computer.",
         "description": "Disclaimer about the remembered images option."
     },
     "rememberedImagesClearButton": {
