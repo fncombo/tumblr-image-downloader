@@ -153,7 +153,7 @@ module.exports = function(grunt) {
                 style: 'compressed',
                 precision: 3,
                 noCache: true,
-                sourcemap: false
+                sourcemap: 'none'
             },
             build: {
                 files: [
