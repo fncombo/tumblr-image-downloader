@@ -410,13 +410,13 @@ TID.events.initMutationObservers = function () {
                     });
 
                     // Append the button
-                    blockEl = el.closest('p, div:not(.post_container)');
+                    blockEl = el.closest('p, div:not(' + TID.selectors.post + ')');
                     blockEl.classList.add(TID.classes.parent);
                     blockEl.insertBefore(button, el);
                 });
             } else {
                 // Remove any buttons
-                blockEl = el.closest('p, div:not(.post_container)');
+                blockEl = el.closest('p, div:not(' + TID.selectors.post + ')');
                 $$('.' + TID.classes.download, blockEl).forEach(function (el) {
                     el.remove();
                 });
