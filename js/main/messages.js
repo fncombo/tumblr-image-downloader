@@ -5,7 +5,7 @@
 /**
  * Get a local message value
  * @param  {String}              name   Message's key
- * @param  {string|Array|Object} values Values to be used for replacing placeholders in the message
+ * @param  {String|Array|Object} values Values to be used for replacing placeholders in the message
  * @return {String}                     Message value
  */
 TID.msg = function (name, values) {
