@@ -21,9 +21,7 @@ TID.run = function () {
     }
 
     // Add buttons after updating directories list
-    TID.directories.update(function () {
-        TID.buttons.add();
-    });
+    TID.directories.update(TID.buttons.add);
 
     var previousHeight = TID.getDocumentHeight();
 
