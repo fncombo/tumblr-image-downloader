@@ -102,6 +102,7 @@ TID.isSinglePage = document.body.classList.contains('single_image');
  */
 TID.selectors = {
     post: '.post_container',
+    postFullImage: '.tmblr-full',
     lightboxCenterImage: '#tumblr_lightbox_center_image'
 };
 
