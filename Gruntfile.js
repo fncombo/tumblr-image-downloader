@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         clean: [
-            'extension/'
+            '<%= paths.extension %>/'
         ],
 
         concat: {
