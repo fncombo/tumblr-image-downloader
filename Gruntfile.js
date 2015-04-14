@@ -166,9 +166,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: [
                             'sass/*.scss',
-                            '!sass/vars.scss',
-                            '!sass/dialog.scss',
-                            '!sass/normalize.scss'
+                            '!sass/_*vars.scss'
                         ],
                         flatten: true,
                         dest: '<%= paths.extension %>/css/',
