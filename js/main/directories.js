@@ -9,7 +9,7 @@
 TID.directories = {};
 
 /**
- * Avilable directories
+ * Available directories
  * @type {Array}
  */
 TID.directories.list = [];

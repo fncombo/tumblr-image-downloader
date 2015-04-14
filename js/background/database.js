@@ -75,7 +75,7 @@ TID.storage.request.onupgradeneeded = function (event) {
      * Initial versions
      */
 
-    // First time runing, create the store
+    // First time running, create the store
     if (!db.objectStoreNames.contains(TID.storage.store)) {
         store = db.createObjectStore(TID.storage.store, {
             keyPath: 'imageId',
@@ -183,7 +183,7 @@ TID.storage.request.onerror = function (event) {
 
 /**
  * Get the main object store of the database
- * @param  {String} mode Transacation mode, either 'readonly' or 'readwrite'
+ * @param  {String} mode Transaction mode, either 'readonly' or 'readwrite'
  * @return {Object}      The object store to work with
  */
 TID.storage.getObjectStore = function (mode) {

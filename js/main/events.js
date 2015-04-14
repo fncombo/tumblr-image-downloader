@@ -78,7 +78,7 @@ TID.events.directoryImageDownload = function (event) {
 };
 
 /**
- * Initialise all document event listeners
+ * Initialize all document event listeners
  */
 TID.events.initDocumentEvents = function () {
     console.log('Initializing all document events');

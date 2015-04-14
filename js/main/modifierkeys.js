@@ -9,7 +9,7 @@
 TID.modifierKeys = {};
 
 /**
- * Check for any modifier keys while clicking on a download button or download directroy
+ * Check for any modifier keys while clicking on a download button or download directory
  * @param  {Event}            event     The click event
  * @param  {Element}          button    The main download button
  * @param  {String}           imageId   ID of the image being clicked on
@@ -121,7 +121,7 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
             case '0':
                 // Trigger a click event on all the buttons in that post
                 $$(selector, post).forEach(function (downloadButton, i) {
-                    // Keep downloads apart form eachother so that IndexedDB can keep up
+                    // Keep downloads apart form each other so that IndexedDB can keep up
                     setTimeout(function () {
                         downloadButton.click();
                     }, 500 * i);

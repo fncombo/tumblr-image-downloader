@@ -17,7 +17,7 @@ TID.ticks.add = function (imageId, directoriesToTick) {
     $$('.' + TID.classes.download + '[data-image-id="' + imageId + '"]').forEach(function (el) {
         el.classList.add(TID.classes.downloaded);
 
-        // Tick any directories that should be ticked (that thios images has been downloaded to)
+        // Tick any directories that should be ticked (that this images has been downloaded to)
         if (directoriesToTick) {
             directoriesToTick.forEach(function (directory) {
                 var listEl = $('li[data-directory="' + directory + '"]', el);
@@ -30,7 +30,7 @@ TID.ticks.add = function (imageId, directoriesToTick) {
 };
 
 /**
- * Remove a tck from a button
+ * Remove a tick from a button
  * @param {String} imageId ID of the button to remove a tick from
  */
 TID.ticks.remove = function (imageId) {
