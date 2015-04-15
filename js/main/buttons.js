@@ -94,7 +94,7 @@ TID.buttons.create = function (imageData, callback) {
 
             var imageDomain = imageData.url.match(TID.regex.imageDomain);
             if (imageDomain && imageDomain.length === 2) {
-                download.title += '\n' + imageDomain;
+                download.title += '\n' + imageDomain[1];
             }
         }
 
