@@ -18,4 +18,4 @@ TID.vars = {};
  * Analytics tracking ID
  * @type {String}
  */
-TID.trackingId = 'UA-40682860-1';
+TID.trackingId = 'UA-40682860-2';
