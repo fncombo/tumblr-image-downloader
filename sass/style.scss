@@ -18,7 +18,6 @@ a.TID-parent {
     img {
         margin-bottom: 0 !important;
     }
-
 }
 
 .TID-parent:hover .TID-download-div,
@@ -83,7 +82,6 @@ a.TID-parent {
     &:hover .TID-list {
         background: $tumblr-color;
     }
-
 }
 
 .TID-download-div {
@@ -94,7 +92,6 @@ a.TID-parent {
     &:hover {
         background: $tumblr-color-hover;
     }
-
 }
 
 .TID-archive {
@@ -120,7 +117,6 @@ a.TID-parent {
             .post_glass {
                 box-shadow: inset 0 0 0 1px $tumblr-color-hover, inset 0 0 0 2px #fff;
             }
-
         }
 
         .TID-download {
@@ -131,7 +127,6 @@ a.TID-parent {
         .TID-download-div, .TID-list {
             display: none;
         }
-
 
         &.is_photo:hover {
 
@@ -152,11 +147,8 @@ a.TID-parent {
                 opacity: 1;
                 background: $tumblr-color-transparent;
             }
-
         }
-
     }
-
 }
 
 .TID-show-ticks .TID-parent:not(:hover) .TID-downloaded:before,
@@ -212,9 +204,7 @@ a.TID-parent {
             span {
                 padding: 0 0.15em;
             }
-
         }
-
     }
 
     &:hover ul {
@@ -228,7 +218,6 @@ a.TID-parent {
         &:hover {
             background: $tumblr-color-hover;
         }
-
     }
 
     & > span {
@@ -240,19 +229,15 @@ a.TID-parent {
     &:hover > span {
         background: $tumblr-color-hover;
     }
-
 }
 
 .TID-hide-locations {
-
     .TID-list {
         display: none !important;
     }
-
 }
 
 .single_image {
-
     .TID-download {
         position: relative;
     }
@@ -260,5 +245,4 @@ a.TID-parent {
     .TID-download-div, .TID-list {
         opacity: 1;
     }
-
 }
