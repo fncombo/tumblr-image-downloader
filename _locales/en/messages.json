@@ -29,7 +29,7 @@
         "description": "Title for the update history page."
     },
     "installMessage": {
-        "message": "Find Image Downloader for Tumblr useful? Don&rsquo;t forget to <a>rate it on the Chrome Web Store</a>.",
+        "message": "Find Image Downloader for Tumblr useful? Don't forget to <a>rate it on the Chrome Web Store</a>.",
         "description": "A message displayed on all background extension pages. Put the <a> around what should be the link, and replace Chrome Web Store with the locale-specific name."
     },
     "supportMessage": {
@@ -59,7 +59,7 @@
         "description": "Help text at the bottom of the options page."
     },
     "optionsGuidelinesHelp": {
-        "message": "Please remember to respect the images&rsquo; owners and follow their rules and usage guidelines. This extension is only supposed to enable you to collect images for yourself, not redistribute or use them without the original owner&rsquo;s permission.",
+        "message": "Please remember to respect the images' owners and follow their rules and usage guidelines. This extension is only supposed to enable you to collect images for yourself, not redistribute or use them without the original owner's permission.",
         "description": "Help text at the bottom of the options page."
     },
     "optionsAffiliactionHelp": {
@@ -88,7 +88,7 @@
         "description": "Description of the additional download locations option."
     },
     "locationsSeparatorHelp": {
-        "message": "Separate sub-folders with a <code>/</code> forward slash. If the folder doesn&rsquo;t exist, it will automatically be created.",
+        "message": "Separate sub-folders with a <code>/</code> forward slash. If the folder doesn't exist, it will automatically be created.",
         "description": "Help text explaining how to nest directories. Wrap the / (directory separator character) inside a <code> tag."
     },
     "locationsDisabledHelp": {
