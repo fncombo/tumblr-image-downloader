@@ -36,7 +36,6 @@ a.TID-parent {
     cursor: pointer;
     z-index: 89;
     white-space: pre;
-    text-transform: none !important;
 
     #tumblr_lightbox & {
         // Exactly how many 9s it takes to overrtide tumblr. Well done.
@@ -61,6 +60,8 @@ a.TID-parent {
         line-height: 1.4 !important;
         text-shadow: none !important;
         cursor: pointer !important;
+        text-transform: none !important;
+        text-decoration: none !important;
     }
 
     strong {
