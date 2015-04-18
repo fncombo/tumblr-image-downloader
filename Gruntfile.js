@@ -129,7 +129,7 @@ module.exports = function(grunt) {
                 },
                 report: false,
                 sourceMap: false,
-                wrap: false,
+                wrap: true,
                 preserveComments: false,
                 screwIE8: true,
                 quoteStyle: 3
