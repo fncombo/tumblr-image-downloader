@@ -205,7 +205,7 @@ a.TID-parent {
         }
 
         span {
-            color: hsla(0, 0%, 100%, 0.75);
+            color: unquote('hsla(0, 0%, 100%, 0.75)') !important;
             pointer-events: none;
 
             span {
