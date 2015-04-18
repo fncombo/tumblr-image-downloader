@@ -55,21 +55,6 @@ module.exports = function(grunt) {
                     },
                     {
                         src: [
-                            'js/main/core.js',
-                            'js/main/main.js',
-                            'js/main/init.js',
-                            'js/main/runtime.js',
-                            'js/main/messages.js',
-                            'js/main/ui.js',
-                            'js/background/checkboxes.js',
-                            'js/background/directories.js',
-                            'js/background/events.js',
-                            'js/background/updates.js',
-                        ],
-                        dest: '<%= paths.extension %>/js/support.js'
-                    },
-                    {
-                        src: [
                             'js/main/main.js',
                             'js/main/messages.js',
                             'js/background/analytics.js',
@@ -80,6 +65,35 @@ module.exports = function(grunt) {
                             'js/pages/background.js'
                         ],
                         dest: '<%= paths.extension %>/js/background.js'
+                    },
+                    {
+                        src: [
+                            'js/main/core.js',
+                            'js/main/main.js',
+                            'js/main/init.js',
+                            'js/main/runtime.js',
+                            'js/main/messages.js',
+                            'js/main/ui.js',
+                            'js/background/checkboxes.js',
+                            'js/background/directories.js',
+                            'js/background/events.js',
+                            'js/pages/text.js',
+                            'js/pages/options.js'
+                        ],
+                        dest: '<%= paths.extension %>/js/options.js'
+                    },
+                    {
+                        src: [
+                            'js/main/core.js',
+                            'js/main/main.js',
+                            'js/main/init.js',
+                            'js/main/runtime.js',
+                            'js/main/messages.js',
+                            'js/background/updates.js',
+                            'js/pages/text.js',
+                            'js/pages/updates.js'
+                        ],
+                        dest: '<%= paths.extension %>/js/updates.js'
                     }
                 ]
             }
@@ -197,20 +211,6 @@ module.exports = function(grunt) {
         },
 
         copy: {
-            javascript: {
-                files: [
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: [
-                            'js/pages/*.js',
-                            '!js/pages/background.js'
-                        ],
-                        dest: '<%= paths.extension %>/js/',
-                        filter: 'isFile'
-                    }
-                ]
-            },
             misc: {
                 files: [
                     {
