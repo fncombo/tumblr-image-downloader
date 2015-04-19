@@ -176,7 +176,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     case 'storage':
         switch (request.action) {
-        case 'imageExists':
+        case 'image_exists':
             // Keep the messaging channel open for async
             ret = true;
             TID.storage.imageExists(request.data.imageId, sendResponse);

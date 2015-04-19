@@ -58,7 +58,7 @@ TID.images.exists = function (imageId, callback, fromHtml) {
     } else {
         chrome.runtime.sendMessage({
             message: 'storage',
-            action: 'imageExists',
+            action: 'image_exists',
             data: {
                 imageId: imageId
             }
