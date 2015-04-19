@@ -69,6 +69,7 @@ TID.storage.request.onupgradeneeded = function (event) {
 
     var db = event.currentTarget.result;
     var store;
+    var request;
 
     /**
      * Version 1 - 2
@@ -128,7 +129,7 @@ TID.storage.request.onupgradeneeded = function (event) {
 
         // Open a cursor to traverse through all the entries
         // in order to migrate the data
-        var request = store.openCursor();
+        request = store.openCursor();
 
         request.onsuccess = function (event) {
             var cursor = event.target.result;
