@@ -141,6 +141,21 @@ TID.events.initDocumentEvents = function () {
         if (el.matchesSelector('.' + TID.classes.overlay)) {
             $$('.' + TID.classes.dialogButton).pop().click();
         }
+
+        // Clicking on a link in a dialog to reveal an image
+        if (el.matchesSelector('.' + TID.classes.revealImageLink)) {
+            if (el.dataset.exists === 'false') {
+                TID.ui.showDialog(TID.msg('imageNotAtDownloadLocation'), [TID.msg('nevermind')]);
+                return;
+            }
+
+            TID.sendMessage({
+                message: 'reveal_image',
+                data: {
+                    downloadId: el.dataset.downloadId,
+                },
+            });
+        }
     }, true);
 };
 

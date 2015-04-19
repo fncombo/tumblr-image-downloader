@@ -75,13 +75,7 @@ TID.modifierKeys.triggerAlt = function (event, button, imageId, directory) {
 
     // Image has been downloaded, try to reveal it
     if (button.classList.contains(TID.classes.downloaded)) {
-        TID.sendMessage({
-            message: 'storage',
-            action: 'reveal_image',
-            data: {
-                imageId: imageId
-            }
-        });
+        TID.ui.revealImage(button.dataset.url);
     // Image has not been downloaded, inform them about it
     } else {
         TID.ui.showDialog(TID.msg('altKeyClickWarning'), TID.msg('okay'));

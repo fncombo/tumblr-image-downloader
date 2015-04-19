@@ -61,6 +61,48 @@
 
 .TID-dialog-message {
     @extend .text-reset;
+
+    .TID-dialog-align-text {
+        text-align: left !important;
+    }
+
+    ul {
+        margin: 0 0 0 18px !important;
+        padding: 0 !important;
+        list-style: initial !important;
+
+        li {
+            margin: 4px 0 0 0 !important;
+            padding: 0 !important;
+        }
+
+        em {
+            font-style: italic !important;
+        }
+
+        a {
+            color: $tumblr-color !important;
+            text-decoration: underline !important;
+
+            &[data-directory="false"] {
+                font-style: italic !important;
+            }
+
+            &[data-exists="false"] {
+                color: $tumblr-red !important;
+            }
+
+
+            &:hover {
+                text-decoration: none !important;
+            }
+
+            &:focus {
+                outline: none !important;
+                text-decoration: underline !important;
+            }
+        }
+    }
 }
 
 .TID-dialog-image {

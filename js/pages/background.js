@@ -164,6 +164,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }
         break;
 
+    case 'search_image':
+        ret = true;
+
+        chrome.downloads.search(request.data, sendResponse);
+        break;
+
+    case 'reveal_image':
+        console.log('Attempting to reveal image', request.data.downloadId);
+        chrome.downloads.show(parseInt(request.data.downloadId, 10));
+        break;
+
     case 'storage':
         switch (request.action) {
         case 'imageExists':
@@ -197,10 +208,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             ret = true;
 
             TID.storage.count(sendResponse);
-            break;
-
-        case 'reveal_image':
-            TID.storage.revealImage(request.data.imageId);
             break;
         }
         break;

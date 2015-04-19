@@ -82,6 +82,8 @@ TID.classes = {
     dialogMessage: 'TID-dialog-message',
     dialogImage: 'TID-dialog-image',
     dialogButton: 'TID-dialog-button',
+    dialogAlignText: 'TID-dialog-align-text',
+    revealImageLink: 'TID-reveal-image-link',
 };
 
 /**

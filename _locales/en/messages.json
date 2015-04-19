@@ -195,6 +195,10 @@
         "message": "Okay",
         "description": "Button text used in dialogs."
     },
+    "nevermind": {
+        "message": "Nevermind",
+        "description": "Button text used in dialogs."
+    },
     "save": {
         "message": "Save",
         "description": "Button text for saving options."
@@ -262,6 +266,30 @@
     "altKeyClickWarning": {
         "message": "You held down the <strong>Alt</strong> key.<br>Use this on a downloaded image to reveal it in your file browser.",
         "description": "Dialog message when the user clicks the download button while holding down the alt key but it is not applicable."
+    },
+    "imageNotAtDownloadLocation": {
+        "message": "Looks like this image doesn't exist at the original download location anymore.<br>Did you move or delete it, or clear your downloads history?",
+        "description": "Dialog message when the user tries to reveal an image that Chrome can't find at the original download location anymore."
+    },
+    "revealPlacesFound": {
+        "message": "Found these places you downloaded the image to (click to reveal)",
+        "description": "Title for the dialog which lists all the download locations."
+    },
+    "revealPlacesByExtension": {
+        "message": "Using this extension",
+        "description": "Title for the dialog which lists all the download locations by this extension."
+    },
+    "revealPlacesByOther": {
+        "message": "Not using this extension",
+        "description": "Title for the dialog which lists all the download locations not by this extension."
+    },
+    "revealUnknownDirectory": {
+        "message": "Default/unknown directory",
+        "description": "Used when the reveal/download directory couldn't be determined."
+    },
+    "revealEmpty": {
+        "message": "None...",
+        "description": "Used when no images were download by this extension."
     },
 
 
@@ -338,7 +366,7 @@
         "description": "Title for this modifier key description."
     },
     "tipAltClickDescription": {
-        "message": "Will attempt to show the downloaded image in the file browser. If you downloaded an image into multiple directories, this will open the location of your first download.",
+        "message": "Will list all the directories to which you have downloaded the image, allowing you to reveal the files. Note that Chrome's download history must be enabled and not cleared for this.",
         "description": "Explains to the user about alt+click."
     },
     "tipShiftClickTitle": {

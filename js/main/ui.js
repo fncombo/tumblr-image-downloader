@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID */
+/* globals TID, chrome */
 
 /**
  * UI functions
@@ -85,4 +85,104 @@ TID.ui.confirmDialog = function (callback, imageId) {
     }
 
     TID.ui.showDialog(message, buttons, buttonsCallback, imageId);
+};
+
+TID.ui.revealImage = function (url) {
+    TID.sendMessage({
+        message: 'search_image',
+        data: {
+            url: url
+        }
+    }, function (results) {
+        if (!results || (results.length === 1 && !results[0].exists)) {
+            console.log('No download items');
+
+            TID.ui.showDialog(TID.msg('imageNotAtDownloadLocation'), [TID.msg('nevermind')]);
+            return;
+        } else if (results.length === 1) {
+            console.log('Only one download item, attempting to reveal');
+
+            TID.sendMessage({
+                message: 'reveal_image',
+                data: {
+                    downloadId: results[0].id,
+                },
+            });
+            return;
+        }
+
+        function list (download) {
+            var downloadDirectory = false;
+            var date = new Date(download.startTime);
+            var locale = TID.msg('@@ui_locale').replace('_', '-');
+            var dateOptions = {
+                hour: 'numeric',
+                minute: 'numeric',
+                weekday: 'long',
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+            };
+
+            TID.directories.list.forEach(function (directory) {
+                if (
+                    download.filename.indexOf(directory) !== -1 ||
+                    download.filename.indexOf(directory.replace(/\//g, '\\')) !== -1
+                ) {
+                    downloadDirectory = directory;
+                }
+            });
+
+            html += '<li>';
+            html += '<a href="javascript:;" class="' + TID.classes.revealImageLink + '"';
+            html += ' data-download-id="' + download.id + '"';
+            html += ' data-exists="' + download.exists + '"';
+            html += ' data-directory="' + !!downloadDirectory + '"';
+            html += ' title="' + download.filename + '"';
+            html += '>';
+            html += downloadDirectory ? downloadDirectory : TID.msg('revealUnknownDirectory');
+            html += '</a>';
+            html += '<span> (' + date.toLocaleString(locale, dateOptions) + ')</span>';
+            html += '</li>';
+        }
+
+        console.log('Listing download items:', results);
+
+        var byExtension = [];
+        var byOther = [];
+
+        results.forEach(function (download) {
+            if (download.byExtensionId === chrome.runtime.id) {
+                byExtension.push(download);
+            } else {
+                byOther.push(download);
+            }
+        });
+
+        var html = '<div class="' + TID.classes.dialogAlignText + '">';
+        html += TID.msg('revealPlacesFound');
+
+        if (byOther.length) {
+            html += '<br><br><strong>' + TID.msg('revealPlacesByExtension') + '</strong><br>';
+        }
+
+        html += '<ul>';
+        if (byExtension.length) {
+            byExtension.forEach(list);
+        } else {
+            html += '<div>' + TID.msg('revealEmpty') + '</div>';
+        }
+        html += '</ul>';
+
+        if (byOther.length) {
+            html += '<br><strong>' + TID.msg('revealPlacesByOther') + '</strong><br>';
+            html += '<ul>';
+            byOther.forEach(list);
+            html += '</ul>';
+        }
+
+        html += '</div>';
+
+        TID.ui.showDialog(html, ['Done']);
+    });
 };

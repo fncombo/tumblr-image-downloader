@@ -300,18 +300,3 @@ TID.storage.count = function (callback) {
         callback(0);
     };
 };
-
-/**
- * Attempt to reveal the downloaded image in the file browser
- * @param  {String} imageId ID of the image to reveal
- */
-TID.storage.revealImage = function (imageId) {
-    console.log('Getting the download ID of the image', imageId);
-
-    var store = TID.storage.getObjectStore();
-    var request = store.get(imageId);
-
-    request.onsuccess = function () {
-        chrome.downloads.show(request.result.chromeDownloadId);
-    };
-};
