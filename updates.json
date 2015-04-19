@@ -95,5 +95,8 @@
     [
         "Hold Shift to download all images in a post.",
         "Improvements to the download confirmation dialog."
+    ],
+    [
+        "Improved and much more useful dialog for revealing images that were downloaded more than once."
     ]
 ]
