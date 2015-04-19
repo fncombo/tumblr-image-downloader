@@ -196,7 +196,7 @@
         "description": "Button text used in dialogs."
     },
     "nevermind": {
-        "message": "Nevermind",
+        "message": "Never mind",
         "description": "Button text used in dialogs."
     },
     "save": {
@@ -226,7 +226,7 @@
         "description": "Dialog message when the user tries to download the same image again."
     },
     "linkNotImage": {
-        "message": "Oops! The external link doesn't appear to be an image.<br>What would you like to do?",
+        "message": "The external download link doesn't appear to be an image.<br>What would you like to do?",
         "description": "Dialog message when the external download URL isn't an image."
     },
     "downloadFromTumblr": {
