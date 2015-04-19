@@ -185,6 +185,6 @@ TID.ui.revealImage = function (url) {
 
         html += '</div>';
 
-        TID.ui.showDialog(html, ['Done']);
+        TID.ui.showDialog(html, TID.msg('done'));
     });
 };

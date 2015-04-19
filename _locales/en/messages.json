@@ -195,6 +195,10 @@
         "message": "Okay",
         "description": "Button text used in dialogs."
     },
+    "done": {
+        "message": "Done",
+        "description": "Button text used in dialogs."
+    },
     "nevermind": {
         "message": "Never mind",
         "description": "Button text used in dialogs."
