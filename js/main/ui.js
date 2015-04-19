@@ -94,7 +94,7 @@ TID.ui.revealImage = function (url) {
             url: url
         }
     }, function (results) {
-        if (!results || (results.length === 1 && !results[0].exists)) {
+        if (!results || !results.length || (results.length === 1 && !results[0].exists)) {
             console.log('No download items');
 
             TID.ui.showDialog(TID.msg('imageNotAtDownloadLocation'), [TID.msg('nevermind')]);
