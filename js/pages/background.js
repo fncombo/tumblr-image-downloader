@@ -113,7 +113,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         chrome.downloads.download({
             url: request.data.url,
             saveAs: false
-        }, function (downloadId) {
+        }, function () {
             var directory;
             if (TID.vars.saveDirectory) {
                 directory = TID.vars.saveDirectory;
@@ -128,8 +128,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 imageId: TID.vars.lastImageId,
                 imageUrl: TID.vars.lastImageUrl,
                 pageUrl: TID.vars.lastPageUrl,
-                directory: directory,
-                chromeDownloadId: downloadId
+                directory: directory
             });
 
             // Send message to all open tabs that the image was downloaded
