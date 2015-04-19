@@ -97,12 +97,12 @@ TID.ui.revealImage = function (url) {
         }
     }, function (results) {
         if (!results || !results.length || (results.length === 1 && !results[0].exists)) {
-            console.log('No download items');
+            console.log('No download items', results);
 
             TID.ui.showDialog(TID.msg('imageNotAtDownloadLocation'), TID.msg('nevermind'));
             return;
         } else if (results.length === 1) {
-            console.log('Only one download item, attempting to reveal');
+            console.log('Only one download item, attempting to reveal', results);
 
             TID.sendMessage({
                 message: 'reveal_image',
