@@ -129,7 +129,7 @@ TID.ui.revealImage = function (url) {
             TID.directories.list.forEach(function (directory) {
                 if (
                     download.filename.indexOf(directory) !== -1 ||
-                    download.filename.indexOf(directory.replace(/\//g, '\\')) !== -1
+                    download.filename.indexOf(directory.replace(TID.regex.globalForwardSlash, '\\')) !== -1
                 ) {
                     downloadDirectory = directory;
                 }

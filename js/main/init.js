@@ -48,6 +48,7 @@ TID.regex = {
     imageDomain: /^https?:\/\/(?:www.)?([^\/]+)/,
     tumblrDomain: /tumblr\.com\//,
     https: /^https?:\/\//,
+    globalForwardSlash: /\//g,
 };
 
 /**
