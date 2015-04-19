@@ -170,7 +170,7 @@ TID.ui.revealImage = function (url) {
         if (byExtension.length) {
             byExtension.forEach(list);
         } else {
-            html += '<div>' + TID.msg('revealEmpty') + '</div>';
+            html += '<li>' + TID.msg('revealEmpty') + '</li>';
         }
         html += '</ul>';
 
