@@ -91,7 +91,9 @@ TID.ui.revealImage = function (url) {
     TID.sendMessage({
         message: 'search_image',
         data: {
-            url: url
+            query: [
+                url.replace(TID.regex.https, '')
+            ]
         }
     }, function (results) {
         if (!results || !results.length || (results.length === 1 && !results[0].exists)) {

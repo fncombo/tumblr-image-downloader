@@ -46,7 +46,8 @@ TID.regex = {
     imageExt: /(jpe?g|png|gif)$/,
     image1280: /_1280\.(?:jpe?g|png|gif)$/,
     imageDomain: /^https?:\/\/(?:www.)?([^\/]+)/,
-    tumblrDomain: /tumblr\.com\//
+    tumblrDomain: /tumblr\.com\//,
+    https: /^https?:\/\//,
 };
 
 /**
