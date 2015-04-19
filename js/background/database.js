@@ -136,21 +136,18 @@ TID.storage.request.onupgradeneeded = function (event) {
 
             if (cursor) {
                 // Update each entry's value
-                var innerRequest = store.get(cursor.value.imageId);
+                var data = cursor.value;
 
-                innerRequest.onsuccess = function () {
-                    var data = innerRequest.result;
-                    // Move "directory" into "directories"
-                    data.directories = [];
-                    // Make sure it's not false
-                    if (data.directory) {
-                        data.directories.push(data.directory);
-                    }
-                    // Remove "directory"
-                    delete data.directory;
+                // Move "directory" into "directories"
+                data.directories = [];
+                // Make sure it's not false
+                if (data.directory) {
+                    data.directories.push(data.directory);
+                }
+                // Remove "directory"
+                delete data.directory;
 
-                    store.put(data);
-                };
+                store.put(data);
 
                 cursor.continue();
             } else {
