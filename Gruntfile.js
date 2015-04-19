@@ -246,7 +246,6 @@ module.exports = function(grunt) {
                 ],
                 tasks: [
                     'concat',
-                    'copy:javascript'
                 ]
             },
             sass: {
@@ -261,7 +260,6 @@ module.exports = function(grunt) {
                 ],
                 tasks: [
                     'concat',
-                    'copy:javascript',
                     'sass'
                 ]
             },
