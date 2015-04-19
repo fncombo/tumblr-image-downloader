@@ -13,7 +13,7 @@ TID.storage = {};
  * @type {String|Number}
  */
 TID.storage.name = 'TID';
-TID.storage.version = 6;
+TID.storage.version = 7;
 TID.storage.store = 'images';
 
 /**
@@ -168,6 +168,44 @@ TID.storage.request.onupgradeneeded = function (event) {
         store.createIndex('chromeDownloadId', 'chromeDownloadId', {
             unique: false
         });
+    }
+
+    /**
+     * Version 7
+     * Remove chromeDownloadId from the database
+     */
+
+    // Remove the chromeDownloadId value from all the entries
+    if (store.indexNames.contains('chromeDownloadId')) {
+        // Open a cursor to traverse through all the entries
+        // in order to migrate the data
+        request = store.openCursor();
+
+        request.onsuccess = function (event) {
+            var cursor = event.target.result;
+
+            if (cursor) {
+                // Update each entry's value
+                var data = cursor.value;
+
+                // Remove "chromeDownloadId"
+                if (data.hasOwnProperty('chromeDownloadId')) {
+                    delete data.chromeDownloadId;
+                    store.put(data);
+                }
+
+                cursor.continue();
+            } else {
+                // End of all entries, delete the "chromeDownloadId" index
+                if (store.indexNames.contains('chromeDownloadId')) {
+                    store.deleteIndex('chromeDownloadId');
+                }
+            }
+        };
+    }
+
+    if (store.indexNames.contains('chromeDownloadId')) {
+        store.deleteIndex('chromeDownloadId');
     }
 };
 
