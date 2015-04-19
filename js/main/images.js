@@ -214,11 +214,7 @@ TID.images.download = function (url, imageId, directory) {
     }
 
     if (TID.isArchivePage) {
-        TID.images.checkHD(url, function (url) {
-            sendMessage(url);
-        }, function (url) {
-            sendMessage(url);
-        });
+        TID.images.checkHD(url, sendMessage, sendMessage);
     } else {
         sendMessage(url);
     }
