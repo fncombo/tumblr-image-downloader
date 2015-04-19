@@ -249,11 +249,34 @@ TID.events.initMessageListener = function () {
 TID.events.initMutationObservers = function () {
     console.log('Initializing DOM mutation observers');
 
+    function appendButton (el, button) {
+        // Give the button correct offsets
+        button.style.position = 'relative';
+        button.style.top = el.style.top;
+        button.style.left = el.style.left;
+
+        // Remove any existing buttons
+        $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
+            el.remove();
+        });
+
+        // Append the button
+        el.parentNode.appendChild(button);
+    }
+
     // Create a DOM mutation observer for the lightbox middle image
     var centerImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
             var el = mutation.target;
             var imageId = TID.images.getID(el.src);
+
+            // If the button already exists on the page, use that
+            var existingButton = $('.' + TID.classes.download + '[data-image-id="' + imageId + '"]');
+            if (existingButton) {
+                appendButton(el, existingButton.cloneNode(true));
+                return;
+            }
+
             var isHD = TID.regex.image1280.test(el.src);
             var data = {
                 imageId: imageId,
@@ -263,18 +286,7 @@ TID.events.initMutationObservers = function () {
             };
 
             TID.buttons.create(data, function (button) {
-                // Give the button correct offsets
-                button.style.position = 'relative';
-                button.style.top = el.style.top;
-                button.style.left = el.style.left;
-
-                // Remove any existing buttons
-                $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
-                    el.remove();
-                });
-
-                // Append the button
-                el.parentNode.appendChild(button);
+                appendButton(el, button);
             });
         });
     });
