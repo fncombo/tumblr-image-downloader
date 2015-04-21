@@ -118,7 +118,7 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
                     // Keep downloads apart form each other so that IndexedDB can keep up
                     setTimeout(function () {
                         downloadButton.click();
-                    }, 500 * i);
+                    }, 100 * i);
                 });
                 break;
             }
