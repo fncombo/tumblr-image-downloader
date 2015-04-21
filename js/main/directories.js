@@ -41,7 +41,7 @@ TID.directories.update = function (callback) {
 };
 
 /**
- * Format HMTL the list fo current directories
+ * Generate HTML for the list of current directories
  * @return {String} The formatted HTML for the download directories
  */
 TID.directories.format = function () {
