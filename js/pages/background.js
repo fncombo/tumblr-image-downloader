@@ -55,23 +55,15 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             downloadItem.mime.indexOf('image') !== -1
         )
     ) {
-        var directory;
-
         if (TID.vars.saveDirectory) {
-            directory = TID.vars.saveDirectory;
-
             suggest({
                 filename: TID.vars.saveDirectory + '/' + downloadItem.filename
             });
         } else if (TID.vars.defaultDirectory) {
-            directory = TID.vars.defaultDirectory;
-
             suggest({
                 filename: TID.vars.defaultDirectory + '/' + downloadItem.filename
             });
         } else {
-            directory = false;
-
             suggest({
                 filename: downloadItem.filename
             });
