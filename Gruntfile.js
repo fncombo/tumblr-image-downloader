@@ -62,6 +62,7 @@ module.exports = function(grunt) {
                             'js/background/notifications.js',
                             'js/background/database.js',
                             'js/background/tabs.js',
+                            'js/background/download.js',
                             'js/pages/background.js'
                         ],
                         dest: '<%= paths.extension %>/js/background.js'
