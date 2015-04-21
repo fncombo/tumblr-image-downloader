@@ -228,9 +228,10 @@ TID.storage.getObjectStore = function (mode) {
 
 /**
  * Save an image that has been downloaded
- * @param {Object} data All the data about the downloaded image
+ * @param {Object}   data     All the data about the downloaded image
+ * @param {Function} callback Callback
  */
-TID.storage.saveImage = function (data) {
+TID.storage.saveImage = function (data, callback) {
     var store = TID.storage.getObjectStore('readwrite');
 
     if (!data.hasOwnProperty('time')) {
@@ -238,15 +239,24 @@ TID.storage.saveImage = function (data) {
     }
 
     var request = store.get(data.imageId);
+    var insertRequest;
+
+    function retry () {
+        console.error('Request to save image failed, retrying...', data);
+
+        setTimeout(function () {
+            TID.storage.saveImage(data, callback);
+        }, 100);
+    }
 
     request.onsuccess = function () {
         var currentData = request.result;
 
         if (currentData) {
-            // Make sure it's not false
-            if (data.directory) {
-                // Create the array if it doesn't exist
-                if (!currentData.directories) {
+            // Make sure it exists and is not false
+            if (data.hasOwnProperty('directory') && typeof data.directory === 'string') {
+                // Create the array if it doesn't exist or is the wrong type
+                if (!currentData.hasOwnProperty('directories') || !(currentData.directories instanceof Array)) {
                     currentData.directories = [];
                 }
 
@@ -258,19 +268,33 @@ TID.storage.saveImage = function (data) {
 
             console.log('Saving image (update)', currentData);
 
-            store.put(currentData);
+            insertRequest = store.put(currentData);
         } else {
-            // Make sure it's not false
-            if (data.directory) {
+            // Make sure it exists and is not false
+            if (data.hasOwnProperty('directory') && typeof data.directory === 'string') {
                 data.directories = [data.directory];
             }
             delete data.directory;
 
             console.log('Saving image (insert)', data);
 
-            store.add(data);
+            insertRequest = store.add(data);
         }
+
+        // Saved/update successfully
+        insertRequest.onsuccess = function () {
+            console.log('Image saved successfully', data);
+
+            if (callback) {
+                callback();
+            }
+        };
+        // Wait a little bit and try again
+        insertRequest.onerror = retry;
     };
+
+    // Wait a little bit and try again
+    request.onerror = retry;
 };
 
 /**

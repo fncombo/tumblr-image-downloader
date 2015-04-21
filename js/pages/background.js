@@ -11,6 +11,12 @@ TID.regex = TID.regex || {};
 // Regular expression to match image files
 TID.regex.imageFile = new RegExp('\\.(?:jpe?g|png|gif)$', 'i');
 
+/**
+ * Downloading images
+ * @type {Object}
+ */
+TID.downloadingImages = {};
+
 // Only add analytics if they haven't opted out
 // Default to enabled
 chrome.storage.sync.get({
@@ -45,6 +51,8 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         return;
     }
 
+    var downloadingImage = TID.downloadingImages[downloadItem.url];
+
     console.log('Downloading item', downloadItem);
 
     // If a valid image
@@ -55,9 +63,9 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             downloadItem.mime.indexOf('image') !== -1
         )
     ) {
-        if (TID.vars.saveDirectory) {
+        if (downloadingImage.saveDirectory) {
             suggest({
-                filename: TID.vars.saveDirectory + '/' + downloadItem.filename
+                filename: downloadingImage.saveDirectory + '/' + downloadItem.filename
             });
         } else if (TID.vars.defaultDirectory) {
             suggest({
@@ -75,10 +83,10 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         chrome.downloads.cancel(downloadItem.id);
 
         // Prompt the user
-        chrome.tabs.sendMessage(TID.vars.lastTabID, {
+        chrome.tabs.sendMessage(downloadingImage.tabId, {
             message: 'not_image',
-            imageId: TID.vars.lastImageId,
-            directory: TID.vars.saveDirectory,
+            imageId: downloadingImage.imageId,
+            directory: downloadingImage.saveDirectory,
             url: downloadItem.url
         });
     }
@@ -96,42 +104,60 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         break;
 
     case 'download':
-        TID.vars.saveDirectory = request.data.directory;
-        TID.vars.lastTabID = sender.tab.id;
-        TID.vars.lastImageId = request.data.imageId;
-        TID.vars.lastImageUrl = request.data.url;
-        TID.vars.lastPageUrl = request.data.pageUrl;
+        TID.downloadingImages[request.data.url] = {
+            saveDirectory: request.data.directory,
+            tabId: sender.tab.id,
+            imageId: request.data.imageId,
+            imageUrl: request.data.url,
+            pageUrl: request.data.pageUrl,
+        };
 
         chrome.downloads.download({
             url: request.data.url,
-            saveAs: false
-        }, function () {
-            var directory;
-            if (TID.vars.saveDirectory) {
-                directory = TID.vars.saveDirectory;
-            } else if (TID.vars.defaultDirectory) {
-                directory = TID.vars.defaultDirectory;
-            } else {
-                directory = false;
-            }
-
-            // Save the image
-            TID.storage.saveImage({
-                imageId: TID.vars.lastImageId,
-                imageUrl: TID.vars.lastImageUrl,
-                pageUrl: TID.vars.lastPageUrl,
-                directory: directory
-            });
-
-            // Send message to all open tabs that the image was downloaded
-            TID.sendToAllTabs('*://*.tumblr.com/*', {
-                message: 'image_downloaded',
-                data: {
-                    imageId: TID.vars.lastImageId,
-                    directory: directory
+            saveAs: false,
+        }, function (downloadId) {
+            chrome.downloads.search({
+                id: downloadId,
+            }, function (results) {
+                if (!results || !results.length) {
+                    console.log('Image downloaded by not found in download history', downloadId);
                 }
-            });
 
+                var downloadItem = results[0];
+                var downloadingImage = TID.downloadingImages[downloadItem.url];
+                var directory;
+
+                console.log('Download finished', downloadItem);
+
+                // Figure out which directory it was saved to
+                if (downloadingImage.saveDirectory) {
+                    directory = TID.vars.saveDirectory;
+                } else if (TID.vars.defaultDirectory) {
+                    directory = TID.vars.defaultDirectory;
+                } else {
+                    directory = false;
+                }
+
+                // Save the image
+                TID.storage.saveImage({
+                    imageId: downloadingImage.imageId,
+                    imageUrl: downloadingImage.imageUrl,
+                    pageUrl: downloadingImage.pageUrl,
+                    directory: directory,
+                }, function () {
+                    // Send message to all open tabs that the image was downloaded
+                    TID.sendToAllTabs('*://*.tumblr.com/*', {
+                        message: 'image_downloaded',
+                        data: {
+                            imageId: downloadingImage.imageId,
+                            directory: directory
+                        }
+                    });
+
+                    // Remove the downloading image data
+                    delete TID.downloadingImages[downloadItem.url];
+                });
+            });
         });
         break;
 
