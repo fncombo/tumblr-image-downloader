@@ -131,7 +131,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
                 // Figure out which directory it was saved to
                 if (downloadingImage.saveDirectory) {
-                    directory = TID.vars.saveDirectory;
+                    directory = downloadingImage.saveDirectory;
                 } else if (TID.vars.defaultDirectory) {
                     directory = TID.vars.defaultDirectory;
                 } else {
