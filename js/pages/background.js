@@ -51,7 +51,16 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         return;
     }
 
-    var downloadingImage = TID.downloadingImages[downloadItem.url];
+    var downloadingImage;
+
+    if (TID.downloadingImages.hasOwnProperty(downloadItem.url)) {
+        downloadingImage = TID.downloadingImages[downloadItem.url];
+    } else {
+        console.error('Downloading image URL does not seem to exist in downloading images object',
+            downloadItem, TID.downloadingImages);
+
+        return;
+    }
 
     console.log('Downloading item', downloadItem);
 
@@ -90,6 +99,8 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             url: downloadItem.url
         });
     }
+
+    downloadingImage.filenameDetermined = true;
 });
 
 // Listen to messages from other scripts
@@ -154,8 +165,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                         }
                     });
 
-                    // Remove the downloading image data
-                    delete TID.downloadingImages[downloadItem.url];
+                    // Go through each downloading image and remove it if we've used it
+                    Object.keys(TID.downloadingImages).forEach(function (key) {
+                        if (
+                            TID.downloadingImages[key].hasOwnProperty('filenameDetermined') &&
+                            TID.downloadingImages[key].filenameDetermined
+                        ) {
+                            delete TID.downloadingImages[key];
+                        }
+                    });
                 });
             });
         });
