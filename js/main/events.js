@@ -316,7 +316,14 @@ TID.events.initMutationObservers = function () {
     var inlineImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
             var el = mutation.target;
-            var blockEl;
+            var blockEl = [];
+
+            TID.selectors.post.split(', ').forEach(function (selector) {
+                blockEl.push('p, div:not(' + selector + ')');
+            });
+
+            blockEl = blockEl.join(', ');
+            blockEl = el.closest(blockEl);
 
             if (
                 (
@@ -343,13 +350,11 @@ TID.events.initMutationObservers = function () {
                     });
 
                     // Append the button
-                    blockEl = el.closest('p, div:not(' + TID.selectors.post + ')');
                     blockEl.classList.add(TID.classes.parent);
                     blockEl.insertBefore(button, el);
                 });
             } else {
                 // Remove any buttons
-                blockEl = el.closest('p, div:not(' + TID.selectors.post + ')');
                 $$('.' + TID.classes.download, blockEl).forEach(function (el) {
                     el.remove();
                 });
