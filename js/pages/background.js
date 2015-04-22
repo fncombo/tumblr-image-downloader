@@ -42,6 +42,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log('Received request', request, 'from', sender);
 
+    // Set to true to keep the messaging channel open for async requests
     var ret = false;
 
     switch (request.message) {
@@ -95,7 +96,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     case 'storage':
         switch (request.action) {
         case 'image_exists':
-            // Keep the messaging channel open for async
             ret = true;
             TID.storage.imageExists(request.data.imageId, sendResponse);
             break;
