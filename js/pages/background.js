@@ -97,6 +97,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         switch (request.action) {
         case 'image_exists':
             ret = true;
+
             TID.storage.imageExists(request.data.imageId, sendResponse);
             break;
 
