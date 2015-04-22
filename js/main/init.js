@@ -33,7 +33,21 @@ TID.settings.list = {
         set: function (value) {
             TID.directories.setVisibility(value);
         }
-    }
+    },
+
+    ctrlClickConfirm: {
+        default: true,
+        set: function (value) {
+            TID.settings.ctrlClickConfirm = value;
+        }
+    },
+
+    shiftClickConfirm: {
+        default: true,
+        set: function (value) {
+            TID.settings.shiftClickConfirm = value;
+        }
+    },
 };
 
 /**

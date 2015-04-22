@@ -22,10 +22,22 @@ main#static
     div
       p msg-content="tipCtrlClickTitle"
         p.desc msg-content="tipCtrlClickDescription"
+        p.toggle-group
+          label
+            input type="checkbox" data-for="ctrlClickConfirm" data-default="true" data-message="Ctrl-click Confirmation Option"
+            span
+            span msg-content="tipCtrlClickConfirmationOption"
+      hr
       p msg-content="tipAltClickTitle"
         p.desc msg-content="tipAltClickDescription"
+      hr
       p msg-content="tipShiftClickTitle"
         p.desc msg-content="tipShiftClickDescription"
+        p.toggle-group
+          label
+            input type="checkbox" data-for="shiftClickConfirm" data-default="true" data-message="Shift-click Confirmation Option"
+            span
+            span msg-content="tipShiftClickConfirmationOption"
 
   hr.strong
 

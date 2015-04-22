@@ -47,6 +47,13 @@ TID.modifierKeys.triggerCtrl = function (event, button, imageId, directory) {
 
     // Image has been downloaded, it can be removed
     if (button.classList.contains(TID.classes.downloaded)) {
+        // If the confirm message is turned off, just do it
+        if (!TID.settings.ctrlClickConfirm) {
+            TID.images.remove(imageId);
+            return;
+        }
+
+        // Otherwise show a dialog
         TID.ui.showDialog(TID.msg('ctrlKeyClick'), buttons, function (i) {
             switch (i) {
             case '0':
@@ -111,10 +118,21 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
     var buttons = [TID.msg('yes'), TID.msg('no')];
     var post = button.closest(TID.selectors.post);
 
+    function run () {
+        // Trigger a click event on all the buttons in that post
+        $$(selector, post).forEach(function (downloadButton, i) {
+            // Keep downloads apart form each other so that IndexedDB can keep up
+            setTimeout(function () {
+                downloadButton.click();
+            }, 100 * i);
+        });
+    }
+
     // If we can find the post for this image
     if (post) {
         var message;
         var selector;
+
         if (directory) {
             message = TID.msg('shiftKeyClickWithDirectory', directory);
             selector = '.' + TID.classes.list + ' li[data-directory="' + directory + '"]';
@@ -123,16 +141,17 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
             selector = '.' + TID.classes.downloadDiv;
         }
 
+        // If the confirm message is turned off, just do it
+        if (!TID.settings.shiftClickConfirm) {
+            run();
+            return;
+        }
+
+        // Otherwise show a dialog
         TID.ui.showDialog(message, buttons, function (i) {
             switch (i) {
             case '0':
-                // Trigger a click event on all the buttons in that post
-                $$(selector, post).forEach(function (downloadButton, i) {
-                    // Keep downloads apart form each other so that IndexedDB can keep up
-                    setTimeout(function () {
-                        downloadButton.click();
-                    }, 100 * i);
-                });
+                run();
                 break;
             }
         });

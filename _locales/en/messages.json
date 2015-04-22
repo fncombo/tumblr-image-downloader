@@ -365,6 +365,10 @@
         "message": "Will forget that you downloaded that image (and remove the ✓ tick). This does <strong>not</strong> delete the file from your computer.",
         "description": "Explains to the user about ctrl+click."
     },
+    "tipCtrlClickConfirmationOption": {
+        "message": "Show a confirmation dialog before forgetting the image",
+        "description": "An option to turn on/off the confirmation dialog when using ctrl-click."
+    },
     "tipAltClickTitle": {
         "message": "<strong>Alt</strong>-click download",
         "description": "Title for this modifier key description."
@@ -380,6 +384,10 @@
     "tipShiftClickDescription": {
         "message": "Will download all images in a post.",
         "description": "Explains to the user about shift+click."
+    },
+    "tipShiftClickConfirmationOption": {
+        "message": "Show a confirmation dialog before downloading all the images",
+        "description": "An option to turn on/off the confirmation dialog when using ctrl-click."
     }
 
 }

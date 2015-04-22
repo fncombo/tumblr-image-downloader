@@ -1,2 +1,12 @@
 {
+    /**
+     * Tips text
+     */
+    "tipCtrlClickConfirmationOption": {
+        "message": "Show a confirmation dialogue before forgetting the image"
+    },
+    "tipShiftClickConfirmationOption": {
+        "message": "Show a confirmation dialogue before downloading all the images"
+    }
+
 }

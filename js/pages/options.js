@@ -163,7 +163,15 @@ document.addEventListener('keyup', function (event) {
 // Keep settings up-to-date across multiple options pages
 chrome.storage.onChanged.addListener(function (changes) {
     // Check for tickbox changes
-    var tickboxes = ['confirm', 'showTicks', 'enableAnalytics', 'rememberImages', 'enableLocations'];
+    var tickboxes = [
+        'confirm',
+        'showTicks',
+        'enableAnalytics',
+        'rememberImages',
+        'enableLocations',
+        'ctrlClickConfirm',
+        'shiftClickConfirm',
+    ];
 
     tickboxes.forEach(function (tickbox) {
         if (changes.hasOwnProperty(tickbox)) {
