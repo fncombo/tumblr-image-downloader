@@ -16,7 +16,7 @@ TID.events.buttonImageDownload = function (event) {
     var parent = event.target.parentNode;
     var imageId = parent.dataset.imageId;
     var url = parent.dataset.url;
-    var isHD = parent.dataset.isHd === 'true' ? true : false;
+    var isHd = parent.dataset.isHd === 'true' ? true : false;
 
     console.log('Downloading image from button', imageId);
 
@@ -29,7 +29,7 @@ TID.events.buttonImageDownload = function (event) {
             if (TID.isArchivePage) {
                 TID.trackEvent('Downloaded Image', 'Archive');
             } else {
-                TID.trackEvent('Downloaded Image', isHD ? 'HD' : 'SD');
+                TID.trackEvent('Downloaded Image', isHd ? 'HD' : 'SD');
             }
         // Otherwise ask for confirmation
         } else if (hasDownloaded) {
@@ -40,7 +40,7 @@ TID.events.buttonImageDownload = function (event) {
                     if (TID.isArchivePage) {
                         TID.trackEvent('Downloaded Image', 'Archive');
                     } else {
-                        TID.trackEvent('Downloaded Image', isHD ? 'HD' : 'SD');
+                        TID.trackEvent('Downloaded Image', isHd ? 'HD' : 'SD');
                     }
                 }
             }, url);
