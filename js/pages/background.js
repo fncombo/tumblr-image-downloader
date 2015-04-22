@@ -30,10 +30,14 @@ chrome.runtime.onInstalled.addListener(function (details) {
         chrome.tabs.create({
             url: 'html/options.html'
         });
+
+        TID.trackEvent('Extension', 'Installed');
         break;
 
     case 'update':
         TID.notifications.showUpdate();
+
+        TID.trackEvent('Extension', 'Updated');
         break;
     }
 });
