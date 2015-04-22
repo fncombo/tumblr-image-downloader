@@ -75,7 +75,20 @@ TID.modifierKeys.triggerAlt = function (event, button, imageId, directory) {
 
     // Image has been downloaded, try to reveal it
     if (button.classList.contains(TID.classes.downloaded)) {
-        TID.ui.revealImage(button.dataset.url);
+        // Get image data first as we cannot access all of it on the archive page
+        if (TID.isArchivePage) {
+            TID.sendMessage({
+                message: 'storage',
+                action: 'get_image',
+                data: {
+                    imageId: button.dataset.imageId
+                }
+            }, function (image) {
+                TID.ui.revealImage(image.imageUrl);
+            });
+        } else {
+            TID.ui.revealImage(button.dataset.url);
+        }
     // Image has not been downloaded, inform them about it
     } else {
         TID.ui.showDialog(TID.msg('altKeyClickWarning'), TID.msg('okay'));

@@ -95,6 +95,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     case 'storage':
         switch (request.action) {
+        case 'get_image':
+            keepChannelOpen = true;
+
+            TID.storage.getImage(request.data.imageId, sendResponse);
+            break;
+
         case 'image_exists':
             keepChannelOpen = true;
 
