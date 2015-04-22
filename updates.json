@@ -101,6 +101,7 @@
     ],
     [
         "Greatly improved the reliability of the database and the downloading of images.",
+        "Fixed revealing images from the archive page.",
         "Bug fixes."
     ]
 ]
