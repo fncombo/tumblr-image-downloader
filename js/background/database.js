@@ -299,12 +299,28 @@ TID.storage.saveImage = function (data, callback) {
 
 /**
  * Remove an image from storage by its ID
- * @param {String} imageId ID of the image to remove
+ * @param {String}   imageId  ID of the image to remove
+ * @param {Function} callback Callback
  */
-TID.storage.removeImage = function (imageId) {
+TID.storage.removeImage = function (imageId, callback) {
     console.log('Removing imageID from the database', imageId);
 
-    TID.storage.getObjectStore('readwrite').delete(imageId);
+    var request = TID.storage.getObjectStore('readwrite').delete(imageId);
+
+    request.onsuccess = function () {
+        if (callback) {
+            callback();
+        }
+    };
+
+    // Wait a little bit and try again
+    request.onerror = function () {
+        console.error('Request to remove image failed, retrying...', imageId);
+
+        setTimeout(function () {
+            TID.storage.removeImage(imageId, callback);
+        }, 100);
+    };
 };
 
 /**
