@@ -291,7 +291,7 @@ input[type="checkbox"] {
     }
 
     &:checked + span:before {
-        left: 24px - 2px - 10px;
+        left: 13px;
     }
 
     &.toggle + span:after {
