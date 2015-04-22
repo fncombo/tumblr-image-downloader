@@ -328,7 +328,9 @@ TID.storage.imageExists = function (imageId, callback) {
             data.directories = request.result.directories || [];
         }
 
-        callback(data);
+        if (callback) {
+            callback(data);
+        }
     };
 
     request.onerror = function () {
