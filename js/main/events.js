@@ -337,7 +337,7 @@ TID.events.initMutationObservers = function () {
                 };
 
                 TID.buttons.create(data, function (button) {
-                    // Remove any existing butons
+                    // Remove any existing buttons
                     $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
                         el.remove();
                     });
