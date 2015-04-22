@@ -49,13 +49,13 @@ $('#clear').onclick = function () {
     TID.ui.showDialog(message, buttons, function (i) {
         switch (i) {
         case '0':
-            TID.adjustImageCount(0);
-
             TID.sendMessage({
                 message: 'storage',
                 action: 'clear'
+            }, function () {
+                TID.adjustImageCount(0);
+                TID.trackEvent('Cleared Storage', 'Cleared Images');
             });
-            TID.trackEvent('Cleared Storage', 'Cleared Images');
             break;
 
         case '1':
