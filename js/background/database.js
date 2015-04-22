@@ -338,11 +338,27 @@ TID.storage.imageExists = function (imageId, callback) {
 
 /**
  * Clear everything stored in the database
+ * @param {Function} callback Callback
  */
-TID.storage.clear = function () {
+TID.storage.clear = function (callback) {
     console.log('Clearing database storage');
 
-    TID.storage.getObjectStore('readwrite').clear();
+    var request = TID.storage.getObjectStore('readwrite').clear();
+
+    request.onsuccess = function () {
+        if (callback) {
+            callback();
+        }
+    };
+
+    // Wait a little bit and try again
+    request.onerror = function () {
+        console.error('Request to clear storage failed, retrying...');
+
+        setTimeout(function () {
+            TID.storage.clear(callback);
+        }, 100);
+    };
 };
 
 /**
