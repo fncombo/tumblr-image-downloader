@@ -101,14 +101,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
 
         case 'remove_image':
-            TID.storage.removeImage(request.data.imageId);
-
-            // Send message to all open tabs that the image has been removed
-            TID.sendToAllTabs('*://*.tumblr.com/*', {
-                message: 'image_removed',
-                data: {
-                    imageId: request.data.imageId
-                }
+            TID.storage.removeImage(request.data.imageId, function () {
+                // Send message to all open tabs that the image has been removed
+                TID.sendToAllTabs('*://*.tumblr.com/*', {
+                    message: 'image_removed',
+                    data: {
+                        imageId: request.data.imageId
+                    }
+                });
             });
             break;
 
