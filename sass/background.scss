@@ -136,7 +136,7 @@ button {
 }
 
 input {
-    width: 18rem;
+    width: 14rem;
     padding: 0.5rem 0.75rem;
     border: 1px solid $border;
     border-radius: $input-radius;
@@ -376,5 +376,9 @@ footer {
             margin: 0;
             text-align: right;
         }
+    }
+
+    input {
+        width: 18rem;
     }
 }
