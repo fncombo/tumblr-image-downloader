@@ -1,5 +1,12 @@
 {
     /**
+     * General options
+     */
+    "confirmationHelp": {
+        "message": "Show a confirmation dialogue when I try to download an already downloaded image"
+    },
+
+    /**
      * Modifier keys text
      */
     "modifierKeysCtrlClickConfirmationOption": {

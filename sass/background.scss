@@ -2,7 +2,7 @@
 @import 'vars';
 @import 'dialog.scss';
 
-$main-width: 665px;
+$main-width: 765px;
 $main-margin: 32px;
 
 html, body {
@@ -41,6 +41,10 @@ hr {
     &.strong {
         border-top: 1px solid hsl(0, 0%, 90%);
         border-bottom: 1px solid hsl(0, 0%, 90%);
+    }
+
+    section & {
+        margin: 1rem 0;
     }
 }
 
@@ -132,7 +136,7 @@ button {
 }
 
 input {
-    width: 12rem;
+    width: 18rem;
     padding: 0.5rem 0.75rem;
     border: 1px solid $border;
     border-radius: $input-radius;

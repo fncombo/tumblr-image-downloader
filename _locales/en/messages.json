@@ -144,7 +144,7 @@
         "description": "Title for the general section on the options page."
     },
     "confirmationHelp": {
-        "message": "Prompt me when I try to download an already downloaded image",
+        "message": "Show a confirmation dialog when I try to download an already downloaded image",
         "description": "Help text explaining what the confirm option does."
     },
     "showTicksHelp": {
