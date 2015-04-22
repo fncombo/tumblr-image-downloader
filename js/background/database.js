@@ -333,8 +333,13 @@ TID.storage.imageExists = function (imageId, callback) {
         }
     };
 
+    // Wait a little bit and try again
     request.onerror = function () {
-        callback(data);
+        console.error('Request to check whether image exists failed, retrying...', imageId);
+
+        setTimeout(function () {
+            TID.storage.imageExists(imageId, callback);
+        }, 100);
     };
 };
 
