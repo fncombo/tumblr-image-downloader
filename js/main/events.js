@@ -16,7 +16,7 @@ TID.events.buttonImageDownload = function (event) {
     var parent = event.target.parentNode;
     var imageId = parent.dataset.imageId;
     var url = parent.dataset.url;
-    var isHD = parent.dataset.hd === 'true' ? true : false;
+    var isHD = parent.dataset.isHd === 'true' ? true : false;
 
     console.log('Downloading image from button', imageId);
 
