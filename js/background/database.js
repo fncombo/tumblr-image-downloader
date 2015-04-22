@@ -350,13 +350,20 @@ TID.storage.clear = function () {
  * @param {Function} callback Callback
  */
 TID.storage.count = function (callback) {
-    var count = TID.storage.getObjectStore().count();
+    var request = TID.storage.getObjectStore().count();
 
-    count.onsuccess = function (event) {
-        callback(event.target.result);
+    request.onsuccess = function (event) {
+        if (callback) {
+            callback(event.target.result);
+        }
     };
 
-    count.onerror = function () {
-        callback(0);
+    // Wait a little bit and try again
+    request.onerror = function () {
+        console.error('Request to get storage count failed, retrying...');
+
+        setTimeout(function () {
+            TID.storage.count(callback);
+        }, 100);
     };
 };
