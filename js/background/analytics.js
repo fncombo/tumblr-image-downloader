@@ -51,7 +51,7 @@ TID.activateAnalytics = function () {
 TID.deactivateAnalytics = function () {
     console.log('Disabling analytics');
 
-    window['ga-disable-UA-' + TID.trackingId] = true;
+    window['ga-disable-' + TID.trackingId] = true;
 
     document.querySelector('script[src*="google-analytics"]').remove();
 
