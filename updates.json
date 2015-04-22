@@ -100,6 +100,7 @@
         "Improved and much more useful dialog for revealing images that were downloaded more than once."
     ],
     [
-        "Greatly improved the reliability of the database and the downloading of images."
+        "Greatly improved the reliability of the database and the downloading of images.",
+        "Bug fixes."
     ]
 ]
