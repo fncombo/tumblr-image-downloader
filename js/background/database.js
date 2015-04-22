@@ -227,6 +227,31 @@ TID.storage.getObjectStore = function (mode) {
 };
 
 /**
+ * Get all the data about a single image identified by its ID
+ * @param  {String}   imageId  ID of the image to search for
+ * @param  {Function} callback Callback
+ */
+TID.storage.getImage = function (imageId, callback) {
+    var store = TID.storage.getObjectStore();
+    var request = store.get(imageId);
+
+    request.onsuccess = function () {
+        console.log('Got image data', imageId, request.result);
+
+        if (callback) {
+            callback(request.result);
+        }
+    };
+
+    // Wait a little bit and try again
+    request.onerror = function () {
+        setTimeout(function () {
+            TID.storage.getImage(imageId, callback);
+        }, 100);
+    };
+};
+
+/**
  * Save an image that has been downloaded
  * @param {Object}   data     All the data about the downloaded image
  * @param {Function} callback Callback
