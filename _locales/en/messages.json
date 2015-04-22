@@ -351,41 +351,41 @@
     },
 
     /**
-     * Tips text
+     * Modifier keys text
      */
-    "tipsTitle": {
-        "message": "Tips",
-        "description": "Title for the tips section on the options page."
+    "modifierKeysTitle": {
+        "message": "Modifier Keys",
+        "description": "Title for the modifier keys section on the options page."
     },
-    "tipCtrlClickTitle": {
+    "modifierKeysCtrlClickTitle": {
         "message": "<strong>Ctrl</strong>-click download",
         "description": "Title for this modifier key description."
     },
-    "tipCtrlClickDescription": {
+    "modifierKeysCtrlClickDescription": {
         "message": "Will forget that you downloaded that image (and remove the ✓ tick). This does <strong>not</strong> delete the file from your computer.",
         "description": "Explains to the user about ctrl+click."
     },
-    "tipCtrlClickConfirmationOption": {
+    "modifierKeysCtrlClickConfirmationOption": {
         "message": "Show a confirmation dialog before forgetting the image",
         "description": "An option to turn on/off the confirmation dialog when using ctrl-click."
     },
-    "tipAltClickTitle": {
+    "modifierKeysAltClickTitle": {
         "message": "<strong>Alt</strong>-click download",
         "description": "Title for this modifier key description."
     },
-    "tipAltClickDescription": {
+    "modifierKeysAltClickDescription": {
         "message": "Will list all the directories to which you have downloaded the image, allowing you to reveal the files. Note that Chrome's download history must be enabled and not cleared for this.",
         "description": "Explains to the user about alt+click."
     },
-    "tipShiftClickTitle": {
+    "modifierKeysShiftClickTitle": {
         "message": "<strong>Shift</strong>-click download",
         "description": "Title for this modifier key description."
     },
-    "tipShiftClickDescription": {
+    "modifierKeysShiftClickDescription": {
         "message": "Will download all images in a post.",
         "description": "Explains to the user about shift+click."
     },
-    "tipShiftClickConfirmationOption": {
+    "modifierKeysShiftClickConfirmationOption": {
         "message": "Show a confirmation dialog before downloading all the images",
         "description": "An option to turn on/off the confirmation dialog when using ctrl-click."
     }

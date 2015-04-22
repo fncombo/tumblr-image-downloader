@@ -1,11 +1,11 @@
 {
     /**
-     * Tips text
+     * Modifier keys text
      */
-    "tipCtrlClickConfirmationOption": {
+    "modifierKeysCtrlClickConfirmationOption": {
         "message": "Show a confirmation dialogue before forgetting the image"
     },
-    "tipShiftClickConfirmationOption": {
+    "modifierKeysShiftClickConfirmationOption": {
         "message": "Show a confirmation dialogue before downloading all the images"
     }
 
