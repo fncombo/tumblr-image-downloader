@@ -7,13 +7,13 @@ module.exports = function(grunt) {
     grunt.initConfig({
 
         paths: {
-            extension: 'extension'
+            extension: 'extension',
         },
 
         pkg: grunt.file.readJSON('package.json'),
 
         clean: [
-            '<%= paths.extension %>/'
+            '<%= paths.extension %>/',
         ],
 
         concat: {
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
                     });
 
                     return newSrc.join('\n');
-                }
+                },
             },
             build: {
                 files: [
@@ -49,9 +49,9 @@ module.exports = function(grunt) {
                             'js/main/buttons.js',
                             'js/main/ticks.js',
                             'js/main/ui.js',
-                            'js/main/run.js'
+                            'js/main/run.js',
                         ],
-                        dest: '<%= paths.extension %>/js/extension.js'
+                        dest: '<%= paths.extension %>/js/extension.js',
                     },
                     {
                         src: [
@@ -63,9 +63,9 @@ module.exports = function(grunt) {
                             'js/background/database.js',
                             'js/background/tabs.js',
                             'js/background/download.js',
-                            'js/pages/background.js'
+                            'js/pages/background.js',
                         ],
-                        dest: '<%= paths.extension %>/js/background.js'
+                        dest: '<%= paths.extension %>/js/background.js',
                     },
                     {
                         src: [
@@ -79,9 +79,9 @@ module.exports = function(grunt) {
                             'js/background/directories.js',
                             'js/background/events.js',
                             'js/pages/text.js',
-                            'js/pages/options.js'
+                            'js/pages/options.js',
                         ],
-                        dest: '<%= paths.extension %>/js/options.js'
+                        dest: '<%= paths.extension %>/js/options.js',
                     },
                     {
                         src: [
@@ -92,12 +92,12 @@ module.exports = function(grunt) {
                             'js/main/messages.js',
                             'js/background/updates.js',
                             'js/pages/text.js',
-                            'js/pages/updates.js'
+                            'js/pages/updates.js',
                         ],
-                        dest: '<%= paths.extension %>/js/updates.js'
-                    }
-                ]
-            }
+                        dest: '<%= paths.extension %>/js/updates.js',
+                    },
+                ],
+            },
         },
 
         uglify: {
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
                     pure_getters: false,
                     pure_funcs: false,
                     drop_console: true,
-                    keep_fargs: true
+                    keep_fargs: true,
                 },
                 beautify: {
                     indent_level: 2,
@@ -140,14 +140,14 @@ module.exports = function(grunt) {
                     bracketize: true,
                     semicolons: true,
                     preamble: null,
-                    quote_style: 3
+                    quote_style: 3,
                 },
                 report: false,
                 sourceMap: false,
                 wrap: true,
                 preserveComments: false,
                 screwIE8: true,
-                quoteStyle: 3
+                quoteStyle: 3,
             },
             build: {
                 files: [
@@ -156,46 +156,66 @@ module.exports = function(grunt) {
                         src: [
                             '<%= paths.extension %>/js/*.js'
                         ],
-                        ext: '.js'
-                    }
-                ]
-            }
+                        ext: '.js',
+                    },
+                ],
+            },
         },
 
         'json-minify': {
             build: {
-                files: '<%= paths.extension %>/**/*.json'
-            }
+                files: '<%= paths.extension %>/**/*.json',
+            },
         },
 
         sass: {
-            options: {
-                style: 'compressed',
-                precision: 3,
-                noCache: true,
-                sourcemap: 'none'
-            },
-            build: {
+            production: {
+                options: {
+                    style: 'compressed',
+                    precision: 3,
+                    noCache: true,
+                    sourcemap: 'none',
+                },
                 files: [
                     {
                         expand: true,
                         src: [
                             'sass/*.scss',
-                            '!sass/_*vars.scss'
+                            '!sass/_*vars.scss',
                         ],
                         flatten: true,
                         dest: '<%= paths.extension %>/css/',
-                        ext: '.css'
-                    }
-                ]
-            }
+                        ext: '.css',
+                    },
+                ],
+            },
+            development: {
+                options: {
+                    style: 'expanded',
+                    precision: 3,
+                    noCache: true,
+                    sourcemap: 'none',
+                },
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'sass/*.scss',
+                            '!sass/_*vars.scss',
+                        ],
+                        flatten: true,
+                        dest: '<%= paths.extension %>/css/',
+                        ext: '.css',
+                    },
+                ],
+            },
         },
 
-        slim :{
-            options: {
-                pretty: true
-            },
-            build: {
+        slim: {
+            production: {
+                options: {
+                    pretty: false,
+                },
                 files: [
                     {
                         expand: true,
@@ -205,10 +225,27 @@ module.exports = function(grunt) {
                         ],
                         flatten: true,
                         dest: '<%= paths.extension %>/html/',
-                        ext: '.html'
-                    }
-                ]
-            }
+                        ext: '.html',
+                    },
+                ],
+            },
+            development: {
+                options: {
+                    pretty: true,
+                },
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'slim/*.slim',
+                            '!slim/*.include.slim',
+                        ],
+                        flatten: true,
+                        dest: '<%= paths.extension %>/html/',
+                        ext: '.html',
+                    },
+                ],
+            },
         },
 
         copy: {
@@ -231,44 +268,48 @@ module.exports = function(grunt) {
 
         watch: {
             options: {
-                spawn: false
+                spawn: false,
             },
             all: {
                 files: [
                     '*',
-                    '**/*'
+                    '**/*',
                 ],
-                tasks: 'development'
+                tasks: 'development',
             },
             javascript: {
                 files: [
                     'js/*.js',
-                    'js/**/*.js'
+                    'js/**/*.js',
                 ],
                 tasks: [
                     'concat',
-                ]
+                ],
             },
             sass: {
-                files: ['**/*.scss'],
-                tasks: 'sass'
+                files: [
+                    '**/*.scss',
+                ],
+                tasks: 'sass:development',
             },
             javascriptSass: {
                 files: [
                     'js/*.js',
                     'js/**/*.js',
-                    '**/*.scss'
+                    '**/*.scss',
                 ],
                 tasks: [
                     'concat',
-                    'sass'
-                ]
+                    'sass:development',
+                ],
             },
             slim: {
-                files: ['**/*.slim'],
-                tasks: 'slim'
-            }
-        }
+                files: [
+                    '**/*.slim',
+                ],
+                tasks: 'slim:development'
+            },
+        },
 
     });
 
@@ -282,20 +323,21 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-json-minify');
 
     grunt.registerTask('development', [
+        'clean',
         'concat',
-        'sass',
-        'slim',
-        'copy'
+        'sass:development',
+        'slim:development',
+        'copy',
     ]);
 
     grunt.registerTask('production', [
         'clean',
         'concat',
-        'sass',
-        'slim',
+        'sass:production',
+        'slim:production',
         'copy',
         'json-minify',
-        'uglify'
+        'uglify',
     ]);
 
 };

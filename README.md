@@ -26,7 +26,7 @@ You can use:
 * `grunt watch:javascript`, `grunt watch:sass` or `grunt watch:slim` to watch only specific types of files
 * `grunt watch:javascriptSass` to watch both JavaScipt and Sass files
 
-To manually build the extension, run `grunt development` or `grunt production`. The production build is the same as development, but it also minifies JavaScript.
+To manually build the extension, run `grunt development` or `grunt production`. The production build Uglifies and minifies JavaScript, and minifies CSS, HTML, and JSON.
 
 To add the extension to Chrome, go to `Settings > Extensions`, and open the `extension` folder that is created after you run a Grunt build.
 
