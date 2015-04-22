@@ -113,11 +113,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
 
         case 'clear':
-            TID.storage.clear();
+            ret = true;
 
-            // Send message to all open tabs that all images have been removed
-            TID.sendToAllTabs('*://*.tumblr.com/*', {
-                message: 'storage_cleared'
+            TID.storage.clear(function () {
+                // Send message to all open tabs that all images have been removed
+                TID.sendToAllTabs('*://*.tumblr.com/*', {
+                    message: 'storage_cleared'
+                });
+
+                // Callback
+                sendResponse();
             });
             break;
 
