@@ -58,4 +58,5 @@ TID.deactivateAnalytics = function () {
     delete window.ga;
     delete window.gaplugins;
     delete window.gaGlobal;
+    delete window.GoogleAnalyticsObject;
 };
