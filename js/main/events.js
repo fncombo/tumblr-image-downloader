@@ -90,6 +90,11 @@ TID.events.initDocumentEvents = function () {
         var imageId;
         var directory;
 
+        if (!(el instanceof Element)) {
+            console.error('Click event target was not an element', event, el);
+            return;
+        }
+
         // Set up downloading via normal download button
         if (el.matchesSelector('.' + TID.classes.downloadDiv)) {
             event.stopPropagation();
