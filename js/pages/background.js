@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log('Received request', request, 'from', sender);
 
     // Set to true to keep the messaging channel open for async requests
-    var ret = false;
+    var keepChannelOpen = false;
 
     switch (request.message) {
     case 'show_page_action':
@@ -83,7 +83,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         break;
 
     case 'search_image':
-        ret = true;
+        keepChannelOpen = true;
 
         chrome.downloads.search(request.data, sendResponse);
         break;
@@ -96,7 +96,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     case 'storage':
         switch (request.action) {
         case 'image_exists':
-            ret = true;
+            keepChannelOpen = true;
 
             TID.storage.imageExists(request.data.imageId, sendResponse);
             break;
@@ -114,7 +114,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
 
         case 'clear':
-            ret = true;
+            keepChannelOpen = true;
 
             TID.storage.clear(function () {
                 // Send message to all open tabs that all images have been removed
@@ -128,7 +128,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
 
         case 'count':
-            ret = true;
+            keepChannelOpen = true;
 
             TID.storage.count(sendResponse);
             break;
@@ -144,7 +144,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         break;
     }
 
-    return ret;
+    return keepChannelOpen;
 });
 
 // Get default save directory
