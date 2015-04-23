@@ -25,9 +25,15 @@ TID.events.mousedown = function (event, el) {
 
     TID.directories.addFake(TID.vars.currentItem);
 
+    var elBoundingRect = TID.vars.currentItem.getBoundingClientRect();
+    var elOffsetY = event.pageY + (elBoundingRect.height / 2) - 1; // -1 accounts for border
+    elOffsetY -= elBoundingRect.height - (elBoundingRect.top - event.y);
+
+    TID.vars.lastMouseY = event.pageY;
+
     TID.vars.currentItem.classList.add('moving');
     TID.vars.currentItem.style.position = 'absolute';
-    TID.vars.currentItem.style.top = (event.clientY + window.pageYOffset) + 'px';
+    TID.vars.currentItem.style.top = elOffsetY + 'px';
 
     TID.vars.moveDirection = false;
     TID.vars.moveDirectionLast = 0;
@@ -51,7 +57,10 @@ TID.events.mousemove = function (event) {
         TID.directories.addFake(TID.vars.moveDirection ? li : li.nextSibling);
     }
 
-    TID.vars.currentItem.style.top = (event.clientY + window.pageYOffset) + 'px';
+    TID.vars.currentItem.style.top = parseInt(TID.vars.currentItem.style.top, 10) +
+                                     (event.pageY - TID.vars.lastMouseY) + 'px';
+
+    TID.vars.lastMouseY = event.pageY;
 };
 
 /**
