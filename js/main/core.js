@@ -1,6 +1,6 @@
 'use strict';
 
-/*jshint unused:false, plusplus:false, freeze:false */
+/* jshint unused:false, plusplus:false, freeze:false */
 
 /**
  * Select a single element by a query selector
