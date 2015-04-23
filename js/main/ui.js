@@ -15,7 +15,7 @@ TID.ui = {};
  * @param {Function} callback The callback to call when a button is clicked
  * @param {String}   imageUrl Optional URL of an image to display a thumbnail of
  */
-TID.ui.showDialog = function (message, options, callback, imageUrl) {
+TID.ui.showDialog = function (title, message, options, callback, imageUrl) {
     if (!(options instanceof Array)) {
         options = [options];
     }
@@ -37,15 +37,24 @@ TID.ui.showDialog = function (message, options, callback, imageUrl) {
     dialog.classList.add(TID.classes.dialog);
     overlay.appendChild(dialog);
 
-    var dialogMessage = document.createElement('div');
-    dialogMessage.classList.add(TID.classes.dialogMessage);
-
     if (imageUrl) {
         var dialogImage = document.createElement('div');
         dialogImage.classList.add(TID.classes.dialogImage);
         dialogImage.innerHTML = '<img src="' + imageUrl + '">';
-        dialogMessage.appendChild(dialogImage);
+        dialog.appendChild(dialogImage);
     }
+
+    var dialogTitle = document.createElement('div');
+    dialogTitle.classList.add(TID.classes.dialogTitle);
+    dialogTitle.classList.add(TID.classes.keyboardKey);
+    dialogTitle.innerHTML = title;
+    dialog.appendChild(dialogTitle);
+
+    var dialogHr = document.createElement('hr');
+    dialog.appendChild(dialogHr);
+
+    var dialogMessage = document.createElement('div');
+    dialogMessage.classList.add(TID.classes.dialogMessage);
 
     dialogMessage.innerHTML += message;
     dialog.appendChild(dialogMessage);
@@ -77,14 +86,15 @@ TID.ui.showDialog = function (message, options, callback, imageUrl) {
  * @param {String}   imageUrl Optional URL of an image to display a thumbnail of
  */
 TID.ui.confirmDialog = function (callback, imageId) {
-    var message = TID.msg('confirmDuplicateDownload');
+    var title = TID.msg('confirmDuplicateDownloadTitle');
+    var message = TID.msg('confirmDuplicateDownloadMessage');
     var buttons = [TID.msg('yes'), TID.msg('no')];
 
     function buttonsCallback (i) {
         callback(i === '0' ? true : false);
     }
 
-    TID.ui.showDialog(message, buttons, buttonsCallback, imageId);
+    TID.ui.showDialog(title, message, buttons, buttonsCallback, imageId);
 };
 
 TID.ui.revealImage = function (url) {
@@ -96,10 +106,12 @@ TID.ui.revealImage = function (url) {
             ]
         }
     }, function (results) {
+        var title = TID.msg('modifierKeysAltClickTitle');
+
         if (!results || !results.length || (results.length === 1 && !results[0].exists)) {
             console.log('No download items', results);
 
-            TID.ui.showDialog(TID.msg('imageNotAtDownloadLocation'), TID.msg('nevermind'));
+            TID.ui.showDialog(title, TID.msg('imageNotAtDownloadLocation'), TID.msg('nevermind'));
             return;
         } else if (results.length === 1) {
             console.log('Only one download item, attempting to reveal', results);
@@ -185,6 +197,6 @@ TID.ui.revealImage = function (url) {
 
         html += '</div>';
 
-        TID.ui.showDialog(html, TID.msg('done'));
+        TID.ui.showDialog(title, html, TID.msg('done'));
     });
 };

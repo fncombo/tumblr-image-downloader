@@ -129,8 +129,12 @@
         "message": "Forget all images (#)",
         "description": "Button text to clear all remembered images. The # will be replaced with the amount of images, and should be wrapped in a <span> tag."
     },
-    "rememberedImagesClearConfirmation": {
-        "message": "Are you sure you want to forget all images?<br>This cannot be undone!",
+    "rememberedImagesClearConfirmationTitle": {
+        "message": "Forget all images",
+        "description": "Dialog title confirming whether the users is sure they want to delete all remembered images."
+    },
+    "rememberedImagesClearConfirmationMessage": {
+        "message": "Are you sure you want to forget all images? This cannot be undone.",
         "description": "Dialog message confirming whether the users is sure they want to delete all remembered images."
     },
     "rememberedImagesDisabledHelp": {
@@ -223,18 +227,26 @@
         "message": "Disabled",
         "description": "General disabled option message."
     },
+    "whoa": {
+        "message": "Whoa there!",
+        "description": "Dialog title when something unexpected happens."
+    },
 
 
 
     /**
      * Dialogs
      */
-    "confirmDuplicateDownload": {
-        "message": "You've downloaded this image before.<br>Download again?",
+    "confirmDuplicateDownloadTitle": {
+        "message": "Duplicate download",
+        "description": "Dialog title when the user tries to download the same image again."
+    },
+    "confirmDuplicateDownloadMessage": {
+        "message": "You've downloaded this image before. Download again?",
         "description": "Dialog message when the user tries to download the same image again."
     },
     "linkNotImage": {
-        "message": "The external download link doesn't appear to be an image.<br>What would you like to do?",
+        "message": "The external download link doesn't appear to be an image. What would you like to do?",
         "description": "Dialog message when the external download URL isn't an image."
     },
     "downloadFromTumblr": {
@@ -246,11 +258,11 @@
         "description": "Button text for opening a link in a new tab."
     },
     "shiftKeyClickWithoutDirectory": {
-        "message": "You held down the <strong>Shift</strong> key.<br>Would you like to download all images in this post?",
+        "message": "Would you like to download all images in this post?",
         "description": "Dialog message when the user clicks the download button while holding down the shift key on a button without a directory."
     },
     "shiftKeyClickWithDirectory": {
-        "message": "You held down the <strong>Shift</strong> key.<br>Would you like to download all images in this post to: <strong>$DIRECTORY$</strong>?",
+        "message": "Would you like to download all images in this post to: <strong>$DIRECTORY$</strong>?",
         "description": "Dialog message when the user clicks the download button while holding down the shift key on a button with a directory.",
         "placeholders": {
             "directory": {
@@ -260,27 +272,27 @@
         }
     },
     "shiftKeyClickWarning": {
-        "message": "You held down the <strong>Shift</strong> key.<br>Use this on an image in a post download all the images in that post.",
+        "message": "Use this on an image in a post download all the images in that post.",
         "description": "Dialog message when the user clicks the download button while holding down the shift key but it is not applicable."
     },
     "ctrlKeyClick": {
-        "message": "You held down the <strong>Ctrl</strong> key.<br>Would you like to forget this downloaded image?<br><br>This will <strong>not</strong> delete the image from your computer.",
+        "message": "Would you like to forget this downloaded image? This will <strong>not</strong> delete the image from your computer.",
         "description": "Dialog message when the user clicks the download button while holding down the Ctrl key."
     },
     "ctrlKeyClickWarning": {
-        "message": "You held down the <strong>Ctrl</strong> key.<br>Use this on a downloaded image to forget it.",
+        "message": "Use this on a downloaded image to forget it.",
         "description": "Dialog message when the user clicks the download button while holding down the ctrl key but it is not applicable."
     },
     "altKeyClickWarning": {
-        "message": "You held down the <strong>Alt</strong> key.<br>Use this on a downloaded image to reveal it in your file browser.",
+        "message": "Use this on a downloaded image to reveal it in your file browser.",
         "description": "Dialog message when the user clicks the download button while holding down the alt key but it is not applicable."
     },
     "imageNotAtDownloadLocation": {
-        "message": "Looks like this image doesn't exist at the original download location anymore.<br>Did you move or delete it, or clear your downloads history?",
+        "message": "Looks like this image doesn't exist at the original download location anymore. Did you move or delete it, or clear your downloads history?",
         "description": "Dialog message when the user tries to reveal an image that Chrome can't find at the original download location anymore."
     },
     "revealPlacesFound": {
-        "message": "Found these places you downloaded the image to (click to reveal)",
+        "message": "Found these places you downloaded the image to:",
         "description": "Title for the dialog which lists all the download locations."
     },
     "revealPlacesByExtension": {

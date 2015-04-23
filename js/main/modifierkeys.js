@@ -43,7 +43,7 @@ TID.modifierKeys.triggerCtrl = function (event, button, imageId, directory) {
     console.log('Pressed with CTRL key', event, button, imageId, directory);
     TID.trackEvent('Modified Click', 'Ctrl');
 
-    var buttons = [TID.msg('yes'), TID.msg('no')];
+    var title = TID.msg('modifierKeysCtrlClickTitle');
 
     // Image has been downloaded, it can be removed
     if (button.classList.contains(TID.classes.downloaded)) {
@@ -53,8 +53,11 @@ TID.modifierKeys.triggerCtrl = function (event, button, imageId, directory) {
             return;
         }
 
+        var message = TID.msg('ctrlKeyClick');
+        var buttons = [TID.msg('yes'), TID.msg('no')];
+
         // Otherwise show a dialog
-        TID.ui.showDialog(TID.msg('ctrlKeyClick'), buttons, function (i) {
+        TID.ui.showDialog(title, message, buttons, function (i) {
             switch (i) {
             case '0':
                 TID.images.remove(imageId);
@@ -63,7 +66,7 @@ TID.modifierKeys.triggerCtrl = function (event, button, imageId, directory) {
         });
     // Image has not been downloaded, inform them about it
     } else {
-        TID.ui.showDialog(TID.msg('ctrlKeyClickWarning'), TID.msg('okay'));
+        TID.ui.showDialog(title, TID.msg('ctrlKeyClickWarning'), TID.msg('okay'));
     }
 };
 
@@ -98,7 +101,7 @@ TID.modifierKeys.triggerAlt = function (event, button, imageId, directory) {
         }
     // Image has not been downloaded, inform them about it
     } else {
-        TID.ui.showDialog(TID.msg('altKeyClickWarning'), TID.msg('okay'));
+        TID.ui.showDialog(TID.msg('modifierKeysAltClickTitle'), TID.msg('altKeyClickWarning'), TID.msg('okay'));
     }
 };
 
@@ -115,7 +118,7 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
     console.log('Pressed with SHIFT key', event, button, imageId, directory);
     TID.trackEvent('Modified Click', 'Shift');
 
-    var buttons = [TID.msg('yes'), TID.msg('no')];
+    var title = TID.msg('modifierKeysShiftClickTitle');
     var post = button.closest(TID.selectors.post);
 
     function run () {
@@ -130,8 +133,15 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
 
     // If we can find the post for this image
     if (post) {
+        // If the confirm message is turned off, just do it
+        if (!TID.settings.shiftClickConfirm) {
+            run();
+            return;
+        }
+
         var message;
         var selector;
+        var buttons = [TID.msg('yes'), TID.msg('no')];
 
         if (directory) {
             message = TID.msg('shiftKeyClickWithDirectory', directory);
@@ -141,14 +151,8 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
             selector = '.' + TID.classes.downloadDiv;
         }
 
-        // If the confirm message is turned off, just do it
-        if (!TID.settings.shiftClickConfirm) {
-            run();
-            return;
-        }
-
         // Otherwise show a dialog
-        TID.ui.showDialog(message, buttons, function (i) {
+        TID.ui.showDialog(title, message, buttons, function (i) {
             switch (i) {
             case '0':
                 run();
@@ -157,6 +161,6 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
         });
     // If we can't find the post for this image
     } else {
-        TID.ui.showDialog(TID.msg('shiftKeyClickWarning'), TID.msg('okay'));
+        TID.ui.showDialog(title, TID.msg('shiftKeyClickWarning'), TID.msg('okay'));
     }
 };

@@ -43,10 +43,11 @@ listen('click', 'input[type="checkbox"]', TID.checkboxes.onChange);
 
 // Clear list of downloaded images from options
 $('#clear').onclick = function () {
-    var message = TID.msg('rememberedImagesClearConfirmation');
+    var title = TID.msg('rememberedImagesClearConfirmationTitle');
+    var message = TID.msg('rememberedImagesClearConfirmationMessage');
     var buttons = [TID.msg('yes'), TID.msg('no')];
 
-    TID.ui.showDialog(message, buttons, function (i) {
+    TID.ui.showDialog(title, message, buttons, function (i) {
         switch (i) {
         case '0':
             TID.sendMessage({

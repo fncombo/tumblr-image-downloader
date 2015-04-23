@@ -95,11 +95,13 @@ TID.classes = {
     highlight: 'TID-highlight',
     overlay: 'TID-overlay',
     dialog: 'TID-dialog',
+    dialogTitle: 'TID-dialog-title',
     dialogMessage: 'TID-dialog-message',
     dialogImage: 'TID-dialog-image',
     dialogButton: 'TID-dialog-button',
     dialogAlignText: 'TID-dialog-align-text',
     revealImageLink: 'TID-reveal-image-link',
+    keyboardKey: 'TID-keyboard-key',
 };
 
 /**

@@ -150,7 +150,7 @@ TID.events.initDocumentEvents = function () {
         // Clicking on a link in a dialog to reveal an image
         if (el.matchesSelector('.' + TID.classes.revealImageLink)) {
             if (el.dataset.exists === 'false') {
-                TID.ui.showDialog(TID.msg('imageNotAtDownloadLocation'), [TID.msg('nevermind')]);
+                TID.ui.showDialog(TID.msg('whoa'), TID.msg('imageNotAtDownloadLocation'), [TID.msg('nevermind')]);
                 return;
             }
 
@@ -209,10 +209,11 @@ TID.events.initMessageListener = function () {
             TID.images.remove(request.imageId);
             TID.ticks.remove(request.imageId);
 
+            var title = TID.msg('whoa');
             var message = TID.msg('linkNotImage');
             var buttons = [TID.msg('downloadFromTumblr'), TID.msg('openLinkInNewTab'), TID.msg('cancel')];
 
-            TID.ui.showDialog(message, buttons, function (i) {
+            TID.ui.showDialog(title, message, buttons, function (i) {
                 switch (i) {
                 case '0':
                     var button = $('.' + TID.classes.download + '[data-image-id="' + request.imageId + '"]');

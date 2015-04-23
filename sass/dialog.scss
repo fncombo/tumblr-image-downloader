@@ -12,7 +12,7 @@
 @-webkit-keyframes dialog {
     from {
         opacity: 0;
-        -webkit-transform: scale(1.5);
+        -webkit-transform: scale(0.1);
     }
     to {
         opacity: 1;
@@ -29,7 +29,7 @@
     left: 0;
     right: 0;
     z-index: 9999999999;
-    -webkit-animation: overlay 0.05s linear forwards;
+    -webkit-animation: overlay 0.1s ease-in-out forwards;
     color: $text-primary-color !important;
     @extend .text-reset;
     cursor: auto !important;
@@ -54,13 +54,27 @@
     padding: 1.5em 2.25em;
     display: inline-block;
     vertical-align: middle;
-    -webkit-animation: dialog 0.15s $easeOutBack forwards;
-    animation: dialog 0.15s $easeOutBack forwards;
+    -webkit-animation: dialog 0.1s ease-in-out forwards;
+    animation: dialog 0.1s ease-in-out forwards;
     @extend .text-reset;
+
+    hr {
+        border: none;
+        border-top: 2px solid hsl(0, 0%, 95%);
+        margin: 1em 0;
+    }
+}
+
+.TID-dialog-title {
+    text-align: left;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .TID-dialog-message {
     @extend .text-reset;
+    text-align: left;
+    margin: 0 0 1em 0;
 
     .TID-dialog-align-text {
         text-align: left !important;
@@ -106,7 +120,7 @@
 }
 
 .TID-dialog-image {
-    margin: 0.75em 0 1.5em 0;
+    margin: 0 0 1em 0;
     max-width: 900px;
     min-width: 200px;
 
@@ -118,6 +132,6 @@
 .TID-dialog-button {
     @extend .base-button;
     display: inline-block;
-    margin: 1em 0.5em 0;
+    margin: 0 0.5em;
 }
 
