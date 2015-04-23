@@ -80,7 +80,7 @@
         "description": "Description of the download locations option."
     },
     "locationsDefaultDescription": {
-        "message": "Default download location (blank for your normal downloads folder)",
+        "message": "Default download location (leave blank for your default downloads folder)",
         "description": "Description of the default download location option."
     },
     "locationsMoreDescription": {
@@ -114,11 +114,11 @@
         "description": "Title for the remembered images section on the options page."
     },
     "rememberedImagesDescription": {
-        "message": "Images you download are automatically remembered and have a ✓ tick in the download button.",
+        "message": "Downloaded images are automatically remembered and have a ✓ tick in the download button.",
         "description": "Description of the remembered images option."
     },
     "rememberedImagesDisclaimer": {
-        "message": "Information about which images you download is stored locally in the browser and never leaves your computer.",
+        "message": "This data is stored locally in the browser and never leaves your computer.",
         "description": "Disclaimer about the remembered images option."
     },
     "rememberedImagesClearDescription": {
@@ -160,7 +160,7 @@
         "description": "Help text explaining what the analytics option does."
     },
     "enableAnalyticsDescription": {
-        "message": "Information about what pages you visit, what images you download, or any other private data does <strong>not</strong> get tracked.",
+        "message": "Information about pages you visit, images you download, or any other private data is <strong>not</strong> tracked.",
         "description": "Additional help text explaining what the out out of analytics option does."
     },
 
