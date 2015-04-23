@@ -37,13 +37,6 @@ TID.ui.showDialog = function (title, message, options, callback, imageUrl) {
     dialog.classList.add(TID.classes.dialog);
     overlay.appendChild(dialog);
 
-    if (imageUrl) {
-        var dialogImage = document.createElement('div');
-        dialogImage.classList.add(TID.classes.dialogImage);
-        dialogImage.innerHTML = '<img src="' + imageUrl + '">';
-        dialog.appendChild(dialogImage);
-    }
-
     var dialogTitle = document.createElement('div');
     dialogTitle.classList.add(TID.classes.dialogTitle);
     dialogTitle.classList.add(TID.classes.keyboardKey);
@@ -52,6 +45,13 @@ TID.ui.showDialog = function (title, message, options, callback, imageUrl) {
 
     var dialogHr = document.createElement('hr');
     dialog.appendChild(dialogHr);
+
+    if (imageUrl) {
+        var dialogImage = document.createElement('div');
+        dialogImage.classList.add(TID.classes.dialogImage);
+        dialogImage.innerHTML = '<img src="' + imageUrl + '">';
+        dialog.appendChild(dialogImage);
+    }
 
     var dialogMessage = document.createElement('div');
     dialogMessage.classList.add(TID.classes.dialogMessage);
