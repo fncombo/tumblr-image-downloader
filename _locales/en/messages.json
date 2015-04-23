@@ -358,7 +358,7 @@
         "description": "Title for the modifier keys section on the options page."
     },
     "modifierKeysCtrlClickTitle": {
-        "message": "<strong>Ctrl</strong>-click download",
+        "message": "<strong>Ctrl</strong> download",
         "description": "Title for this modifier key description."
     },
     "modifierKeysCtrlClickDescription": {
@@ -370,7 +370,7 @@
         "description": "An option to turn on/off the confirmation dialog when using ctrl-click."
     },
     "modifierKeysAltClickTitle": {
-        "message": "<strong>Alt</strong>-click download",
+        "message": "<strong>Alt</strong> download",
         "description": "Title for this modifier key description."
     },
     "modifierKeysAltClickDescription": {
@@ -378,7 +378,7 @@
         "description": "Explains to the user about alt+click."
     },
     "modifierKeysShiftClickTitle": {
-        "message": "<strong>Shift</strong>-click download",
+        "message": "<strong>Shift</strong> download",
         "description": "Title for this modifier key description."
     },
     "modifierKeysShiftClickDescription": {

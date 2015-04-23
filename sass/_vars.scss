@@ -72,3 +72,13 @@ $easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
     text-shadow: none !important;
     cursor: auto !important;
 }
+
+strong.keyboardKey, .keyboardKey p:not(.desc) strong {
+    background: #fff;
+    margin: -4px 0;
+    padding: 4px 8px;
+    border: 1px solid $border;
+    border-bottom-width: 2px;
+    border-radius: $input-radius;
+    font-weight: bold;
+}
