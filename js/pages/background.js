@@ -157,20 +157,29 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     return keepChannelOpen;
 });
 
-// Get default save directory
+// Get default save directory and download rememberer settings
 chrome.storage.sync.get({
-    defaultDirectory: false
+    defaultDirectory: false,
+    rememberImages: true,
 }, function (object) {
     TID.vars.defaultDirectory = object.defaultDirectory;
+    TID.vars.rememberImages = object.rememberImages;
 });
 
 // Keep default directory updated
 chrome.storage.onChanged.addListener(function (changes) {
-    if (changes.hasOwnProperty('defaultDirectory')) {
-        if (changes.defaultDirectory.hasOwnProperty('newValue')) {
-            TID.vars.defaultDirectory = changes.defaultDirectory.newValue;
-        } else {
-            TID.vars.defaultDirectory = false;
+    var keys = [
+        'defaultDirectory',
+        'rememberImages',
+    ];
+
+    keys.forEach(function (key) {
+        if (changes.hasOwnProperty(key)) {
+            if (changes[key].hasOwnProperty('newValue')) {
+                TID.vars[key] = changes[key].newValue;
+            } else {
+                TID.vars[key] = false;
+            }
         }
-    }
+    });
 });

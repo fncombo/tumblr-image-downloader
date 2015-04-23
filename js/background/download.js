@@ -81,10 +81,16 @@ TID.downloadImage = function (url) {
             }
 
             var downloadItem = results[0];
-            var downloadingImage = TID.downloadingImages[downloadItem.url];
-            var directory;
 
             console.log('Download finished', downloadItem);
+
+            // Do not save to the database if the setting is turned off
+            if (!TID.vars.rememberImages) {
+                return;
+            }
+
+            var downloadingImage = TID.downloadingImages[downloadItem.url];
+            var directory;
 
             // Figure out which directory it was saved to
             if (downloadingImage.saveDirectory) {
