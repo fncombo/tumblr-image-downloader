@@ -43,7 +43,7 @@ TID.events.buttonImageDownload = function (event) {
                         TID.trackEvent('Downloaded Image', isHd ? 'HD' : 'SD');
                     }
                 }
-            }, url);
+            }, TID.isSinglePage ? false : url);
         }
     }, true);
 };
@@ -72,7 +72,7 @@ TID.events.directoryImageDownload = function (event) {
                     TID.images.download(url, imageId, directory);
                     TID.trackEvent('Downloaded Image', 'To Directory');
                 }
-            }, url);
+            }, TID.isSinglePage ? false : url);
         }
     }, true);
 };
