@@ -121,6 +121,10 @@
         "message": "Information about which images you download is stored locally in the browser and never leaves your computer.",
         "description": "Disclaimer about the remembered images option."
     },
+    "rememberedImagesClearDescription": {
+        "message": "Permanently forget all images that you have downloaded.",
+        "description": "Description of the clear button."
+    },
     "rememberedImagesClearButton": {
         "message": "Forget all images (#)",
         "description": "Button text to clear all remembered images. The # will be replaced with the amount of images, and should be wrapped in a <span> tag."
