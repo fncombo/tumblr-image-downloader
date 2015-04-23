@@ -1,7 +1,7 @@
 'use strict';
 
 /* globals TID, chrome */
-/* jshint maxparams:5 */
+/* jshint maxparams:5, maxcomplexity:30 */
 
 /**
  * UI functions
