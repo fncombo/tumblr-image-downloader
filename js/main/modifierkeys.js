@@ -133,12 +133,6 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
 
     // If we can find the post for this image
     if (post) {
-        // If the confirm message is turned off, just do it
-        if (!TID.settings.shiftClickConfirm) {
-            run();
-            return;
-        }
-
         var message;
         var selector;
         var buttons = [TID.msg('yes'), TID.msg('no')];
@@ -149,6 +143,12 @@ TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
         } else {
             message = TID.msg('shiftKeyClickWithoutDirectory');
             selector = '.' + TID.classes.downloadDiv;
+        }
+
+        // If the confirm message is turned off, just do it
+        if (!TID.settings.shiftClickConfirm) {
+            run();
+            return;
         }
 
         // Otherwise show a dialog
