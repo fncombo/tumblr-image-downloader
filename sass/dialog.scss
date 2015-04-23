@@ -49,6 +49,7 @@
 
 .TID-dialog {
     background: #fff;
+    max-width: $main-width;
     border-radius: $border-radius;
     margin: 0 1em;
     padding: 1em 0;
@@ -127,6 +128,7 @@
     background-repeat: none;
 
     img {
+        max-height: $main-width;
         max-height: 400px;
     }
 }
