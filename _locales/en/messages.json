@@ -164,7 +164,7 @@
         "description": "Help text explaining what the analytics option does."
     },
     "enableAnalyticsDescription": {
-        "message": "Information about pages you visit, images you download, or any other private data is <strong>not</strong> tracked.",
+        "message": "This helps to improve the extension and detect bugs. Information about pages you visit, images you download, or any other private data is <strong>not</strong> tracked.",
         "description": "Additional help text explaining what the out out of analytics option does."
     },
 
