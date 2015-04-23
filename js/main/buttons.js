@@ -15,17 +15,6 @@ TID.buttons.add = function () {
     console.log('Adding buttons');
 
     $$(TID.selectors.images).forEach(function (el) {
-        // Skip images that are not part of the actual post
-        if (!TID.isArchivePage && !el.parentNode.classList.contains(TID.selectors.postFullImage.slice(1))) {
-            var ancestor = el.ancestor(2);
-
-            if (ancestor.classList.contains('caption') || ancestor.nodeName === 'BLOCKQUOTE') {
-                console.log('Skipping image that is not part of the post');
-
-                return;
-            }
-        }
-
         // Don't add buttons to this image anymore
         el.classList.add(TID.classes.ignore);
 
