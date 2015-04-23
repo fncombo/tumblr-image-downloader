@@ -45,11 +45,12 @@ $easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
     color: #fff;
     cursor: pointer;
     text-decoration: none;
-    line-height: 28px;
+    line-height: 30px;
     height: 30px;
     -webkit-user-select: none;
     user-select: none;
     font-size: 13px;
+    transition: background-color 0.1s ease-in-out;
 
     &:hover {
         background: $tumblr-gray-hover;
@@ -57,7 +58,7 @@ $easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 0.1rem #fff, 0 0 0.1rem 0.15rem $tumblr-color;
+        box-shadow: 0 0 5px $tumblr-light-color;
         text-decoration: none;
     }
 }

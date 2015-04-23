@@ -2,7 +2,7 @@
 @import 'vars';
 @import 'dialog.scss';
 
-$main-width: 765px;
+$main-width: 700px;
 $main-margin: 32px;
 
 html, body {
@@ -64,6 +64,10 @@ p {
 
         a {
             color: $tumblr-gray;
+        }
+
+        strong {
+            color: $tumblr-gray-hover;
         }
     }
 
@@ -170,6 +174,7 @@ input {
         padding: 0.5rem;
         opacity: 0.3;
         font-size: 1.1rem;
+        transition: opacity 0.1s ease-in-out;
     }
 
     .moving {
@@ -189,6 +194,7 @@ input {
         font-size: 1.1rem;
         -webkit-user-select: none;
         user-select: none;
+        transition: opacity 0.1s ease-in-out;
     }
 
     .fake {
@@ -200,7 +206,8 @@ input {
         opacity: 0.3;
     }
 
-    li:hover .move, li:hover .delete {
+    li:hover .move,
+    li:hover .delete {
         opacity: 0.6;
     }
 
@@ -208,12 +215,16 @@ input {
         opacity: 1;
     }
 
-    li .move:hover, li .delete:hover, li .delete:focus {
+    li .move:hover,
+    li .delete:hover,
+    li .delete:focus {
         opacity: 0.9;
         outline: none;
     }
 
-    .blank .move, .blank .delete, .blank .default {
+    .blank .move,
+    .blank .delete,
+    .blank .default {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
