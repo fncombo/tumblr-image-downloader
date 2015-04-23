@@ -130,7 +130,7 @@
         "description": "Button text to clear all remembered images. The # will be replaced with the amount of images, and should be wrapped in a <span> tag."
     },
     "rememberedImagesClearConfirmationTitle": {
-        "message": "Forget all images",
+        "message": "Forget All Images",
         "description": "Dialog title confirming whether the users is sure they want to delete all remembered images."
     },
     "rememberedImagesClearConfirmationMessage": {
@@ -228,7 +228,7 @@
         "description": "General disabled option message."
     },
     "whoa": {
-        "message": "Whoa there!",
+        "message": "Whoa There!",
         "description": "Dialog title when something unexpected happens."
     },
 
@@ -238,7 +238,7 @@
      * Dialogs
      */
     "confirmDuplicateDownloadTitle": {
-        "message": "Duplicate download",
+        "message": "Duplicate Download",
         "description": "Dialog title when the user tries to download the same image again."
     },
     "confirmDuplicateDownloadMessage": {
@@ -374,7 +374,7 @@
         "description": "Title for the modifier keys section on the options page."
     },
     "modifierKeysCtrlClickTitle": {
-        "message": "<strong>Ctrl</strong> download",
+        "message": "<strong>Ctrl</strong> Download",
         "description": "Title for this modifier key description."
     },
     "modifierKeysCtrlClickDescription": {
@@ -386,7 +386,7 @@
         "description": "An option to turn on/off the confirmation dialog when using ctrl-click."
     },
     "modifierKeysAltClickTitle": {
-        "message": "<strong>Alt</strong> download",
+        "message": "<strong>Alt</strong> Download",
         "description": "Title for this modifier key description."
     },
     "modifierKeysAltClickDescription": {
@@ -394,7 +394,7 @@
         "description": "Explains to the user about alt+click."
     },
     "modifierKeysShiftClickTitle": {
-        "message": "<strong>Shift</strong> download",
+        "message": "<strong>Shift</strong> Download",
         "description": "Title for this modifier key description."
     },
     "modifierKeysShiftClickDescription": {
