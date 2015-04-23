@@ -58,6 +58,7 @@ module.exports = function(grunt) {
                     {
                         src: [
                             'js/main/main.js',
+                            'js/main/runtime.js',
                             'js/main/messages.js',
                             'js/background/analytics.js',
                             'js/background/updates.js',
