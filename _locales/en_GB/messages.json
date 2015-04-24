@@ -3,7 +3,7 @@
      * General options
      */
     "confirmationHelp": {
-        "message": "Show a confirmation dialogue when I try to download an already downloaded image"
+        "message": "Show a confirmation dialogue when I try to download a previously downloaded image"
     },
 
     /**

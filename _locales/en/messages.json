@@ -76,11 +76,11 @@
         "description": "Title for the locations section on the options page."
     },
     "locationsDescription": {
-        "message": "Specify a list of locations in your downloads folder that you can quickly choose from when downloading an image.",
+        "message": "Specify a list of locations in your downloads folder that you can quickly choose from when downloading an image:",
         "description": "Description of the download locations option."
     },
     "locationsDefaultDescription": {
-        "message": "Default download location (leave blank for your default downloads folder)",
+        "message": "Default download location (leave blank for your default downloads folder):",
         "description": "Description of the default download location option."
     },
     "locationsMoreDescription": {
@@ -114,7 +114,7 @@
         "description": "Title for the remembered images section on the options page."
     },
     "rememberedImagesDescription": {
-        "message": "Downloaded images are automatically remembered and have a ✓ tick in the download button.",
+        "message": "Downloaded images are automatically remembered and marked with a ✓ tick.",
         "description": "Description of the remembered images option."
     },
     "rememberedImagesDisclaimer": {
@@ -152,7 +152,7 @@
         "description": "Title for the general section on the options page."
     },
     "confirmationHelp": {
-        "message": "Show a confirmation dialog when I try to download an already downloaded image",
+        "message": "Show a confirmation dialog when I try to download a previously downloaded image",
         "description": "Help text explaining what the confirm option does."
     },
     "showTicksHelp": {
@@ -164,7 +164,7 @@
         "description": "Help text explaining what the analytics option does."
     },
     "enableAnalyticsDescription": {
-        "message": "This helps to improve the extension and detect bugs. Information about pages you visit, images you download, or any other private data is <strong>not</strong> tracked.",
+        "message": "Analytics help to improve the extension and detect bugs. Information about pages you visit, images you download, or any other private data is <strong>not</strong> tracked.",
         "description": "Additional help text explaining what the out out of analytics option does."
     },
 
@@ -378,7 +378,7 @@
         "description": "Title for this modifier key description."
     },
     "modifierKeysCtrlClickDescription": {
-        "message": "Will forget that you downloaded that image (and remove the ✓ tick). This does <strong>not</strong> delete the file from your computer.",
+        "message": "Will forget that you have downloaded that image (and remove the ✓ tick). This does <strong>not</strong> delete the file from your computer.",
         "description": "Explains to the user about ctrl+click."
     },
     "modifierKeysCtrlClickConfirmationOption": {
@@ -390,7 +390,7 @@
         "description": "Title for this modifier key description."
     },
     "modifierKeysAltClickDescription": {
-        "message": "Will list all the directories to which you have downloaded the image, allowing you to reveal the files. Note that Chrome's download history must be enabled and not cleared for this.",
+        "message": "Will list all the locations to which you have downloaded that image, allowing you to reveal the files. Chrome's download history must be enabled and not cleared for this.",
         "description": "Explains to the user about alt+click."
     },
     "modifierKeysShiftClickTitle": {
