@@ -21,7 +21,7 @@
 }
 
 .TID-overlay {
-    background: hsla(0, 0%, 0, 0.8);
+    background: transparentize($tumblr-color, 0.05);
     text-align: center;
     position: fixed;
     top: 0;
