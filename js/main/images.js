@@ -52,9 +52,14 @@ TID.images.remove = function (imageId) {
  */
 TID.images.exists = function (imageId, callback, fromHtml) {
     if (fromHtml) {
-        var el = !!$('.' + TID.classes.downloaded + '[data-image-id="' + imageId + '"]');
+        var el = $('.' + TID.classes.download + '[data-image-id="' + imageId + '"]');
+        var exists = false;
 
-        callback(el);
+        if (el && el.classList.contains(TID.classes.downloaded)) {
+            exists = true;
+        }
+
+        callback(exists);
     } else {
         chrome.runtime.sendMessage({
             message: 'storage',
