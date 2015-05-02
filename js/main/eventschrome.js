@@ -94,7 +94,7 @@ TID.events.initMessageListener = function () {
             title = TID.msg('downloadFailedTitle');
             message = TID.msg('downloadFailedMessage', request.error);
             buttons = TID.msg('okay');
-            var imageEl = $('img[src*="' + request.downloadingImage.imageId + '"]');
+            var imageEl = $('img[src*="' + request.activeDownload.imageId + '"]');
             var imageUrl = imageEl ? imageEl.src : false;
 
             TID.ui.showDialog(title, message, buttons, false, imageUrl);

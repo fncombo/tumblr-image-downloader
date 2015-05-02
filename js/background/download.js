@@ -23,17 +23,13 @@ TID.downloads.handleDownloadState = {};
 /**
  * Go through each downloading image and remove it if we've used it
  */
-TID.downloads.cleanupActiveDownloads = function () {
-    Object.keys(TID.downloads.activeDownloads).forEach(function (key) {
-        if (TID.downloads.activeDownloads[key].downloadState !== 'in_progress') {
-            delete TID.downloads.activeDownloads[key];
-        }
-    });
+TID.downloads.removeActiveDownload = function (key) {
+    delete TID.downloads.activeDownloads[key];
 };
 
 /**
  * Download an image and save in the databse if the user enabled that option
- * @param  {String} url URL of the image to download
+ * @param {String} url URL of the image to download
  */
 TID.downloads.downloadImage = function (url) {
     chrome.downloads.download({
@@ -46,23 +42,23 @@ TID.downloads.downloadImage = function (url) {
 
 /**
  * Handler for when a download completes
- * @param  {Object} downloadingImage TID.downloads.activeDownloads object
- * @param  {Object} downloadItem     Chrome object
+ * @param {Object} activeDownload TID.downloads.activeDownloads object
+ * @param {Object} downloadItem   Chrome object
  */
-TID.downloads.handleDownloadState.complete = function (downloadingImage, downloadItem) {
+TID.downloads.handleDownloadState.complete = function (activeDownload, downloadItem) {
     console.log('Download finished', downloadItem);
 
     // Do not save to the database if the setting is turned off
     if (!TID.vars.rememberImages) {
-        TID.downloads.cleanupActiveDownloads();
+        TID.downloads.removeActiveDownload(activeDownload.url);
         return;
     }
 
     var directory;
 
     // Figure out which directory it was saved to
-    if (downloadingImage.saveDirectory) {
-        directory = downloadingImage.saveDirectory;
+    if (activeDownload.directory) {
+        directory = activeDownload.directory;
     } else if (TID.vars.defaultDirectory) {
         directory = TID.vars.defaultDirectory;
     } else {
@@ -71,30 +67,30 @@ TID.downloads.handleDownloadState.complete = function (downloadingImage, downloa
 
     // Save the image
     TID.storage.saveImage({
-        imageId: downloadingImage.imageId,
-        imageUrl: downloadingImage.imageUrl,
-        pageUrl: downloadingImage.pageUrl,
+        imageId: activeDownload.imageId,
+        imageUrl: activeDownload.imageUrl,
+        pageUrl: activeDownload.pageUrl,
         directory: directory,
     }, function () {
         // Send message to all open tabs that the image was downloaded
         TID.sendToAllTabs('*://*.tumblr.com/*', {
             message: 'image_downloaded',
             data: {
-                imageId: downloadingImage.imageId,
+                imageId: activeDownload.imageId,
                 directory: directory
             }
         });
 
-        TID.downloads.cleanupActiveDownloads();
+        TID.downloads.removeActiveDownload(activeDownload.url);
     });
 };
 
 /**
  * Handler for when a download is interrupted
- * @param  {Object} downloadingImage TID.downloads.activeDownloads object
- * @param  {Object} downloadItem     Chrome object
+ * @param {Object} activeDownload TID.downloads.activeDownloads object
+ * @param {Object} downloadItem   Chrome object
  */
-TID.downloads.handleDownloadState.interrupted = function (downloadingImage, downloadItem) {
+TID.downloads.handleDownloadState.interrupted = function (activeDownload, downloadItem) {
     var error = 'UNKNOWN_ERROR';
 
     if (downloadItem.hasOwnProperty('error') && typeof downloadItem.error === 'string') {
@@ -105,13 +101,13 @@ TID.downloads.handleDownloadState.interrupted = function (downloadingImage, down
 
     TID.trackEvent('Download Failed', error);
 
-    chrome.tabs.sendMessage(downloadingImage.tabId, {
+    chrome.tabs.sendMessage(activeDownload.tabId, {
         message: 'download_failed',
         error: error,
-        downloadingImage: downloadingImage,
+        activeDownload: activeDownload,
     });
 
-    TID.downloads.cleanupActiveDownloads();
+    TID.downloads.removeActiveDownload(activeDownload.url);
 };
 
 // Override file names by adding the user's directory of choice
@@ -121,10 +117,10 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         return;
     }
 
-    var downloadingImage;
+    var activeDownload;
 
     if (TID.downloads.activeDownloads.hasOwnProperty(downloadItem.url)) {
-        downloadingImage = TID.downloads.activeDownloads[downloadItem.url];
+        activeDownload = TID.downloads.activeDownloads[downloadItem.url];
     } else {
         console.error('Downloading image URL does not seem to exist in downloading images object',
             downloadItem, TID.downloads.activeDownloads);
@@ -140,9 +136,9 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             downloadItem.mime.indexOf('image') !== -1
         )
     ) {
-        if (downloadingImage.saveDirectory) {
+        if (activeDownload.directory) {
             suggest({
-                filename: downloadingImage.saveDirectory + '/' + downloadItem.filename
+                filename: activeDownload.directory + '/' + downloadItem.filename
             });
         } else if (TID.vars.defaultDirectory) {
             suggest({
@@ -160,10 +156,10 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
         chrome.downloads.cancel(downloadItem.id);
 
         // Prompt the user
-        chrome.tabs.sendMessage(downloadingImage.tabId, {
+        chrome.tabs.sendMessage(activeDownload.tabId, {
             message: 'not_image',
-            imageId: downloadingImage.imageId,
-            directory: downloadingImage.saveDirectory,
+            imageId: activeDownload.imageId,
+            directory: activeDownload.directory,
             url: downloadItem.url
         });
     }
@@ -183,25 +179,21 @@ chrome.downloads.onChanged.addListener(function (downloadDelta) {
 
         var downloadItem = results[0];
 
-        console.log(downloadItem);
-
         if (downloadItem.byExtensionId !== chrome.runtime.id) {
             console.log('Download not by this extension, ignoring');
             return;
         }
 
-        var downloadingImage = TID.downloads.activeDownloads[downloadItem.url];
-
-        downloadingImage.downloadState = downloadItem.state;
+        var activeDownload = TID.downloads.activeDownloads[downloadItem.url];
 
         // Handle the current download state of the file
         switch (downloadItem.state) {
         case 'complete':
-            TID.downloads.handleDownloadState.complete(downloadingImage, downloadItem);
+            TID.downloads.handleDownloadState.complete(activeDownload, downloadItem);
             break;
 
         case 'interrupted':
-            TID.downloads.handleDownloadState.interrupted(downloadingImage, downloadItem);
+            TID.downloads.handleDownloadState.interrupted(activeDownload, downloadItem);
             break;
         }
     });

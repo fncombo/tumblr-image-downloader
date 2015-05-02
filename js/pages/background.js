@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     case 'download':
         TID.downloads.activeDownloads[request.data.url] = {
-            saveDirectory: request.data.directory,
+            directory: request.data.directory,
             tabId: sender.tab.id,
             imageId: request.data.imageId,
             imageUrl: request.data.url,
