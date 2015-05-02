@@ -25,10 +25,7 @@ TID.downloads.handleDownloadState = {};
  */
 TID.downloads.cleanupActiveDownloads = function () {
     Object.keys(TID.downloads.activeDownloads).forEach(function (key) {
-        if (
-            TID.downloads.activeDownloads[key].hasOwnProperty('filenameDetermined') &&
-            TID.downloads.activeDownloads[key].filenameDetermined
-        ) {
+        if (TID.downloads.activeDownloads[key].downloadState !== 'in_progress') {
             delete TID.downloads.activeDownloads[key];
         }
     });
@@ -170,8 +167,6 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             url: downloadItem.url
         });
     }
-
-    downloadingImage.filenameDetermined = true;
 });
 
 // Listen for changes to download items
@@ -196,6 +191,8 @@ chrome.downloads.onChanged.addListener(function (downloadDelta) {
         }
 
         var downloadingImage = TID.downloads.activeDownloads[downloadItem.url];
+
+        downloadingImage.downloadState = downloadItem.state;
 
         // Handle the current download state of the file
         switch (downloadItem.state) {
