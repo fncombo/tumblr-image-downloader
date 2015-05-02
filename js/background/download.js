@@ -46,6 +46,14 @@ TID.downloads.downloadImage = function (url) {
  * @param {Object} downloadItem   Chrome object
  */
 TID.downloads.handleDownloadState.complete = function (activeDownload, downloadItem) {
+    if (!activeDownload) {
+        console.log('Active download object not found, ignoring ' +
+            '(this is most likely due to Chrome triggering onChanged for a deleted file)', downloadItem);
+        // For example, downloading file X and then deleting it will cause Chrome to
+        // trigger an onChanged event once it detects that the file is missing
+        return;
+    }
+
     console.log('Download finished', downloadItem);
 
     // Do not save to the database if the setting is turned off
