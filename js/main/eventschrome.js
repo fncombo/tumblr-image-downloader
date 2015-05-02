@@ -44,14 +44,18 @@ TID.events.initMessageListener = function () {
     chrome.runtime.onMessage.addListener(function (request) {
         console.log('Recieved message', request);
 
+        var title;
+        var message;
+        var buttons;
+
         switch (request.message) {
         case 'not_image':
             TID.images.remove(request.imageId);
             TID.ticks.remove(request.imageId);
 
-            var title = TID.msg('whoa');
-            var message = TID.msg('linkNotImage');
-            var buttons = [TID.msg('downloadFromTumblr'), TID.msg('openLinkInNewTab'), TID.msg('cancel')];
+            title = TID.msg('whoa');
+            message = TID.msg('linkNotImage');
+            buttons = [TID.msg('downloadFromTumblr'), TID.msg('openLinkInNewTab'), TID.msg('cancel')];
 
             TID.ui.showDialog(title, message, buttons, function (i) {
                 switch (i) {
