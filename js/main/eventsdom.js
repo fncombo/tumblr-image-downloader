@@ -8,6 +8,9 @@
 TID.events.initMutationObservers = function () {
     console.log('Initializing DOM mutation observers');
 
+    var toObserve;
+    var postsObserver;
+
     function appendButton (el, button) {
         // Give the button correct offsets
         button.style.position = 'relative';
@@ -128,4 +131,22 @@ TID.events.initMutationObservers = function () {
             attributeFilter: ['src', 'class']
         });
     });
+
+    if (!TID.isArchivePage) {
+        // Create a DOM mutation observer for new posts
+        postsObserver = new MutationObserver(function () {
+            // Assume a post has been added or removed,
+            // so try to add button to any new images
+            TID.buttons.add();
+        });
+
+        toObserve = $(TID.selectors.posts);
+
+        // Observe the posts container for new posts
+        if (toObserve) {
+            postsObserver.observe(toObserve, {
+                childList: true,
+            });
+        }
+    }
 };
