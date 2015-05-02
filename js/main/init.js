@@ -63,6 +63,8 @@ TID.regex = {
     tumblrDomain: /tumblr\.com\//,
     https: /^https?:\/\//,
     globalForwardSlash: /\//g,
+    directoryToLastSlash: /(.+\/)/,
+    directoryNonTagSlashes: /\/(?!\w+>)/g,
 };
 
 /**

@@ -54,8 +54,8 @@ TID.directories.format = function () {
     var list = '<ul>';
 
     TID.directories.list.forEach(function (directory) {
-        var name = directory.replace(/(.+\/)/, '<span>$1</span>')
-                            .replace(/\/(?!\w+>)/g, '<span>/</span>');
+        var name = directory.replace(TID.regex.directoryToLastSlash, '<span>$1</span>')
+                            .replace(TID.regex.directoryNonTagSlashes, '<span>/</span>');
 
         list += '<li title="' + TID.msg('downloadDirectoryTitle', directory) + '" data-directory="' + directory + '">';
         list += name;
