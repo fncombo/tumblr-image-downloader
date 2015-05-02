@@ -67,6 +67,19 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
     downloadingImage.filenameDetermined = true;
 });
 
+/**
+ * Go through each downloading image and remove it if we've used it
+ */
+TID.cleanupDownloadingImages = function () {
+    Object.keys(TID.downloadingImages).forEach(function (key) {
+        if (
+            TID.downloadingImages[key].hasOwnProperty('filenameDetermined') &&
+            TID.downloadingImages[key].filenameDetermined
+        ) {
+            delete TID.downloadingImages[key];
+        }
+    });
+};
 
 /**
  * Download an image and save in the databse if the user enabled that option
@@ -90,6 +103,7 @@ TID.downloadImage = function (url) {
 
             // Do not save to the database if the setting is turned off
             if (!TID.vars.rememberImages) {
+                TID.cleanupDownloadingImages();
                 return;
             }
 
@@ -121,15 +135,7 @@ TID.downloadImage = function (url) {
                     }
                 });
 
-                // Go through each downloading image and remove it if we've used it
-                Object.keys(TID.downloadingImages).forEach(function (key) {
-                    if (
-                        TID.downloadingImages[key].hasOwnProperty('filenameDetermined') &&
-                        TID.downloadingImages[key].filenameDetermined
-                    ) {
-                        delete TID.downloadingImages[key];
-                    }
-                });
+                TID.cleanupDownloadingImages();
             });
         });
     });
