@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         break;
 
     case 'download':
-        TID.downloadingImages[request.data.url] = {
+        TID.downloads.activeDownloads[request.data.url] = {
             saveDirectory: request.data.directory,
             tabId: sender.tab.id,
             imageId: request.data.imageId,
@@ -63,7 +63,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             pageUrl: request.data.pageUrl,
         };
 
-        TID.downloadImage(request.data.url);
+        TID.downloads.downloadImage(request.data.url);
         break;
 
     case 'open_settings':
