@@ -89,6 +89,16 @@ TID.events.initMessageListener = function () {
         case 'storage_cleared':
             TID.ticks.removeAll();
             break;
+
+        case 'download_failed':
+            title = TID.msg('downloadFailedTitle');
+            message = TID.msg('downloadFailedMessage', request.error);
+            buttons = TID.msg('okay');
+            var imageEl = $('img[src*="' + request.downloadingImage.imageId + '"]');
+            var imageUrl = imageEl ? imageEl.src : false;
+
+            TID.ui.showDialog(title, message, buttons, false, imageUrl);
+            break;
         }
     });
 };
