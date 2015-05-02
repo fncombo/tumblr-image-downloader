@@ -3,14 +3,28 @@
 /* globals TID, $, $$ */
 
 /**
+ * Object of functions for different mutation observations
+ * @type {Object}
+ */
+TID.mutationObservers = {};
+
+/**
  * Initialize all DOM mutation observers
  */
 TID.events.initMutationObservers = function () {
     console.log('Initializing DOM mutation observers');
 
-    var toObserve;
-    var postsObserver;
+    if (!TID.isArchivePage) {
+        TID.mutationObservers.lightbox();
+        TID.mutationObservers.inlineImage();
+        TID.mutationObservers.posts();
+    }
+};
 
+/**
+ * Observe the lightbox and the center image within it
+ */
+TID.mutationObservers.lightbox = function () {
     function appendButton (el, button) {
         // Give the button correct offsets
         button.style.position = 'relative';
@@ -44,7 +58,7 @@ TID.events.initMutationObservers = function () {
                 imageId: imageId,
                 isHD: isHD,
                 HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
-                url: el.src
+                url: el.src,
             };
 
             TID.buttons.create(data, function (button) {
@@ -60,7 +74,9 @@ TID.events.initMutationObservers = function () {
                 if (el.addedNodes[i].id === 'tumblr_lightbox') {
                     centerImageObserver.observe($(TID.selectors.lightboxCenterImage), {
                         attributes: true,
-                        attributeFilter: ['src']
+                        attributeFilter: [
+                            'src',
+                        ],
                     });
 
                     break;
@@ -71,9 +87,14 @@ TID.events.initMutationObservers = function () {
 
     // Start observing
     lightboxObserver.observe(document.body, {
-        childList: true
+        childList: true,
     });
+};
 
+/**
+ * Observer for changed in inline post images
+ */
+TID.mutationObservers.inlineImage = function () {
     // Create a DOM mutation observer for inline post images
     var inlineImageObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
@@ -102,7 +123,7 @@ TID.events.initMutationObservers = function () {
                     imageId: TID.images.getID(el.src),
                     isHD: false,
                     HDType: isExternal ? TID.HDTypes.externalHighRes : TID.HDTypes.none,
-                    url: el.src
+                    url: el.src,
                 };
 
                 TID.buttons.create(data, function (button) {
@@ -125,28 +146,34 @@ TID.events.initMutationObservers = function () {
     });
 
     // Observe each inline image
-    $$('.inline_image, .inline_external_image').forEach(function (el) {
+    $$(TID.selectors.inlineImages).forEach(function (el) {
         inlineImageObserver.observe(el, {
             attributes: true,
-            attributeFilter: ['src', 'class']
+            attributeFilter: [
+                'src',
+                'class',
+            ],
         });
     });
+};
 
-    if (!TID.isArchivePage) {
-        // Create a DOM mutation observer for new posts
-        postsObserver = new MutationObserver(function () {
-            // Assume a post has been added or removed,
-            // so try to add button to any new images
-            TID.buttons.add();
+/**
+ * Observe for new posts
+ */
+TID.mutationObservers.posts = function () {
+    // Create a DOM mutation observer for new posts
+    var postsObserver = new MutationObserver(function () {
+        // Assume a post has been added or removed,
+        // so try to add button to any new images
+        TID.buttons.add();
+    });
+
+    var toObserve = $(TID.selectors.posts);
+
+    // Observe the posts container for new posts
+    if (toObserve) {
+        postsObserver.observe(toObserve, {
+            childList: true,
         });
-
-        toObserve = $(TID.selectors.posts);
-
-        // Observe the posts container for new posts
-        if (toObserve) {
-            postsObserver.observe(toObserve, {
-                childList: true,
-            });
-        }
     }
 };

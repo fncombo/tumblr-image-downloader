@@ -124,7 +124,8 @@ TID.selectors = {
     posts: '#posts, .posts',
     post: '.post_container, .post_chrome',
     postFullImage: '.tmblr-full',
-    lightboxCenterImage: '#tumblr_lightbox_center_image'
+    lightboxCenterImage: '#tumblr_lightbox_center_image',
+    inlineImages: '.inline_image, .inline_external_image',
 };
 
 if (TID.isArchivePage) {
