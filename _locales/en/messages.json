@@ -311,6 +311,20 @@
         "message": "None...",
         "description": "Used when no images were download by this extension."
     },
+    "downloadFailedTitle": {
+        "message": "Download Failed",
+        "description": "Dialog title when the download fails."
+    },
+    "downloadFailedMessage": {
+        "message": "Something went wrong while downloading the image. Here's the error: <strong>$ERROR$</strong>.",
+        "description": "Dialog message when the download fails, specifying the error.",
+        "placeholders": {
+            "error": {
+                "content": "$1",
+                "example": "FILE_FAILED"
+            }
+        }
+    },
 
 
 
