@@ -68,6 +68,10 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
 });
 
 
+/**
+ * Download an image and save in the databse if the user enabled that option
+ * @param  {String} url URL of the image to download
+ */
 TID.downloadImage = function (url) {
     chrome.downloads.download({
         url: url,
