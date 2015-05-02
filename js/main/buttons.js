@@ -14,7 +14,9 @@ TID.buttons = {};
 TID.buttons.add = function () {
     console.log('Adding buttons');
 
-    $$(TID.selectors.images).forEach(function (el) {
+    var images = $$(TID.selectors.images);
+
+    images.forEach(function (el) {
         // Don't add buttons to this image anymore
         el.classList.add(TID.classes.ignore);
 
@@ -43,7 +45,9 @@ TID.buttons.add = function () {
         }
     });
 
-    TID.trackEvent('Download Buttons', 'Added');
+    if (images) {
+        TID.trackEvent('Download Buttons', 'Added');
+    }
 };
 
 /**
