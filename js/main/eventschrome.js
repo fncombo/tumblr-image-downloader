@@ -42,6 +42,8 @@ TID.events.initMessageListener = function () {
     console.log('Initializing Chrome message listeners');
 
     chrome.runtime.onMessage.addListener(function (request) {
+        console.log('Recieved message', request);
+
         switch (request.message) {
         case 'not_image':
             TID.images.remove(request.imageId);
