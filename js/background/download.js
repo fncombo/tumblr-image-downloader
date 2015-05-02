@@ -65,7 +65,7 @@ TID.downloads.handleDownloadState.complete = function (activeDownload, downloadI
     var directory;
 
     // Figure out which directory it was saved to
-    if (activeDownload.directory) {
+    if (activeDownload.hasOwnProperty('directory') && activeDownload.directory) {
         directory = activeDownload.directory;
     } else if (TID.vars.defaultDirectory) {
         directory = TID.vars.defaultDirectory;
