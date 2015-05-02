@@ -6,6 +6,12 @@
  * Object of functions for different mutation observations
  * @type {Object}
  */
+TID.observeMutations = {};
+
+/**
+ * Object of all mutation observers
+ * @type {Object}
+ */
 TID.mutationObservers = {};
 
 /**
@@ -15,16 +21,16 @@ TID.events.initMutationObservers = function () {
     console.log('Initializing DOM mutation observers');
 
     if (!TID.isArchivePage) {
-        TID.mutationObservers.lightbox();
-        TID.mutationObservers.inlineImage();
-        TID.mutationObservers.posts();
+        TID.observeMutations.lightbox();
+        TID.observeMutations.inlineImages();
+        TID.observeMutations.posts();
     }
 };
 
 /**
  * Observe the lightbox and the center image within it
  */
-TID.mutationObservers.lightbox = function () {
+TID.observeMutations.lightbox = function () {
     function appendButton (el, button) {
         // Give the button correct offsets
         button.style.position = 'relative';
@@ -41,52 +47,60 @@ TID.mutationObservers.lightbox = function () {
     }
 
     // Create a DOM mutation observer for the lightbox middle image
-    var centerImageObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            var el = mutation.target;
-            var imageId = TID.images.getID(el.src);
+    if (!TID.mutationObservers.centerImage) {
+        TID.mutationObservers.centerImage = new MutationObserver(function (mutations) {
+            console.log('Center image mutation observer fired', mutations);
 
-            // If the button already exists on the page, use that
-            var existingButton = $('.' + TID.classes.download + '[data-image-id="' + imageId + '"]');
-            if (existingButton) {
-                appendButton(el, existingButton.cloneNode(true));
-                return;
-            }
+            mutations.forEach(function (mutation) {
+                var el = mutation.target;
+                var imageId = TID.images.getID(el.src);
 
-            var isHD = TID.regex.image1280.test(el.src);
-            var data = {
-                imageId: imageId,
-                isHD: isHD,
-                HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
-                url: el.src,
-            };
+                // If the button already exists on the page, use that
+                var existingButton = $('.' + TID.classes.download + '[data-image-id="' + imageId + '"]');
+                if (existingButton) {
+                    appendButton(el, existingButton.cloneNode(true));
+                    return;
+                }
 
-            TID.buttons.create(data, function (button) {
-                appendButton(el, button);
+                var isHD = TID.regex.image1280.test(el.src);
+                var data = {
+                    imageId: imageId,
+                    isHD: isHD,
+                    HDType: isHD ? TID.HDTypes.tumblrHighRes : TID.HDTypes.none,
+                    url: el.src,
+                };
+
+                TID.buttons.create(data, function (button) {
+                    appendButton(el, button);
+                });
             });
         });
-    });
+    }
 
     // Create a DOM mutation observer for the body
-    var lightboxObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (el) {
-            for (var i = 0, l = el.addedNodes.length; i < l; i += 1) {
-                if (el.addedNodes[i].id === 'tumblr_lightbox') {
-                    centerImageObserver.observe($(TID.selectors.lightboxCenterImage), {
-                        attributes: true,
-                        attributeFilter: [
-                            'src',
-                        ],
-                    });
+    if (!TID.mutationObservers.lightbox) {
+        TID.mutationObservers.lightbox = new MutationObserver(function (mutations) {
+            console.log('Lightbox mutation observer fired', mutations);
 
-                    break;
+            mutations.forEach(function (el) {
+                for (var i = 0, l = el.addedNodes.length; i < l; i += 1) {
+                    if (el.addedNodes[i].id === 'tumblr_lightbox') {
+                        TID.mutationObservers.centerImage.observe($(TID.selectors.lightboxCenterImage), {
+                            attributes: true,
+                            attributeFilter: [
+                                'src',
+                            ],
+                        });
+
+                        break;
+                    }
                 }
-            }
+            });
         });
-    });
+    }
 
     // Start observing
-    lightboxObserver.observe(document.body, {
+    TID.mutationObservers.lightbox.observe(document.body, {
         childList: true,
     });
 };
@@ -94,60 +108,64 @@ TID.mutationObservers.lightbox = function () {
 /**
  * Observer for changed in inline post images
  */
-TID.mutationObservers.inlineImage = function () {
+TID.observeMutations.inlineImages = function () {
     // Create a DOM mutation observer for inline post images
-    var inlineImageObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            var el = mutation.target;
-            var blockEl = [];
+    if (!TID.mutationObservers.inlineImage) {
+        TID.mutationObservers.inlineImage = new MutationObserver(function (mutations) {
+            console.log('Inline image mutation observer fired', mutations);
 
-            TID.selectors.post.split(', ').forEach(function (selector) {
-                blockEl.push('p, div:not(' + selector + ')');
-            });
+            mutations.forEach(function (mutation) {
+                var el = mutation.target;
+                var blockEl = [];
 
-            blockEl = blockEl.join(', ');
-            blockEl = el.closest(blockEl);
+                TID.selectors.post.split(', ').forEach(function (selector) {
+                    blockEl.push('p, div:not(' + selector + ')');
+                });
 
-            if (
-                (
-                    !el.classList.contains('inline_external_image') &&
-                    !el.classList.contains('inline_image')
-                ) ||
-                (
-                    el.classList.contains('inline_external_image') &&
-                    el.classList.contains('enlarged')
-                )
-            ) {
-                var isExternal = !!el.classList.contains('inline_external_image');
-                var data = {
-                    imageId: TID.images.getID(el.src),
-                    isHD: false,
-                    HDType: isExternal ? TID.HDTypes.externalHighRes : TID.HDTypes.none,
-                    url: el.src,
-                };
+                blockEl = blockEl.join(', ');
+                blockEl = el.closest(blockEl);
 
-                TID.buttons.create(data, function (button) {
-                    // Remove any existing buttons
-                    $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
+                if (
+                    (
+                        !el.classList.contains('inline_external_image') &&
+                        !el.classList.contains('inline_image')
+                    ) ||
+                    (
+                        el.classList.contains('inline_external_image') &&
+                        el.classList.contains('enlarged')
+                    )
+                ) {
+                    var isExternal = !!el.classList.contains('inline_external_image');
+                    var data = {
+                        imageId: TID.images.getID(el.src),
+                        isHD: false,
+                        HDType: isExternal ? TID.HDTypes.externalHighRes : TID.HDTypes.none,
+                        url: el.src,
+                    };
+
+                    TID.buttons.create(data, function (button) {
+                        // Remove any existing buttons
+                        $$('.' + TID.classes.download, el.parentNode).forEach(function (el) {
+                            el.remove();
+                        });
+
+                        // Append the button
+                        blockEl.classList.add(TID.classes.parent);
+                        blockEl.insertBefore(button, el);
+                    });
+                } else {
+                    // Remove any buttons
+                    $$('.' + TID.classes.download, blockEl).forEach(function (el) {
                         el.remove();
                     });
-
-                    // Append the button
-                    blockEl.classList.add(TID.classes.parent);
-                    blockEl.insertBefore(button, el);
-                });
-            } else {
-                // Remove any buttons
-                $$('.' + TID.classes.download, blockEl).forEach(function (el) {
-                    el.remove();
-                });
-            }
+                }
+            });
         });
-    });
+    }
 
     // Observe each inline image
     $$(TID.selectors.inlineImages).forEach(function (el) {
-        inlineImageObserver.observe(el, {
+        TID.mutationObservers.inlineImage.observe(el, {
             attributes: true,
             attributeFilter: [
                 'src',
@@ -160,19 +178,26 @@ TID.mutationObservers.inlineImage = function () {
 /**
  * Observe for new posts
  */
-TID.mutationObservers.posts = function () {
+TID.observeMutations.posts = function () {
     // Create a DOM mutation observer for new posts
-    var postsObserver = new MutationObserver(function () {
-        // Assume a post has been added or removed,
-        // so try to add button to any new images
-        TID.buttons.add();
-    });
+    if (!TID.mutationObservers.posts) {
+        TID.mutationObservers.posts = new MutationObserver(function (mutations) {
+            console.log('Posts mutation observer fired', mutations);
+
+            // Assume a post has been added or removed,
+            // so try to add button to any new images
+            TID.buttons.add();
+
+            // Observe any new inline images
+            TID.observeMutations.inlineImages();
+        });
+    }
 
     var toObserve = $(TID.selectors.posts);
 
     // Observe the posts container for new posts
     if (toObserve) {
-        postsObserver.observe(toObserve, {
+        TID.mutationObservers.posts.observe(toObserve, {
             childList: true,
         });
     }
