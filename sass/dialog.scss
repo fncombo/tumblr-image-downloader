@@ -9,7 +9,27 @@
     }
 }
 
+@keyframes overlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @-webkit-keyframes dialog {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(0.1);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes dialog {
     from {
         opacity: 0;
         -webkit-transform: scale(0.1);
