@@ -9,6 +9,23 @@
 TID.buttons = {};
 
 /**
+ * Store all the active timeout IDs
+ * @type {Array}
+ */
+TID.buttons.timeouts = [];
+
+/**
+ * Clear all timeouts stored in TID.buttons.timeouts
+ */
+TID.buttons.clearTimeouts = function () {
+    TID.buttons.timeouts.forEach(function (timeoutId) {
+        clearTimeout(timeoutId);
+    });
+
+    TID.buttons.timeouts = [];
+};
+
+/**
  * Add download buttons to all images on the page
  */
 TID.buttons.add = function () {
@@ -99,12 +116,34 @@ TID.buttons.create = function (imageData, callback) {
 
         // Button hover events
         el.onmouseover = el.onmouseout = function (event) {
-            var action = event.type === 'mouseover' ? 'add' : 'remove';
+            var parent = false;
+            var cssClass;
 
             if (TID.isArchivePage) {
-                el.parentNode.classList[action](TID.classes.highlight);
+                parent = el.parentNode;
+                cssClass = TID.classes.highlight;
             } else if (el.ancestor(2).classList.contains('photoset_row')) {
-                el.ancestor(2).classList[action](TID.classes.photoset);
+                parent = el.ancestor(2);
+                cssClass = TID.classes.photoset;
+            }
+
+            if (!parent) {
+                return;
+            }
+
+            // Clear any existing timeouts
+            TID.buttons.clearTimeouts();
+
+            if (event.type === 'mouseover') {
+                parent.classList.add(cssClass);
+            } else {
+                // Remove class only after CSS has finished animating
+                // currently 0.15s
+                var timeoutId = setTimeout(function () {
+                    parent.classList.remove(cssClass);
+                }, 150);
+
+                TID.buttons.timeouts.push(timeoutId);
             }
         };
 

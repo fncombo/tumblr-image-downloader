@@ -1,7 +1,8 @@
 @import 'dialog';
 @import 'vars';
 
-$time: 0.15s;
+$time-short: 0.1s;
+$time-long: 0.2s;
 $easing: ease-in-out;
 
 @font-face {
@@ -17,19 +18,19 @@ $easing: ease-in-out;
 
 @-webkit-keyframes tick-background {
     0% {
-        background: transparentize($tumblr-color, 1);
+        background-color: transparentize($tumblr-color, 1);
     }
     100% {
-        background: $tumblr-color-transparent;
+        background-color: $tumblr-color-transparent;
     }
 }
 
 @keyframes tick-background {
     0% {
-        background: transparentize($tumblr-color, 1);
+        background-color: transparentize($tumblr-color, 1);
     }
     100% {
-        background: $tumblr-color-transparent;
+        background-color: $tumblr-color-transparent;
     }
 }
 
@@ -55,12 +56,16 @@ $easing: ease-in-out;
     }
 }
 
+%transition {
+    transition-property: background-color, opacity, visibility;
+    transition-duration: $time-short;
+    transition-timing-function: $easing;
+}
+
 %hidden {
     opacity: 0;
     visibility: hidden;
-    // transition-property: opacity, visibility;
-    // transition-duration: $time;
-    // transition-timing-function: $easing;
+    @extend %transition;
 }
 
 %visible {
@@ -116,27 +121,35 @@ a.TID-parent {
         pointer-events: none;
     }
 
+    & + img {
+        position: relative;
+        outline: 1px solid unquote('hsla(0, 0%, 100%, 0)');
+        transition-property: box-shadow, outline;
+        transition-duration: $time-long;
+        transition-timing-function: $easing;
+    }
+
     &:hover {
         z-index: 9999999999;
 
         & + img {
-            outline: 1px solid #fff;
-            outline-offset: -1px;
-            box-shadow: 0 0 0 1px $tumblr-color-hover;
+            outline: 1px solid unquote('hsla(0, 0%, 100%, 1)');
+            box-shadow: 0 0 10px 5px $tumblr-color;
+            z-index: 80;
         }
     }
 
     .TID-show-ticks &.TID-downloaded:before {
         content: '\2713';
-        background: transparentize($tumblr-color, 1);
+        background-color: transparentize($tumblr-color, 1);
         padding: 0.3em 0.6em;
         position: absolute;
         top: 0;
         left: 0;
         z-index: 78;
         color: unquote('hsla(0, 0%, 100%, 0)');
-        -webkit-animation: tick-background $time $easing forwards;
-        animation: tick-background $time $easing forwards;
+        -webkit-animation: tick-background $time-long $easing forwards;
+        animation: tick-background $time-long $easing forwards;
     }
 
     .TID-archive &.TID-downloaded:before {
@@ -151,13 +164,13 @@ a.TID-parent {
         left: 0;
         z-index: 78;
         color: unquote('hsla(0, 0%, 100%, 0)');
-        -webkit-animation: tick-text $time $easing forwards;
-        animation: tick-text $time $easing forwards;
+        -webkit-animation: tick-text $time-long $easing forwards;
+        animation: tick-text $time-long $easing forwards;
     }
 }
 
 .TID-download-div {
-    background: $tumblr-color;
+    background-color: $tumblr-color;
     flex: 0 0 auto;
     padding: 0.3em 0.6em;
     position: relative;
@@ -175,7 +188,7 @@ a.TID-parent {
     }
 
     &:hover {
-        background: $tumblr-color-hover;
+        background-color: $tumblr-color-hover;
     }
 
     .TID-downloaded &:before {
@@ -202,26 +215,28 @@ a.TID-parent {
     }
 
     &:before {
-        background: $tumblr-color-transparent;
+        background-color: $tumblr-color-transparent;
         position: absolute;
         top: 0;
         left: 0;
         padding: 0.3em 0.6em;
         font-family: tumblr-icons;
         content: '\f104';
+        @extend %transition;
 
         .TID-download:hover & {
-            background: $tumblr-color;
+            background-color: $tumblr-color;
         }
     }
 
     ul {
-        background: $tumblr-color;
+        background-color: $tumblr-color;
         position: absolute;
         top: 0;
         left: 0;
         margin: 0 !important;
         padding: 0 !important;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
         @extend %hidden;
     }
 
@@ -230,19 +245,20 @@ a.TID-parent {
     }
 
     li {
+        display: flex;
         padding: 0.3em 0.6em;
         list-style: none !important;
         cursor: pointer;
 
         &:hover {
-            background: $tumblr-color-hover;
+            background-color: $tumblr-color-hover;
         }
 
         &.TID-downloaded:before {
             content: '\2713\0020';
         }
 
-        span {
+        & > span {
             color: unquote('hsla(0, 0%, 100%, 0.75)') !important;
             pointer-events: none;
 
