@@ -262,14 +262,15 @@ a.TID-parent {
         }
 
         span {
+            pointer-events: none;
 
             &:not(:last-child) {
                 color: unquote('hsla(0, 0%, 100%, 0.75)') !important;
-                pointer-events: none;
             }
         }
 
         i {
+            pointer-events: none;
             transform: translateY(-1px);
 
             &:after {
