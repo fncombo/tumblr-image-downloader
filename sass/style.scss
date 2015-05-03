@@ -98,11 +98,14 @@ a.TID-parent {
     top: 0;
     left: 0;
     z-index: 77;
-    @extend %text-reset;
     white-space: pre !important;
     color: #fff !important;
     -webkit-user-select: none;
     user-select: none;
+
+    &, & div, & span, & i, & ul, & li {
+        @extend %text-reset;
+    }
 
     .single_image & {
         position: relative;
