@@ -260,13 +260,13 @@ module.exports = function(grunt) {
                             'img/icon*.png',
                             '_locales/*/*',
                             'updates.json',
-                            'manifest.json'
+                            'manifest.json',
                         ],
                         dest: '<%= paths.extension %>/',
-                        filter: 'isFile'
-                    }
-                ]
-            }
+                        filter: 'isFile',
+                    },
+                ],
+            },
         },
 
         watch: {
