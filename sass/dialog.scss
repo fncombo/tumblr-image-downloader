@@ -51,7 +51,7 @@
     z-index: 9999999999;
     -webkit-animation: overlay 0.1s ease-in-out forwards;
     color: $text-primary-color !important;
-    @extend .text-reset;
+    @extend %text-reset;
     cursor: auto !important;
 
     &:before {
@@ -75,9 +75,9 @@
     padding: 1em 0;
     display: inline-block;
     vertical-align: middle;
-    -webkit-animation: dialog 0.2s $easeOutBack forwards;
-    animation: dialog 0.2s $easeOutBack forwards;
-    @extend .text-reset;
+    -webkit-animation: dialog 0.2s $ease-out-back forwards;
+    animation: dialog 0.2s $ease-out-back forwards;
+    @extend %text-reset;
 
     hr {
         border: none;
@@ -94,7 +94,7 @@
 }
 
 .TID-dialog-message {
-    @extend .text-reset;
+    @extend %text-reset;
     text-align: left;
     margin: 0 2.25em 1em;
 
@@ -154,7 +154,7 @@
 }
 
 .TID-dialog-button {
-    @extend .base-button;
+    @extend %base-button;
     display: inline-block;
     margin: 0 0.5em;
 }

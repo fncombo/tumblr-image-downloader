@@ -85,7 +85,7 @@ TID.directories.setVisibility = function (setting) {
 TID.directories.clone = function (directoriesToTick) {
     var el = document.createElement('div');
     el.classList.add(TID.classes.list);
-    el.innerHTML = '<span>&#9660;</span>' + TID.directories.html;
+    el.innerHTML = TID.directories.html;
 
     // Tick any directories that should be ticked (that thios images has been downloaded to)
     if (directoriesToTick) {

@@ -1,6 +1,73 @@
 @import 'dialog';
 @import 'vars';
 
+$time: 0.15s;
+$easing: ease-in-out;
+
+@font-face {
+    font-family: 'tumblr-icons';
+    src: url('https://secure.assets.tumblr.com/fonts/tumblr-icons/tumblr-icons_b5f923caf182ed9c2de28e209f4a02fd.eot');
+    src: url('https://secure.assets.tumblr.com/fonts/tumblr-icons/tumblr-icons_b5f923caf182ed9c2de28e209f4a02fd.eot?#iefix') format('embedded-opentype'),
+         url('https://secure.assets.tumblr.com/fonts/tumblr-icons/tumblr-icons_b5f923caf182ed9c2de28e209f4a02fd.woff') format('woff'),
+         url('https://secure.assets.tumblr.com/fonts/tumblr-icons/tumblr-icons_b5f923caf182ed9c2de28e209f4a02fd.ttf') format('truetype'),
+         url('https://secure.assets.tumblr.com/fonts/tumblr-icons/tumblr-icons_b5f923caf182ed9c2de28e209f4a02fd.svg#tumblr-icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@-webkit-keyframes tick-background {
+    0% {
+        background: transparentize($tumblr-color, 1);
+    }
+    100% {
+        background: $tumblr-color-transparent;
+    }
+}
+
+@keyframes tick-background {
+    0% {
+        background: transparentize($tumblr-color, 1);
+    }
+    100% {
+        background: $tumblr-color-transparent;
+    }
+}
+
+@-webkit-keyframes tick-text {
+    0% {
+        transform: scale(0.5);
+        color: unquote('hsla(0, 0%, 100%, 0)');
+    }
+    100% {
+        transform: scale(1);
+        color: unquote('hsla(0, 0%, 100%, 1)');
+    }
+}
+
+@keyframes tick-text {
+    0% {
+        transform: scale(0.5);
+        color: unquote('hsla(0, 0%, 100%, 0)');
+    }
+    100% {
+        transform: scale(1);
+        color: unquote('hsla(0, 0%, 100%, 1)');
+    }
+}
+
+%hidden {
+    opacity: 0;
+    visibility: hidden;
+    // transition-property: opacity, visibility;
+    // transition-duration: $time;
+    // transition-timing-function: $easing;
+}
+
+%visible {
+    opacity: 1;
+    visibility: visible;
+}
+
 .TID-photoset {
     overflow: visible !important;
     position: relative;
@@ -20,24 +87,23 @@ a.TID-parent {
     }
 }
 
-.TID-parent:hover .TID-download-div,
-.TID-parent:hover .TID-list,
-#tumblr_lightbox_center_link:hover .TID-download-div,
-#tumblr_lightbox_center_link:hover .TID-list {
-    opacity: 1;
-}
-
 .TID-download {
-    display: inline-block;
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
-    cursor: pointer;
-    z-index: 79;
-    white-space: pre;
+    z-index: 77;
+    @extend %text-reset;
+    white-space: pre !important;
+    color: #fff !important;
+    -webkit-user-select: none;
+    user-select: none;
+
+    .single_image & {
+        position: relative;
+    }
 
     #tumblr_lightbox & {
-        // Exactly how many 9s it takes to overrtide tumblr. Well done.
         z-index: 9999999999;
     }
 
@@ -45,156 +111,135 @@ a.TID-parent {
         z-index: initial;
     }
 
-    &,
-    div,
-    ul,
-    li,
-    strong {
-        color: #fff !important;
-        font-size: $text-base-size !important;
-        font-style: normal !important;
-        font-variant: normal !important;
-        font-weight: normal !important;
-        font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif !important;
-        line-height: 1.4 !important;
-        text-shadow: none !important;
-        cursor: pointer !important;
-        text-transform: none !important;
-        text-decoration: none !important;
-    }
-
     strong {
         font-weight: bolder !important;
         pointer-events: none;
     }
 
-    &:hover + img {
-        outline: 1px solid #fff;
-        outline-offset: -1px;
-        box-shadow: 0 0 0 1px $tumblr-color-hover;
+    &:hover {
+        z-index: 9999999999;
+
+        & + img {
+            outline: 1px solid #fff;
+            outline-offset: -1px;
+            box-shadow: 0 0 0 1px $tumblr-color-hover;
+        }
     }
 
-    .TID-download-div,
-    .TID-list {
-        opacity: 0;
+    .TID-show-ticks &.TID-downloaded:before {
+        content: '\2713';
+        background: transparentize($tumblr-color, 1);
+        padding: 0.3em 0.6em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 78;
+        color: unquote('hsla(0, 0%, 100%, 0)');
+        -webkit-animation: tick-background $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
+        animation: tick-background $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
     }
 
-    &:hover .TID-list {
-        background: $tumblr-color;
+    .TID-archive &.TID-downloaded:before {
+        border-radius: $border-radius 0 $border-radius 0;
+    }
+
+    .TID-show-ticks &.TID-downloaded:after {
+        content: '\2713';
+        padding: 0.3em 0.6em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 78;
+        color: unquote('hsla(0, 0%, 100%, 0)');
+        -webkit-animation: tick-text $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
+        animation: tick-text $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
     }
 }
 
 .TID-download-div {
     background: $tumblr-color;
-    display: inline-block;
+    flex: 0 0 auto;
     padding: 0.3em 0.6em;
+    position: relative;
+    cursor: pointer;
+    z-index: 79;
+    @extend %hidden;
+
+    .single_image & {
+        @extend %visible;
+    }
+
+    .TID-parent:hover &,
+    #tumblr_lightbox_center_link:hover & {
+        @extend %visible;
+    }
 
     &:hover {
         background: $tumblr-color-hover;
     }
-}
 
-.TID-archive {
-
-    &.TID-show-ticks .post:not(:hover) .TID-downloaded:after {
-        content: '\2713';
-        display: block;
-        background: $tumblr-color;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        padding: 0.3em 0.6em;
-        font-size: 0.75em;
-        border-radius: $border-radius 0 $border-radius 0;
+    .TID-downloaded &:before {
+        content: '\2713\0020';
     }
-
-    .post {
-        overflow: visible;
-
-        &.TID-highlight {
-            z-index: 9999999999999;
-
-            .post_glass {
-                box-shadow: inset 0 0 0 1px $tumblr-color-hover, inset 0 0 0 2px #fff;
-            }
-        }
-
-        .TID-download {
-            top: auto;
-            bottom: 100%;
-        }
-
-        .TID-download-div, .TID-list {
-            display: none;
-        }
-
-        &.is_photo:hover {
-
-            .post_content,
-            .post_content_inner,
-            .post_thumbnail_container,
-            .post_glass {
-                border-top-left-radius: 0;
-            }
-
-            .TID-download-div {
-                display: inline-block;
-                opacity: 1;
-            }
-
-            .TID-list  {
-                display: inline-block;
-                opacity: 1;
-                background: $tumblr-color-transparent;
-            }
-        }
-    }
-}
-
-.TID-show-ticks .TID-parent:not(:hover) .TID-downloaded:before,
-.TID-show-ticks #tumblr_lightbox_center_link:not(:hover) .TID-downloaded:before,
-.TID-downloaded .TID-download-div:before,
-.TID-list .TID-downloaded:before {
-    content: '\2713\00A0';
-}
-
-.TID-show-ticks .TID-parent:not(:hover) .TID-downloaded:before,
-.TID-show-ticks #tumblr_lightbox_center_link:not(:hover) .TID-downloaded:before {
-    background: $tumblr-color-transparent;
-    display: inline-block;
-    padding: 0.3em 0.3em 0.3em 0.6em;
 }
 
 .TID-list {
-    background: $tumblr-color-transparent;
-    display: inline-block;
+    flex: 0 0 auto;
     position: relative;
+    @extend %hidden;
 
-    &:before {
-        content: '';
-        display: block;
-        margin-left: 100%;
+    .single_image & {
+        @extend %visible;
     }
 
-    &:hover {
-        opacity: 1;
+    .TID-parent:hover &,
+    #tumblr_lightbox_center_link:hover & {
+        @extend %visible;
+    }
+
+    .TID-hide-locations & {
+        display: none;
+    }
+
+    &:before {
+        background: $tumblr-color-transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0.3em 0.6em;
+        font-family: tumblr-icons;
+        content: '\f104';
+
+        .TID-download:hover & {
+            background: $tumblr-color;
+        }
     }
 
     ul {
         background: $tumblr-color;
-        min-width: 31px;
-        display: none;
-        margin: 0 !important;
-        padding: 0 !important;
         position: absolute;
         top: 0;
         left: 0;
-        white-space: pre;
-        list-style: none !important;
-        z-index: 99999999;
+        margin: 0 !important;
+        padding: 0 !important;
+        @extend %hidden;
+    }
 
-        li {
-            list-style: none !important;
+    &:hover ul {
+        @extend %visible;
+    }
+
+    li {
+        padding: 0.3em 0.6em;
+        list-style: none !important;
+        cursor: pointer;
+
+        &:hover {
+            background: $tumblr-color-hover;
+        }
+
+        &.TID-downloaded:before {
+            content: '\2713\0020';
         }
 
         span {
@@ -206,43 +251,44 @@ a.TID-parent {
             }
         }
     }
+}
 
-    &:hover ul {
-        display: block;
-    }
+.TID-archive {
 
-    li {
-        padding: 0.3em 0.6em;
-        list-style: none;
+    .post {
 
-        &:hover {
-            background: $tumblr-color-hover;
+        &.TID-highlight {
+            z-index: 9999999999;
+
+            .post_glass {
+                box-shadow: inset 0 0 0 1px $tumblr-color-hover, inset 0 0 0 2px #fff;
+            }
         }
-    }
 
-    & > span {
-        display: block;
-        padding: 0.3em 0.6em;
-        color: #fff !important;
-    }
+        &.is_photo:hover {
+            overflow: visible;
 
-    &:hover > span {
-        background: $tumblr-color-hover;
-    }
-}
+            .TID-download {
+                top: auto;
+                bottom: 100%;
+            }
 
-.TID-hide-locations {
-    .TID-list {
-        display: none !important;
-    }
-}
+            .post_content,
+            .post_content_inner,
+            .post_thumbnail_container,
+            .post_glass {
+                border-top-left-radius: 0;
+            }
 
-.single_image {
-    .TID-download {
-        position: relative;
-    }
+            .TID-download-div {
+                opacity: 1;
+                visibility: visible;
+            }
 
-    .TID-download-div, .TID-list {
-        opacity: 1;
+            .TID-list  {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     }
 }

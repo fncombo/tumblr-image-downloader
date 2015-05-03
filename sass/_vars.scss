@@ -27,12 +27,12 @@ $font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
 $border-radius: 3px;
 $input-radius: 2px;
 
-$easeOutBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
 $main-width: 740px;
 $main-margin: 32px;
 
-.base-button {
+%base-button {
     background: $tumblr-gray;
     min-width: 69px;
     border: none;
@@ -60,7 +60,7 @@ $main-margin: 32px;
     }
 }
 
-.text-reset {
+%text-reset {
     font-size: $text-base-size !important;
     font-style: normal !important;
     font-variant: normal !important;
