@@ -135,8 +135,8 @@ a.TID-parent {
         left: 0;
         z-index: 78;
         color: unquote('hsla(0, 0%, 100%, 0)');
-        -webkit-animation: tick-background $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
-        animation: tick-background $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
+        -webkit-animation: tick-background $time $easing forwards;
+        animation: tick-background $time $easing forwards;
     }
 
     .TID-archive &.TID-downloaded:before {
@@ -151,8 +151,8 @@ a.TID-parent {
         left: 0;
         z-index: 78;
         color: unquote('hsla(0, 0%, 100%, 0)');
-        -webkit-animation: tick-text $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
-        animation: tick-text $time cubic-bezier(0, 0, 0.5, 1.5) forwards;
+        -webkit-animation: tick-text $time $easing forwards;
+        animation: tick-text $time $easing forwards;
     }
 }
 
