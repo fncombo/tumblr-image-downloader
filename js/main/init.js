@@ -28,7 +28,7 @@ TID.settings.list = {
         }
     },
 
-    enableLocations: {
+    enableFolders: {
         default: true,
         set: function (value) {
             TID.directories.setVisibility(value);

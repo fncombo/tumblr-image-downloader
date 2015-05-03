@@ -45,23 +45,23 @@ hr
 
 section
   div
-    h1 msg-content="locationsTitle"
+    h1 msg-content="foldersTitle"
   div
-    p msg-content="locationsDefaultDescription"
+    p msg-content="foldersDefaultDescription"
     p
       input#default-directory
-    p.desc msg-content="locationsSeparatorHelp"
-    p#locations-restriction.desc msg-content="locationsRestriction"
+    p.desc msg-content="foldersSeparatorHelp"
+    p#folders-restriction.desc msg-content="foldersRestriction"
     hr
     p.toggle-group
       label
-        input type="checkbox" data-for="enableLocations" data-default="true" data-message="Locations Option" data-controls="locations"
+        input type="checkbox" data-for="enableFolders" data-default="true" data-message="Folders Option" data-controls="folders"
         span
-        span msg-content="locationsMoreDescription"
-    #locations-off
-      p.desc msg-content="locationsDisabledHelp"
-    #locations-on
-      p msg-content="locationsDescription"
+        span msg-content="foldersMoreDescription"
+    #folders-off
+      p.desc msg-content="foldersDisabledHelp"
+    #folders-on
+      p msg-content="foldersDescription"
       ul#download-directories
       p
         button#save-directories msg-content="save"

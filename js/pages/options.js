@@ -109,12 +109,12 @@ listen('click', '#download-directories .delete', function (event, el) {
 });
 
 // Open up the default downloads directory
-var locationsRestriction = $('#locations-restriction');
+var locationsRestriction = $('#folders-restriction');
 if (locationsRestriction) {
     $('a', locationsRestriction).href = '#';
     locationsRestriction.title = TID.msg('defaultDownloadsFolderTooltip');
 
-    listen('click', '#locations-restriction a', function (event) {
+    listen('click', '#folders-restriction a', function (event) {
         event.preventDefault();
         chrome.downloads.showDefaultFolder();
     });
@@ -169,7 +169,7 @@ chrome.storage.onChanged.addListener(function (changes) {
         'showTicks',
         'enableAnalytics',
         'rememberImages',
-        'enableLocations',
+        'enableFolders',
         'ctrlClickConfirm',
         'shiftClickConfirm',
     ];

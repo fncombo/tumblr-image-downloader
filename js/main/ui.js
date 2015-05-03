@@ -112,7 +112,7 @@ TID.ui.revealImage = function (url) {
         if (!results || !results.length || (results.length === 1 && !results[0].exists)) {
             console.log('No download items', results);
 
-            TID.ui.showDialog(title, TID.msg('imageNotAtDownloadLocation'), TID.msg('nevermind'));
+            TID.ui.showDialog(title, TID.msg('imageNotInDownloadFolder'), TID.msg('nevermind'));
             return;
         } else if (results.length === 1) {
             console.log('Only one download item, attempting to reveal', results);

@@ -69,35 +69,35 @@
 
 
     /**
-     * Location options
+     * folder options
      */
-    "locationsTitle": {
-        "message": "Locations",
-        "description": "Title for the locations section on the options page."
+    "foldersTitle": {
+        "message": "Folders",
+        "description": "Title for the folders section on the options page."
     },
-    "locationsDescription": {
-        "message": "Specify a list of locations in your downloads folder that you can quickly choose from when downloading an image:",
-        "description": "Description of the download locations option."
+    "foldersDescription": {
+        "message": "Specify a list of folders in your downloads folder that you can quickly choose from when downloading an image:",
+        "description": "Description of the download folders option."
     },
-    "locationsDefaultDescription": {
-        "message": "Default download location (leave blank for your default downloads folder):",
-        "description": "Description of the default download location option."
+    "foldersDefaultDescription": {
+        "message": "Default download folder (leave blank for your default downloads folder):",
+        "description": "Description of the default download folder option."
     },
-    "locationsMoreDescription": {
-        "message": "Additional download locations",
-        "description": "Description of the additional download locations option."
+    "foldersMoreDescription": {
+        "message": "Additional download folders",
+        "description": "Description of the additional download folders option."
     },
-    "locationsSeparatorHelp": {
+    "foldersSeparatorHelp": {
         "message": "Separate sub-folders with a <code>/</code> forward slash. If the folder doesn't exist, it will automatically be created.",
         "description": "Help text explaining how to nest directories. Wrap the / (directory separator character) inside a <code> tag."
     },
-    "locationsDisabledHelp": {
-        "message": "Enable to specify a list of locations in your downloads folder that you can quickly choose from when downloading an image.",
-        "description": "Help text shown when the locations option is disabled."
+    "foldersDisabledHelp": {
+        "message": "Enable to specify a list of folders in your downloads folder that you can quickly choose from when downloading an image.",
+        "description": "Help text shown when the folders option is disabled."
     },
-    "locationsRestriction": {
-        "message": "Due to Chrome's restrictions, you can only create locations in <a>your default downloads folder</a>.",
-        "description": "Help text about the download locations restriction. Put the <a> around what should be the link."
+    "foldersRestriction": {
+        "message": "Due to Chrome's restrictions, you can only create folders in <a>your default downloads folder</a>.",
+        "description": "Help text about the download folders restriction. Put the <a> around what should be the link."
     },
     "defaultDownloadsFolderTooltip": {
         "message": "Open your current default downloads folder.",
@@ -287,21 +287,21 @@
         "message": "Use this on a downloaded image to reveal it in your file browser.",
         "description": "Dialog message when the user clicks the download button while holding down the alt key but it is not applicable."
     },
-    "imageNotAtDownloadLocation": {
-        "message": "Looks like this image doesn't exist at the original download location anymore. Did you move or delete it, or clear your downloads history?",
-        "description": "Dialog message when the user tries to reveal an image that Chrome can't find at the original download location anymore."
+    "imageNotInDownloadFolder": {
+        "message": "Looks like this image doesn't exist in the original download folder anymore. Did you move or delete it, or clear your downloads history?",
+        "description": "Dialog message when the user tries to reveal an image that Chrome can't find in the original download folder anymore."
     },
     "revealPlacesFound": {
         "message": "Found these places you downloaded the image to:",
-        "description": "Title for the dialog which lists all the download locations."
+        "description": "Title for the dialog which lists all the download folders."
     },
     "revealPlacesByExtension": {
         "message": "Using this extension",
-        "description": "Title for the dialog which lists all the download locations by this extension."
+        "description": "Title for the dialog which lists all the download folders by this extension."
     },
     "revealPlacesByOther": {
         "message": "Not using this extension",
-        "description": "Title for the dialog which lists all the download locations not by this extension."
+        "description": "Title for the dialog which lists all the download folders not by this extension."
     },
     "revealUnknownDirectory": {
         "message": "Default/unknown directory",
@@ -358,7 +358,7 @@
         }
     },
     "noConfiguredDirectories": {
-        "message": "Click to specify a list of download<br>locations in the options.<br>",
+        "message": "Click to specify a list of download<br>folders in the options.<br>",
         "description": "Message for when there are no configured directories. Try to keep the text concise and the lines under 30 characters."
     },
 
@@ -404,7 +404,7 @@
         "description": "Title for this modifier key description."
     },
     "modifierKeysAltClickDescription": {
-        "message": "Will list all the locations to which you have downloaded that image, allowing you to reveal the files. Chrome's download history must be enabled and not cleared for this.",
+        "message": "Will list all the folders to which you have downloaded that image, allowing you to reveal the files. Chrome's download history must be enabled and not cleared for this.",
         "description": "Explains to the user about alt+click."
     },
     "modifierKeysShiftClickTitle": {

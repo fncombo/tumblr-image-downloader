@@ -150,7 +150,7 @@ TID.events.initDocumentEvents = function () {
         // Clicking on a link in a dialog to reveal an image
         if (el.matchesSelector('.' + TID.classes.revealImageLink)) {
             if (el.dataset.exists === 'false') {
-                TID.ui.showDialog(TID.msg('whoa'), TID.msg('imageNotAtDownloadLocation'), TID.msg('nevermind'));
+                TID.ui.showDialog(TID.msg('whoa'), TID.msg('imageNotInDownloadFolder'), TID.msg('nevermind'));
                 return;
             }
 
