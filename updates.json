@@ -106,5 +106,9 @@
     ],
     [
         "Lots of bug fixes and general improvements."
+    ],
+    [
+        "Ticks will now appear only after an image has fully finished downloading.",
+        "If an image fails to download for any reason, you will be informed."
     ]
 ]
