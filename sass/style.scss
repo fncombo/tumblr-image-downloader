@@ -261,12 +261,22 @@ a.TID-parent {
             content: '\2713\0020';
         }
 
-        & > span {
-            color: unquote('hsla(0, 0%, 100%, 0.75)') !important;
-            pointer-events: none;
+        span {
 
-            span {
-                padding: 0 0.15em;
+            &:not(:last-child) {
+                color: unquote('hsla(0, 0%, 100%, 0.75)') !important;
+                pointer-events: none;
+            }
+        }
+
+        i {
+            transform: translateY(-1px);
+
+            &:after {
+                padding: 0 3px;
+                font-family: tumblr-icons;
+                font-size: 0.65em;
+                content: '\f106';
             }
         }
     }
