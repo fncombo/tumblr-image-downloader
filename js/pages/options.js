@@ -172,6 +172,7 @@ chrome.storage.onChanged.addListener(function (changes) {
         'enableFolders',
         'ctrlClickConfirm',
         'shiftClickConfirm',
+        'nestInsideDefaultFolder',
     ];
 
     tickboxes.forEach(function (tickbox) {

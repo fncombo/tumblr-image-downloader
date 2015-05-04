@@ -61,6 +61,12 @@ section
     #folders-off
       p.desc msg-content="foldersDisabledHelp"
     #folders-on
+      p.toggle-group
+        label
+          input type="checkbox" data-for="nestInsideDefaultFolder" data-default="false" data-message="Nest Additional Folders Inside Default"
+          span
+          span msg-content="foldersNestInsideDefaultDescription"
+      p.desc msg-content="foldersNestInsideDefaultHelp"
       p msg-content="foldersDescription"
       ul#download-directories
       p

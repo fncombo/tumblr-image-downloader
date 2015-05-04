@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome, $ */
+/* globals TID, $, $$ */
 
 /**
  * Directories functions
@@ -9,36 +9,10 @@
 TID.directories = {};
 
 /**
- * Available directories
- * @type {Array}
- */
-TID.directories.list = [];
-
-/**
  * HTML of all the directories
  * @type {String}
  */
 TID.directories.html = '';
-
-/**
- * Update the list of download directories
- * @param {Function} callback Optional callback to call when the update is done
- */
-TID.directories.update = function (callback) {
-    console.log('Directories have been updated');
-
-    chrome.storage.sync.get({saveDirectories: []}, function (object) {
-        if (object.saveDirectories.length) {
-            TID.directories.list = object.saveDirectories;
-        }
-
-        TID.directories.html = TID.directories.format();
-
-        if (callback) {
-            callback();
-        }
-    });
-};
 
 /**
  * Generate HTML for the list of current directories
@@ -47,24 +21,30 @@ TID.directories.update = function (callback) {
 TID.directories.format = function () {
     console.log('Generating HTML for the directories list');
 
-    if (!TID.directories.list.length) {
+    if (!TID.settings.saveDirectories.length) {
         return '<ul><li class="' + TID.classes.help + '">' + TID.msg('noConfiguredDirectories') + '</li></ul>';
     }
 
     var list = '<ul>';
 
-    TID.directories.list.forEach(function (directory) {
+    TID.settings.saveDirectories.forEach(function (directory) {
         var name = directory.replace(TID.regex.subDirectories, '<span>$1</span>')
                             .replace(TID.regex.subDirectorySlashes, '><i></i>');
 
-        list += '<li title="' + TID.msg('downloadDirectoryTitle', directory) + '" data-directory="' + directory + '">';
+        if (TID.settings.nestInsideDefaultFolder && TID.settings.defaultDirectory) {
+            directory = TID.settings.defaultDirectory + '/' + directory;
+        }
+
+        list += '<li title="' + TID.msg('downloadDirectoryTitle', directory) + '" ';
+        list += 'data-directory="' + directory + '">';
+
         list += name;
         list += '</li>';
     });
 
     list += '</ul>';
 
-    return list;
+    TID.directories.html = list;
 };
 
 /**
@@ -98,4 +78,16 @@ TID.directories.clone = function (directoriesToTick) {
     }
 
     return el;
+};
+
+/**
+ * Update all the lists' HTML
+ */
+TID.directories.updatePageHtml = function () {
+    $$('.' + TID.classes.list).forEach(function (el) {
+        TID.images.exists(el.parentNode.dataset.imageId, function (exists, directories) {
+            var directoriesEl = TID.directories.clone(directories);
+            el.parentNode.replaceChild(directoriesEl, el);
+        });
+    });
 };

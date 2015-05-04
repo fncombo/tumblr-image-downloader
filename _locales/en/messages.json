@@ -103,6 +103,14 @@
         "message": "Open your current default downloads folder.",
         "description": "Tooltip for the link to open the current default downloads folder."
     },
+    "foldersNestInsideDefaultDescription": {
+        "message": "Put all additional download folders inside the default folder",
+        "description": ""
+    },
+    "foldersNestInsideDefaultHelp": {
+        "message": "If you have specified a default download folder above, all your additional folders will go inside there.",
+        "description": ""
+    },
 
 
 

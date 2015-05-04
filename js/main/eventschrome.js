@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals TID, chrome, $, $$ */
+/* globals TID, chrome, $ */
 
 /**
  * Initialize all Chrome storage event listeners
@@ -9,23 +9,6 @@ TID.events.initStorageListener = function () {
     console.log('Initializing Chrome storage listeners');
 
     chrome.storage.onChanged.addListener(function (changes) {
-
-        // If the save directories were modified
-        if (changes.hasOwnProperty('saveDirectories')) {
-            TID.directories.list = changes.saveDirectories.newValue;
-            TID.directories.html = TID.directories.format();
-
-            // Update all the lists' HTML
-            $$('.' + TID.classes.list).forEach(function (el) {
-                TID.images.exists(el.parentNode.dataset.imageId, function (exists, directories) {
-                    var directoriesEl = TID.directories.clone(directories);
-                    el.parentNode.replaceChild(directoriesEl, el);
-                });
-            });
-
-            return;
-        }
-
         // Check if any settings were updated
         Object.keys(TID.settings.list).forEach(function (setting) {
             if (changes.hasOwnProperty(setting)) {

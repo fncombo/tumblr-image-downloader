@@ -20,17 +20,23 @@ TID.run = function () {
         document.body.classList.add(TID.classes.archivePage);
     }
 
-    // Add buttons after updating directories list
-    TID.directories.update(TID.buttons.add);
-
-    // Update settings
+    // Aggregate all the settings that need to be updated, and their default values
+    var settingsToUpdate = {};
     Object.keys(TID.settings.list).forEach(function (setting) {
-        var object = {};
-        object[setting] = TID.settings.list[setting].default;
+        settingsToUpdate[setting] = TID.settings.list[setting].default;
+    });
 
-        chrome.storage.sync.get(object, function (object) {
-            TID.settings.list[setting].set(object[setting]);
+    // Update all the settings at once
+    chrome.storage.sync.get(settingsToUpdate, function (settings) {
+        Object.keys(settings).forEach(function (setting) {
+            TID.settings.list[setting].set(settings[setting]);
         });
+
+        // Generate directories HTML after all settings have been updated
+        TID.directories.format();
+
+        // Add buttons after all settings have been updated
+        TID.buttons.add();
     });
 
     // Init all the event listeners

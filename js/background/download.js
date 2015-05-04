@@ -65,7 +65,9 @@ TID.downloads.handleDownloadState.complete = function (activeDownload, downloadI
     var directory;
 
     // Figure out which directory it was saved to
-    if (activeDownload.hasOwnProperty('directory') && activeDownload.directory) {
+    if (activeDownload.hasOwnProperty('directory') && activeDownload.directory && TID.vars.nestInsideDefaultFolder) {
+        directory = TID.vars.defaultDirectory + '/' + activeDownload.directory;
+    } else if (activeDownload.hasOwnProperty('directory') && activeDownload.directory) {
         directory = activeDownload.directory;
     } else if (TID.vars.defaultDirectory) {
         directory = TID.vars.defaultDirectory;
@@ -144,7 +146,11 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             downloadItem.mime.indexOf('image') !== -1
         )
     ) {
-        if (activeDownload.directory) {
+        if (activeDownload.directory && TID.vars.nestInsideDefaultFolder) {
+            suggest({
+                filename: TID.vars.defaultDirectory + '/' + activeDownload.directory + '/' + downloadItem.filename
+            });
+        } else if (activeDownload.directory) {
             suggest({
                 filename: activeDownload.directory + '/' + downloadItem.filename
             });
