@@ -194,6 +194,10 @@ a.TID-parent {
         background-color: $tumblr-color-hover;
     }
 
+    &:active {
+        background-color: $tumblr-color-active;
+    }
+
     .TID-downloaded &:before {
         content: '\2713\0020';
     }
@@ -254,6 +258,10 @@ a.TID-parent {
 
         &:hover {
             background-color: $tumblr-color-hover;
+        }
+
+        &:active {
+            background-color: $tumblr-color-active;
         }
 
         &.TID-downloaded:before {
