@@ -28,36 +28,6 @@ TID.storage.request.onsuccess = function () {
     console.log('Opened IndexedDB');
 
     TID.storage.db = this.result;
-
-    // Insert all images previously stored locally if haven't already done so
-    chrome.storage.local.get({
-        localstorageToDatabaseMigrationComplete: false
-    }, function (object) {
-        // Migration already complete
-        if (object.localstorageToDatabaseMigrationComplete) {
-            return;
-        }
-
-        // Get this separately after checking the above to not bloat the memory
-        chrome.storage.local.get({
-            images: []
-        }, function (object) {
-            if (!object.images.length) {
-                return;
-            }
-
-            object.images.forEach(function (image) {
-                TID.storage.saveImage({
-                    imageId: image
-                });
-            });
-        });
-
-        // Mark migration as complete
-        chrome.storage.local.set({
-            localstorageToDatabaseMigrationComplete: true
-        });
-    });
 };
 
 /**
