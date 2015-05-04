@@ -54,7 +54,7 @@ TID.downloads.handleDownloadState.complete = function (activeDownload, downloadI
         return;
     }
 
-    console.log('Download finished', downloadItem);
+    console.log('Download finished', downloadItem, activeDownload);
 
     // Do not save to the database if the setting is turned off
     if (!TID.vars.rememberImages) {
@@ -62,32 +62,19 @@ TID.downloads.handleDownloadState.complete = function (activeDownload, downloadI
         return;
     }
 
-    var directory;
-
-    // Figure out which directory it was saved to
-    if (activeDownload.hasOwnProperty('directory') && activeDownload.directory && TID.vars.nestInsideDefaultFolder) {
-        directory = TID.vars.defaultDirectory + '/' + activeDownload.directory;
-    } else if (activeDownload.hasOwnProperty('directory') && activeDownload.directory) {
-        directory = activeDownload.directory;
-    } else if (TID.vars.defaultDirectory) {
-        directory = TID.vars.defaultDirectory;
-    } else {
-        directory = false;
-    }
-
     // Save the image
     TID.storage.saveImage({
         imageId: activeDownload.imageId,
         imageUrl: activeDownload.imageUrl,
         pageUrl: activeDownload.pageUrl,
-        directory: directory,
+        directory: activeDownload.finalDirectory,
     }, function () {
         // Send message to all open tabs that the image was downloaded
         TID.sendToAllTabs('*://*.tumblr.com/*', {
             message: 'image_downloaded',
             data: {
                 imageId: activeDownload.imageId,
-                directory: directory
+                directory: activeDownload.finalDirectory,
             }
         });
 
@@ -146,23 +133,17 @@ chrome.downloads.onDeterminingFilename.addListener(function (downloadItem, sugge
             downloadItem.mime.indexOf('image') !== -1
         )
     ) {
-        if (activeDownload.directory && TID.vars.nestInsideDefaultFolder) {
-            suggest({
-                filename: TID.vars.defaultDirectory + '/' + activeDownload.directory + '/' + downloadItem.filename
-            });
-        } else if (activeDownload.directory) {
-            suggest({
-                filename: activeDownload.directory + '/' + downloadItem.filename
-            });
+        if (activeDownload.directory) {
+            activeDownload.finalDirectory = activeDownload.directory;
         } else if (TID.vars.defaultDirectory) {
-            suggest({
-                filename: TID.vars.defaultDirectory + '/' + downloadItem.filename
-            });
+            activeDownload.finalDirectory = TID.vars.defaultDirectory;
         } else {
-            suggest({
-                filename: downloadItem.filename
-            });
+            activeDownload.finalDirectory = false;
         }
+
+        suggest({
+            filename: (activeDownload.finalDirectory ? activeDownload.finalDirectory + '/' : '') + downloadItem.filename
+        });
 
     // If the link does not appear to link to an image
     } else {
