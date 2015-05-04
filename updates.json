@@ -110,5 +110,9 @@
     [
         "Ticks will now appear only after an image has fully finished downloading.",
         "If an image fails to download for any reason, you will be informed."
+    ],
+    [
+        "Added an option to put all additional download folders inside the default folder.",
+        "Visual enhancements."
     ]
 ]
