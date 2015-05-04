@@ -139,12 +139,16 @@ TID.ui.revealImage = function (url) {
                 year: 'numeric',
             };
 
-            TID.directories.list.forEach(function (directory) {
+            TID.settings.saveDirectories.forEach(function (directory) {
                 if (
                     download.filename.indexOf(directory) !== -1 ||
                     download.filename.indexOf(directory.replace(TID.regex.globalForwardSlash, '\\')) !== -1
                 ) {
-                    downloadDirectory = directory;
+                    if (TID.settings.nestInsideDefaultFolder && TID.settings.defaultDirectory) {
+                        downloadDirectory = TID.settings.defaultDirectory + '/' + directory;
+                    } else {
+                        downloadDirectory = directory;
+                    }
                 }
             });
 
