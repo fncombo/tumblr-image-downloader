@@ -134,7 +134,7 @@ a.TID-parent {
 
         & + img {
             outline: 1px solid unquote('hsla(0, 0%, 100%, 1)');
-            box-shadow: 0 0 10px 5px $tumblr-color;
+            box-shadow: 0 0 10px 5px $tumblr-color-transparent;
             z-index: 80;
         }
     }
