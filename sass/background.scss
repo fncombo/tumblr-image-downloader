@@ -147,7 +147,7 @@ input {
     border-radius: $input-radius;
     position: relative;
     top: -0.1rem;
-    transition: border-color 0.1s ease-in-out;
+    transition: border-color $time-short $easing;
 
     &:focus {
         border-color: $border-active;
@@ -176,7 +176,7 @@ input {
         padding: 0.5rem;
         opacity: 0.3;
         font-size: 1.1rem;
-        transition: opacity 0.1s ease-in-out;
+        transition: opacity $time-short $easing;
     }
 
     .moving {
@@ -196,7 +196,7 @@ input {
         font-size: 1.1rem;
         -webkit-user-select: none;
         user-select: none;
-        transition: opacity 0.1s ease-in-out;
+        transition: opacity $time-short $easing;
     }
 
     .fake {
@@ -275,7 +275,7 @@ input[type="checkbox"] {
         cursor: pointer;
         -webkit-user-select: none;
         transform: translateY(2px);
-        transition: background-color 0.1s ease-in-out;
+        transition: background-color $time-short $easing;
     }
 
     &:checked + span {
@@ -296,7 +296,7 @@ input[type="checkbox"] {
         width: 10px;
         position: absolute;
         top: 2px;
-        transition: left 0.1s ease-in-out;
+        transition: left $time-short $easing;
     }
 
     &:not(:checked) + span:before {
@@ -328,7 +328,7 @@ input[type="checkbox"] {
     font-weight: bold;
     -webkit-transform: scale(0.75);
     transform: scale(0.75);
-    transition: all 0.1s ease-in-out;
+    transition: all $time-short $easing;
 
     &.show {
         opacity: 1;
