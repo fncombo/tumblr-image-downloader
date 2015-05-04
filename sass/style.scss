@@ -264,6 +264,11 @@ a.TID-parent {
             content: '\2713\0020';
         }
 
+        &.TID-help {
+            white-space: normal;
+            min-width: 200px;
+        }
+
         span {
             pointer-events: none;
 

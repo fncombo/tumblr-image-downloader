@@ -22,7 +22,10 @@ TID.directories.format = function () {
     console.log('Generating HTML for the directories list');
 
     if (!TID.settings.saveDirectories.length) {
-        return '<ul><li class="' + TID.classes.help + '">' + TID.msg('noConfiguredDirectories') + '</li></ul>';
+        TID.directories.html = '<ul><li class="' + TID.classes.help + '">';
+        TID.directories.html += TID.msg('noConfiguredDirectories');
+        TID.directories.html += '</li></ul>';
+        return;
     }
 
     var list = '<ul>';
