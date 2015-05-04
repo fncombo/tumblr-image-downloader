@@ -66,6 +66,11 @@ p {
         strong {
             color: $tumblr-gray-hover;
         }
+
+        .toggle-group + & {
+            margin-top: -0.75rem;
+            margin-left: calc(24px + 0.5rem);
+        }
     }
 
     &:last-child {
