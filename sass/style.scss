@@ -104,6 +104,7 @@ a.TID-parent {
     user-select: none;
 
     &, & div, & span, & i, & ul, & li {
+        cursor: pointer;
         @extend %text-reset;
     }
 
@@ -177,7 +178,6 @@ a.TID-parent {
     flex: 0 0 auto;
     padding: 0.3em 0.6em;
     position: relative;
-    cursor: pointer;
     z-index: 79;
     @extend %hidden;
 
@@ -251,7 +251,6 @@ a.TID-parent {
         display: flex;
         padding: 0.3em 0.6em;
         list-style: none !important;
-        cursor: pointer;
 
         &:hover {
             background-color: $tumblr-color-hover;
