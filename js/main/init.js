@@ -17,7 +17,7 @@ TID.settings.list = {
         default: true,
         set: function (value) {
             TID.settings.confirm = value;
-        }
+        },
     },
 
     showTicks: {
@@ -34,21 +34,21 @@ TID.settings.list = {
             TID.settings.enableDirectories = value;
 
             TID.directories.setVisibility(value);
-        }
+        },
     },
 
     ctrlClickConfirm: {
         default: true,
         set: function (value) {
             TID.settings.ctrlClickConfirm = value;
-        }
+        },
     },
 
     shiftClickConfirm: {
         default: true,
         set: function (value) {
             TID.settings.shiftClickConfirm = value;
-        }
+        },
     },
 
     defaultDirectory: {
@@ -65,7 +65,7 @@ TID.settings.list = {
             }
 
             TID.settings.list.defaultDirectory.initialSetFired = true;
-        }
+        },
     },
 
     saveDirectories: {
@@ -81,7 +81,7 @@ TID.settings.list = {
             }
 
             TID.settings.list.saveDirectories.initialSetFired = true;
-        }
+        },
     },
 
     nestInsideDefaultDirectory: {
@@ -97,7 +97,7 @@ TID.settings.list = {
             }
 
             TID.settings.list.nestInsideDefaultDirectory.initialSetFired = true;
-        }
+        },
     },
 };
 
@@ -125,7 +125,7 @@ TID.regex = {
 TID.HDTypes = {
     none: 0,
     tumblrHighRes: 1,
-    externalHighRes: 2
+    externalHighRes: 2,
 };
 
 /**

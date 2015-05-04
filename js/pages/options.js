@@ -26,7 +26,7 @@ TID.adjustImageCount = function (amount) {
 // Get the number of remembered images
 TID.sendMessage({
     message: 'storage',
-    action: 'count'
+    action: 'count',
 }, function (count) {
     TID.adjustImageCount(count);
 });
@@ -52,7 +52,7 @@ $('#clear').onclick = function () {
         case '0':
             TID.sendMessage({
                 message: 'storage',
-                action: 'clear'
+                action: 'clear',
             }, function () {
                 TID.adjustImageCount(0);
                 TID.trackEvent('Cleared Storage', 'Cleared Images');
@@ -69,7 +69,7 @@ $('#clear').onclick = function () {
 listen('click', 'input[data-for="enableAnalytics"]', function (event, el) {
     TID.sendMessage({
         message: 'toggle_analytics',
-        value: el.checked
+        value: el.checked,
     });
 });
 

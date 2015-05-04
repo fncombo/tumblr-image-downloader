@@ -28,7 +28,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
     switch (details.reason) {
     case 'install':
         chrome.tabs.create({
-            url: 'html/options.html'
+            url: 'html/options.html',
         });
 
         TID.trackEvent('Extension', 'Installed');
@@ -68,13 +68,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     case 'open_settings':
         chrome.tabs.create({
-            url: 'html/options.html'
+            url: 'html/options.html',
         });
         break;
 
     case 'open_tab':
         chrome.tabs.create({
-            url: request.url
+            url: request.url,
         });
         break;
 
@@ -117,8 +117,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 TID.sendToAllTabs('*://*.tumblr.com/*', {
                     message: 'image_removed',
                     data: {
-                        imageId: request.data.imageId
-                    }
+                        imageId: request.data.imageId,
+                    },
                 });
             });
             break;
@@ -129,7 +129,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             TID.storage.clear(function () {
                 // Send message to all open tabs that all images have been removed
                 TID.sendToAllTabs('*://*.tumblr.com/*', {
-                    message: 'storage_cleared'
+                    message: 'storage_cleared',
                 });
 
                 // Callback

@@ -93,7 +93,9 @@ TID.directories.saveDefault = function () {
     var defaultDirectory = TID.directories.sanitize($('#default-directory').value);
 
     if (defaultDirectory.length) {
-        chrome.storage.sync.set({defaultDirectory: defaultDirectory});
+        chrome.storage.sync.set({
+            defaultDirectory: defaultDirectory,
+        });
     } else {
         chrome.storage.sync.remove('defaultDirectory');
     }
@@ -116,7 +118,9 @@ TID.directories.saveMore = function () {
         return self.indexOf(value) === index;
     });
 
-    chrome.storage.sync.set({saveDirectories: directories}, function () {
+    chrome.storage.sync.set({
+        saveDirectories: directories,
+    }, function () {
         var el = $('#save-directories').nextElementSibling;
         el.classList.add('show');
 

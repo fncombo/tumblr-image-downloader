@@ -42,7 +42,7 @@ TID.buttons.add = function () {
                 imageId: TID.images.getID(el.dataset.imageurl),
                 isHD: false,
                 HDType: TID.HDTypes.none,
-                url: el.dataset.imageurl
+                url: el.dataset.imageurl,
             };
 
             TID.buttons.create(data, function (button) {

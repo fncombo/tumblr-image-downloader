@@ -17,7 +17,11 @@ TID.modifierKeys = {};
  * @return {Boolean}                    Whether or not any modifier keys were active
  */
 TID.modifierKeys.checkAll = function (event, button, imageId, directory) {
-    var keys = ['ctrl', 'alt', 'shift'];
+    var keys = [
+        'ctrl',
+        'alt',
+        'shift',
+    ];
     var result = false;
 
     keys.forEach(function (key) {
@@ -91,8 +95,8 @@ TID.modifierKeys.triggerAlt = function (event, button, imageId, directory) {
                 message: 'storage',
                 action: 'get_image',
                 data: {
-                    imageId: button.dataset.imageId
-                }
+                    imageId: button.dataset.imageId,
+                },
             }, function (image) {
                 TID.ui.revealImage(image.imageUrl);
             });

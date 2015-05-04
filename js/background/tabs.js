@@ -9,7 +9,7 @@
  */
 TID.sendToAllTabs = function (url, message) {
     chrome.tabs.query({
-        url: url
+        url: url,
     }, function (tabs) {
         tabs.forEach(function (tab) {
             chrome.tabs.sendMessage(tab.id, message);

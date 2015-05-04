@@ -38,8 +38,8 @@ TID.images.remove = function (imageId) {
         message: 'storage',
         action: 'remove_image',
         data: {
-            imageId: imageId
-        }
+            imageId: imageId,
+        },
     });
 };
 
@@ -65,8 +65,8 @@ TID.images.exists = function (imageId, callback, fromHtml) {
             message: 'storage',
             action: 'image_exists',
             data: {
-                imageId: imageId
-            }
+                imageId: imageId,
+            },
         }, function (response) {
             callback(response.found, response.directories);
         });
@@ -106,7 +106,7 @@ TID.images.getData = function (el) {
         imageId: TID.images.getID(el.src),
         isHD: false,
         HDType: TID.HDTypes.none,
-        url: el.src
+        url: el.src,
     };
 
     if (TID.isSinglePage) {
@@ -213,8 +213,8 @@ TID.images.download = function (url, imageId, directory) {
                 url: url,
                 directory: directory,
                 imageId: imageId,
-                pageUrl: window.location.href
-            }
+                pageUrl: window.location.href,
+            },
         });
     }
 

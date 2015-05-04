@@ -42,6 +42,6 @@ TID.trackEvent = function (category, action, label, value) {
 
     chrome.runtime.sendMessage({
         message: 'analytics',
-        data: data
+        data: data,
     });
 };

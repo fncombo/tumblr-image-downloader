@@ -21,7 +21,7 @@ TID.notifications.show = function (icon, title, message, buttons) {
 
     buttons.forEach(function (button) {
         notificationButtons.push({
-            title: button.title
+            title: button.title,
         });
     });
 
@@ -31,7 +31,7 @@ TID.notifications.show = function (icon, title, message, buttons) {
         title: title,
         message: message,
         iconUrl: '../img/' + icon,
-        buttons: notificationButtons
+        buttons: notificationButtons,
     }, function (id) {
         thisNotificationID = id;
     });
@@ -59,17 +59,17 @@ TID.notifications.showUpdate = function () {
                 title: TID.msg('notificationRateButton'),
                 callback: function () {
                     chrome.tabs.create({
-                        url: url
+                        url: url,
                     });
-                }
+                },
             },
             {
                 title: TID.msg('notificationUpdateHistoryButton'),
                 callback: function () {
                     chrome.tabs.create({
-                        url: 'html/updates.html'
+                        url: 'html/updates.html',
                     });
-                }
+                },
             }
         ];
 
