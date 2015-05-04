@@ -105,11 +105,11 @@
     },
     "foldersNestInsideDefaultDescription": {
         "message": "Put all additional download folders inside the default folder",
-        "description": ""
+        "description": "Description of the option to enable users to put all additional download folders into the default download folder."
     },
     "foldersNestInsideDefaultHelp": {
         "message": "If you have specified a default download folder above, all your additional folders will go inside there.",
-        "description": ""
+        "description": "Help text about the the option to enable users to put all additional download folders into the default download folder."
     },
 
 
