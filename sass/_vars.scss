@@ -10,6 +10,7 @@ $tumblr-light-color: #529ecc;
 
 $tumblr-gray: hsl(210, 10%, 65%);
 $tumblr-gray-hover: hsl(210, 10%, 55%);
+$tumblr-gray-active: hsl(210, 10%, 45%);
 
 $text-primary-color: hsl(0, 0%, 27%);
 $text-primary-color-hover: hsl(0, 0%, 37%);
@@ -55,6 +56,7 @@ $main-margin: 32px;
     }
 
     &:focus {
+        background: $tumblr-gray-active;
         outline: none;
         box-shadow: 0 0 5px $tumblr-light-color;
         text-decoration: none;
