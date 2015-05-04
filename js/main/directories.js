@@ -34,7 +34,7 @@ TID.directories.format = function () {
         var name = directory.replace(TID.regex.subDirectories, '<span>$1</span>')
                             .replace(TID.regex.subDirectorySlashes, '><i></i>');
 
-        if (TID.settings.nestInsideDefaultFolder && TID.settings.defaultDirectory) {
+        if (TID.settings.nestInsideDefaultDirectory && TID.settings.defaultDirectory) {
             directory = TID.settings.defaultDirectory + '/' + directory;
         }
 

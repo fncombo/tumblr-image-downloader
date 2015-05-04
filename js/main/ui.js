@@ -144,7 +144,7 @@ TID.ui.revealImage = function (url) {
                     download.filename.indexOf(directory) !== -1 ||
                     download.filename.indexOf(directory.replace(TID.regex.globalForwardSlash, '\\')) !== -1
                 ) {
-                    if (TID.settings.nestInsideDefaultFolder && TID.settings.defaultDirectory) {
+                    if (TID.settings.nestInsideDefaultDirectory && TID.settings.defaultDirectory) {
                         downloadDirectory = TID.settings.defaultDirectory + '/' + directory;
                     } else {
                         downloadDirectory = directory;

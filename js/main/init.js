@@ -28,10 +28,10 @@ TID.settings.list = {
         }
     },
 
-    enableFolders: {
+    enableDirectories: {
         default: true,
         set: function (value) {
-            TID.settings.enableFolders = value;
+            TID.settings.enableDirectories = value;
 
             TID.directories.setVisibility(value);
         }
@@ -84,19 +84,19 @@ TID.settings.list = {
         }
     },
 
-    nestInsideDefaultFolder: {
+    nestInsideDefaultDirectory: {
         default: false,
         // This stores whether the setting has been updated at least once [initially]
         initialSetFired: false,
         set: function (value) {
-            TID.settings.nestInsideDefaultFolder = value;
+            TID.settings.nestInsideDefaultDirectory = value;
 
-            if (TID.settings.list.nestInsideDefaultFolder.initialSetFired) {
+            if (TID.settings.list.nestInsideDefaultDirectory.initialSetFired) {
                 TID.directories.format(value);
                 TID.directories.updatePageHtml();
             }
 
-            TID.settings.list.nestInsideDefaultFolder.initialSetFired = true;
+            TID.settings.list.nestInsideDefaultDirectory.initialSetFired = true;
         }
     },
 };

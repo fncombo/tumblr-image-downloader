@@ -161,11 +161,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 chrome.storage.sync.get({
     defaultDirectory: false,
     rememberImages: true,
-    nestInsideDefaultFolder: false,
+    nestInsideDefaultDirectory: false,
 }, function (object) {
     TID.vars.defaultDirectory = object.defaultDirectory;
     TID.vars.rememberImages = object.rememberImages;
-    TID.vars.nestInsideDefaultFolder = object.nestInsideDefaultFolder;
+    TID.vars.nestInsideDefaultDirectory = object.nestInsideDefaultDirectory;
 });
 
 // Keep default directory updated
@@ -173,7 +173,7 @@ chrome.storage.onChanged.addListener(function (changes) {
     var keys = [
         'defaultDirectory',
         'rememberImages',
-        'nestInsideDefaultFolder',
+        'nestInsideDefaultDirectory',
     ];
 
     keys.forEach(function (key) {

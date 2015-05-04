@@ -169,10 +169,10 @@ chrome.storage.onChanged.addListener(function (changes) {
         'showTicks',
         'enableAnalytics',
         'rememberImages',
-        'enableFolders',
+        'enableDirectories',
         'ctrlClickConfirm',
         'shiftClickConfirm',
-        'nestInsideDefaultFolder',
+        'nestInsideDefaultDirectory',
     ];
 
     tickboxes.forEach(function (tickbox) {
