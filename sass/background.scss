@@ -16,7 +16,6 @@ body {
 }
 
 #static *, #static *:before, #static *:after {
-    -webkit-transition: none !important;
     transition: none !important;
 }
 
@@ -297,7 +296,6 @@ input[type="checkbox"] {
         width: 10px;
         position: absolute;
         top: 2px;
-        -webkit-transition: left 0.1s ease-in-out;
         transition: left 0.1s ease-in-out;
     }
 
@@ -330,7 +328,6 @@ input[type="checkbox"] {
     font-weight: bold;
     -webkit-transform: scale(0.75);
     transform: scale(0.75);
-    -webkit-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
 
     &.show {
