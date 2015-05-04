@@ -347,13 +347,19 @@
         "message": "Download <strong>HD</strong>",
         "description": "Text on the download buttons for HD images. Put the HD part inside a <strong> tag."
     },
-    "extenalImageTitle": {
-        "message": "Image is from an external site.",
-        "description": "Title for buttons whose images are from an external site."
-    },
-    "extenalHDImageTitle": {
+    "extenalHDImageTitleWithoutDomain": {
         "message": "HD Image is from an external site.",
         "description": "Title for buttons whose HD images are from an external site."
+    },
+    "extenalHDImageTitleWithDomain": {
+        "message": "HD Image is from an external site ($DOMAIN$).",
+        "description": "Title for buttons whose HD images are from an external site.",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "instagram.com"
+            }
+        }
     },
     "downloadDirectoryTitle": {
         "message": "Download image to: $DIRECTORY$",

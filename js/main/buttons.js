@@ -94,19 +94,29 @@ TID.buttons.create = function (imageData, callback) {
 
         // Main download button
         var download = div.cloneNode(false);
+        var titles = {};
         download.classList.add(TID.classes.downloadDiv);
         download.innerHTML = imageData.isHD ? TID.msg('downloadHD') : TID.msg('download');
 
-        // If HD is from an external site, add an arrow and a tooltip
+        // Show the default directory in the title if there is one
+        if (TID.settings.defaultDirectory) {
+            titles.directory = TID.msg('downloadDirectoryTitle', TID.settings.defaultDirectory);
+        }
+
+        // If HD is from an external site, add an arrow and a title
         if (imageData.HDType === TID.HDTypes.externalHighRes) {
             download.innerHTML += '&#10138;';
-            download.title = TID.msg('extenalHDImageTitle');
 
             var imageDomain = imageData.url.match(TID.regex.imageDomain);
             if (imageDomain && imageDomain.length === 2) {
-                download.title += '\n' + imageDomain[1];
+                titles.external = TID.msg('extenalHDImageTitleWithDomain', imageDomain[1]);
+            } else {
+                titles.external = TID.msg('extenalHDImageTitleWithoutDomain');
             }
         }
+
+        download.title = TID.buttons.formatTitle(titles);
+        download.dataset.titles = JSON.stringify(titles);
 
         el.appendChild(download);
 
@@ -148,5 +158,57 @@ TID.buttons.create = function (imageData, callback) {
         };
 
         callback(el);
+    });
+};
+
+/**
+ * Format the title for a download button. Since we cannot control the order
+ * of the keys in an object, we have to manually put them in the order
+ * we want into an array, and then make sure each one is on a separate line.
+ * @param  {Object} titles Object containing all the titles of the button
+ * @return {String}        The final title for the element
+ */
+TID.buttons.formatTitle = function (titles) {
+    var title = [];
+
+    if (titles.hasOwnProperty('directory')) {
+        title.push(titles.directory);
+    }
+
+    if (titles.hasOwnProperty('external')) {
+        title.push(titles.external);
+    }
+
+    return title.join('\n');
+};
+
+/**
+ * Go through each button and reformat its title, taking into account
+ * the change in the default download directory.
+ */
+TID.buttons.updateTitles = function () {
+    $$('.' + TID.classes.downloadDiv).forEach(function (el) {
+        var titles = el.dataset.titles;
+
+        if (!titles || typeof titles !== 'string') {
+            return;
+        }
+
+        try {
+            titles = JSON.parse(titles);
+        } catch (e) {
+            console.error('Could not parse JSON for titles', titles, el, e);
+            return;
+        }
+
+        el.title = '';
+
+        if (TID.settings.defaultDirectory) {
+            titles.directory = TID.msg('downloadDirectoryTitle', TID.settings.defaultDirectory);
+        } else if (titles.hasOwnProperty('directory')) {
+            delete titles.directory;
+        }
+
+        el.title = TID.buttons.formatTitle(titles);
     });
 };

@@ -61,6 +61,7 @@ TID.settings.list = {
             if (TID.settings.list.defaultDirectory.initialSetFired) {
                 TID.directories.format(value);
                 TID.directories.updatePageHtml();
+                TID.buttons.updateTitles();
             }
 
             TID.settings.list.defaultDirectory.initialSetFired = true;
