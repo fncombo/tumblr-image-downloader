@@ -18,7 +18,7 @@
      */
     "optionsButtonTitle": {
         "message": "Tumblr Image Downloader Options",
-        "description": "Tooltip text for the page action button that opens the options page."
+        "description": "Title text for the page action button that opens the options page."
     },
     "optionsTitle": {
         "message": "Options",
@@ -99,9 +99,9 @@
         "message": "Due to Chrome's restrictions, you can only create folders in <a>your default downloads folder</a>.",
         "description": "Help text about the download folders restriction. Put the <a> around what should be the link."
     },
-    "defaultDownloadsFolderTooltip": {
+    "defaultDownloadsFolderTitle": {
         "message": "Open your current default downloads folder.",
-        "description": "Tooltip for the link to open the current default downloads folder."
+        "description": "Title for the link to open the current default downloads folder."
     },
     "foldersNestInsideDefaultDescription": {
         "message": "Put all additional download folders inside the default folder",

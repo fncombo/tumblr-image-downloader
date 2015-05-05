@@ -117,7 +117,7 @@ listen('click', '#download-directories .delete', function (event, el) {
 var locationsRestriction = $('#folders-restriction');
 if (locationsRestriction) {
     $('a', locationsRestriction).href = '#';
-    locationsRestriction.title = TID.msg('defaultDownloadsFolderTooltip');
+    locationsRestriction.title = TID.msg('defaultDownloadsFolderTitle');
 
     listen('click', '#folders-restriction a', function (event) {
         event.preventDefault();
