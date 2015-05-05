@@ -31,13 +31,13 @@ chrome.runtime.onInstalled.addListener(function (details) {
             url: 'html/options.html',
         });
 
-        TID.trackEvent('Extension', 'Installed');
+        TID.trackEvent('Extension', 'Installed', chrome.runtime.getManifest().version, 1);
         break;
 
     case 'update':
         TID.notifications.showUpdate();
 
-        TID.trackEvent('Extension', 'Updated');
+        TID.trackEvent('Extension', 'Updated', chrome.runtime.getManifest().version, 1);
         break;
     }
 });

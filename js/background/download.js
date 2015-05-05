@@ -96,7 +96,7 @@ TID.downloads.handleDownloadState.interrupted = function (activeDownload, downlo
 
     console.warn('Download failed', downloadItem, downloadItem.state, error);
 
-    TID.trackEvent('Download Failed', error);
+    TID.trackEvent('Downloads', 'Failed', error, 1);
 
     chrome.tabs.sendMessage(activeDownload.tabId, {
         message: 'download_failed',

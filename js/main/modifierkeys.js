@@ -45,7 +45,7 @@ TID.modifierKeys.checkAll = function (event, button, imageId, directory) {
  */
 TID.modifierKeys.triggerCtrl = function (event, button, imageId, directory) {
     console.log('Pressed with CTRL key', event, button, imageId, directory);
-    TID.trackEvent('Modified Click', 'Ctrl');
+    TID.trackEvent('Downloads', 'Modified Click', 'Ctrl', 1);
 
     var title = TID.msg('modifierKeysCtrlClickTitle');
 
@@ -85,7 +85,7 @@ TID.modifierKeys.triggerCtrl = function (event, button, imageId, directory) {
  */
 TID.modifierKeys.triggerAlt = function (event, button, imageId, directory) {
     console.log('Pressed with ALT key', event, button, imageId, directory);
-    TID.trackEvent('Modified Click', 'Alt');
+    TID.trackEvent('Downloads', 'Modified Click', 'Alt', 1);
 
     // Image has been downloaded, try to reveal it
     if (button.classList.contains(TID.classes.downloaded)) {
@@ -120,7 +120,7 @@ TID.modifierKeys.triggerAlt = function (event, button, imageId, directory) {
  */
 TID.modifierKeys.triggerShift = function (event, button, imageId, directory) {
     console.log('Pressed with SHIFT key', event, button, imageId, directory);
-    TID.trackEvent('Modified Click', 'Shift');
+    TID.trackEvent('Downloads', 'Modified Click', 'Shift', 1);
 
     var title = TID.msg('modifierKeysShiftClickTitle');
     var post = button.closest(TID.selectors.post);

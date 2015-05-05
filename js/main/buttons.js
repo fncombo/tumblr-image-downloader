@@ -27,8 +27,9 @@ TID.buttons.clearTimeouts = function () {
 
 /**
  * Add download buttons to all images on the page
+ * @param {Function} callback Optional callback with the number of buttons added
  */
-TID.buttons.add = function () {
+TID.buttons.add = function (callback) {
     console.log('Adding buttons');
 
     var images = $$(TID.selectors.images);
@@ -62,8 +63,10 @@ TID.buttons.add = function () {
         }
     });
 
-    if (images) {
-        TID.trackEvent('Download Buttons', 'Added');
+    if (callback && images.length) {
+        callback(images.length);
+    } else if (images.length) {
+        TID.trackEvent('Buttons', 'Added', 'Page Load', images.length);
     }
 };
 

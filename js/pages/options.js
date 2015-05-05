@@ -54,8 +54,13 @@ $('#clear').onclick = function () {
                 message: 'storage',
                 action: 'clear',
             }, function () {
-                TID.adjustImageCount(0);
-                TID.trackEvent('Cleared Storage', 'Cleared Images');
+                TID.sendMessage({
+                    message: 'storage',
+                    action: 'count',
+                }, function (count) {
+                    TID.trackEvent('Extension', 'Cleared Storage', 'IndexedDB', count);
+                    TID.adjustImageCount(0);
+                });
             });
             break;
 

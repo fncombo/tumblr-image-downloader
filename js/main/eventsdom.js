@@ -44,6 +44,8 @@ TID.observeMutations.lightbox = function () {
 
         // Append the button
         el.parentNode.appendChild(button);
+
+        TID.trackEvent('Buttons', 'Added', 'Lightbox Mutation', 1);
     }
 
     // Create a DOM mutation observer for the lightbox middle image
@@ -152,6 +154,8 @@ TID.observeMutations.inlineImages = function () {
                         // Append the button
                         blockEl.classList.add(TID.classes.parent);
                         blockEl.insertBefore(button, el);
+
+                        TID.trackEvent('Buttons', 'Added', 'Inline Image Mutation', 1);
                     });
                 } else {
                     // Remove any buttons
@@ -186,7 +190,9 @@ TID.observeMutations.posts = function () {
 
             // Assume a post has been added or removed,
             // so try to add button to any new images
-            TID.buttons.add();
+            TID.buttons.add(function (count) {
+                TID.trackEvent('Buttons', 'Added', 'Posts Mutation', count);
+            });
 
             // Observe any new inline images
             TID.observeMutations.inlineImages();

@@ -59,6 +59,6 @@ TID.checkboxes.onChange = function (event, el) {
 
     chrome.storage.sync.set(object);
 
-    TID.trackEvent(el.dataset.message, el.checked ? 'Enabled' : 'Disabled');
+    TID.trackEvent('Extension', (el.checked ? 'Enabled' : 'Disabled') + ' Option', el.dataset.message, 1);
     TID.checkboxes.adjustControls(key);
 };

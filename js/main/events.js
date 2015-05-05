@@ -27,9 +27,9 @@ TID.events.buttonImageDownload = function (event) {
             TID.images.download(url, imageId);
 
             if (TID.isArchivePage) {
-                TID.trackEvent('Downloaded Image', 'Archive');
+                TID.trackEvent('Downloads', 'Downloaded Image', 'Archive', 1);
             } else {
-                TID.trackEvent('Downloaded Image', isHd ? 'HD' : 'SD');
+                TID.trackEvent('Downloads', 'Downloaded Image', isHd ? 'HD' : 'SD', 1);
             }
         // Otherwise ask for confirmation
         } else if (hasDownloaded) {
@@ -38,9 +38,9 @@ TID.events.buttonImageDownload = function (event) {
                     TID.images.download(url, imageId);
 
                     if (TID.isArchivePage) {
-                        TID.trackEvent('Downloaded Image', 'Archive');
+                        TID.trackEvent('Downloads', 'Downloaded Image', 'Archive', 1);
                     } else {
-                        TID.trackEvent('Downloaded Image', isHd ? 'HD' : 'SD');
+                        TID.trackEvent('Downloads', 'Downloaded Image', isHd ? 'HD' : 'SD', 1);
                     }
                 }
             }, TID.isSinglePage ? false : url);
@@ -64,13 +64,13 @@ TID.events.directoryImageDownload = function (event) {
         // If don't care about confirmation or not downloaded yet, download
         if (!TID.settings.confirm || (TID.settings.confirm && !hasDownloaded)) {
             TID.images.download(url, imageId, directory);
-            TID.trackEvent('Downloaded Image', 'To Directory');
+            TID.trackEvent('Downloads', 'Downloaded Image', 'Directory', 1);
         // Otherwise ask for confirmation
         } else if (hasDownloaded) {
             TID.ui.confirmDialog(function (accept) {
                 if (accept) {
                     TID.images.download(url, imageId, directory);
-                    TID.trackEvent('Downloaded Image', 'To Directory');
+                    TID.trackEvent('Downloads', 'Downloaded Image', 'Directory', 1);
                 }
             }, TID.isSinglePage ? false : url);
         }
