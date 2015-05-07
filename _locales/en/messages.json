@@ -7,7 +7,7 @@
         "description": "The name of the extension. The word Tumblr must be English."
     },
     "extensionDescription": {
-        "message": "Download images from your Tumblr dashboard and other pages with a single click.",
+        "message": "Download images from Tumblr with a single click.",
         "description": "The description of the extension. The word Tumblr must be English."
     },
 
