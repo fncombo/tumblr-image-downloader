@@ -43,8 +43,6 @@ TID.activateAnalytics = function () {
     ga('set', 'checkProtocolTask', function () {});
     ga('require', 'displayfeatures');
     ga('send', 'pageview');
-
-    TID.trackEvent('Extension', 'Enabled Option', 'Analytics', 1);
 };
 
 /**
@@ -53,16 +51,12 @@ TID.activateAnalytics = function () {
 TID.deactivateAnalytics = function () {
     console.log('Disabling analytics');
 
-    TID.trackEvent('Extension', 'Disabled Option', 'Analytics', 1);
+    window['ga-disable-' + TID.trackingId] = true;
 
-    setTimeout(function () {
-        window['ga-disable-' + TID.trackingId] = true;
+    document.querySelector('script[src*="google-analytics"]').remove();
 
-        document.querySelector('script[src*="google-analytics"]').remove();
-
-        delete window.ga;
-        delete window.gaplugins;
-        delete window.gaGlobal;
-        delete window.GoogleAnalyticsObject;
-    }, 1000);
+    delete window.ga;
+    delete window.gaplugins;
+    delete window.gaGlobal;
+    delete window.GoogleAnalyticsObject;
 };
