@@ -53,8 +53,8 @@ TID.directories.generateInput = function (value, skipLi) {
     var html = '';
     html += skipLi ? '' : '<li>';
     html += '<input type="text" placeholder="' + TID.directories.getPlaceholder() + '" value="' + (value || '') + '">';
-    html += '<span class="move">&#9776;</span>';
-    html += '<span class="delete" tabindex="0">&cross;</span>';
+    html += '<span class="move" title="' + TID.msg('changeOrder') + '">&#9776;</span>';
+    html += '<span class="delete" title="' + TID.msg('delete') + '" tabindex="0">&cross;</span>';
     html += skipLi ? '' : '</li>';
     return html;
 };

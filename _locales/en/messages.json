@@ -239,6 +239,14 @@
         "message": "Whoa There!",
         "description": "Dialog title when something unexpected happens."
     },
+    "changeOrder": {
+        "message": "Change order",
+        "description": "Title for the move hamburger icon next to directories list."
+    },
+    "delete": {
+        "message": "Delete",
+        "description": "Generic title for a delete button/link."
+    },
 
 
 
