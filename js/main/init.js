@@ -170,6 +170,12 @@ TID.isArchivePage = /\/archive(?:\/|$)/.test(window.location.pathname);
 TID.isSinglePage = document.body.classList.contains('single_image');
 
 /**
+ * A complete :not for use in selectors to ignore images
+ * @type {String}
+ */
+TID.fullIgnoreSelector = ':not(.' + TID.classes.ignore + '):not(.reblog-avatar-image-thumb)';
+
+/**
  * Selectors for HTML elements based on the current page
  * @type {Object}
  */
@@ -187,7 +193,7 @@ if (TID.isArchivePage) {
 } else if (TID.isSinglePage) {
     TID.selectors.images = '#content-image';
 } else {
-    TID.selectors.images = '.post.is_photo .post_content img:not(.' + TID.classes.ignore + '), ' +
-        '.post.is_photoset .post_content img:not(.' + TID.classes.ignore + '), '+
-        '.post_body figure img:not(.' + TID.classes.ignore + ')';
+    TID.selectors.images = '.post.is_photo .post_content img' + TID.fullIgnoreSelector + ', ' +
+        '.post.is_photoset .post_content img' + TID.fullIgnoreSelector + ', ' +
+        '.post_content figure img' + TID.fullIgnoreSelector;
 }
