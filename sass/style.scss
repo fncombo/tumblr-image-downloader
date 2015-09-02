@@ -239,7 +239,8 @@ a.TID-parent {
 
     li {
         display: flex;
-        padding: 0.3em 0.6em;
+        margin: 0 !important;
+        padding: 0.3em 0.6em !important;
         list-style: none !important;
 
         &:hover {
