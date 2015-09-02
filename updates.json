@@ -114,5 +114,8 @@
     [
         "Added an option to put all additional download folders inside the default folder.",
         "Visual enhancements."
+    ],
+    [
+        "Bug fixes to accommodate the new reblog design."
     ]
 ]
