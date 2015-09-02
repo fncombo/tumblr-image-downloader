@@ -88,7 +88,8 @@ a.TID-parent {
     -webkit-user-select: none;
     user-select: none;
 
-    &, & div, & span, & i, & ul, & li {
+    &, & div, & span, & i, & ul, & li, & strong {
+        color: #fff !important;
         cursor: pointer;
         @extend %text-reset;
     }
