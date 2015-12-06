@@ -130,7 +130,8 @@ a.TID-parent {
     }
 
     .TID-show-ticks &.TID-downloaded:before {
-        content: '\2713';
+        content: '\EA1B';
+        font-family: 'tumblr-icons';
         background-color: transparentize($tumblr-color, 1);
         padding: 0.3em 0.6em;
         position: absolute;
@@ -147,7 +148,8 @@ a.TID-parent {
     }
 
     .TID-show-ticks &.TID-downloaded:after {
-        content: '\2713';
+        content: '\EA1B';
+        font-family: 'tumblr-icons';
         padding: 0.3em 0.6em;
         position: absolute;
         top: 0;
@@ -185,7 +187,8 @@ a.TID-parent {
     }
 
     .TID-downloaded &:before {
-        content: '\2713\0020';
+        content: '\EA1B\0020';
+        font-family: 'tumblr-icons';
     }
 }
 
@@ -213,8 +216,8 @@ a.TID-parent {
         top: 0;
         left: 0;
         padding: 0.3em 0.6em;
-        font-family: tumblr-icons;
-        content: '\f104';
+        font-family: 'tumblr-icons';
+        content: '\EA0D';
         @extend %transition;
 
         .TID-download:hover & {
@@ -252,7 +255,8 @@ a.TID-parent {
         }
 
         &.TID-downloaded:before {
-            content: '\2713\0020';
+            content: '\EA1B\0020';
+            font-family: 'tumblr-icons';
         }
 
         &.TID-help {
@@ -274,9 +278,9 @@ a.TID-parent {
 
             &:after {
                 padding: 0 3px;
-                font-family: tumblr-icons;
+                font-family: 'tumblr-icons';
                 font-size: 0.65em;
-                content: '\f106';
+                content: '\EA0B';
             }
         }
     }
